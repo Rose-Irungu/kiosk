@@ -31,7 +31,7 @@ function VisitorWelcome() {
       {/* Image Pane*/}
       <div className="relative flex-1">
         <img
-          src="../../public/sample.jpg"
+          src="../assets/logo.svg"
           alt="Visitor Registration"
           className="absolute inset-0 h-full w-full object-cover"
         />
