@@ -23,9 +23,9 @@ export default function Navbar() {
       <div className="flex justify-between items-center w-full">
         {/* Three colored rectangles on the left */}
         <div className="flex items-center space-x-2">
-          <div className="w-12 h-2 bg-[#08cd24] rounded-sm shadow-sm"></div>
-          <div className="w-12 h-2 bg-[#6c50ef] rounded-sm shadow-sm"></div>
-          <div className="w-12 h-2 bg-[#6c50ef] rounded-sm shadow-sm"></div>
+          <div className="w-12 h-2 bg-[#08cd24] border border-[#009515] rounded-sm "></div>
+          <div className="w-12 h-2 bg-[#6c50ef] border border-[#4D39AA] rounded-sm "></div>
+          <div className="w-12 h-2 bg-[#6c50ef] border border-[#4D39AA] rounded-sm "></div>
         </div>
 
         {/* Language dropdown on the right */}

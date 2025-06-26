@@ -19,7 +19,7 @@ const VisitorPage = () => {
           className="w-1/2 h-[200px] lg:h-auto bg-cover bg-center flex items-center justify-center"
           style={{ backgroundImage: `url(${rectangle})` }}
         >
-          <img src={logo} alt="West Brook Logo" className="max-w-[200px]" />
+          <img src={logo} alt="West Brook Logo" className="max-w-[200px] max-h-[500px] w-full h-auto overflow-hidden" />
         </div>
 
         {/* Right form section */}
@@ -55,14 +55,15 @@ const VisitorPage = () => {
             </button>
 
             {/* OR Divider */}
-            <div className="flex items-center justify-center my-6">
-              <hr className="w-20 border-dashed border-purple-600" />
-              <span className="mx-2 text-purple-600 text-sm">or</span>
-              <hr className="w-20 border-dashed border-purple-600" />
-            </div>
+            <div className="flex items-center my-6">
+            <hr className="flex-grow border-t border-dashed border-purple-600" />
+            <span className="mx-4 text-purple-600 text-sm">or</span>
+            <hr className="flex-grow border-t border-dashed border-purple-600" />
+          </div>
+
 
             {/* QR Instruction */}
-            <p className="text-sm text-[#00580D]">
+            <p className="text-sm text-[#00580D] text-center">
               Let security scan the QR code sent to your email.
             </p>
           </div>
