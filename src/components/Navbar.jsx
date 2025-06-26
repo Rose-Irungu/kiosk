@@ -1,3 +1,4 @@
+// src/components/Navbar.jsx
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 
@@ -9,8 +10,7 @@ export default function Navbar() {
     { code: 'EN', name: 'English' },
     { code: 'FR', name: 'Français' },
     { code: 'SWA', name: 'Swahili' },
-    { code: '橘子 ', name: 'Mandarin' },
-    
+    { code: '橘子', name: 'Mandarin' },
   ];
 
   const handleLanguageSelect = (language) => {
@@ -19,26 +19,26 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-[#e6fbe9] px-6 py-4 shadow-sm">
-      <div className="flex items-center justify-between max-w-7xl mx-auto">
-        {/* Three colored rectangles */}
+    <nav className="bg-[#e6fbe9] px-6 py-4 shadow-none w-full">
+      <div className="flex justify-between items-center w-full">
+        {/* Three colored rectangles on the left */}
         <div className="flex items-center space-x-2">
           <div className="w-12 h-2 bg-[#08cd24] rounded-sm shadow-sm"></div>
           <div className="w-12 h-2 bg-[#6c50ef] rounded-sm shadow-sm"></div>
           <div className="w-12 h-2 bg-[#6c50ef] rounded-sm shadow-sm"></div>
         </div>
 
-        {/* Language dropdown */}
+        {/* Language dropdown on the right */}
         <div className="relative">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="flex items-center space-x-2 bg-[#6c50ef] text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors duration-200 shadow-sm"
           >
             <span className="font-medium">{selectedLanguage}</span>
-            <ChevronDown 
+            <ChevronDown
               className={`w-4 h-4 transition-transform duration-200 ${
                 isDropdownOpen ? 'rotate-180' : ''
-              }`} 
+              }`}
             />
           </button>
 
@@ -50,8 +50,8 @@ export default function Navbar() {
                   key={language.code}
                   onClick={() => handleLanguageSelect(language)}
                   className={`w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors duration-150 ${
-                    selectedLanguage === language.code 
-                      ? 'bg-indigo-50 text-indigo-600 font-medium' 
+                    selectedLanguage === language.code
+                      ? 'bg-indigo-50 text-indigo-600 font-medium'
                       : 'text-gray-700'
                   }`}
                 >
@@ -68,8 +68,8 @@ export default function Navbar() {
 
       {/* Overlay to close dropdown when clicking outside */}
       {isDropdownOpen && (
-        <div 
-          className="fixed inset-0 z-40" 
+        <div
+          className="fixed inset-0 z-40"
           onClick={() => setIsDropdownOpen(false)}
         ></div>
       )}
