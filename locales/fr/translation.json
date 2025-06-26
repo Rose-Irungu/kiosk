@@ -1,0 +1,15 @@
+{
+  "welcome": "Bienvenue",
+  "home": "Accueil",
+  "about": "À propos",
+  "contact": "Contact",
+  "login": "Se connecter",
+  "logout": "Se déconnecter",
+  "signup": "S'inscrire",
+  "language": "Langue",
+  "search": "Recherche",
+  "submit": "Soumettre",
+  "cancel": "Annuler",
+  "yes": "Oui",
+  "no": "Non"
+}
