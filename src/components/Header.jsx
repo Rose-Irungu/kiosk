@@ -30,19 +30,19 @@ const Header = () => {
   return (
     <header className="flex justify-between items-center px-6 py-4 bg-[#00580d] relative z-50">
      
-      <div className=" text-white px-5 text-sm   tracking-wide">
+      <div className=" text-white px-5 text-sm  text-[20px] ">
         {currentDate}
       </div>
       
      
-      <div className="text-white text-2xl  tracking-widest uppercase text-center mr-45 flex-1 mx-5">
+      <div className="text-white  text-[24px]  uppercase text-center mr-45 flex-1 mx-5">
         VISITOR GATE
       </div>
       
       
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-5 text-[20px]">
         
-        <div className="text-white text-lg  tracking-wide min-w-fit">
+        <div className="text-white text-lg   min-w-fit">
           {timeString}
         </div>
         
