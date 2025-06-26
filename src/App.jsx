@@ -7,6 +7,7 @@ import Verify from './pages/Verify';
 import Bye from './pages/Bye'
 import Error from './pages/Error'
 import VisitorWelcome from './pages/VisitorWelcome';
+import Welcomeback from './pages/Welcomeback';
 
 const App = () => {
   return (
@@ -20,8 +21,10 @@ const App = () => {
         {<Route path="/welcomeback" element={< VisitorWelcome/>} /> }
         {/* <Route path="/checkout" element={<checkout />} /> */}{/* Nigel uncomment when done */}
         <Route path="/welcomeback" element={<VisitorWelcome />} />
-        <Route path="/bye" element={<Bye />} />{/* Rebecca uncomment when done */}
-        <Route path="/error" element={<Error />} />{/* Rebecca uncomment when done */}
+        <Route path="/bye" element={<Bye />} />{/* Rebecca uncomment when done - done */}
+        <Route path="/error" element={<Error />} />{/* Rebecca uncomment when done - done */}
+        <Route path="/welcomeback" element={<Welcomeback />} /> 
+         
        
 
         
