@@ -31,7 +31,7 @@ const VisitorPage = () => {
 
           {/* Form */}
           <div className="w-full max-w-md text-start mt-10">
-            <h2 className="text-xl font-semibold text-[#00580D] mb-3  left-1/2  top-[217px] gap-5">
+            <h2 className="text-xl font-semibold text-[#00580D] left-1/2  top-[217px] ">
               Submit your details below
             </h2>
 
