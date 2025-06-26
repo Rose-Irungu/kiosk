@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HomeIcon } from "@heroicons/react/24/solid";
-import axios from "axios";
+// import axios from "axios";
 import Header from '../components/Header';
 import logo from '../assets/logo.svg';
 import rectangle from '../assets/rectangle-780.png';
