@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Navbar from './components/Navbar';
 import VisitorPage from './pages/VisitorPage';
 import Verify from './pages/Verify';
-import Welcomeback from './pages/Welcomeback';
+import VisitorWelcome from './pages/VisitorWelcome';
 
 const App = () => {
   return (
@@ -15,9 +15,9 @@ const App = () => {
         <Route path="/header" element={<Header />} />
         <Route path="/navbar" element={<Navbar />} />
         <Route path="/verify" element={<Verify />} />
-        {/* <Route path="/welcomeback" element={< Welcomeback/>} /> */}{/* Nigel uncomment when done */}
+        {<Route path="/welcomeback" element={< VisitorWelcome/>} /> }
         {/* <Route path="/checkout" element={<checkout />} /> */}{/* Nigel uncomment when done */}
-        <Route path="/welcomeback" element={<Welcomeback />} /> 
+        <Route path="/welcomeback" element={<VisitorWelcome />} />
         {/* <Route path="/bye" element={<Bye />} /> */}{/* Rebecca uncomment when done */}
         {/* <Route path="/error" element={<Error />} /> */}{/* Rebecca uncomment when done */}
        

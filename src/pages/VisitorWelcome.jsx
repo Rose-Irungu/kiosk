@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { HomeIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
+import Header from '../components/Header';
+import logo from '../assets/logo.svg';
+import rectangle from '../assets/rectangle-780.png';
+import sphere from '../assets/sphere-green-glossy0.png';
 
 function VisitorWelcome() {
   //Local state 
@@ -27,15 +31,16 @@ function VisitorWelcome() {
 
   //Render
   return (
+    <>
+    <Header />
     <div className="flex min-h-screen flex-col md:flex-row">
       {/* Image Pane*/}
-      <div className="relative flex-1">
-        <img
-          src="../assets/logo.svg"
-          alt="Visitor Registration"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-      </div>
+        <div
+          className="w-1/2 h-[200px] lg:h-auto bg-cover bg-center flex items-center justify-center"
+          style={{ backgroundImage: `url(${rectangle})` }}
+        >
+          <img src={logo} alt="West Brook Logo" className="max-w-[200px] max-h-[500px] w-full h-auto overflow-hidden" />
+        </div>
 
       {/*Welcome Pane*/}
       <div className="flex flex-1 items-center justify-center bg-gray-100 p-6">
@@ -66,6 +71,7 @@ function VisitorWelcome() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
