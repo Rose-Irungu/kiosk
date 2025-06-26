@@ -1,0 +1,15 @@
+{
+  "welcome": "欢迎",
+  "home": "主页",
+  "about": "关于",
+  "contact": "联系",
+  "login": "登录",
+  "logout": "退出登录",
+  "signup": "注册",
+  "language": "语言",
+  "search": "搜索",
+  "submit": "提交",
+  "cancel": "取消",
+  "yes": "是",
+  "no": "否"
+}
