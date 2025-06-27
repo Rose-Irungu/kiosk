@@ -7,32 +7,36 @@ import logo from '../assets/logo.svg';
 import rectangle from '../assets/rectangle-780.png';
 import sphere from '../assets/sphere-green-glossy0.png';
 
-const VisitorPage = () => {
+const Verify = () => {
   return (
-    <div className="flex flex-col min-h-screen w-screen overflow-x-hidden relative">
+    <div className="flex flex-col min-h-screen w-full overflow-x-hidden relative">
       {/* Header */}
       <Header />
 
-      {/* Content layout: stays horizontal even on small screens */}
-      <div className="flex flex-row w-full min-w-[768px] flex-1 overflow-hidden">
+      {/* Responsive layout: column on mobile, row on lg and up */}
+      <div className="flex flex-col lg:flex-row w-full flex-1 overflow-hidden">
         {/* Left section with background and logo */}
         <div
-          className="w-1/2 h-[200px] lg:h-auto bg-cover bg-center flex items-center justify-center"
+          className="w-full lg:w-1/2 h-[200px] sm:h-[300px] lg:h-auto bg-cover bg-center flex items-center justify-center p-4"
           style={{ backgroundImage: `url(${rectangle})` }}
         >
-          <img src={logo} alt="West Brook Logo" className="max-w-[200px] max-h-[500px] w-full h-auto overflow-hidden" />
+          <img
+            src={logo}
+            alt="West Brook Logo"
+            className="max-w-[140px] sm:max-w-[200px] md:max-w-[220px] lg:max-w-[250px] max-h-[180px] sm:max-h-[300px] lg:max-h-[500px] w-full h-auto"
+          />
         </div>
 
         {/* Right form section */}
-        <div className="w-1/2 bg-[#E6FBE9] relative flex flex-col items-center px-6 pt-0 pb-10">
+        <div className="w-full lg:w-1/2 bg-[#E6FBE9] relative flex flex-col items-center px-4 sm:px-6 lg:px-8 py-6 lg:pt-0 lg:pb-10 min-h-[500px] lg:min-h-full">
           {/* Top bar with Navbar */}
-          <div className="w-full flex justify-between items-center mt-0 mb-10">
+          <div className="w-full flex justify-between items-center mt-0 mb-8 sm:mb-10">
             <Navbar />
           </div>
 
           {/* Form */}
-          <div className="w-full max-w-md text-start mt-10">
-            <h2 className="text-xl font-semibold text-[#00580D] left-1/2  top-[217px] ">
+          <div className="w-full max-w-sm sm:max-w-md text-start mt-4 sm:mt-10">
+            <h2 className="text-lg sm:text-xl font-semibold text-[#00580D] mb-4">
               Submit your details below
             </h2>
 
@@ -52,17 +56,15 @@ const VisitorPage = () => {
                 background: 'linear-gradient(90deg, rgba(0,210,30,1) 0%, rgba(0,88,13,1) 100%)',
               }}
             >
-              <Link to="/bye" className="text-white font-medium">Submit</Link>
-              
+              <Link to="/bye" className="text-white font-medium block text-center">Submit</Link>
             </button>
 
             {/* OR Divider */}
             <div className="flex items-center my-6">
-            <hr className="flex-grow border-t border-dashed border-purple-600" />
-            <span className="mx-4 text-purple-600 text-sm">or</span>
-            <hr className="flex-grow border-t border-dashed border-purple-600" />
-          </div>
-
+              <hr className="flex-grow border-t border-dashed border-purple-600" />
+              <span className="mx-4 text-purple-600 text-sm">or</span>
+              <hr className="flex-grow border-t border-dashed border-purple-600" />
+            </div>
 
             {/* QR Instruction */}
             <p className="text-sm text-[#00580D] text-center">
@@ -74,7 +76,7 @@ const VisitorPage = () => {
           <img
             src={sphere}
             alt="Decorative sphere"
-            className="hidden lg:block w-[150px] absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2"
+            className="hidden lg:block w-[90px] sm:w-[120px] xl:w-[150px] h-auto absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 opacity-60"
           />
         </div>
       </div>
@@ -82,4 +84,4 @@ const VisitorPage = () => {
   );
 };
 
-export default VisitorPage;
+export default Verify;

@@ -9,83 +9,72 @@ import sphere from "../assets/sphere-green-glossy0.png";
 import Navbar from "../components/Navbar";
 
 function Welcomeback() {
-  //Local state
   const [visitorName, setVisitorName] = useState("Guest");
-  const [visitorRef, setVisitorRef] = useState(""); // reference #
+  const [visitorRef, setVisitorRef] = useState("");
 
-  //fetch visitor data once on mount
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get("https://guestapi.zynamis.co.ke/api/kiosk/visitor/checkin/");
-        console.log("Visitor data:", data);
-
-        // Expecting { visitorName, visitorRef } back from API
+        // const { data } = await axios.get("https://guestapi.zynamis.co.ke/api/kiosk/visitor/checkin/");
+        // console.log("Visitor data:", data);
         setVisitorName(data.visitorName ?? "Visitor");
         setVisitorRef(data.visitorRef ?? "Unknown");
       } catch (err) {
-        console.error("Error fetching visitor data:", err);
+        // console.error("Error fetching visitor data:", err);
       }
     };
 
     fetchData();
   }, []);
 
-  //Render
   return (
     <>
       <Header />
-      <div className="flex min-h-screen flex-col md:flex-row">
-        {/* Image Pane*/}
+      <div className="flex flex-col lg:flex-row min-h-screen w-full overflow-hidden">
+        {/* Left: Image Pane */}
         <div
-          className="w-1/2 h-[200px] lg:h-auto bg-cover bg-center flex items-center justify-center"
+          className="w-full lg:w-1/2 h-[200px] sm:h-[300px] lg:h-auto bg-cover bg-center flex items-center justify-center p-4"
           style={{ backgroundImage: `url(${rectangle})` }}
         >
           <img
             src={logo}
             alt="West Brook Logo"
-            className="max-w-[200px] max-h-[500px] w-full h-auto overflow-hidden"
+            className="max-w-[140px] sm:max-w-[200px] md:max-w-[220px] lg:max-w-[250px] max-h-[180px] sm:max-h-[300px] lg:max-h-[500px] w-full h-auto"
           />
         </div>
 
-        {/*Welcome Pane*/}
-        <div className="flex flex-1 items-center justify-center bg-[#E6FBE9] p-6">
-
-          <div className="flex w-full max-w-md flex-col items-start gap-4">
+        {/* Right: Welcome Message */}
+        <div className="w-full lg:w-1/2 bg-[#E6FBE9] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-6 lg:pt-0 lg:pb-10 min-h-[500px] lg:min-h-full">
+          <div className="w-full max-w-sm sm:max-w-md flex flex-col items-center gap-6">
             <div
-              className="flex flex-col gap-1 rounded-xl border border-blue-500  p-4 text-center 
-          "
+              className="w-full p-4 sm:p-6 rounded-xl border border-blue-500 text-center shadow-md"
               style={{
                 background:
                   "linear-gradient(105.46deg, rgba(108, 80, 239, 0.3) 6.53%, rgba(0, 210, 30, 0.3) 51.54%, rgba(108, 80, 239, 0.3) 91.07%)",
               }}
             >
-              <h2 className="text-2xl font-normal text-green-700">
-                👋🏾 Hi&nbsp;{visitorName}
+              <h2 className="text-xl sm:text-2xl font-normal text-green-700 mb-2">
+                👋🏾 Hi {visitorName}
               </h2>
-              <p className="mx-2 mb-3">
-                Enjoy your stay at West&nbsp;Brook&nbsp;Apartments
+              <p className="text-sm sm:text-base mb-2">
+                Enjoy your stay at West Brook Apartments
               </p>
-              <p className="mx-2 mb-3">
+              <p className="text-sm sm:text-base mb-2">
                 Your visitor reference number is:&nbsp;
-                <span className="font-semibold text-blue-800">
-                  {visitorRef}
-                </span>
+                <span className="font-semibold text-blue-800">{visitorRef}</span>
               </p>
-              <p className="mx-2 mb-3">
+              <p className="text-sm sm:text-base">
                 We’ve also slid this code into your SMS and email.
               </p>
             </div>
 
+            {/* Return Home Button */}
             <button
               type="button"
-              className="mb-1 self-center rounded-2xl bg-green-600 px-4 py-2 font-normal text-white transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+              className="flex items-center justify-center gap-2 rounded-2xl bg-green-600 px-4 py-2 text-sm sm:text-base text-white font-medium hover:bg-green-700 transition focus:outline-none focus:ring-2 focus:ring-green-500"
             >
-              <HomeIcon
-                className="mr-2 h-5 w-5 inline-flex"
-                aria-hidden="true"
-              />
-              <Link to="/">Return&nbsp;to&nbsp;Home</Link>
+              <HomeIcon className="h-5 w-5" />
+              <Link to="/">Return to Home</Link>
             </button>
           </div>
         </div>
