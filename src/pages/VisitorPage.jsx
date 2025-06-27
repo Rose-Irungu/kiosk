@@ -1,5 +1,6 @@
 // src/pages/VisitorPage.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Navbar from '../components/Navbar';
 import logo from '../assets/logo.svg';
@@ -51,7 +52,8 @@ const VisitorPage = () => {
                 background: 'linear-gradient(90deg, rgba(0,210,30,1) 0%, rgba(0,88,13,1) 100%)',
               }}
             >
-              Submit
+              <Link to="/welcomeback" className="text-white font-medium">  Submit</Link>
+            
             </button>
 
             {/* OR Divider */}

@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 import { HomeIcon } from "@heroicons/react/24/solid";
 // import axios from "axios";
+import Header from '../components/Header';
+import logo from '../assets/logo.svg';
+import rectangle from '../assets/rectangle-780.png';
+import sphere from '../assets/sphere-green-glossy0.png';
 
 function Welcomeback() {
   //Local state 
@@ -27,15 +32,16 @@ function Welcomeback() {
 
   //Render
   return (
+    <>
+    <Header />
     <div className="flex min-h-screen flex-col md:flex-row">
       {/* Image Pane*/}
-      <div className="relative flex-1">
-        <img
-          src="../../public/sample.jpg"
-          alt="Visitor Registration"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-      </div>
+        <div
+          className="w-1/2 h-[200px] lg:h-auto bg-cover bg-center flex items-center justify-center"
+          style={{ backgroundImage: `url(${rectangle})` }}
+        >
+          <img src={logo} alt="West Brook Logo" className="max-w-[200px] max-h-[500px] w-full h-auto overflow-hidden" />
+        </div>
 
       {/*Welcome Pane*/}
       <div className="flex flex-1 items-center justify-center bg-gray-100 p-6">
@@ -61,11 +67,13 @@ function Welcomeback() {
             className="mb-1 self-center rounded-2xl bg-green-600 px-4 py-2 font-normal text-white transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
           >
             <HomeIcon className="mr-2 h-5 w-5 inline-flex" aria-hidden="true" />
-            Return&nbsp;to&nbsp;Home
+            <Link to="/">Return&nbsp;to&nbsp;Home</Link>
+            
           </button>
         </div>
       </div>
     </div>
+    </>
   );
 }
 

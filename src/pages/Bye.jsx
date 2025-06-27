@@ -1,5 +1,6 @@
 // src/pages/VisitorPage.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Navbar from '../components/Navbar';
 import logo from '../assets/logo.svg';
@@ -77,8 +78,8 @@ const ByePage = () => {
                                 <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
                             </svg>
 
-                            {/* Text */}
-                            Return to Home
+                              <Link to="/">Return to Home</Link>
+                            
                         </button>
 
 
