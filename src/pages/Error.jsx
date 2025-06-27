@@ -6,10 +6,12 @@ import logo from "../assets/logo.svg";
 import rectangle from "../assets/rectangle-780.png";
 import sphere from "../assets/sphere-green-glossy0.png";
 import { ChevronDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const ErrorPage = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("EN");
+  const { t } = useTranslation();
 
   const languages = [
     { code: "EN", name: "English" },
@@ -103,23 +105,21 @@ const ErrorPage = () => {
           {/* Ooops Card */}
           <div className="flex flex-col items-start gap-6 text-[#F83162] mt-10 px-4 text-left">
             {/* Heading */}
-            <p className="text-[24px] font-semibold leading-[31px]">Oops!</p>
+            <p className="text-[24px] font-semibold leading-[31px]">{t("oops")}</p>
 
             {/* Message */}
             <p className="max-w-md text-[16px] font-semibold leading-[21px]">
-              Visitor information not found. Go back to enter correct details or
-              clarify with security.
+              {t("infoMissing")}
             </p>
 
             {/* Optional button row or icons – Frame 25 */}
             <div className="flex items-center justify-center gap-8 mt-4">
               {/* Example buttons/icons */}
               <button className="w-[212px] h-[57px] px-3 py-2 bg-[#00D21E] text-white font-medium rounded-xl shadow-md flex items-center justify-center">
-                <Link to="/">Back to check in</Link>
-                
+                <Link to="/">{t("backCheckIn")}</Link>
               </button>
               <button className="w-[212px] h-[57px] px-3 py-2 bg-[#6C50EF] text-white font-medium rounded-xl shadow-md flex items-center justify-center">
-                Back to check out
+                {t('backCheckOut')}
               </button>
             </div>
           </div>

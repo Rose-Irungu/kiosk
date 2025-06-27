@@ -6,8 +6,11 @@ import Navbar from '../components/Navbar';
 import logo from '../assets/logo.svg';
 import rectangle from '../assets/rectangle-780.png';
 import sphere from '../assets/sphere-green-glossy0.png';
+import { useTranslation } from "react-i18next";
 
 const ByePage = () => {
+    const { t } = useTranslation();
+
     return (
         <div className="flex flex-col min-h-screen w-screen overflow-x-hidden relative">
             {/* Header */}
@@ -54,12 +57,12 @@ const ByePage = () => {
                             }}
                         >
                             <p className="text-[24px] leading-[33px] text-[#070D18] text-center font-serif" style={{ fontFamily: '"DM Serif Display", serif' }}>
-                                👋🏾Bye Jane
+                                {t("bye")} Jane
                             </p>
 
                             <div className="w-[379px] h-[63px] text-center text-[#070D18] font-medium text-[16px] leading-[42px]">
-                                <p>Thank you for visiting West Brook apartments</p>
-                                <p>Have a beautiful day.</p>
+                                <p>{t("thanksForComing")}</p>
+                                <p>{t("haveABeautifulDay")}</p>
                             </div>
 
 
@@ -78,8 +81,8 @@ const ByePage = () => {
                                 <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
                             </svg>
 
-                              <Link to="/">Return to Home</Link>
-                            
+                              <Link to="/">{t("returnToHome")}</Link>
+
                         </button>
 
 

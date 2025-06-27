@@ -8,7 +8,10 @@ import out from "../assets/out.svg";
 import sphere from "../assets/sphere-green-glossy0.png";
 import logo from "../assets/logo.svg";
 import rectangle from "../assets/rectangle-780.png";
+import { useTranslation } from "react-i18next";
 const HomePage = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col min-h-screen w-screen overflow-x-hidden relative">
       {/* Header */}
@@ -38,14 +41,14 @@ const HomePage = () => {
           {/* Form */}
           <div className="w-full max-w-md text-start mt-10">
             <h2 className="text-black font-bold text-center text-xl mb-3">
-              Welcome To
+              {t("welcome")}
             </h2>
 
             <label
               htmlFor="details"
               className="block text-[#00580D] font-bold text-center mb-1"
             >
-              Westbrook Apartments
+              {t("westBrook")}
             </label>
 
             <div className="flex justify-center gap-x-20 mt-6">
@@ -53,7 +56,7 @@ const HomePage = () => {
               <button className="flex flex-col items-center w-full sm:w-auto p-4 rounded-md shadow-md bg-gradient-to-r from-green-500 via-green-500 to-green-600 hover:from-green-600 hover:via-green-600 hover:to-green-700 active:from-green-700 active:via-green-700 active:to-green-800 transition-all duration-200">
                 <img src={download} alt="Enter icon" className="w-6 h-7 mb-5" />
                 <span className="text-white text-lg font-medium">
-                  <Link to="/visitorpage">Check in guest</Link>
+                  <Link to="/visitorpage">{t("checkIn")}</Link>
                 </span>
               </button>
 
@@ -65,7 +68,7 @@ const HomePage = () => {
                   className="w-6 h-7 mb-2 transform rotate 180 fill-white"
                 />
                 <span className="text-white text-lg font-medium">
-                  <Link to="/verify">Check out guest</Link>
+                  <Link to="/verify">{t('checkOut')}</Link>
                 </span>
               </button>
             </div>

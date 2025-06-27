@@ -40,7 +40,7 @@ const VisitorPage = () => {
             </h2>
 
             <label htmlFor="details" className="block text-sm text-[#00580D] mb-1">
-              {t('visitorCred')} {/* Phone number / Email / Number plate */}
+              {t('visitorCred')} 
             </label>
             <input
               id="details"
