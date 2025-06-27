@@ -89,8 +89,6 @@ const VisitorPage = () => {
   };
 
 
-
-
 const handleSubmit = async (e) => {
   e.preventDefault();
 
@@ -153,7 +151,7 @@ const handleSubmit = async (e) => {
         <div className="w-full lg:w-1/2 bg-[#E6FBE9] relative flex flex-col items-center px-4 sm:px-6 lg:px-8 py-6 lg:pt-0 lg:pb-10 min-h-[600px] lg:min-h-full">
           {/* Top bar with Navbar - only show on desktop */}
           <div className="hidden lg:flex w-full justify-between items-center mt-0 mb-10">
-            <Navbar />
+            {/* <Navbar /> */}
           </div>
 
           {/* Form */}
