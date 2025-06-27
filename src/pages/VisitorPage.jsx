@@ -12,6 +12,7 @@ const VisitorPage = () => {
   const [details, setDetails] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   // Validation functions
   const validatePhoneNumber = (phone) => {
