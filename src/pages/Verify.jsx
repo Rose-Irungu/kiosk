@@ -6,7 +6,6 @@ import Navbar from '../components/Navbar';
 import logo from '../assets/logo.svg';
 import rectangle from '../assets/rectangle-780.png';
 import sphere from '../assets/sphere-green-glossy0.png';
-import
 
 const VisitorPage = () => {
   return (
