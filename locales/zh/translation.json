@@ -1,15 +1,15 @@
 {
-  "welcome": "欢迎",
-  "home": "主页",
-  "about": "关于",
-  "contact": "联系",
-  "login": "登录",
-  "logout": "退出登录",
-  "signup": "注册",
-  "language": "语言",
-  "search": "搜索",
+  "visitorGate": "访客入口",
+  "submitDetails": "请在下方提交您的信息",
+  "visitorRegNo": "访客登记号码",
   "submit": "提交",
-  "cancel": "取消",
-  "yes": "是",
-  "no": "否"
+  "or": "或",
+  "letScan": "请让安保扫描发送到您邮箱的二维码",
+  "enjoyStay": "祝您在西溪公寓入住愉快",
+  "visitorRefNo": "您的访客参考编号是",
+  "codeSend": "我们也已通过短信和电子邮件发送了此代码。",
+  "returnToHome": "返回首页",
+  "hi": "您好，",
+  "visitorCred": "手机号 / 邮箱 / 车牌号",
+  "enterDetails": "请输入您的信息"
 }

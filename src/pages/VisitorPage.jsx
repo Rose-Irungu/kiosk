@@ -6,8 +6,11 @@ import Navbar from '../components/Navbar';
 import logo from '../assets/logo.svg';
 import rectangle from '../assets/rectangle-780.png';
 import sphere from '../assets/sphere-green-glossy0.png';
+import { useTranslation } from "react-i18next";
 
 const VisitorPage = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col min-h-screen w-screen overflow-x-hidden relative">
       {/* Header */}
@@ -33,16 +36,16 @@ const VisitorPage = () => {
           {/* Form */}
           <div className="w-full max-w-md text-start mt-10">
             <h2 className="text-xl font-semibold text-[#00580D] mb-3 -ml-7">
-              Submit your details below
+              {t('submitDetails')}
             </h2>
 
             <label htmlFor="details" className="block text-sm text-[#00580D] mb-1">
-              Phone number / Email / Number plate
+              {t('visitorCred')} {/* Phone number / Email / Number plate */}
             </label>
             <input
               id="details"
               type="text"
-              placeholder="Enter your details"
+              placeholder={t('enterDetails')}
               className="w-full px-4 py-3 border-2 border-green-200 rounded-md bg-white mb-4 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
 
@@ -52,21 +55,21 @@ const VisitorPage = () => {
                 background: 'linear-gradient(90deg, rgba(0,210,30,1) 0%, rgba(0,88,13,1) 100%)',
               }}
             >
-              <Link to="/welcomeback" className="text-white font-medium">  Submit</Link>
+              <Link to="/welcomeback" className="text-white font-medium">  {t('submit')}</Link>
             
             </button>
 
             {/* OR Divider */}
             <div className="flex items-center my-6">
             <hr className="flex-grow border-t border-dashed border-purple-600" />
-            <span className="mx-4 text-purple-600 text-sm">or</span>
+            <span className="mx-4 text-purple-600 text-sm">{t('or')}</span>
             <hr className="flex-grow border-t border-dashed border-purple-600" />
           </div>
 
 
             {/* QR Instruction */}
             <p className="text-sm text-[#00580D] text-center">
-              Let security scan the QR code sent to your email.
+              {t('letScan')}
             </p>
           </div>
 

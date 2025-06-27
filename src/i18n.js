@@ -1,43 +1,52 @@
+// i18n.js — patched ✅
+// Loads translation JSON on‑demand and registers bundles the right way.
+
 import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { initReactI18next } from 'react-i18next';
 
-// Lazy-load JSON files with dynamic imports (works in modern bundlers)
-const loadLocales = async (lng) => {
-  // Map language codes to the JSON modules
-  const files = {
-    en: () => import('../locales/en/translation.json'),
-    sw: () => import('../locales/sw/translation.json'),
-    fr: () => import('../locales/fr/translation.json'),
-    zh: () => import('../locales/zh/translation.json'),
-  };
-
-  const resModule = await files[lng]();        // pull in the JSON
-  return resModule.default || resModule;       // ESM / CJS compat
+// -------- lazy loader --------
+const files = {
+  en: () => import('../locales/en/translation.json'),
+  sw: () => import('../locales/sw/translation.json'),
+  fr: () => import('../locales/fr/translation.json'),
+  zh: () => import('../locales/zh/translation.json'),
 };
 
+const loadLocales = async (lng) => {
+  const base = (lng ?? 'en').split('-')[0];     // e.g. 'en-US' ➜ 'en'
+  const loader = files[base] || files.en;       // default to English
+  const mod = await loader();
+  return mod.default || mod;                    // ESM / CJS compat
+};
+
+// -------- i18next boot --------
 await i18next
-  .use(LanguageDetector)                       // checks navigator.language etc.
+  .use(LanguageDetector)
+  .use(initReactI18next)
   .init({
     fallbackLng: 'en',
-    debug: import.meta.env?.DEV,               // only chatty in dev
-    resources: {},                             // we’ll fill this on-the-fly
-    interpolation: { escapeValue: false },     // allow HTML in strings
-    react: { useSuspense: false },             // harmless for non-React too
-    initImmediate: false                       // ensure synchronous t() calls
+    debug: import.meta.env?.DEV,
+    resources: {},                              // we’ll inject bundles on the fly
+    defaultNS: 'translation',
+    interpolation: { escapeValue: false },
+    react: { useSuspense: false },
+    initImmediate: false,
   });
 
-// Kick-off initial language load
-await i18next.addResources(
-  i18next.language,
-  'translation',
-  await loadLocales(i18next.language)
-);
+// -------- preload initial bundle --------
+{
+  const base = (i18next.language || 'en').split('-')[0];
+  const bundle = await loadLocales(base);
+  i18next.addResourceBundle(base, 'translation', bundle, true, true); // deep‑merge + overwrite
+}
 
-// Hot-swap when the user changes language
+// -------- hot‑swap on language change --------
 i18next.on('languageChanged', async (lng) => {
-  if (!i18next.hasResourceBundle(lng, 'translation')) {
-    const bundle = await loadLocales(lng);
-    i18next.addResources(lng, 'translation', bundle);
+  const base = lng.split('-')[0];
+  if (!i18next.hasResourceBundle(base, 'translation')) {
+    const bundle = await loadLocales(base);
+    i18next.addResourceBundle(base, 'translation', bundle, true, true);
   }
 });
 
