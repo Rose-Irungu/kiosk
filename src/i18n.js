@@ -1,5 +1,4 @@
-// i18n.js — patched ✅
-// Loads translation JSON on‑demand and registers bundles the right way.
+// src/i18n.js
 
 import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -14,41 +13,42 @@ const files = {
 };
 
 const loadLocales = async (lng) => {
-  const base = (lng ?? 'en').split('-')[0];     // e.g. 'en-US' ➜ 'en'
-  const loader = files[base] || files.en;       // default to English
+  const base = (lng ?? 'en').split('-')[0];
+  const loader = files[base] || files.en;
   const mod = await loader();
-  return mod.default || mod;                    // ESM / CJS compat
+  return mod.default || mod;
 };
 
-// -------- i18next boot --------
-await i18next
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    fallbackLng: 'en',
-    debug: import.meta.env?.DEV,
-    resources: {},                              // we’ll inject bundles on the fly
-    defaultNS: 'translation',
-    interpolation: { escapeValue: false },
-    react: { useSuspense: false },
-    initImmediate: false,
-  });
+// -------- init function --------
+export const initI18n = async () => {
+  await i18next
+    .use(LanguageDetector)
+    .use(initReactI18next)
+    .init({
+      fallbackLng: 'en',
+      debug: import.meta.env?.DEV,
+      resources: {},
+      defaultNS: 'translation',
+      interpolation: { escapeValue: false },
+      react: { useSuspense: false },
+      initImmediate: false,
+    });
 
-// -------- preload initial bundle --------
-{
+  // preload default bundle
   const base = (i18next.language || 'en').split('-')[0];
   const bundle = await loadLocales(base);
-  i18next.addResourceBundle(base, 'translation', bundle, true, true); // deep‑merge + overwrite
-}
+  i18next.addResourceBundle(base, 'translation', bundle, true, true);
 
-// -------- hot‑swap on language change --------
-i18next.on('languageChanged', async (lng) => {
-  const base = lng.split('-')[0];
-  if (!i18next.hasResourceBundle(base, 'translation')) {
-    const bundle = await loadLocales(base);
-    i18next.addResourceBundle(base, 'translation', bundle, true, true);
-  }
-});
+  // dynamic hot-swap
+  i18next.on('languageChanged', async (lng) => {
+    const base = lng.split('-')[0];
+    if (!i18next.hasResourceBundle(base, 'translation')) {
+      const bundle = await loadLocales(base);
+      i18next.addResourceBundle(base, 'translation', bundle, true, true);
+    }
+  });
+};
 
+// export for use
 export const t = (...args) => i18next.t(...args);
 export default i18next;
