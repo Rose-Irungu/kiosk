@@ -1,15 +1,15 @@
 {
-  "welcome": "Karibu",
-  "home": "Nyumbani",
-  "about": "Kuhusu",
-  "contact": "Wasiliana",
-  "login": "Ingia",
-  "logout": "Toka",
-  "signup": "Jisajili",
-  "language": "Lugha",
-  "search": "Tafuta",
-  "submit": "Tuma",
-  "cancel": "Ghairi",
-  "yes": "Ndiyo",
-  "no": "Hapana"
+  "visitorGate": "LANGO LA WAGENI",
+  "submitDetails": "Wasilisha maelezo yako hapa chini",
+  "visitorRegNo": "Nambari ya usajili ya mgeni",
+  "submit": "Wasilisha",
+  "or": "au",
+  "letScan": "Ruhusu usalama kuchanganua msimbo wa QR uliotumwa kwa barua pepe yako",
+  "enjoyStay": "Furahia ukaaji wako katika West Brook Apartments",
+  "visitorRefNo": "Nambari yako ya rejea ya mgeni ni",
+  "codeSend": "Tumepeleka msimbo huu pia kwa SMS na barua pepe yako.",
+  "returnToHome": "Rudi nyumbani",
+  "hi": "Habari ",
+  "visitorCred": "Nambari ya simu / Barua pepe / Nambari ya gari",
+  "enterDetails": "Ingiza maelezo yako"
 }

@@ -1,15 +1,15 @@
 {
-  "welcome": "Welcome",
-  "home": "Home",
-  "about": "About",
-  "contact": "Contact",
-  "login": "Log In",
-  "logout": "Log Out",
-  "signup": "Sign Up",
-  "language": "Language",
-  "search": "Search",
+  "visitorGate": "VISITOR GATE",
+  "submitDetails": "Submit your details below",
+  "visitorRegNo": "Visitor registration number",
   "submit": "Submit",
-  "cancel": "Cancel",
-  "yes": "Yes",
-  "no": "No"
+  "or": "or",
+  "letScan": "Let security scan the QR code sent to your email",
+  "enjoyStay": "Enjoy your stay at West Brook Apartments",
+  "visitorRefNo": "Your visitor reference number is",
+  "codeSend": "We’ve also slid this code into your SMS and email.",
+  "returnToHome": "Return to Home",
+  "hi": "Hi ",
+  "visitorCred": "Phone number / Email / Number plate",
+  "enterDetails": "Enter your details"
 }

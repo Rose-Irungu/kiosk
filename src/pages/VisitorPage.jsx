@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar';
 import logo from '../assets/logo.svg';
 import rectangle from '../assets/rectangle-780.png';
 import sphere from '../assets/sphere-green-glossy0.png';
+import { useTranslation } from "react-i18next";
 
 const VisitorPage = () => {
   const [details, setDetails] = useState('');
@@ -141,7 +142,7 @@ const VisitorPage = () => {
           {/* Form */}
           <div className="w-full max-w-md text-start mt-10">
             <h2 className="text-xl font-semibold text-[#00580D] mb-3 -ml-7">
-              Submit your details below
+              {t('submitDetails')}
             </h2>
 
             <form onSubmit={handleSubmit}>
@@ -184,7 +185,7 @@ const VisitorPage = () => {
 
             {/* QR Instruction */}
             <p className="text-sm text-[#00580D] text-center">
-              Let security scan the QR code sent to your email.
+              {t('letScan')}
             </p>
           </div>
 

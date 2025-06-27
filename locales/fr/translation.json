@@ -1,15 +1,15 @@
 {
-  "welcome": "Bienvenue",
-  "home": "Accueil",
-  "about": "À propos",
-  "contact": "Contact",
-  "login": "Se connecter",
-  "logout": "Se déconnecter",
-  "signup": "S'inscrire",
-  "language": "Langue",
-  "search": "Recherche",
+  "visitorGate": "PORTE DES VISITEURS",
+  "submitDetails": "Soumettez vos informations ci-dessous",
+  "visitorRegNo": "Numéro d'enregistrement du visiteur",
   "submit": "Soumettre",
-  "cancel": "Annuler",
-  "yes": "Oui",
-  "no": "Non"
+  "or": "ou",
+  "letScan": "Laissez la sécurité scanner le code QR envoyé à votre e-mail",
+  "enjoyStay": "Profitez de votre séjour aux appartements West Brook",
+  "visitorRefNo": "Votre numéro de référence visiteur est",
+  "codeSend": "Nous avons également envoyé ce code par SMS et par e-mail.",
+  "returnToHome": "Retour à l'accueil",
+  "hi": "Salut ",
+  "visitorCred": "Numéro de téléphone / E-mail / Plaque d'immatriculation",
+  "enterDetails": "Entrez vos informations"
 }
