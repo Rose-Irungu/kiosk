@@ -8,6 +8,7 @@ import out from "../assets/out.svg";
 import sphere from "../assets/sphere-green-glossy0.png";
 import logo from "../assets/logo.svg";
 import rectangle from "../assets/rectangle-780.png";
+
 const HomePage = () => {
   return (
     <div className="flex flex-col min-h-screen w-screen overflow-x-hidden relative">
@@ -58,7 +59,7 @@ const HomePage = () => {
               </button>
 
               {/* Check Out Button */}
-              <button className="flex flex-col items-center w-full sm:w-auto p-4 rounded-md shadow-md bg-gradient-to-r from-blue-800 to-blue-600 hover:from-blue-900 hover:to-blue-700 active:from-blue-950 active:to-blue-800 transition-all duration-200">
+             <button className="flex flex-col items-center w-full sm:w-auto p-4 rounded-md shadow-md bg-gradient-to-r from-[#5c4fa3] to-[#4a3d85] hover:from-[#4a3d85] hover:to-[#3d3268] active:from-[#3d3268] active:to-[#302654] transition-all duration-200">
                 <img
                   src={out}
                   alt="Exit icon"
