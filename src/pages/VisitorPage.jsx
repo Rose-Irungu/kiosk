@@ -12,12 +12,12 @@ import axios from "axios";
 const VisitorPage = () => {
   const [details, setDetails] = useState("");
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  // Validation functions
+  
   const validatePhoneNumber = (phone) => {
-   
     const phoneRegex = /^(\+254|0)[17]\d{8}$|^(\+254|0)[14]\d{8}$/;
     return phoneRegex.test(phone.replace(/\s+/g, ""));
   };
@@ -28,7 +28,7 @@ const VisitorPage = () => {
   };
 
   const validateNumberPlate = (plate) => {
-    // Kenyan number plate format: KXX XXXZ or KXXX XXXZ
+   
     const plateRegex = /^K[A-Z]{2,3}\s\d{3}[A-Z]$/i;
     return plateRegex.test(plate.toUpperCase());
   };
@@ -43,7 +43,7 @@ const VisitorPage = () => {
       };
     }
 
-    // Check if it's an email (contains @)
+    
     if (trimmedInput.includes("@")) {
       if (validateEmail(trimmedInput)) {
         return { isValid: true, type: "email" };
@@ -55,7 +55,7 @@ const VisitorPage = () => {
       }
     }
 
-    // Check if it's a phone number (starts with + or 0, contains only digits)
+  
     if (/^(\+|0)/.test(trimmedInput) && /^\+?[\d\s]+$/.test(trimmedInput)) {
       if (validatePhoneNumber(trimmedInput)) {
         return { isValid: true, type: "phone" };
@@ -68,7 +68,7 @@ const VisitorPage = () => {
       }
     }
 
-    // Check if it's a number plate (starts with K and contains letters/numbers)
+  
     if (/^K[A-Z]/i.test(trimmedInput)) {
       if (validateNumberPlate(trimmedInput)) {
         return { isValid: true, type: "numberplate" };
@@ -80,7 +80,7 @@ const VisitorPage = () => {
       }
     }
 
-    // If none of the above, try to give helpful guidance
+ 
     return {
       isValid: false,
       error:
@@ -88,37 +88,47 @@ const VisitorPage = () => {
     };
   };
 
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-   const finalForm = {
-    identifier: details,
-  };
-
-  try {
-    const response = await axios.post(
-      "https://guestapi.zynamis.co.ke/api/kiosk/visitor/checkin/",
-      
-        finalForm,
-      
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    console.log("Response:", response.data);
-    navigate("/welcomeback");
-
-  } catch (error) {
-    console.error("Error submitting form:", error);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     
-    setError(error.response?.data?.message || "An error occurred while submitting your details. Please try again.");
-  }
-};
+   
+    const validation = detectAndValidateInput(details);
+    
+    if (!validation.isValid) {
+      setError(validation.error);
+      return; 
+    }
 
+   
+    setError("");
+    setIsSubmitting(true);
+
+    const finalForm = {
+      identifier: details,
+    };
+
+    try {
+      const response = await axios.post(
+        "https://guestapi.zynamis.co.ke/api/kiosk/visitor/checkin/",
+        finalForm,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("Response:", response.data);
+      navigate("/welcomeback");
+
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      
+      setError(error.response?.data?.message || "An error occurred while submitting your details. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleInputChange = (e) => {
     setDetails(e.target.value);
@@ -133,9 +143,9 @@ const handleSubmit = async (e) => {
       {/* Header */}
       <Header />
 
-      {/* Content layout: responsive - vertical on mobile, horizontal on desktop */}
+     
       <div className="flex flex-col lg:flex-row w-full flex-1 overflow-hidden">
-        {/* Left section with background and logo */}
+      
         <div
           className="w-full lg:w-1/2 h-[250px] sm:h-[300px] lg:h-auto bg-cover bg-center flex items-center justify-center p-4"
           style={{ backgroundImage: `url(${rectangle})` }}
@@ -147,14 +157,14 @@ const handleSubmit = async (e) => {
           />
         </div>
 
-        {/* Right form section */}
+      
         <div className="w-full lg:w-1/2 bg-[#E6FBE9] relative flex flex-col items-center px-4 sm:px-6 lg:px-8 py-6 lg:pt-0 lg:pb-10 min-h-[600px] lg:min-h-full">
-          {/* Top bar with Navbar - only show on desktop */}
+          
           <div className="hidden lg:flex w-full justify-between items-center mt-0 mb-10">
             {/* <Navbar /> */}
           </div>
 
-          {/* Form */}
+          
           <div className="w-full max-w-sm sm:max-w-md text-start flex-1 flex flex-col justify-center lg:mt-10">
             <h2 className="text-lg sm:text-xl font-semibold text-[#00580D] mb-4 sm:mb-6 text-center lg:text-left lg:-ml-7">
               {t("submitDetails")}
@@ -172,15 +182,17 @@ const handleSubmit = async (e) => {
                   id="details"
                   type="text"
                   placeholder="e.g., +254712345678, john@gmail.com, or KCA 123A"
+                  required
                   value={details}
                   onChange={handleInputChange}
+                  disabled={isSubmitting}
                   className={`w-full px-3 sm:px-4 py-3 sm:py-4 border-2 rounded-md bg-white text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors ${
                     error ? "border-red-500" : "border-green-200"
-                  }`}
+                  } ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
                 />
               </div>
 
-              {/* Error message */}
+            
               {error && (
                 <p className="text-red-500 text-xs sm:text-sm leading-tight">
                   {error}
@@ -189,19 +201,20 @@ const handleSubmit = async (e) => {
 
               <button
                 type="submit"
-                className="w-full py-3 sm:py-4 text-white rounded-md shadow-md font-medium text-sm sm:text-base hover:shadow-lg transition-shadow"
+                disabled={isSubmitting}
+                className={`w-full py-3 sm:py-4 text-white rounded-md shadow-md font-medium text-sm sm:text-base hover:shadow-lg transition-shadow ${
+                  isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                }`}
                 style={{
                   background:
                     "linear-gradient(90deg, rgba(0,210,30,1) 0%, rgba(0,88,13,1) 100%)",
                 }}
               >
-                <Link
-                  to="/welcomeback">Submit</Link>
-                
+                {isSubmitting ? "Submitting..." : "Submit"}
               </button>
             </form>
 
-            {/* OR Divider */}
+          
             <div className="flex items-center my-6 sm:my-8">
               <hr className="flex-grow border-t border-dashed border-purple-600" />
               <span className="mx-3 sm:mx-4 text-purple-600 text-xs sm:text-sm">
@@ -210,13 +223,13 @@ const handleSubmit = async (e) => {
               <hr className="flex-grow border-t border-dashed border-purple-600" />
             </div>
 
-            {/* QR Instruction */}
+           
             <p className="text-xs sm:text-sm text-[#00580D] text-center">
-              {t("letScan")}
+              {t("let Security Scan the QR code sent to your email")}
             </p>
           </div>
 
-          {/* Decorative Sphere - responsive positioning */}
+       
           <img
             src={sphere}
             alt="Decorative sphere"
