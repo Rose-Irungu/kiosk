@@ -8,6 +8,7 @@ import rectangle from "../assets/rectangle-780.png";
 import sphere from "../assets/sphere-green-glossy0.png";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const VisitorPage = () => {
   const [details, setDetails] = useState("");
@@ -15,93 +16,95 @@ const VisitorPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  // Validation functions
-  const validatePhoneNumber = (phone) => {
-   
-    const phoneRegex = /^(\+254|0)[17]\d{8}$|^(\+254|0)[14]\d{8}$/;
-    return phoneRegex.test(phone.replace(/\s+/g, ""));
-  };
+ const validatePhoneNumber = (phone) => {
+  // Matches +2547xxxxxxxx or 07xxxxxxxx and similar for 1 or 4 as starting digit
+  const phoneRegex = /^(\+254|0)[17]\d{8}$|^(\+254|0)[14]\d{8}$/;
+  return phoneRegex.test(phone.replace(/\s+/g, ""));
+};
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
 
-  const validateNumberPlate = (plate) => {
-    // Kenyan number plate format: KXX XXXZ or KXXX XXXZ
-    const plateRegex = /^K[A-Z]{2,3}\s\d{3}[A-Z]$/i;
-    return plateRegex.test(plate.toUpperCase());
-  };
+const validateNumberPlate = (plate) => {
+  // Kenyan number plate format: KAA 123A or KBA 123B
+  const plateRegex = /^K[A-Z]{2,3}\s\d{3}[A-Z]$/i;
+  return plateRegex.test(plate.toUpperCase());
+};
 
-  const detectAndValidateInput = (input) => {
-    const trimmedInput = input.trim();
+const detectAndValidateInput = (input) => {
+  const trimmedInput = input.trim();
 
-    if (!trimmedInput) {
-      return {
-        isValid: false,
-        error: "Please enter your phone number, email, or number plate",
-      };
-    }
-
-    // Check if it's an email (contains @)
-    if (trimmedInput.includes("@")) {
-      if (validateEmail(trimmedInput)) {
-        return { isValid: true, type: "email" };
-      } else {
-        return {
-          isValid: false,
-          error: "Please enter a valid email address (e.g., example@gmail.com)",
-        };
-      }
-    }
-
-    // Check if it's a phone number (starts with + or 0, contains only digits)
-    if (/^(\+|0)/.test(trimmedInput) && /^\+?[\d\s]+$/.test(trimmedInput)) {
-      if (validatePhoneNumber(trimmedInput)) {
-        return { isValid: true, type: "phone" };
-      } else {
-        return {
-          isValid: false,
-          error:
-            "Please enter a valid Kenyan phone number (e.g., +254712345678 or 0712345678)",
-        };
-      }
-    }
-
-    // Check if it's a number plate (starts with K and contains letters/numbers)
-    if (/^K[A-Z]/i.test(trimmedInput)) {
-      if (validateNumberPlate(trimmedInput)) {
-        return { isValid: true, type: "numberplate" };
-      } else {
-        return {
-          isValid: false,
-          error: "Please enter a valid Kenyan number plate (e.g., KCA 123A)",
-        };
-      }
-    }
-
-    // If none of the above, try to give helpful guidance
+  if (!trimmedInput) {
     return {
       isValid: false,
-      error:
-        "Please enter a valid phone number (+254XXXXXXXXX), email (example@gmail.com), or number plate (KCA 123A)",
+      error: "Please enter your phone number, email, or number plate",
     };
-  };
+  }
 
+  // Check for email format
+  if (trimmedInput.includes("@")) {
+    if (validateEmail(trimmedInput)) {
+      return { isValid: true, type: "email" };
+    } else {
+      return {
+        isValid: false,
+        error: "Please enter a valid email address (e.g., example@gmail.com)",
+      };
+    }
+  }
+
+  // Check for phone number
+  if (/^(\+|0)/.test(trimmedInput) && /^\+?[\d\s]+$/.test(trimmedInput)) {
+    if (validatePhoneNumber(trimmedInput)) {
+      return { isValid: true, type: "phone" };
+    } else {
+      return {
+        isValid: false,
+        error:
+          "Please enter a valid Kenyan phone number (e.g., +254712345678 or 0712345678)",
+      };
+    }
+  }
+
+  // Check for number plate
+  if (/^K[A-Z]/i.test(trimmedInput)) {
+    if (validateNumberPlate(trimmedInput)) {
+      return { isValid: true, type: "numberplate" };
+    } else {
+      return {
+        isValid: false,
+        error: "Please enter a valid Kenyan number plate (e.g., KCA 123A)",
+      };
+    }
+  }
+
+  return {
+    isValid: false,
+    error:
+      "Please enter a valid phone number (+254XXXXXXXXX), email (example@gmail.com), or number plate (KCA 123A)",
+  };
+};
 
 const handleSubmit = async (e) => {
-  e.preventDefault();
+  e.preventDefault(); // Prevent default browser behavior (refresh)
 
-   const finalForm = {
+  const validation = detectAndValidateInput(details); // Validate input
+
+  if (!validation.isValid) {
+    setError(validation.error); // Show error if input is invalid
+    return; // Stop submission
+  }
+
+  const finalForm = {
     identifier: details,
   };
 
   try {
     const response = await axios.post(
       "https://guestapi.zynamis.co.ke/api/kiosk/visitor/checkin/",
-      
-        finalForm,
-      
+      finalForm,
       {
         headers: {
           "Content-Type": "application/json",
@@ -109,13 +112,14 @@ const handleSubmit = async (e) => {
       }
     );
 
-    console.log("Response:", response.data);
-    navigate("/welcomeback");
-
+    const fullName = response.data.full_name;
+    navigate("/welcomeback", { state: { fullName } }); // Redirect with name
   } catch (error) {
     console.error("Error submitting form:", error);
-    
-    setError(error.response?.data?.message || "An error occurred while submitting your details. Please try again.");
+    setError(
+      error.response?.data?.message ||
+        "An error occurred while submitting your details. Please try again."
+    );
   }
 };
 
@@ -173,14 +177,13 @@ const handleSubmit = async (e) => {
                   type="text"
                   placeholder="e.g., +254712345678, john@gmail.com, or KCA 123A"
                   value={details}
-                  onChange={handleInputChange}
+                  onChange={(e) => setDetails(e.target.value)}
+                  required
                   className={`w-full px-3 sm:px-4 py-3 sm:py-4 border-2 rounded-md bg-white text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors ${
                     error ? "border-red-500" : "border-green-200"
                   }`}
                 />
               </div>
-
-              {/* Error message */}
               {error && (
                 <p className="text-red-500 text-xs sm:text-sm leading-tight">
                   {error}
@@ -212,7 +215,7 @@ const handleSubmit = async (e) => {
 
             {/* QR Instruction */}
             <p className="text-xs sm:text-sm text-[#00580D] text-center">
-              {t("letScan")}
+              {t("let Security Scan the QR code sent to your email")}
             </p>
           </div>
 

@@ -7,18 +7,23 @@ import logo from "../assets/logo.svg";
 import rectangle from "../assets/rectangle-780.png";
 import sphere from "../assets/sphere-green-glossy0.png";
 import Navbar from "../components/Navbar";
+import { useLocation } from "react-router-dom";
 
 function Welcomeback() {
   const [visitorName, setVisitorName] = useState("Guest");
   const [visitorRef, setVisitorRef] = useState("");
+
+  const location = useLocation();
+const fullName = location.state?.fullName || "Guest";
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // const { data } = await axios.get("https://guestapi.zynamis.co.ke/api/kiosk/visitor/checkin/");
         // console.log("Visitor data:", data);
-        setVisitorName(data.visitorName ?? "Visitor");
-        setVisitorRef(data.visitorRef ?? "Unknown");
+        setVisitorName(fullName?? "Visitor");
+        setVisitorRef(fullName?? "Unknown");
       } catch (err) {
         // console.error("Error fetching visitor data:", err);
       }
@@ -54,7 +59,7 @@ function Welcomeback() {
               }}
             >
               <h2 className="text-xl sm:text-2xl font-normal text-green-700 mb-2">
-                👋🏾 Hi {visitorName}
+                👋🏾 Hi {fullName }
               </h2>
               <p className="text-sm sm:text-base mb-2">
                 Enjoy your stay at West Brook Apartments
