@@ -11,5 +11,9 @@
   "returnToHome": "Return to Home",
   "hi": "Hi ",
   "visitorCred": "Phone number / Email / Number plate",
-  "enterDetails": "Enter your details"
+  "enterDetails": "Enter your details",
+  "submitError": "An error occurred while submitting your details. Please try again.",
+
+  "westBrookLogo": "West Brook Logo",
+  "decorativeSphere": "Decorative sphere"
 }
