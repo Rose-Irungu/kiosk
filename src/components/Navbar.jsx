@@ -1,12 +1,10 @@
-// src/components/Navbar.jsx
-import React, { useState, useEffect } from 'react';
+// src/components/Navbar.jsx - Simple version without i18n
+import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 
 export default function Navbar() {
-  const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState(i18n.language.split('-')[0] || 'en');
+  const [selected, setSelected] = useState('en');
 
   const langs = [
     { code: 'en', label: 'EN', name: 'English' },
@@ -15,16 +13,11 @@ export default function Navbar() {
     { code: 'zh', label: '中文', name: 'Mandarin' },
   ];
 
-  // sync if something else (LanguageDetector) changes the language
-  useEffect(() => {
-    const onChange = (lng) => setSelected(lng.split('-')[0]);
-    i18n.on('languageChanged', onChange);
-    return () => i18n.off('languageChanged', onChange);
-  }, [i18n]);
-
   const pick = (code) => {
-    i18n.changeLanguage(code); // async but returns a promise
+    setSelected(code);
     setIsOpen(false);
+    // You can add logic here to handle language change
+    console.log('Language changed to:', code);
   };
 
   return (
@@ -36,7 +29,7 @@ export default function Navbar() {
           <div className="w-12 h-2 bg-[#6c50ef] border border-[#4D39AA] rounded-sm" />
           <div className="w-12 h-2 bg-[#6c50ef] border border-[#4D39AA] rounded-sm" />
         </div>
-
+        
         {/* dropdown */}
         <div className="relative">
           <button
@@ -49,14 +42,14 @@ export default function Navbar() {
               className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
             />
           </button>
-
+          
           {isOpen && (
             <div className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg z-50">
               {langs.map(({ code, name, label }) => (
                 <button
                   key={code}
                   onClick={() => pick(code)}
-                  className={`w-full text-left px-4 py-2 hover:bg-gray-50 ${
+                  className={`w-full text-left px-4 py-2 hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg ${
                     selected === code
                       ? 'bg-indigo-50 text-indigo-600 font-medium'
                       : 'text-gray-700'
@@ -72,7 +65,7 @@ export default function Navbar() {
           )}
         </div>
       </div>
-
+      
       {/* click‑outside overlay */}
       {isOpen && (
         <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />

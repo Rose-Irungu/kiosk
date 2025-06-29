@@ -16,7 +16,7 @@ const HomePage = () => {
       <Header />
 
       {/* Content layout: responsive - vertical on mobile, horizontal on desktop */}
-      <div className="flex flex-col lg:flex-row w-full flex-1 overflow-hidden">
+      <div className="flex flex-col lg:flex-row w-full flex-1 overflow-hidden ">
         {/* Left section with background and logo */}
         <div
           className="w-full lg:w-1/2 h-[250px] sm:h-[300px] lg:h-auto bg-cover bg-center flex items-center justify-center p-4"
@@ -30,15 +30,15 @@ const HomePage = () => {
         </div>
 
         {/* Right form section */}
-        <div className="w-full lg:w-1/2 bg-[#E6FBE9] relative flex flex-col items-center px-4 sm:px-6 lg:px-8 py-6 lg:pt-0 lg:pb-10 min-h-[500px] lg:min-h-full">
+        <div className="w-full lg:w-1/2 bg-[#E6FBE9] relative flex flex-col items-center px-4 sm:px-6 lg:px-8 py-6 lg:pt-0 lg:pb-10 min-h-[500px] lg:min-h-full ">
           {/* Top bar with Navbar - only show on desktop */}
           <div className="hidden lg:flex w-full justify-between items-center mt-0 mb-10">
-            {/* <Navbar /> */}
+            <Navbar />
           </div>
 
           {/* Form */}
-          <div className="w-full max-w-sm sm:max-w-md text-center flex-1 flex flex-col justify-center lg:mt-10">
-            <h2 className="text-black font-bold text-xl sm:text-2xl mb-3">
+          <div className="w-full max-w-sm sm:max-w-md text-center flex-1 flex flex-col justify-center lg:mt-10 ">
+            <h2 className="text-black font-bold text-xl sm:text-2xl mb-3 ">
               Welcome To
             </h2>
 

@@ -28,19 +28,19 @@ const ErrorPage = () => {
       <Header />
 
       {/* Content layout: stays horizontal even on small screens */}
-      <div className="flex flex-row w-full min-w-[768px] flex-1 overflow-hidden">
+      <div className="flex flex-col lg:flex-row w-full min-w-[768px] flex-1 overflow-hidden">
         {/* Left section with background and logo */}
         <div
-          className="w-1/2 h-[200px] lg:h-auto bg-cover bg-center flex items-center justify-center"
+          className="w-full lg:w-1/2 h-[250px] sm:h-[300px] lg:h-auto bg-cover bg-center flex items-center justify-center p-4"
           style={{ backgroundImage: `url(${rectangle})` }}
         >
-          <img src={logo} alt="West Brook Logo" className="max-w-[200px]" />
+          <img src={logo} alt="West Brook Logo" className="max-w-[150px] sm:max-w-[200px] lg:max-w-[250px] max-h-[200px] sm:max-h-[300px] lg:max-h-[500px] w-full h-auto" />
         </div>
 
         {/* Right form section */}
-        <div className="w-1/2 bg-[#E6FBE9] relative flex flex-col items-center px-6 pt-0 pb-10">
+        <div className="w-full lg:w-1/2 bg-[#E6FBE9] relative flex flex-col items-center px-4 sm:px-6 lg:px-8 py-6 lg:pt-0 lg:pb-10 min-h-[600px] lg:min-h-full">
           {/* Top bar with Navbar */}
-          <div className="w-full flex justify-between items-center mt-0 mb-10">
+          <div className="hidden lg:flex w-full justify-between items-center mt-0 mb-10">
             <nav className="bg-[#e6fbe9] px-6 py-4 shadow-none w-full">
               <div className="flex justify-between items-center w-full">
                 {/* Three colored rectangles on the left */}
