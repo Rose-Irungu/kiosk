@@ -30,7 +30,7 @@ async function setupI18n() {
       resources: {}, 
       defaultNS: 'translation',
       interpolation: { escapeValue: false },
-      react: { useSuspense: false },
+      react: { useSuspense: true },
       initImmediate: false, 
     });
 
