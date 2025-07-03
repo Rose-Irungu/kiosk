@@ -7,6 +7,7 @@ import logo from "../assets/logo.svg";
 import rectangle from "../assets/rectangle-780.png";
 import sphere from "../assets/sphere-green-glossy0.png";
 import { useTranslation } from "react-i18next";
+import { kioskService } from "../services/kiosk";
 import axios from "axios";
 
 const VisitorPage = () => {
@@ -107,18 +108,12 @@ const VisitorPage = () => {
       identifier: details,
     };
 
-    try {
-      const response = await axios.post(
-        "https://guestapi.zynamis.co.ke/api/kiosk/visitor/checkin/",
-        finalForm,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
 
-      console.log("Response:", response.data);
+
+    try {
+      const response = await kioskService.checkIn(finalForm);
+
+      console.log("Response:", response.data.ref_number);
       navigate("/welcomeback");
 
     } catch (error) {
@@ -132,7 +127,7 @@ const VisitorPage = () => {
 
   const handleInputChange = (e) => {
     setDetails(e.target.value);
-   
+  
     if (error) {
       setError("");
     }
@@ -140,7 +135,7 @@ const VisitorPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen w-full max-w-full overflow-x-hidden relative">
-      {/* Header */}
+      
       <Header />
 
      
@@ -153,7 +148,7 @@ const VisitorPage = () => {
           <img
             src={logo}
             alt="West Brook Logo"
-            className="max-w-[150px] sm:max-w-[200px] lg:max-w-[250px] max-h-[200px] sm:max-h-[300px] lg:max-h-[500px] w-full h-auto"
+            className="max-w-[150px] sm:max-w-[200px] lg:max-w-[250px] max-h-[200px] sm:max-h-[300px] lg:max-h-[500px] w-full h-auto animate-bounce-once"
           />
         </div>
 
