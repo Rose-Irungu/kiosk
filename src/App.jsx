@@ -19,6 +19,7 @@ import Incident from './components/tables/Incident';
 
 
 
+
 const App = () => {
   return (
     <Router>
