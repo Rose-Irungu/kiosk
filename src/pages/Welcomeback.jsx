@@ -9,6 +9,7 @@ import rectangle from "../assets/rectangle-780.png";
 import sphere from "../assets/sphere-green-glossy0.png";
 import { useTranslation } from "react-i18next";
 
+
 const VisitorWelcome = () => {
   const { t } = useTranslation();
   const [visitorName, setVisitorName] = useState("Guest");

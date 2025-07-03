@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const Header = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [language, setLanguage] = useState('EN');
+  //const [language, setLanguage] = useState('EN');
 
   useEffect(() => {
     const timer = setInterval(() => {
