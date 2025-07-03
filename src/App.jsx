@@ -11,13 +11,22 @@ import Verify from './pages/Verify';
 import Bye from './pages/Bye';
 import Error from './pages/Error';
 import Welcomeback from './pages/Welcomeback';
-import Users from './pages/Dashboardpages/users'; // ✅ corrected import
+import { DashboardTable } from './components/tables/DashboardTable';
+import Users from './components/tables/Users';
+import Visitors from './components/tables/visitors';
+import Emergencies from './components/tables/Emergencies';
+import Incident from './components/tables/Incident'; 
+
+
+
+
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/navigation" element={<Navigation />} />
         <Route path="/visitorpage" element={<VisitorPage />} />
         <Route path="/header" element={<Header />} />
         <Route path="/navbar" element={<Navbar />} />
@@ -25,8 +34,12 @@ const App = () => {
         <Route path="/welcomeback" element={<Welcomeback />} />
         <Route path="/bye" element={<Bye />} />
         <Route path="/error" element={<Error />} />
-        <Route path="/form" element={<UserForm />} />
-        <Route path="/users" element={<Users />} /> {/* ✅ Users route added */}
+        <Route path="/dashboardtable" element={<DashboardTable />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/visitors" element={<Visitors />} />
+        <Route path="/emergencies" element={<Emergencies />} />
+        <Route path="/incident" element={<Incident />} />
+        {/* Add more routes as needed */}
       </Routes>
     </Router>
   );
