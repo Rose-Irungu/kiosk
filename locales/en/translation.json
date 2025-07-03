@@ -12,8 +12,15 @@
   "hi": "Hi ",
   "visitorCred": "Phone number / Email / Number plate",
   "enterDetails": "Enter your details",
-  "submitError": "An error occurred while submitting your details. Please try again.",
-
-  "westBrookLogo": "West Brook Logo",
-  "decorativeSphere": "Decorative sphere"
+  "welcome": "Welcome to",
+  "westBrook": "Westbrook Apartments",
+  "checkIn": "Check in guest",
+  "checkOut": "Check out guest",
+  "oops": "Oops!",
+  "infoMissing":"Visitor information not found. Go back to enter correct details or clarify with security.", 
+  "backCheckIn": "Back to check in",
+  "backCheckOut": "Back to check out",
+  "thanksForComing": "Thank you for visiting West Brook apartments",
+  "haveABeautifulDay": "Have a beautiful day.",
+  "bye": "👋🏾Bye"
 }

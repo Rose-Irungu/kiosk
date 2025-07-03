@@ -1,5 +1,5 @@
 {
-  "visitorGate": "PORTE DES VISITEURS",
+  "visitorGate": "PORTAIL VISITEUR",
   "submitDetails": "Soumettez vos informations ci-dessous",
   "visitorRegNo": "Numéro d'enregistrement du visiteur",
   "submit": "Soumettre",
@@ -7,9 +7,20 @@
   "letScan": "Laissez la sécurité scanner le code QR envoyé à votre e-mail",
   "enjoyStay": "Profitez de votre séjour aux appartements West Brook",
   "visitorRefNo": "Votre numéro de référence visiteur est",
-  "codeSend": "Nous avons également envoyé ce code par SMS et par e-mail.",
+  "codeSend": "Nous avons également envoyé ce code par SMS et e-mail.",
   "returnToHome": "Retour à l'accueil",
   "hi": "Salut ",
   "visitorCred": "Numéro de téléphone / E-mail / Plaque d'immatriculation",
-  "enterDetails": "Entrez vos informations"
+  "enterDetails": "Entrez vos informations",
+  "welcome": "Bienvenue à",
+  "westBrook": "Appartements Westbrook",
+  "checkIn": "Enregistrer un invité",
+  "checkOut": "Faire sortir un invité",
+  "oops": "Oups !",
+  "infoMissing": "Informations du visiteur introuvables. Revenez pour entrer les bons détails ou vérifiez avec la sécurité.",
+  "backCheckIn": "Retour à l'enregistrement",
+  "backCheckOut": "Retour à la sortie",
+  "thanksForComing": "Merci d'avoir visité les appartements West Brook",
+  "haveABeautifulDay": "Passez une belle journée.",
+  "bye": "👋🏾Au revoir"
 }
