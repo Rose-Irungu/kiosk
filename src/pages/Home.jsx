@@ -51,24 +51,34 @@ const HomePage = () => {
 
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 lg:gap-8 mt-6">
               {/* Check In Button */}
-              <button className="flex flex-col items-center w-full sm:w-auto min-w-[140px] p-3 sm:p-4 rounded-md shadow-md bg-gradient-to-r from-green-500 via-green-500 to-green-600 hover:from-green-600 hover:via-green-600 hover:to-green-700 active:from-green-700 active:via-green-700 active:to-green-800 transition-all duration-200">
-                <img src={download} alt="Enter icon" className="w-5 h-6 sm:w-6 sm:h-7 mb-2 sm:mb-3" />
+              <Link
+                to="/visitorpage"
+                className="flex flex-col items-center w-full sm:w-auto min-w-[140px] p-3 sm:p-4 rounded-md shadow-md bg-gradient-to-r from-green-500 via-green-500 to-green-600 hover:from-green-600 hover:via-green-600 hover:to-green-700 active:from-green-700 active:via-green-700 active:to-green-800 transition-all duration-200"
+              >
+                <img
+                  src={download}
+                  alt="Enter icon"
+                  className="w-5 h-6 sm:w-6 sm:h-7 mb-2 sm:mb-3"
+                />
                 <span className="text-white text-sm sm:text-base lg:text-lg font-medium text-center">
-                  <Link to="/visitorpage" className="block">Check in guest</Link>
+                  Check in guest
                 </span>
-              </button>
+              </Link>
 
               {/* Check Out Button */}
-              <button className="flex flex-col items-center w-full sm:w-auto min-w-[140px] p-3 sm:p-4 rounded-md shadow-md bg-gradient-to-r from-[#5c4fa3] to-[#4a3d85] hover:from-[#4a3d85] hover:to-[#3d3268] active:from-[#3d3268] active:to-[#302654] transition-all duration-200">
+              <Link
+                to="/verify"
+                className="flex flex-col items-center w-full sm:w-auto min-w-[140px] p-3 sm:p-4 rounded-md shadow-md bg-gradient-to-r from-[#5c4fa3] to-[#4a3d85] hover:from-[#4a3d85] hover:to-[#3d3268] active:from-[#3d3268] active:to-[#302654] transition-all duration-200"
+              >
                 <img
                   src={out}
                   alt="Exit icon"
-                  className="w-5 h-6 sm:w-6 sm:h-7 mb-2 sm:mb-3 transform  fill-white"
+                  className="w-5 h-6 sm:w-6 sm:h-7 mb-2 sm:mb-3 transform fill-white"
                 />
                 <span className="text-white text-sm sm:text-base lg:text-lg font-medium text-center">
-                  <Link to="/verify" className="block">Check out guest</Link>
+                  Check out guest
                 </span>
-              </button>
+              </Link>
             </div>
           </div>
 
