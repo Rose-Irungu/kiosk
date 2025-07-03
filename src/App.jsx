@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Header from './components/Header';
 import Navbar from './components/Navbar';
+import Navigation from './components/Navigation';
+import Card1 from './components/Card1';
 
 import Home from './pages/Home';
 import VisitorPage from './pages/VisitorPage';
@@ -26,6 +28,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/navigation" element={<Navigation />} />
+        <Route path="/card1" element={<Card1 />} />
         <Route path="/visitorpage" element={<VisitorPage />} />
         <Route path="/header" element={<Header />} />
         <Route path="/navbar" element={<Navbar />} />
