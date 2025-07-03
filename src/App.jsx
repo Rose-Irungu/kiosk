@@ -10,12 +10,14 @@ import Verify from './pages/Verify';
 import Bye from './pages/Bye';
 import Error from './pages/Error';
 import Welcomeback from './pages/Welcomeback';
+import Navigation from './components/Navigation';
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/navigation" element={<Navigation />} />
         <Route path="/visitorpage" element={<VisitorPage />} />
         <Route path="/header" element={<Header />} />
         <Route path="/navbar" element={<Navbar />} />
