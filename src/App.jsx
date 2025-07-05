@@ -5,7 +5,9 @@ import Header from './components/Header';
 import Navbar from './components/Navbar';
 import Navigation from './components/Navigation';
 import Card1 from './components/Card1';
-
+import Card2 from './components/Card2';
+import Chart from './components/Chart';
+import Chart2 from './components/Chart2';
 import Home from './pages/Home';
 import VisitorPage from './pages/VisitorPage';
 import Verify from './pages/Verify';
@@ -29,6 +31,9 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/navigation" element={<Navigation />} />
         <Route path="/card1" element={<Card1 />} />
+        <Route path="/card2" element={<Card2 />} />
+        <Route path="/chart" element={<Chart />} />
+        <Route path="/chart2" element={<Chart2 />} />
         <Route path="/visitorpage" element={<VisitorPage />} />
         <Route path="/header" element={<Header />} />
         <Route path="/navbar" element={<Navbar />} />
