@@ -15,10 +15,7 @@ export default function Navigation({ children }) {
     { id: "incidents", label: "Incident Reports", icon: "/tabler-message-report-filled0.svg" },
   ];
 
-  const secondaryItems = [
-    { id: "settings", label: "Settings", icon: "/ic-round-settings0.svg" },
-    { id: "help", label: "Help", icon: "/material-symbols-help-outline0.svg" },
-  ];
+ 
   const secondaryItems = [
     { id: "settings", label: "Settings", icon: "/ic-round-settings0.svg" },
     { id: "help", label: "Help", icon: "/material-symbols-help-outline0.svg" },
