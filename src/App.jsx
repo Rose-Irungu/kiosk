@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Navbar from './components/Navbar';
 import { UserForm } from './components/forms/form';
 
+
 import Home from './pages/Home';
 import VisitorPage from './pages/VisitorPage';
 import Verify from './pages/Verify';
@@ -16,6 +17,11 @@ import Users from './components/tables/Users';
 import Visitors from './components/tables/visitors';
 import Emergencies from './components/tables/Emergencies';
 import Incident from './components/tables/Incident'; 
+import  Navigation from './components/Navigation';
+import UsersPage from "./pages/Dashboardpages/userspage";
+
+
+
 
 
 
@@ -39,6 +45,10 @@ const App = () => {
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
         <Route path="/incident" element={<Incident />} />
+         <Route path="/userform" element={<UserForm/>} />
+          <Route path="/userspage" element={<UsersPage />} />
+
+
         {/* Add more routes as needed */}
       </Routes>
     </Router>
