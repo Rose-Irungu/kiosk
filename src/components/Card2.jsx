@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { Siren } from "lucide-react";
 
 // const INCIDENT_ENDPOINT = "https://api.example.com/incidents/123"; // Real endpoint disabled for testing
 
-export default function Card2({ panicEmoji }) {
+export default function Card2() {
   const [incident, setIncident] = useState(null); // { unit, floor, minute, resident, status }
   const [loadingIncident, setLoadingIncident] = useState(true);
   const [loadingResolve, setLoadingResolve] = useState(false);
@@ -97,58 +98,63 @@ export default function Card2({ panicEmoji }) {
       </div>
     );
 
-  return (
-    <div className="bg-babyrose w-full p-4 rounded-[10px] shadow flex flex-col lg:flex-row lg:justify-between gap-4">
-      {/* Left side */}
-      <div className="flex-1">
-        <div className="text-rosefire text-2xl">{panicEmoji}</div>
-
+return (
+  <div className="bg-[#FEEAEF] w-full p-4 rounded-[10px] shadow flex flex-col lg:flex-row lg:justify-between gap-6">
+    {/* Left side */}
+    <div className="flex-1">
+      {/* Siren + headline on one line */}
+      <div className="flex items-center gap-2">
+        <div className="w-[60px] h-[60px] flex items-center justify-center border-2 border-[#F93162] rounded-sm">
+          <Siren className="w-6 h-6 text-[#F93162] animate-ping flex-shrink-0" />
+        </div>
         <h1 className="font-dmsans text-xl text-grayish font-normal">
           PANIC BUTTON TRIGGERED AT {incident.unit} – {incident.floor}
         </h1>
+      </div>
 
-        <p className="font-inter text-sm text-slategray font-normal">
-          {incident.minute} minute{incident.minute !== 1 && "s"} ago
-        </p>
 
-        <div className="flex gap-2 mt-3">
-          <button className="bg-rosefire text-white text-sm font-inter font-normal px-3 py-1 rounded">
-            Open Roll Call
-          </button>
+      <p className="font-inter text-sm text-slategray font-normal">
+        {incident.minute} minute{incident.minute !== 1 && "s"} ago
+      </p>
 
-          <button
-            onClick={handleResolve}
-            disabled={isResolved || loadingResolve}
-            className={`border text-sm font-inter font-normal px-3 py-1 rounded transition-colors ${
-              isResolved
-                ? "border-green-600 text-green-600 cursor-default"
-                : loadingResolve
-                ? "border-gray-400 text-gray-400 cursor-wait"
-                : "border-deepindigo text-deepindigo hover:bg-deepindigo/10"
-            }`}
-          >
-            {isResolved
-              ? "Resolved"
+      <div className="flex gap-2 mt-3">
+        <button className="bg-[#F93162] text-white text-sm font-inter font-normal px-3 py-1 border rounded hover:bg-white hover:border-[#F93162] hover:text-[#F93162]">
+          Open Roll Call
+        </button>
+
+        <button
+          onClick={handleResolve}
+          disabled={isResolved || loadingResolve}
+          className={`border border-[#005E0E] text-sm font-inter font-normal px-3 py-1 rounded transition-colors hover:bg-[#005E0E] hover:text-white ${
+            isResolved
+              ? "border-green-600 text-[#005E0E] cursor-default"
               : loadingResolve
-              ? "Resolving…"
-              : "Mark Resolved"}
-          </button>
-        </div>
-
-        {error && (
-          <p className="mt-2 text-sm text-red-500 font-inter">{error}</p>
-        )}
+              ? "border-[#005E0E] text-[#005E0E] cursor-wait"
+              : "border-[#005E0E] text-[#005E0E]"
+          }`}
+        >
+          {isResolved
+            ? "Resolved"
+            : loadingResolve
+            ? "Resolving…"
+            : "Mark Resolved"}
+        </button>
       </div>
 
-      {/* Right side */}
-      <div className="flex-1 rounded-[10px] border-[0.5px] border-[#49505780] p-4 flex flex-col gap-2">
-        <p className="font-dmsans text-sm text-slateboost">
-          Triggered&nbsp;By: {incident.resident}
-        </p>
-        <p className="font-dmsans text-sm text-slateboost">
-          Status: {incident.status}
-        </p>
-      </div>
+      {error && (
+        <p className="mt-2 text-sm text-red-500 font-inter">{error}</p>
+      )}
     </div>
-  );
+
+    {/* Right side */}
+    <div className="w-full lg:w-1/3 rounded-[10px] border-[0.5px] border-[#49505780] p-4 flex flex-col gap-2">
+      <p className="font-dmsans text-sm text-slateboost">
+        Triggered&nbsp;By: {incident.resident}
+      </p>
+      <p className="font-dmsans text-sm text-slateboost">
+        Status: {incident.status}
+      </p>
+    </div>
+  </div>
+);
 }
