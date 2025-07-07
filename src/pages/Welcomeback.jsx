@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HomeIcon } from "@heroicons/react/24/solid";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import logo from "../assets/logo.svg";
@@ -9,23 +8,35 @@ import rectangle from "../assets/rectangle-780.png";
 import sphere from "../assets/sphere-green-glossy0.png";
 import { useTranslation } from "react-i18next";
 
-
-const VisitorWelcome = () => {
+const Welcomeback = () => {
   const { t } = useTranslation();
+  const location = useLocation();
   const [visitorName, setVisitorName] = useState("Guest");
   const [visitorRef, setVisitorRef] = useState("");
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get("/api/visitor/welcome");
-        setVisitorName(data?.visitorName ?? "Visitor");
-        setVisitorRef(data?.visitorRef ?? "––");
-      } catch (err) {
-        console.error("Error fetching visitor data:", err);
-      }
-    })();
-  }, []);
+    // Check if data was passed from form submission
+    if (location.state?.visitorData) {
+      const { visitorName, visitorRef } = location.state.visitorData;
+      setVisitorName(visitorName || "Visitor");
+      setVisitorRef(visitorRef || "––");
+    } else {
+      // Fallback: fetch from API if no data passed
+      const fetchVisitorData = async () => {
+        try {
+          const response = await fetch("https://guestapi.zynamis.co.ke/api/kiosk/visitor/create");
+          const data = await response.json();
+
+          setVisitorName(data?.visitorName ?? "Visitor");
+          setVisitorRef(data?.visitorRef ?? "––");
+        } catch (err) {
+          console.error("Error fetching visitor data:", err);
+        }
+      };
+
+      fetchVisitorData();
+    }
+  }, [location.state]);
 
   return (
     <div className="flex min-h-screen w-full flex-col overflow-x-hidden bg-white">
@@ -79,4 +90,4 @@ const VisitorWelcome = () => {
   );
 };
 
-export default VisitorWelcome;
+export default Welcomeback
