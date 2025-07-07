@@ -143,7 +143,7 @@ export default function Card2({ panicEmoji }) {
       {/* Right side */}
       <div className="flex-1 rounded-[10px] border-[0.5px] border-[#49505780] p-4 flex flex-col gap-2">
         <p className="font-dmsans text-sm text-slateboost">
-          Triggered By: {incident.resident}
+          Triggered&nbsp;By: {incident.resident}
         </p>
         <p className="font-dmsans text-sm text-slateboost">
           Status: {incident.status}
