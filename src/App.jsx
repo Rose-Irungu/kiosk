@@ -24,7 +24,8 @@ import Sidebar from './components/layout/Sidebar';
 import Chart from './components/Chart'; // Ensure Chart is imported correctly
 
 
-import Dashboard from './pages/admin/Dashboard'; 
+import Dashboard from './pages/Dashboardpages/Dashboard'; 
+import UsersPage from './pages/Dashboardpages/userspage';
 
 
 
@@ -55,7 +56,8 @@ const App = () => {
         <Route path="/header1" element={<Header1 />} />   
         <Route path="/profilemenu" element={<ProfileMenu />} />
         <Route path="/sidebar" element={<Sidebar />} />
-        <Route path="/chart" element={<Chart />} />
+        <Route path="/chart" element={<Chart />} /> 
+        <Route path="/userspage" element={<UsersPage />} />
         {/* Add more routes as needed */}
       </Routes>
     </Router>
