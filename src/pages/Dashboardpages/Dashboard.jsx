@@ -3,6 +3,7 @@ import Layout from "../../components/layout/Layout";
 import Navigation from "../../components/Navigation";
 import Card1 from "../../components/Card1";
 import Card2 from "../../components/Card2";
+import Card3 from "../../components/Card3";
 import Chart from "../../components/Chart";
 import { Users, AlertTriangle, Shield, Activity,  UserCheck,  AlarmClock} from "lucide-react";
 import DashboardTable from "../../components/tables/DashboardTable";
@@ -64,10 +65,11 @@ const Dashboard = () => {
       </div>
 
       {/* Chart */}
-      <div className="bg-white p-6 rounded-lg shadow mb-8">
+      <div className="bg-white p-6 rounded-lg shadow mb-8 flex flex-col lg:flex-row gap-6">
         <Chart />
+        <Card3 className="lg:ml-4" />
       </div>
-
+       
       {/* Table */}
     
         <DashboardTable />
