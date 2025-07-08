@@ -2,6 +2,7 @@
 
 import React from "react";
 import { z } from "zod";
+import { userService } from "../../services/user";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
@@ -73,25 +74,36 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
     },
   });
 
-  const onSubmit = (values) => {
-    const newUser = {
-      id: Date.now(), // Unique ID
-      name: `${values.firstName} ${values.lastName}`,
-      phone: values.phone,
-      email: values.email,
-      idNo: values.idNo,
-      role: values.role.charAt(0).toUpperCase() + values.role.slice(1),
-      unit: values.role === "resident" ? values.unit : "--",
-      status: "Active",
-      photo: values.photo
-        ? URL.createObjectURL(values.photo)
-        : "/ellipse-160.png",
-    };
+    const onSubmit = async (values) => {
+      try {
+        const formData = new FormData();
+        formData.append("first_name", values.firstName);
+        formData.append("last_name", values.lastName);
+        formData.append("email", values.email);
+        formData.append("phone_number", values.phone);
+        formData.append("id_number", values.idNo);
+        formData.append("unit_number", values.unit);
+        formData.append("role", values.role);
+        formData.append("password", values.password);
+        if (values.photo) {
+          formData.append("profile_picture", values.photo);
+        }
 
-    setUsers((prev) => [...prev, newUser]);
-    form.reset();
-    navigate("/userspage");
+        const addedUser = await userService.addUser(formData);
+
+        // Optionally refresh user list
+        if (setUsers) {
+          setUsers((prev) => [...prev, addedUser]);
+        }
+
+        form.reset();
+        navigate("/userspage");
+      } catch (error) {
+        console.error("Error adding user:", error);
+        alert("Failed to add user. Please try again.");
+      }
   };
+
 
   return (
     <div className="min-h-screen bg-[#EEEAFD]">
@@ -116,7 +128,7 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="resident">Resident</SelectItem>
+                          <SelectItem value="tenant">Resident</SelectItem>
                           <SelectItem value="security">Security</SelectItem>
                           <SelectItem value="admin">Admin</SelectItem>
                         </SelectContent>
