@@ -1,7 +1,6 @@
 import React from "react";
-import Header1 from "../../components/layout/Header1";
-import ProfileMenu from "../../components/layout/ProfileMenu";
 import Layout from "../../components/layout/Layout";
+import Navigation from "../../components/Navigation";
 import Card1 from "../../components/Card1";
 import Card2 from "../../components/Card2";
 import Chart from "../../components/Chart";
@@ -10,9 +9,12 @@ import DashboardTable from "../../components/tables/DashboardTable";
 
 const Dashboard = () => {
   return (
-    <Layout>
+    <Navigation>
+      {/* Separator under header */}
      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+      {/* Cards */}
+      <div className="transition-all duration-300 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <Card1
           label="Current Visitors"
           value="50"
@@ -45,7 +47,7 @@ const Dashboard = () => {
 
       {/* Panic Button Alert */}
       <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200 mb-8">
-        <div className="flex items-start gap-4">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
           <div className="bg-red-100 p-2 rounded-lg">
             <AlertTriangle className="h-6 w-6 text-red-600" />
           </div>
@@ -54,7 +56,7 @@ const Dashboard = () => {
               PANIC BUTTON TRIGGERED AT UNIT 7 - FLOOR 2
             </h3>
             <p className="text-sm text-gray-600 mb-4">1 minute ago</p>
-            <div className="flex gap-4">
+            <div className="flex gap-4 flex-wrap">
               <button className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
                 Open Roll Call
               </button>
@@ -73,13 +75,17 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="bg-white p-6 rounded-lg shadow">
+
+      {/* Chart */}
+      <div className="bg-white p-6 rounded-lg shadow mb-8">
         <Chart />
       </div>
-      <div>
+
+      {/* Table */}
+    
         <DashboardTable />
-      </div>
-    </Layout>
+      
+    </Navigation>
   );
 };
 

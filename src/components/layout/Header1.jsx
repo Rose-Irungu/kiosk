@@ -3,9 +3,10 @@ import ProfileMenu from "./ProfileMenu";
 
 export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
   return (
-    <header className="flex flex-col md:flex-row justify-between items-start md:items-center px-4 md:px-8 py-4 bg-[#EEEAFD] gap-4">
+ <header className="flex flex-col md:flex-row justify-between items-start md:items-center px-4 md:px-8 py-4 bg-[#EEEAFD] border-b-2 border-gray-150 w-full gap-4 ">
+
       <div className="flex items-center justify-between w-full md:w-auto">
-        <h1 className="text-lg md:text-xl font-bold">Welcome to West Brook Apartment</h1>
+        <h1 className="text-lg md:text-xl font-bold ml-[200px]">Welcome to West Brook Apartment</h1>
         <button onClick={() => setMobileOpen(true)} className="md:hidden text-gray-700 hover:text-gray-900">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
@@ -13,8 +14,8 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
         </button>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full md:w-auto">
-        <div className="flex items-center w-full sm:w-[233px] px-4 py-[3px] gap-2.5 bg-white border border-[rgba(108,117,125,0.3)] rounded-md">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full md:w-auto ml-[100px]">
+        <div className="flex items-center left-[12px] w-full sm:w-[233px] px-4 py-[3px] gap-2.5 bg-white border border-[rgba(108,117,125,0.3)] rounded-md">
           <Search />
           <input type="text" placeholder="Search..." className="flex-1 bg-transparent focus:outline-none text-sm" />
         </div>

@@ -8,6 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { MoreHorizontal } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 const emergencyEvents = [
   {
@@ -73,6 +75,7 @@ export function EmergencyTable() {
             <TableHead className="font-medium text-muted-foreground">Type</TableHead>
             <TableHead className="font-medium text-muted-foreground">Time</TableHead>
             <TableHead className="font-medium text-muted-foreground">Status</TableHead>
+            <TableHead className="font-medium text-muted-foreground">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -101,6 +104,9 @@ export function EmergencyTable() {
                 >
                   {event.status}
                 </span>
+              </TableCell>
+               <TableCell>
+                <MoreHorizontal className="cursor-pointer text-muted-foreground" />
               </TableCell>
             </TableRow>
           ))}
