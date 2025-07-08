@@ -8,27 +8,32 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { MoreHorizontal } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 const incidentReports = [
   {
     reporterName: "George Weru",
     reporterRole: "Officer",
     incidentType: "Maintenance",
-    shortDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    shortDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     status: "New",
   },
   {
     reporterName: "Haron Kariuki",
     reporterRole: "Resident",
     incidentType: "Noise and Disturbance",
-    shortDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    shortDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     status: "Under Review",
   },
   {
     reporterName: "Lewis Oduor",
     reporterRole: "Officer",
     incidentType: "Maintenance",
-    shortDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    shortDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     status: "Resolved",
   },
 ];
@@ -38,7 +43,7 @@ export function IncidentTable() {
     <div className="w-full max-w-6xl mx-auto bg-white p-6 rounded-xl shadow-sm mt-10">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-semibold">Incident Reports</h2>
+        <h2 className="text-2xl font-semibold">Reported Incidents</h2>
         <div className="relative">
           <select className="flex h-10 items-center rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
             <option>Today</option>
@@ -51,14 +56,29 @@ export function IncidentTable() {
 
       {/* Table */}
       <Table>
-        <TableCaption className="sr-only">A list of incident reports.</TableCaption>
+        <TableCaption className="sr-only">
+          A list of incident reports.
+        </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="font-medium text-muted-foreground">Reporter</TableHead>
-            <TableHead className="font-medium text-muted-foreground">Role</TableHead>
-            <TableHead className="font-medium text-muted-foreground">Type</TableHead>
-            <TableHead className="font-medium text-muted-foreground">Description</TableHead>
-            <TableHead className="font-medium text-muted-foreground">Status</TableHead>
+            <TableHead className="font-medium text-muted-foreground">
+              Reporter Name
+            </TableHead>
+            <TableHead className="font-medium text-muted-foreground">
+              Reporter Role
+            </TableHead>
+            <TableHead className="font-medium text-muted-foreground">
+              Incident Type
+            </TableHead>
+            <TableHead className="font-medium text-muted-foreground">
+              Short Description
+            </TableHead>
+            <TableHead className="font-medium text-muted-foreground">
+              Status
+            </TableHead>
+            <TableHead className="font-medium text-muted-foreground">
+              Action
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -67,15 +87,16 @@ export function IncidentTable() {
               key={index}
               className={
                 (report.reporterName === "George Weru" &&
-                  report.status === "New")    ||   
+                  report.status === "New") ||
                 (report.reporterName === "Lewis Oduor" &&
-                  report.status === "Resolved")           
-               
+                  report.status === "Resolved")
                   ? "bg-[#f2f7f3]"
                   : ""
               }
             >
-              <TableCell className="font-medium">{report.reporterName}</TableCell>
+              <TableCell className="font-medium">
+                {report.reporterName}
+              </TableCell>
               <TableCell>{report.reporterRole}</TableCell>
               <TableCell>{report.incidentType}</TableCell>
               <TableCell>{report.shortDescription}</TableCell>
@@ -91,6 +112,9 @@ export function IncidentTable() {
                 >
                   {report.status}
                 </span>
+              </TableCell>
+              <TableCell>
+                <MoreHorizontal className="cursor-pointer text-muted-foreground" />
               </TableCell>
             </TableRow>
           ))}
