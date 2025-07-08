@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const STATS_ENDPOINT = "https://api.example.com/visitors/summary"; // edit this
+const STATS_ENDPOINT = "https://api.example.com/visitors/summary"; 
 
 export default function Card3({ className = "" }) {
   // state for the three numbers + status flags
