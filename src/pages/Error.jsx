@@ -34,7 +34,11 @@ const ErrorPage = () => {
           className="w-full lg:w-1/2 h-[250px] sm:h-[300px] lg:h-auto bg-cover bg-center flex items-center justify-center p-4"
           style={{ backgroundImage: `url(${rectangle})` }}
         >
-          <img src={logo} alt="West Brook Logo" className="max-w-[150px] sm:max-w-[200px] lg:max-w-[250px] max-h-[200px] sm:max-h-[300px] lg:max-h-[500px] w-full h-auto" />
+          <img
+            src={logo}
+            alt="West Brook Logo"
+            className="max-w-[150px] sm:max-w-[200px] lg:max-w-[250px] max-h-[200px] sm:max-h-[300px] lg:max-h-[500px] w-full h-auto"
+          />
         </div>
 
         {/* Right form section */}
@@ -114,13 +118,19 @@ const ErrorPage = () => {
             {/* Optional button row or icons – Frame 25 */}
             <div className="flex items-center justify-center gap-8 mt-4">
               {/* Example buttons/icons */}
-              <button className="w-[212px] h-[57px] px-3 py-2 bg-[#00D21E] text-white font-medium rounded-xl shadow-md flex items-center justify-center">
-                <Link to="/">Back to check in</Link>
-                
-              </button>
-              <button className="w-[212px] h-[57px] px-3 py-2 bg-[#6C50EF] text-white font-medium rounded-xl shadow-md flex items-center justify-center">
+              <Link
+                to="/"
+                className="w-[212px] h-[57px] px-3 py-2 bg-[#00D21E] text-white font-medium rounded-xl shadow-md flex items-center justify-center"
+              >
+                Back to check in
+              </Link>
+
+              <Link
+                to="/checkout"
+                className="w-[212px] h-[57px] px-3 py-2 bg-[#6C50EF] text-white font-medium rounded-xl shadow-md flex items-center justify-center"
+              >
                 Back to check out
-              </button>
+              </Link>
             </div>
           </div>
         </div>

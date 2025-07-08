@@ -11,9 +11,8 @@ import { useTranslation } from "react-i18next";
 const Welcomeback = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const [visitorName, setVisitorName] = useState("Guest");
-  const [visitorRef, setVisitorRef] = useState("");
-
+  const { refNumber, full_name } = location.state || {};
+  
   useEffect(() => {
     // Check if data was passed from form submission
     if (location.state?.visitorData) {
@@ -60,12 +59,12 @@ const Welcomeback = () => {
             <div className="flex w-full max-w-md flex-col items-center gap-6">
               <div className="w-full rounded-xl border border-blue-500 bg-blue-100 p-5 text-center">
                 <h2 className="text-2xl font-semibold text-green-700 md:text-3xl">
-                  {t("hi")} {visitorName}
+                  {t("hi")} {full_name}!
                 </h2>
                 <p className="mb-3 mt-1">{t("enjoyStay")}</p>
                 <p className="mb-3">
                   {t("visitorRefNo")}:{" "}
-                  <span className="font-bold text-blue-800">{visitorRef}</span>
+                  <span className="font-bold text-blue-800">{refNumber}</span>
                 </p>
                 <p>{t("codeSend")}</p>
               </div>

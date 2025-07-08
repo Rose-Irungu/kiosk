@@ -103,10 +103,9 @@ export default function Visitors() {
             <TableHead>Photo</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Phone</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead>Host Unit</TableHead>
+            <TableHead>Visitor Type</TableHead>
+            <TableHead>Host/Unit</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -135,28 +134,24 @@ export default function Visitors() {
               <TableCell>{visitor.phone}</TableCell>
               <TableCell>{visitor.visitorType}</TableCell>
               <TableCell>{visitor.hostUnit}</TableCell>
-              <TableCell>{visitor.status}</TableCell>
               <TableCell>
-                <MoreHorizontal className="cursor-pointer text-muted-foreground" />
+                <span
+                  className={`px-3 py-1 text-xs font-medium rounded-full ${
+                    visitor.status === "Checked-In"
+                      ? "bg-[#c2f0c9]"
+                      : visitor.status === "Checked-Out"
+                      ? "bg-[#e0dbf4]"
+                      : "text-green-700"
+                  }`}
+                >
+                  {visitor.status}
+                </span>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-
-      {/* Pagination */}
-      <div className="flex justify-between items-center mt-4">
-        <div className="text-sm text-muted-foreground">
-          Showing 1 to 5 of 5 entries
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="icon" className="h-8 w-8 rounded-full">
-            &lt;
-          </Button>
-          <Button variant="outline" size="icon" className="h-8 w-8 rounded-full">
-            &gt;
-          </Button>
-        </div>
+       <div>
       </div>
     </div>
   );

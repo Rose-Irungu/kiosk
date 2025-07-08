@@ -17,7 +17,6 @@ const VisitorPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  
   const validatePhoneNumber = (phone) => {
     const phoneRegex = /^(\+254|0)[17]\d{8}$|^(\+254|0)[14]\d{8}$/;
     return phoneRegex.test(phone.replace(/\s+/g, ""));
@@ -29,7 +28,6 @@ const VisitorPage = () => {
   };
 
   const validateNumberPlate = (plate) => {
-   
     const plateRegex = /^K[A-Z]{2,3}\s\d{3}[A-Z]$/i;
     return plateRegex.test(plate.toUpperCase());
   };
@@ -44,7 +42,6 @@ const VisitorPage = () => {
       };
     }
 
-    
     if (trimmedInput.includes("@")) {
       if (validateEmail(trimmedInput)) {
         return { isValid: true, type: "email" };
@@ -56,7 +53,6 @@ const VisitorPage = () => {
       }
     }
 
-  
     if (/^(\+|0)/.test(trimmedInput) && /^\+?[\d\s]+$/.test(trimmedInput)) {
       if (validatePhoneNumber(trimmedInput)) {
         return { isValid: true, type: "phone" };
@@ -69,7 +65,6 @@ const VisitorPage = () => {
       }
     }
 
-  
     if (/^K[A-Z]/i.test(trimmedInput)) {
       if (validateNumberPlate(trimmedInput)) {
         return { isValid: true, type: "numberplate" };
@@ -81,7 +76,6 @@ const VisitorPage = () => {
       }
     }
 
- 
     return {
       isValid: false,
       error:
@@ -91,16 +85,14 @@ const VisitorPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-   
+
     const validation = detectAndValidateInput(details);
-    
+
     if (!validation.isValid) {
       setError(validation.error);
-      return; 
+      return;
     }
 
-   
     setError("");
     setIsSubmitting(true);
 
@@ -108,18 +100,23 @@ const VisitorPage = () => {
       identifier: details,
     };
 
-
-
     try {
       const response = await kioskService.checkIn(finalForm);
 
       console.log("Response:", response.data.ref_number);
-      navigate("/welcomeback");
-
+      navigate("/welcomeback", {
+        state: {
+          refNumber: response.data.ref_number,
+          full_name: response.data.visitor.full_name,
+        },
+      });
     } catch (error) {
       console.error("Error submitting form:", error);
-      
-      setError(error.response?.data?.message || "An error occurred while submitting your details. Please try again.");
+
+      setError(
+        error.response?.data?.message ||
+          "An error occurred while submitting your details. Please try again."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -127,7 +124,7 @@ const VisitorPage = () => {
 
   const handleInputChange = (e) => {
     setDetails(e.target.value);
-  
+
     if (error) {
       setError("");
     }
@@ -135,12 +132,9 @@ const VisitorPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen w-full max-w-full overflow-x-hidden relative">
-      
       <Header />
 
-     
       <div className="flex flex-col lg:flex-row w-full flex-1 overflow-hidden">
-      
         <div
           className="w-full lg:w-1/2 h-[250px] sm:h-[300px] lg:h-auto bg-cover bg-center flex items-center justify-center p-4"
           style={{ backgroundImage: `url(${rectangle})` }}
@@ -152,14 +146,11 @@ const VisitorPage = () => {
           />
         </div>
 
-      
         <div className="w-full lg:w-1/2 bg-[#E6FBE9] relative flex flex-col items-center px-4 sm:px-6 lg:px-8 py-6 lg:pt-0 lg:pb-10 min-h-[600px] lg:min-h-full">
-          
           <div className="hidden lg:flex w-full justify-between items-center mt-0 mb-10">
             <Navbar />
           </div>
 
-          
           <div className="w-full max-w-sm sm:max-w-md text-start flex-1 flex flex-col justify-center lg:mt-10">
             <h2 className="text-lg sm:text-xl font-semibold text-[#00580D] mb-4 sm:mb-6 text-center lg:text-left lg:-ml-7">
               {t("submitDetails")}
@@ -187,7 +178,6 @@ const VisitorPage = () => {
                 />
               </div>
 
-            
               {error && (
                 <p className="text-red-500 text-xs sm:text-sm leading-tight">
                   {error}
@@ -209,7 +199,6 @@ const VisitorPage = () => {
               </button>
             </form>
 
-          
             <div className="flex items-center my-6 sm:my-8">
               <hr className="flex-grow border-t border-dashed border-purple-600" />
               <span className="mx-3 sm:mx-4 text-purple-600 text-xs sm:text-sm">
@@ -218,13 +207,11 @@ const VisitorPage = () => {
               <hr className="flex-grow border-t border-dashed border-purple-600" />
             </div>
 
-           
             <p className="text-xs sm:text-sm text-[#00580D] text-center">
               {t("let Security Scan the QR code sent to your email")}
             </p>
           </div>
 
-       
           <img
             src={sphere}
             alt="Decorative sphere"

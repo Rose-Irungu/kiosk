@@ -10,8 +10,8 @@ export default function Layout({ children }) {
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#EEEAFD]">
-      {/* Fixed Sidebar */}
-      <aside className="fixed top-0 left-0 h-screen z-50">
+      {/* Sidebar */}
+      <aside className={`fixed top-0 left-0 h-screen z-50 transition-all duration-300 ${collapsed ? "w-16" : "w-64"}`}>
         <Sidebar
           collapsed={collapsed}
           setCollapsed={setCollapsed}
@@ -22,10 +22,15 @@ export default function Layout({ children }) {
         />
       </aside>
 
-      {/* Content area with fixed header and scrollable main */}
-      <div className={`flex flex-col flex-1 ml-64 h-screen`}>
-        {/* Fixed Header */}
-        <header className="fixed ">
+      {/* Main content */}
+      <div
+        className={`
+          flex flex-col flex-1 h-screen transition-all duration-300
+          ${collapsed ? "ml-16" : "ml-64"}
+        `}
+      >
+        {/* Header */}
+        <header className="fixed top-0 left-0 right-0 z-40">
           <Header
             setMobileOpen={setMobileOpen}
             profileOpen={profileOpen}
@@ -33,8 +38,8 @@ export default function Layout({ children }) {
           />
         </header>
 
-        {/* Scrollable main content */}
-        <main className="flex-1 overflow-y-auto mt-16 p-4 md:p-8">
+        {/* Main scrollable content (account for header height) */}
+        <main className="flex-1 overflow-y-auto mt-20 p-4 md:p-8">
           {children}
         </main>
       </div>
