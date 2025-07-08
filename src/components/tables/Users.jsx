@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal, ChevronDown, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../utils/constants";
 
 export default function Users({ users = [], setUsers = () => {} }) {
   const navigate = useNavigate();
@@ -104,16 +105,17 @@ export default function Users({ users = [], setUsers = () => {} }) {
                   <TableRow key={index} className={index % 2 === 0 ? "bg-[#f2f7f3]" : ""}>
                     <TableCell>
                       <img
-                        src={user.photo}
-                        alt={user.name}
+                        src={`${BASE_URL}${user.profile_picture}`}
+                        alt={user.first_name}
+                        crossOrigin="anonymous"
                         className="h-10 w-10 rounded-full object-cover"
                       />
                     </TableCell>
-                    <TableCell className="font-medium">{user.name}</TableCell>
+                    <TableCell className="font-medium">{user.first_name} {user.last_name}</TableCell>
                     <TableCell />
-                    <TableCell>{user.phone}</TableCell>
+                    <TableCell>{user.phone_number}</TableCell>
                     <TableCell>{user.role}</TableCell>
-                    <TableCell>{user.unit}</TableCell>
+                    <TableCell>{user.unit_number}</TableCell>
                     <TableCell>{user.status}</TableCell>
                     <TableCell className="relative user-menu-trigger">
                       <MoreHorizontal
@@ -168,8 +170,9 @@ export default function Users({ users = [], setUsers = () => {} }) {
             {/* Header */}
             <div className="flex items-center gap-6 border-b pb-4">
               <img
-                src={selectedUser.photo}
+                src={`${BASE_URL}${selectedUser.profile_picture}`}
                 alt={selectedUser.name}
+                crossOrigin="anonymous"
                 className="w-[140px] h-[140px] rounded-full object-cover"
               />
               <div>

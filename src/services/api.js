@@ -1,11 +1,12 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL || 'https://guestapi.zynamis.co.ke/api',
-    timeout: 10000,
-    headers: {
-        'Content-Type': 'application/json',
-    },
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://292695e84858.ngrok-free.app/api',
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true', // 👈 Add this line
+  },
 });
 
 // Request interceptor to add auth token

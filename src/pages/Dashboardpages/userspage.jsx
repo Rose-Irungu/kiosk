@@ -1,18 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../components/Navigation";
 import UsersTable from "../../components/tables/Users";
+import { userService } from "../../services/user";
 
-export default function UsersPage({ users, setUsers }) {
-  console.log("Users list:", users);
-
+export default function UsersPage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [users, setUsers] = useState([])
   const entriesPerPage = 5;
-  const totalEntries = users.length;
-  const totalPages = Math.ceil(totalEntries / entriesPerPage);
   const navigate = useNavigate();
 
-  // Pagination slice
+  // 🔁 Fetch users on component mount
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const data = await userService.getAllUsers();
+        setUsers(data.data);
+      } catch (error) {
+        console.error("Failed to fetch users:", error);
+      }
+    };
+
+    fetchUsers();
+  }, [setUsers]);
+
+  const totalEntries = users.length;
+  const totalPages = Math.ceil(totalEntries / entriesPerPage);
+
   const paginatedUsers = users.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
@@ -30,10 +44,8 @@ export default function UsersPage({ users, setUsers }) {
     <div className="min-h-screen bg-[#EEEAFD]">
       <Layout>
         <div className="py-4 px-4">
-          {/* ✅ Pass paginated users and state handlers */}
           <UsersTable users={paginatedUsers} setUsers={setUsers} navigate={navigate} />
 
-          {/* ✅ Pagination controls */}
           <div className="border-t mt-6 pt-4 px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <button
