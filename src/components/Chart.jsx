@@ -5,16 +5,14 @@ import {
   Bar,
   XAxis,
   CartesianGrid,
-  Legend,
   YAxis,
-  ResponsiveContainer
+  ResponsiveContainer,
+  Legend,
 } from "recharts"
 
 import {
   ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  ChartLegendContent
+  ChartLegendContent,
 } from "@/components/ui/chart"
 
 const chartData = [
@@ -30,15 +28,15 @@ const chartData = [
 const chartConfig = {
   company: {
     label: "Company Visitors",
-    color: "#7C3AED", // Purple
+    color: "#502deb",
   },
   resident: {
     label: "Resident’s Visitors",
-    color: "#065F46", // Deep Green
+    color: "#005e0e",
   },
   service: {
     label: "Service Providers",
-    color: "#FACC15", // Yellow
+    color: "#a996fe",
   },
 }
 
@@ -47,7 +45,6 @@ export default function ChartPage() {
     <div className="p-6 space-y-4 max-w-3xl mx-auto">
       <h2 className="text-2xl font-bold text-gray-800">Visitors Trend</h2>
 
-      {/* Smaller, calibrated chart container */}
       <ChartContainer config={chartConfig} className="h-[300px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData}>
@@ -57,21 +54,25 @@ export default function ChartPage() {
               axisLine
               tickLine
               tickMargin={8}
-              label={{ value: "Day of the Week", position: "insideBottom", dy: 10 }}
+              label={{
+                value: "Day of the Week",
+                position: "insideBottom",
+                dy: 10,
+              }}
             />
             <YAxis
               axisLine
               tickLine
               tick={{ fontSize: 12 }}
-              label={{ value: "Visitors", angle: -90, position: "insideLeft", dx: -10 }}
+              
             />
-            <ChartTooltip
-              content={<ChartTooltipContent indicator="dot" labelKey="day" />}
-            />
-            <Legend content={<ChartLegendContent />} />
-            <Bar dataKey="company" fill="var(--color-company)" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="resident" fill="var(--color-resident)" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="service" fill="var(--color-service)" radius={[4, 4, 0, 0]} />
+            
+            <Legend content={<ChartLegendContent />} verticalAlign="top"
+                align="center"/>
+            
+            <Bar dataKey="company" fill="var(--color-company)" />
+            <Bar dataKey="resident" fill="var(--color-resident)" />
+            <Bar dataKey="service" fill="var(--color-service)" />
           </BarChart>
         </ResponsiveContainer>
       </ChartContainer>

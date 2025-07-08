@@ -15,6 +15,7 @@ export default function Navigation({ children }) {
     { id: "incidents", label: "Incident Reports", icon: "/tabler-message-report-filled0.svg" },
   ];
 
+ 
   const secondaryItems = [
     { id: "settings", label: "Settings", icon: "/ic-round-settings0.svg" },
     { id: "help", label: "Help", icon: "/material-symbols-help-outline0.svg" },
@@ -74,6 +75,7 @@ export default function Navigation({ children }) {
           ))}
         </div>
 
+        <hr className="w-full border-t border-[#939393] my-4" />
         <hr className="w-full border-t border-[#939393] my-4" />
 
         <div className="flex flex-col w-full space-y-1 mb-4 font-[Roboto]">

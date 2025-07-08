@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HomeIcon } from "@heroicons/react/24/solid";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import logo from "../assets/logo.svg";
@@ -9,23 +8,34 @@ import rectangle from "../assets/rectangle-780.png";
 import sphere from "../assets/sphere-green-glossy0.png";
 import { useTranslation } from "react-i18next";
 
-
-const VisitorWelcome = () => {
+const Welcomeback = () => {
   const { t } = useTranslation();
-  const [visitorName, setVisitorName] = useState("Guest");
-  const [visitorRef, setVisitorRef] = useState("");
-
+  const location = useLocation();
+  const { refNumber, full_name } = location.state || {};
+  
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get("/api/visitor/welcome");
-        setVisitorName(data?.visitorName ?? "Visitor");
-        setVisitorRef(data?.visitorRef ?? "––");
-      } catch (err) {
-        console.error("Error fetching visitor data:", err);
-      }
-    })();
-  }, []);
+    // Check if data was passed from form submission
+    if (location.state?.visitorData) {
+      const { visitorName, visitorRef } = location.state.visitorData;
+      setVisitorName(visitorName || "Visitor");
+      setVisitorRef(visitorRef || "––");
+    } else {
+      // Fallback: fetch from API if no data passed
+      const fetchVisitorData = async () => {
+        try {
+          const response = await fetch("https://guestapi.zynamis.co.ke/api/kiosk/visitor/create");
+          const data = await response.json();
+
+          setVisitorName(data?.visitorName ?? "Visitor");
+          setVisitorRef(data?.visitorRef ?? "––");
+        } catch (err) {
+          console.error("Error fetching visitor data:", err);
+        }
+      };
+
+      fetchVisitorData();
+    }
+  }, [location.state]);
 
   return (
     <div className="flex min-h-screen w-full flex-col overflow-x-hidden bg-white">
@@ -49,12 +59,12 @@ const VisitorWelcome = () => {
             <div className="flex w-full max-w-md flex-col items-center gap-6">
               <div className="w-full rounded-xl border border-blue-500 bg-blue-100 p-5 text-center">
                 <h2 className="text-2xl font-semibold text-green-700 md:text-3xl">
-                  {t("hi")} {visitorName}
+                  {t("hi")} {full_name}!
                 </h2>
                 <p className="mb-3 mt-1">{t("enjoyStay")}</p>
                 <p className="mb-3">
                   {t("visitorRefNo")}:{" "}
-                  <span className="font-bold text-blue-800">{visitorRef}</span>
+                  <span className="font-bold text-blue-800">{refNumber}</span>
                 </p>
                 <p>{t("codeSend")}</p>
               </div>
@@ -79,4 +89,4 @@ const VisitorWelcome = () => {
   );
 };
 
-export default VisitorWelcome;
+export default Welcomeback
