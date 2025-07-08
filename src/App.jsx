@@ -22,8 +22,8 @@ import Header1 from './components/layout/Header1';
 import ProfileMenu from './components/layout/ProfileMenu';
 import Sidebar from './components/layout/Sidebar';
 import Chart from './components/Chart'; // Ensure Chart is imported correctly
-
-
+import IncidentReportsPage from './pages/Dashboardpages/Incident_Reports';
+import Chart2 from './components/Chart2';
 import Dashboard from './pages/Dashboardpages/Dashboard'; 
 import UsersPage from './pages/Dashboardpages/userspage';
 
@@ -33,7 +33,7 @@ import UsersPage from './pages/Dashboardpages/userspage';
 
 const App = () => {
   return (
-    <Router>
+  <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/navigation" element={<Navigation />} />
