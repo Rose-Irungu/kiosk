@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Header from './components/Header';
@@ -18,18 +18,65 @@ import { DashboardTable } from './components/tables/DashboardTable';
 import Users from './components/tables/Users';
 import Visitors from './components/tables/visitors';
 import Emergencies from './components/tables/Emergencies';
-import Incident from './components/tables/Incident'; 
-import  Navigation from './components/Navigation';
+import Incident from './components/tables/Incident';
 import UsersPage from "./pages/Dashboardpages/userspage";
-
-
-
-
-
-
-
+import { UserForm } from './components/forms/form';
 
 const App = () => {
+  const [users, setUsers] = useState([
+    {
+      name: "Derick Ochieng",
+      phone: "0756755634",
+      role: "Resident",
+      unit: "C-04",
+      status: "Active",
+      photo: "/ellipse-160.png",
+      email: "derick@example.com",
+      id: "12345678",
+    },
+    {
+      name: "Haron Mureithi",
+      phone: "0744678751",
+      role: "Resident",
+      unit: "B-04",
+      status: "Active",
+      photo: "/ellipse-161.png",
+      email: "haron@example.com",
+      id: "87654321",
+    },
+    {
+      name: "Jackson Munene",
+      phone: "0709787856",
+      role: "Security",
+      unit: "--",
+      status: "Frozen",
+      photo: "/ellipse-162.png",
+      email: "jackson@example.com",
+      id: "99887766",
+    },
+    {
+      name: "Lucy Wanja",
+      phone: "0108978651",
+      role: "Security",
+      unit: "--",
+      status: "Frozen",
+      photo: "/ellipse-163.png",
+      email: "lucy@example.com",
+      id: "22334455",
+    },
+    {
+      name: "Mary Adhiambo",
+      phone: "0718674563",
+      role: "Resident",
+      unit: "B-10",
+      status: "Active",
+      photo: "/ellipse-164.png",
+      email: "mary@example.com",
+      id: "55667788",
+    },
+
+  ]);
+
   return (
     <Router>
       <Routes>
@@ -47,15 +94,15 @@ const App = () => {
         <Route path="/bye" element={<Bye />} />
         <Route path="/error" element={<Error />} />
         <Route path="/dashboardtable" element={<DashboardTable />} />
-        <Route path="/users" element={<Users />} />
+
+        {/* ✅ Share users state */}
+        <Route path="/users" element={<Users users={users} setUsers={setUsers} />} />
+        <Route path="/userform" element={<UserForm setUsers={setUsers} />} />
+        <Route path="/userspage" element={<UsersPage users={users} setUsers={setUsers} />} />
+
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
         <Route path="/incident" element={<Incident />} />
-         <Route path="/userform" element={<UserForm/>} />
-          <Route path="/userspage" element={<UsersPage />} />
-
-
-        {/* Add more routes as needed */}
       </Routes>
     </Router>
   );

@@ -21,22 +21,30 @@ export default function Navigation({ children }) {
   ];
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#EEEAFD]">
-      {/* Sidebar */}
+    <div className="flex h-screen w-screen overflow-hidden bg-[#EEEAFD] p-2">
+      {/* Sidebar container */}
       <aside
-        className={`${mobileOpen ? "fixed z-50 h-full" : "hidden"} md:static md:flex md:h-screen flex-col ${
-          collapsed ? "w-16" : "w-full md:w-[220px]"
-        } bg-[#005E0E] transition-all duration-300`}
+        className={`${
+          mobileOpen ? "fixed z-50 h-full" : "hidden"
+        } md:flex md:h-full flex-col ${
+          collapsed ? "w-14" : "w-[180px]"
+        } bg-[#005E0E] transition-all duration-300 rounded-2xl shadow-lg`}
       >
-        <div className={`flex items-center ${collapsed ? "justify-center p-2" : "justify-start p-5"}`}>
-          <img src="/frame-1020.png" alt="Logo" className={`${collapsed ? "h-8" : "h-[48px]"} w-auto`} />
+        <div className={`flex items-center ${collapsed ? "justify-center p-2" : "justify-start p-4"}`}>
+          <img src="/frame-1020.png" alt="Logo" className={`${collapsed ? "h-8" : "h-[42px]"} w-auto`} />
           {!collapsed && (
             <span className="ml-2 text-white font-semibold tracking-wide font-[Roboto]">VGATE</span>
           )}
-          <button onClick={() => setCollapsed(!collapsed)} className="hidden md:inline text-white hover:text-gray-200 ml-auto">
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="hidden md:inline text-white hover:text-gray-200 ml-auto"
+          >
             {collapsed ? "→" : "←"}
           </button>
-          <button onClick={() => setMobileOpen(false)} className="md:hidden text-white hover:text-gray-200 ml-2">
+          <button
+            onClick={() => setMobileOpen(false)}
+            className="md:hidden text-white hover:text-gray-200 ml-2"
+          >
             <X />
           </button>
         </div>
@@ -56,7 +64,11 @@ export default function Navigation({ children }) {
                   : "text-white hover:bg-[#EEEAFD] hover:text-gray-800"
               }`}
             >
-              <img src={item.icon} alt="" className={`h-5 w-5 ${active === item.id ? "filter brightness-0" : ""}`} />
+              <img
+                src={item.icon}
+                alt=""
+                className={`h-5 w-5 ${active === item.id ? "filter brightness-0" : ""}`}
+              />
               {!collapsed && <span>{item.label}</span>}
             </button>
           ))}
@@ -78,7 +90,11 @@ export default function Navigation({ children }) {
                   : "text-white hover:bg-[#EEEAFD] hover:text-gray-800"
               }`}
             >
-              <img src={item.icon} alt="" className={`h-5 w-5 ${active === item.id ? "filter brightness-0" : ""}`} />
+              <img
+                src={item.icon}
+                alt=""
+                className={`h-5 w-5 ${active === item.id ? "filter brightness-0" : ""}`}
+              />
               {!collapsed && <span>{item.label}</span>}
             </button>
           ))}
@@ -86,7 +102,7 @@ export default function Navigation({ children }) {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col ml-0">
         {/* Header */}
         <header className="h-[64px] flex justify-between items-center px-4 md:px-8 bg-[#EEEAFD] border-b border-gray-300">
           <div className="flex items-center justify-between w-full md:w-auto">
@@ -142,7 +158,7 @@ export default function Navigation({ children }) {
         </header>
 
         {/* Scrollable Page Content */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-[#f6f1fc]">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-[#EEEAFD]">
           {children}
         </main>
       </div>
