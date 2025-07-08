@@ -5,6 +5,9 @@ import Header from './components/Header';
 import Navbar from './components/Navbar';
 import Navigation from './components/Navigation';
 import Card1 from './components/Card1';
+import Card2 from './components/Card2';
+import Card3 from './components/Card3';
+import Card4 from './components/Card4';
 import { SkeletonCard } from './components/SkeletonCard';
 import Home from './pages/Home';
 import VisitorPage from './pages/VisitorPage';
@@ -17,6 +20,7 @@ import Users from './components/tables/Users';
 import Visitors from './components/tables/Visitors';
 import Emergencies from './components/tables/Emergencies';
 import Incident from './components/tables/Incident'; 
+import Triggers from './components/tables/Triggers'; // Ensure Triggers is imported correctly
 import Layout from './components/layout/Layout';
 import Header1 from './components/layout/Header1';
 import ProfileMenu from './components/layout/ProfileMenu';
@@ -39,6 +43,9 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/navigation" element={<Navigation />} />
         <Route path="/card1" element={<Card1 />} />
+        <Route path="/card2" element={<Card2 />} />
+        <Route path="/card3" element={<Card3 />} />
+        <Route path="/card4" element={<Card4 />} />
         <Route path="/visitorpage" element={<VisitorPage />} />
         <Route path="/header" element={<Header />} />
         <Route path="/navbar" element={<Navbar />} />
@@ -51,6 +58,7 @@ const App = () => {
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
         <Route path="/incident" element={<Incident />} />
+        <Route path="/triggers" element={<Triggers />} /> {/* Ensure Triggers is imported correctly */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/skeletoncard" element={<SkeletonCard />} />
         <Route path="/layout" element={<Layout />} />
