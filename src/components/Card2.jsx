@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Siren } from "lucide-react";
+import { Link } from "react-router-dom";
 
 // const INCIDENT_ENDPOINT = "https://api.example.com/incidents/123"; // Real endpoint disabled for testing
 
@@ -99,7 +100,7 @@ export default function Card2() {
     );
 
 return (
-  <div className="bg-[#FEEAEF] w-full p-4 rounded-[10px] shadow flex flex-col lg:flex-row lg:justify-between gap-6">
+  <div className="bg-white w-full p-4 rounded-[10px] shadow flex flex-col lg:flex-row lg:justify-between gap-6">
     {/* Left side */}
     <div className="flex-1">
       {/* Siren + headline on one line */}
@@ -118,14 +119,16 @@ return (
       </p>
 
       <div className="flex gap-2 mt-3">
-        <button className="bg-[#F93162] text-white text-sm font-inter font-normal px-3 py-1 border rounded hover:bg-white hover:border-[#F93162] hover:text-[#F93162]">
+        <Link to="/triggers"
+         className="bg-[#005e0e] text-white text-sm font-inter font-normal px-3 py-1 border border-[#005e0e] hover:bg-[#001c04] hover:text-white transition-colors duration-200">
+          
           Open Roll Call
-        </button>
-
+        
+        </Link>
         <button
           onClick={handleResolve}
           disabled={isResolved || loadingResolve}
-          className={`border border-[#005E0E] text-sm font-inter font-normal px-3 py-1 rounded transition-colors hover:bg-[#005E0E] hover:text-white ${
+          className={`border border-[#005E0E] text-sm font-inter font-normal px-3 py-1 rounded transition-colors hover:bg-[#e5eee6]  ${
             isResolved
               ? "border-green-600 text-[#005E0E] cursor-default"
               : loadingResolve
