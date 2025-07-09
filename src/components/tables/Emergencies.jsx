@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -9,7 +9,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { MoreHorizontal } from "lucide-react";
-import { ChevronDown } from "lucide-react";
 
 const emergencyEvents = [
   {
@@ -50,6 +49,27 @@ const emergencyEvents = [
 ];
 
 export function EmergencyTable() {
+  const [openDropdown, setOpenDropdown] = useState(null);
+
+  const toggleDropdown = (index) => {
+    setOpenDropdown((prev) => (prev === index ? null : index));
+  };
+
+  const handleAction = (action, event) => {
+    console.log(`Action "${action}" selected for`, event);
+    setOpenDropdown(null);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".dropdown-parent")) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div className="w-full max-w-6xl mx-auto bg-white p-6 rounded-xl shadow-sm mt-10">
       {/* Header */}
@@ -84,7 +104,7 @@ export function EmergencyTable() {
               key={index}
               className={
                 (event.type === "Panic" && event.visitor === "John Doe") ||
-                (event.visitor === "Rose smith" && event.type === "SOS") ||  
+                (event.visitor === "Rose smith" && event.type === "SOS") ||
                 (event.type === "Fire" && event.visitor === "John Doe")
                   ? "bg-[#f2f7f3]"
                   : ""
@@ -105,8 +125,28 @@ export function EmergencyTable() {
                   {event.status}
                 </span>
               </TableCell>
-               <TableCell>
-                <MoreHorizontal className="cursor-pointer text-muted-foreground" />
+              <TableCell className="relative dropdown-parent">
+                <MoreHorizontal
+                  className="cursor-pointer text-muted-foreground"
+                  onClick={() => toggleDropdown(index)}
+                />
+
+                {openDropdown === index && (
+                  <div className="absolute right-0 mt-2 w-36 bg-white border rounded shadow z-20">
+                    <button
+                      onClick={() => handleAction("Resolved", event)}
+                      className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                    >
+                      Resolved
+                    </button>
+                    <button
+                      onClick={() => handleAction("Unresolved", event)}
+                      className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                    >
+                      Unresolved
+                    </button>
+                  </div>
+                )}
               </TableCell>
             </TableRow>
           ))}
