@@ -31,6 +31,7 @@ import Chart2 from './components/Chart2';// Ensure Chart is imported correctly
 
 import Dashboard from './pages/Dashboardpages/Dashboard'; 
 import UsersPage from './pages/Dashboardpages/userspage';
+import VisitorLogs from './pages/Dashboardpages/VisitorLogs';
 
 
 
@@ -100,7 +101,7 @@ const App = () => {
         <Route path="/card2" element={<Card2 />} />
         <Route path="/card3" element={<Card3 />} />
         <Route path="/card4" element={<Card4 />} />
-        <Route path="/visitorpage" element={<VisitorPage />} />
+        <Route path="/visitorpage" element={<VisitorLogs />} />
         <Route path="/header" element={<Header />} />
         <Route path="/navbar" element={<Navbar />} />
         <Route path="/verify" element={<Verify />} />
@@ -126,6 +127,7 @@ const App = () => {
         <Route path="/sidebar" element={<Sidebar />} />
         <Route path="/chart" element={<Chart />} /> 
         <Route path="/userspage" element={<UsersPage />} />
+        <Route path="/visitorspage" element={<VisitorLogs />} />
         <Route path="/chart2" element={<Chart2 />} /> {/* Ensure Chart2 is imported correctly */}
         {/* Add more routes as needed */}
       </Routes>
