@@ -27,6 +27,7 @@ import ProfileMenu from './components/layout/ProfileMenu';
 import Sidebar from './components/layout/Sidebar';
 import Chart from './components/Chart'; 
 import Chart2 from './components/Chart2';// Ensure Chart is imported correctly
+import Emergencypage from './pages/Dashboardpages/Emergencypage';
 
 
 import Dashboard from './pages/Dashboardpages/Dashboard'; 
@@ -101,7 +102,7 @@ const App = () => {
         <Route path="/card2" element={<Card2 />} />
         <Route path="/card3" element={<Card3 />} />
         <Route path="/card4" element={<Card4 />} />
-        <Route path="/visitorpage" element={<VisitorLogs />} />
+        <Route path="/visitorpage" element={<VisitorPage />} />
         <Route path="/header" element={<Header />} />
         <Route path="/navbar" element={<Navbar />} />
         <Route path="/verify" element={<Verify />} />
@@ -113,7 +114,8 @@ const App = () => {
         {/* ✅ Share users state */}
         {/* <Route path="/users" element={<Users users={users} setUsers={setUsers} />} />
         <Route path="/userform" element={<UserForm setUsers={setUsers} />} />
-        <Route path="/userspage" element={<UsersPage users={users} setUsers={setUsers} />} /> */}
+        <Route path="/userspage" element={<UsersPage users={users} setUsers={setUsers} />} />
+        <Route path="/emergencypage" element={<Emergencypage />} />
 
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
@@ -127,7 +129,7 @@ const App = () => {
         <Route path="/sidebar" element={<Sidebar />} />
         <Route path="/chart" element={<Chart />} /> 
         <Route path="/userspage" element={<UsersPage />} />
-        <Route path="/visitorspage" element={<VisitorLogs />} />
+        <Route path="/visitorlogs" element={<VisitorLogs />} />
         <Route path="/chart2" element={<Chart2 />} /> {/* Ensure Chart2 is imported correctly */}
         {/* Add more routes as needed */}
       </Routes>
