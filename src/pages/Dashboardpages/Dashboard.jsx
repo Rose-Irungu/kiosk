@@ -10,7 +10,7 @@ import DashboardTable from "../../components/tables/DashboardTable";
 
 const Dashboard = () => {
   return (
-    <Navigation>
+    <Layout>
       {/* Separator under header */}
      
 
@@ -74,7 +74,7 @@ const Dashboard = () => {
     
         <DashboardTable />
       
-    </Navigation>
+    </Layout>
   );
 };
 
