@@ -27,10 +27,12 @@ import ProfileMenu from './components/layout/ProfileMenu';
 import Sidebar from './components/layout/Sidebar';
 import Chart from './components/Chart'; 
 import Chart2 from './components/Chart2';// Ensure Chart is imported correctly
+import Emergencypage from './pages/Dashboardpages/Emergencypage';
 
 
 import Dashboard from './pages/Dashboardpages/Dashboard'; 
 import UsersPage from './pages/Dashboardpages/userspage';
+import VisitorLogs from './pages/Dashboardpages/VisitorLogs';
 
 
 
@@ -113,6 +115,7 @@ const App = () => {
         <Route path="/users" element={<Users users={users} setUsers={setUsers} />} />
         <Route path="/userform" element={<UserForm setUsers={setUsers} />} />
         <Route path="/userspage" element={<UsersPage users={users} setUsers={setUsers} />} />
+        <Route path="/emergencypage" element={<Emergencypage />} />
 
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
@@ -126,6 +129,7 @@ const App = () => {
         <Route path="/sidebar" element={<Sidebar />} />
         <Route path="/chart" element={<Chart />} /> 
         <Route path="/userspage" element={<UsersPage />} />
+        <Route path="/visitorlogs" element={<VisitorLogs />} />
         <Route path="/chart2" element={<Chart2 />} /> {/* Ensure Chart2 is imported correctly */}
         {/* Add more routes as needed */}
       </Routes>

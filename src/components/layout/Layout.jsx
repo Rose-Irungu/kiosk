@@ -9,28 +9,21 @@ export default function Layout({ children }) {
   const [profileOpen, setProfileOpen] = useState(false);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#EEEAFD]">
-      {/* Sidebar */}
-      <aside className={`fixed top-0 left-0 h-screen z-50 transition-all duration-300 ${collapsed ? "w-16" : "w-64"}`}>
-        <Sidebar
-          collapsed={collapsed}
-          setCollapsed={setCollapsed}
-          active={active}
-          setActive={setActive}
-          mobileOpen={mobileOpen}
-          setMobileOpen={setMobileOpen}
-        />
-      </aside>
+    <div className="flex h-screen overflow-hidden bg-[#F5F4F5]">
+      {/* Sidebar - hidden on mobile */}
+      <Sidebar
+        collapsed={collapsed}
+        setCollapsed={setCollapsed}
+        active={active}
+        setActive={setActive}
+        mobileOpen={mobileOpen}
+        setMobileOpen={setMobileOpen}
+      />
 
-      {/* Main content */}
-      <div
-        className={`
-          flex flex-col flex-1 h-screen transition-all duration-300
-          ${collapsed ? "ml-16" : "ml-64"}
-        `}
-      >
-        {/* Header */}
-        <header className="fixed top-0 left-0 right-0 z-40">
+      {/* Content area */}
+      <div className="relative flex flex-col flex-1 overflow-hidden">
+        {/* Fixed Header */}
+        <header className="sticky top-0 z-40 bg-[#EEEAFD]">
           <Header
             setMobileOpen={setMobileOpen}
             profileOpen={profileOpen}
@@ -38,9 +31,11 @@ export default function Layout({ children }) {
           />
         </header>
 
-        {/* Main scrollable content (account for header height) */}
-        <main className="flex-1 overflow-y-auto mt-20 p-4 md:p-8">
-          {children}
+        {/* Scrollable main content with responsive padding */}
+        <main className="flex-1 overflow-y-auto p-2 sm:p-4">
+          <div className=" rounded-lg  p-2 sm:p-4">
+            {children}
+          </div>
         </main>
       </div>
     </div>
