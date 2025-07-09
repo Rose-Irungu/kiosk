@@ -111,9 +111,9 @@ const App = () => {
         <Route path="/dashboardtable" element={<DashboardTable />} />
 
         {/* ✅ Share users state */}
-        <Route path="/users" element={<Users users={users} setUsers={setUsers} />} />
+        {/* <Route path="/users" element={<Users users={users} setUsers={setUsers} />} />
         <Route path="/userform" element={<UserForm setUsers={setUsers} />} />
-        <Route path="/userspage" element={<UsersPage users={users} setUsers={setUsers} />} />
+        <Route path="/userspage" element={<UsersPage users={users} setUsers={setUsers} />} /> */}
 
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
