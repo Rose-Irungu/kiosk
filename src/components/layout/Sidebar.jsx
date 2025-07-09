@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const navItems = [
   { id: "dashboard", label: "Dashboard", icon: "/material-symbols-dashboard-rounded0.svg", path: "/dashboard" },
   { id: "users", label: "Users", icon: "/mdi-users0.svg", path: "/userspage" },
-  { id: "visitors", label: "Visitors", icon: "/material-symbols-nest-doorbell-visitor0.svg", path: "/visitorspage" },
+  { id: "visitors", label: "Visitors", icon: "/material-symbols-nest-doorbell-visitor0.svg", path: "/visitorlogs" },
   { id: "emergencies", label: "Emergencies", icon: "/material-symbols-e-911-emergency-rounded0.svg", path: "/emergencies" },
   { id: "incidents", label: "Incident Reports", icon: "/tabler-message-report-filled0.svg", path: "/incidents" },
 ];
