@@ -9,10 +9,23 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-
     },
-      esbuild: {
-    target: 'esnext' // or 'es2022'
-  }
+  },
+  esbuild: {
+    target: 'esnext', // Ensure top-level await works
+  },
+  build: {
+    chunkSizeWarningLimit: 1000, // Prevent warning if chunks are large
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Split major libraries into their own chunks
+          react: ['react', 'react-dom'],
+          shadcn: ['@/components/ui'], // You can be more specific if needed
+          
+          lucide: ['lucide-react'],
+        },
+      },
+    },
   },
 })
