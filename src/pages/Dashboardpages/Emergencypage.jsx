@@ -5,7 +5,7 @@ import Card4 from "../../components/Card4";
 import Chart2 from "../../components/Chart2";              
 import EmergencyTable from "../../components/tables/Emergencies";
 
-export default function Emergencies() {
+export default function Emergencypage() {
   // ---------- STATE ----------
   const [feed,   setFeed]   = useState(null);           // { floor, unit, name, status }
   const [stats,  setStats]  = useState(null);           // { resolved, ongoing }
