@@ -9,7 +9,7 @@ import Card2 from './components/Card2';
 import Card3 from './components/Card3';
 import Card4 from './components/Card4';
 import { SkeletonCard } from './components/SkeletonCard';
-import Home from './pages/Home';
+import Home from './pages/Home';      
 import VisitorPage from './pages/VisitorPage';
 import Verify from './pages/Verify';
 import Bye from './pages/Bye';
