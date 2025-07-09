@@ -3,7 +3,6 @@ import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
@@ -12,18 +11,17 @@ export default defineConfig({
     },
   },
   esbuild: {
-    target: 'esnext', // Ensure top-level await works
+    target: 'esnext',
   },
   build: {
-    chunkSizeWarningLimit: 1000, // Prevent warning if chunks are large
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         manualChunks: {
-          // Split major libraries into their own chunks
           react: ['react', 'react-dom'],
-          shadcn: ['@/components/ui'], // You can be more specific if needed
-          
+          chart: ['chart.js', 'react-chartjs-2'],
           lucide: ['lucide-react'],
+          // Removed 'shadcn' to avoid referencing a directory
         },
       },
     },
