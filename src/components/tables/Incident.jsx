@@ -39,7 +39,7 @@ const incidentReports = [
 ]
 
 const statusStyles = {
-  "New Incident": "bg-red-100 text-red-700",
+  "New ": "bg-red-100 text-red-700",
   "Under Review": "bg-yellow-100 text-yellow-700",
   "Resolved": "bg-green-100 text-green-700",
 }
