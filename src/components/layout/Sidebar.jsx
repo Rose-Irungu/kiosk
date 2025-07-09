@@ -5,8 +5,8 @@ const navItems = [
   { id: "dashboard", label: "Dashboard", icon: "/material-symbols-dashboard-rounded0.svg", path: "/dashboard" },
   { id: "users", label: "Users", icon: "/mdi-users0.svg", path: "/userspage" },
   { id: "visitors", label: "Visitors", icon: "/material-symbols-nest-doorbell-visitor0.svg", path: "/visitorlogs" },
-  { id: "emergencies", label: "Emergencies", icon: "/material-symbols-e-911-emergency-rounded0.svg", path: "/emergencies" },
-  { id: "incidents", label: "Incident Reports", icon: "/tabler-message-report-filled0.svg", path: "/incidents" },
+  { id: "emergencies", label: "Emergencies", icon: "/material-symbols-e-911-emergency-rounded0.svg", path: "/emergencypage" },
+  { id: "incidents", label: "Incident Reports", icon: "/tabler-message-report-filled0.svg", path: "/incidentreport" },
 ];
 
 const secondaryItems = [
@@ -14,13 +14,18 @@ const secondaryItems = [
   { id: "help", label: "Help", icon: "/material-symbols-help-outline0.svg", path: "/help" },
 ];
 
-export default function Sidebar({ collapsed, setCollapsed, active, setActive, mobileOpen, setMobileOpen }) {
+export default function Sidebar({
+  collapsed,
+  setCollapsed,
+  active,
+  mobileOpen,
+  setMobileOpen,
+}) {
   const navigate = useNavigate();
 
-  const handleNavigation = (item) => {
-    setActive(item.id);
+  const handleNavigation = (path) => {
     setMobileOpen(false);
-    navigate(item.path);
+    navigate(path);
   };
 
   return (
@@ -34,7 +39,7 @@ export default function Sidebar({ collapsed, setCollapsed, active, setActive, mo
         transition-all duration-300
       `}
     >
-      {/* Logo and Toggle */}
+      {/* Logo and Close Button */}
       <div className={`flex items-center justify-between ${collapsed ? "p-2" : "p-5"}`}>
         <div className="flex-1 flex justify-center">
           <img
@@ -42,8 +47,8 @@ export default function Sidebar({ collapsed, setCollapsed, active, setActive, mo
             alt="Logo"
             className={`${collapsed ? "h-8" : "h-[60px]"} w-auto`}
             draggable="false"
-            onClick={() => handleNavigation(navItems[0])} // Make logo clickable to go to dashboard
-            style={{ cursor: 'pointer' }}
+            onClick={() => handleNavigation("/dashboard")}
+            style={{ cursor: "pointer" }}
           />
         </div>
         <button
@@ -54,26 +59,17 @@ export default function Sidebar({ collapsed, setCollapsed, active, setActive, mo
         </button>
       </div>
 
-      {/* Navigation */}
+      {/* Main Navigation */}
       <div className="flex flex-col w-full space-y-3 font-[Roboto]">
         {navItems.map((item) => (
           <button
             key={item.id}
-            onClick={() => handleNavigation(item)}
+            onClick={() => handleNavigation(item.path)}
             className={`
-              group
-              flex items-center
-              w-full
-              h-12
-              gap-3
-              px-4
-              font-medium
-              text-[13px]
-              transition
+              group flex items-center w-full h-12 gap-3 px-4 font-medium text-[13px] transition
               ${active === item.id
                 ? "bg-[#F5F4F5] border-l-2 border-[#005E0E] text-gray-800"
-                : "text-white hover:bg-[#F5F4F5] hover:text-gray-800"
-              }
+                : "text-white hover:bg-[#F5F4F5] hover:text-gray-800"}
             `}
           >
             <img
@@ -104,26 +100,17 @@ export default function Sidebar({ collapsed, setCollapsed, active, setActive, mo
         </button>
       </div>
 
-      {/* Secondary Items */}
+      {/* Secondary Navigation */}
       <div className="flex flex-col w-full space-y-3 mb-4 font-[Roboto]">
         {secondaryItems.map((item) => (
           <button
             key={item.id}
-            onClick={() => handleNavigation(item)}
+            onClick={() => handleNavigation(item.path)}
             className={`
-              group
-              flex items-center
-              w-full
-              h-12
-              gap-3
-              px-4
-              font-medium
-              transition
-              text-[13px]
+              group flex items-center w-full h-12 gap-3 px-4 font-medium text-[13px] transition
               ${active === item.id
                 ? "bg-[#F5F4F5] border-l-2 border-[#005E0E] text-gray-800"
-                : "text-white hover:bg-[#F5F4F5] hover:text-gray-800"
-              }
+                : "text-white hover:bg-[#F5F4F5] hover:text-gray-800"}
             `}
           >
             <img
