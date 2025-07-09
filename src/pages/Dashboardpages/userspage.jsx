@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Layout from "../../components/Navigation";
+import Layout from "../../components/layout/Layout";
 import UsersTable from "../../components/tables/Users";
 import { userService } from "../../services/user";
 
