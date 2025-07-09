@@ -9,6 +9,10 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+
     },
+      esbuild: {
+    target: 'esnext' // or 'es2022'
+  }
   },
 })
