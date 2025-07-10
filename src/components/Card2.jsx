@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { Siren } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
 
 /**
  * Card2 – Panic‑button incident card
  *
- * @param {String} unit      
- * @param {String} floor     
- * @param {Number} minute    
- * @param {String} resident  
- * @param {String} status    
+ * @param {String} unit
+ * @param {String} floor
+ * @param {Number} minute
+ * @param {String} resident
+ * @param {String} status
  */
 export default function Card2({
   unit,
@@ -60,9 +61,11 @@ export default function Card2({
         </p>
 
         <div className="flex gap-2 mt-3">
-          <button className="bg-[#005E0E] text-white text-sm font-inter font-normal px-3 py-1 border rounded hover:bg-[#002A05]">
-            Open Roll Call
-          </button>
+          <Link to="/triggers">
+            <button className="bg-[#005E0E] text-white text-sm font-inter font-normal px-3 py-1 border rounded hover:bg-[#002A05]">
+              Open Roll Call
+            </button>
+          </Link>
 
           <button
             onClick={handleResolve}
@@ -91,16 +94,28 @@ export default function Card2({
       {/* Right side */}
       <div className="w-full lg:w-[258px] h-[140px] rounded-[10px] border-[0.5px] p-4 flex items-center gap-[8px]">
         <div className="flex flex-col justify-between w-[103px] h-[52px] gap-[12px]">
-          <p className="font-dmsans text-sm text-slateboost w-[103px] h-[20px]">Triggered&nbsp;By</p>
-          <p className="font-dmsans text-sm text-slateboost w-[103px] h-[20px]">Status</p>
+          <p className="font-dmsans text-sm text-slateboost w-[103px] h-[20px]">
+            Triggered&nbsp;By
+          </p>
+          <p className="font-dmsans text-sm text-slateboost w-[103px] h-[20px]">
+            Status
+          </p>
         </div>
         <div className="flex flex-col justify-between w-[12px] h-[52px] gap-[12px]">
-          <p className="font-dmsans text-sm text-slateboost w-[12px] h-[20px]">:</p>
-          <p className="font-dmsans text-sm text-slateboost w-[12px] h-[20px]">:</p>
+          <p className="font-dmsans text-sm text-slateboost w-[12px] h-[20px]">
+            :
+          </p>
+          <p className="font-dmsans text-sm text-slateboost w-[12px] h-[20px]">
+            :
+          </p>
         </div>
         <div className="flex flex-col justify-between w-[69px] h-[52px] gap-[12px]">
-          <p className="font-dmsans text-sm text-slateboost w-[69px] h-[20px]">{resident}</p>
-          <p className="font-dmsans text-sm text-slateboost w-[69px] h-[20px]">{currentStatus}</p>
+          <p className="font-dmsans text-sm text-slateboost w-[69px] h-[20px]">
+            {resident}
+          </p>
+          <p className="font-dmsans text-sm text-slateboost w-[69px] h-[20px]">
+            {currentStatus}
+          </p>
         </div>
       </div>
     </div>

@@ -1,4 +1,8 @@
 module.exports = {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}", // <-- tells Tailwind to scan these files for class names
+  ],
   theme: {
     extend: {
       animation: {
