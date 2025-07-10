@@ -56,7 +56,8 @@ const handleCheckOut = async () => {
 
         {/* Right form section */}
         <div className="w-full lg:w-1/2 bg-[#E6FBE9] relative flex flex-col items-center px-4 sm:px-6 lg:px-8 py-6 lg:pt-0 lg:pb-10 min-h-[500px] lg:min-h-full">
-          <div className="w-full max-w-sm sm:max-w-md text-start mt-4 sm:mt-10">
+         <div className="w-full max-w-sm sm:max-w-md text-start mt-4 sm:mt-10 md:mt-16 lg:mt-24">
+
             <h2 className="text-lg sm:text-xl font-semibold text-[#00580D] mb-4">
               Submit your details below
             </h2>

@@ -75,9 +75,9 @@ export default function Users({ users = [], setUsers = () => {} }) {
           <div className="relative text-sm text-gray-600">
             <select className="border border-gray-300 rounded-md px-3 py-2 bg-white pr-8 appearance-none">
               <option value="all">All</option>
-              <option value="recurring">Recurring</option>
-              <option value="service">Service</option>
-              <option value="one-time">One-time</option>
+              <option value="recurring">Resident</option>
+              <option value="service">Security</option>
+              <option value="one-time">Admin</option>
             </select>
             <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
           </div>
