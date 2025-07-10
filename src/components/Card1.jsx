@@ -50,7 +50,7 @@ export default function Card1({
 
           <a
             href={linkHref}
-            className="text-xs font-dmsans font-medium text-indigo-700 underline"
+            className="text-xs font-dmsans font-medium text-[#40864a] underline"
           >
             {link}
           </a>

@@ -19,6 +19,7 @@ import { DashboardTable } from './components/tables/DashboardTable';
 import Users from './components/tables/Users';
 import Visitors from './components/tables/Visitors';
 import Emergencies from './components/tables/Emergencies';
+import Incident from './components/tables/Incident';
 
 import Triggers from './components/tables/Triggers'; // Ensure Triggers is imported correctly
 import Layout from './components/layout/Layout';
@@ -34,7 +35,7 @@ import Dashboard from './pages/Dashboardpages/Dashboard';
 import UsersPage from './pages/Dashboardpages/userspage';
 import VisitorLogs from './pages/Dashboardpages/VisitorLogs';
 import Incident_Reports from './pages/Dashboardpages/Incident_Reports';
-import IncidentReportsPage from './pages/Dashboardpages/Incident_Reports';
+
 
 
 
@@ -115,15 +116,15 @@ const App = () => {
         <Route path="/dashboardtable" element={<DashboardTable />} />
 
         {/* ✅ Share users state */}
-        {/* <Route path="/users" element={<Users users={users} setUsers={setUsers} />} />
+        <Route path="/users" element={<Users users={users} setUsers={setUsers} />} />
         <Route path="/userform" element={<UserForm setUsers={setUsers} />} />
         <Route path="/userspage" element={<UsersPage users={users} setUsers={setUsers} />} />
         <Route path="/emergencypage" element={<Emergencypage />} />
-        {/* <Route path="/incidents" element={<Incidents />} /> */}
+        <Route path="/incident" element={<Incident />} /> 
 
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
-        <Route path="/incidentreport" element={<Incident_Reports />} />
+        <Route path="/incident_report" element={<Incident_Reports />} />
         <Route path="/triggers" element={<Triggers />} /> {/* Ensure Triggers is imported correctly */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/skeletoncard" element={<SkeletonCard />} />
