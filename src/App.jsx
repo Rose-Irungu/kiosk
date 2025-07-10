@@ -28,6 +28,7 @@ import Sidebar from './components/layout/Sidebar';
 import Chart from './components/Chart'; 
 import Chart2 from './components/Chart2';// Ensure Chart is imported correctly
 import Emergencypage from './pages/Dashboardpages/Emergencypage';
+import GuestRegSuccessPage from './pages/Registration/GuestRegSuccessPage';
 
 
 import Dashboard from './pages/Dashboardpages/Dashboard'; 
@@ -119,6 +120,7 @@ const App = () => {
         <Route path="/userform" element={<UserForm setUsers={setUsers} />} />
         <Route path="/userspage" element={<UsersPage users={users} setUsers={setUsers} />} />
         <Route path="/emergencypage" element={<Emergencypage />} />
+        <Route path="/guestregsuccess" element={<GuestRegSuccessPage />} />
         {/* <Route path="/incidents" element={<Incidents />} /> */}
 
         <Route path="/visitors" element={<Visitors />} />
