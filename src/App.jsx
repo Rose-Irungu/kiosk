@@ -123,6 +123,7 @@ const App = () => {
         <Route path="/incident" element={<Incident />} />
         <Route path="/guestregsuccess" element={<GuestRegSuccessPage />} />
         <Route path="/guestform" element={<GuestRegistrationPage />} />
+        <Route path="/guestform/:token" element={<GuestRegistrationPage />} />
 
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
