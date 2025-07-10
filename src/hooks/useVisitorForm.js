@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useLocation, useSearchParams } from 'react-router-dom';
+import { useParams, useLocation, useSearchParams, useNavigate } from 'react-router-dom';
 import { createInvitation, getInvitation, submitInvitation } from '../services/visitorservice';
 
 export const useVisitorForm = () => {
@@ -26,6 +26,7 @@ export const useVisitorForm = () => {
   const [isVisitorMode, setIsVisitorMode] = useState(false);
   const [isSecurityMode, setIsSecurityMode] = useState(false);
   const [isResidentMode, setIsResidentMode] = useState(false);
+  const navigate = useNavigate();
 
   // Determine the mode based on route and token
   useEffect(() => {
@@ -96,8 +97,9 @@ export const useVisitorForm = () => {
     try {
       if (isVisitorMode && token) {
         // Visitor completing the invitation
+        navigate('/guestregsuccess')
         await submitInvitation(token, formData);
-        alert('Registration completed successfully!');
+        
       } else {
         // Resident creating invitation or security filling form
         await createInvitation(formData);
