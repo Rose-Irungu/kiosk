@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal, ChevronDown } from "lucide-react";
+import Layout from "../layout/Layout";
 
 const visitors = [
   {
@@ -60,8 +61,11 @@ const visitors = [
 
 export default function Visitors() {
   return (
-    <div className="w-full max-w-7xl mx-auto bg-white p-6 rounded-xl shadow-sm mt-10">
+    <Layout>
+   <div className="w-full min-h-screen max-w-7xl mx-auto bg-white p-6 rounded-xl shadow-sm mt-10">
+
       {/* Header */}
+      
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-semibold">Visitor Logs</h2>
         <Button className="bg-[#502deb] hover:bg-[#005e0e] text-white">
@@ -153,6 +157,8 @@ export default function Visitors() {
       </Table>
        <div>
       </div>
+      
     </div>
+    </Layout>
   );
 }
