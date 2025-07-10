@@ -73,7 +73,6 @@ export function EmergencyTable() {
   }, []);
 
   return (
-    <Layout>
     <div className="w-full max-w-6xl mx-auto bg-white p-6 rounded-xl shadow-sm mt-10">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
@@ -156,7 +155,6 @@ export function EmergencyTable() {
         </TableBody>
       </Table>
     </div>
-    </Layout>
   );
 }
 

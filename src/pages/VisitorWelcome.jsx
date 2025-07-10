@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HomeIcon } from "@heroicons/react/24/solid";
-// import axios from "axios";
+import axios from "axios";
 import Header from '../components/Header';
 import logo from '../assets/logo.svg';
 import rectangle from '../assets/rectangle-780.png';
@@ -49,17 +49,17 @@ function VisitorWelcome() {
         <div className="flex w-full max-w-md flex-col items-start gap-4">
           <div className="flex flex-col gap-1 rounded-xl border border-blue-500 bg-blue-100 p-4 text-center">
             <h2 className="text-2xl font-normal text-green-700">
-              {t('hi')}{visitorName}
+              Hi {visitorName}
             </h2>
             <p className="mx-2 mb-3">
-              {t('enjoyStay')}
+              Enjoy your stay at West Brook Apartments
             </p>
             <p className="mx-2 mb-3">
-              {t('visitorRefNo')}:&nbsp;
+              Your visitor reference number is:&nbsp;
               <span className="font-semibold text-blue-800">{visitorRef}</span>
             </p>
             <p className="mx-2 mb-3">
-              {t('codeSend')}
+              We’ve also slid this code into your SMS and email
             </p>
           </div>
 
@@ -68,7 +68,7 @@ function VisitorWelcome() {
             className="mb-1 self-center rounded-2xl bg-green-600 px-4 py-2 font-normal text-white transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
           >
             <HomeIcon className="mr-2 h-5 w-5 inline-flex" aria-hidden="true" />
-            {t('returnToHome')}
+            Return to Home
           </button>
         </div>
       </div>

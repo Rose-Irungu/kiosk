@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import { HomeIcon } from "@heroicons/react/24/solid";
 import { Link, useLocation } from "react-router-dom";
 import Header from "../components/Header";
-import Navbar from "../components/Navbar";
 import logo from "../assets/logo.svg";
 import rectangle from "../assets/rectangle-780.png";
 import sphere from "../assets/sphere-green-glossy0.png";
-import { useTranslation } from "react-i18next";
 
 const Welcomeback = () => {
-  const { t } = useTranslation();
   const location = useLocation();
   const { refNumber, full_name } = location.state || {};
   
@@ -53,27 +50,26 @@ const Welcomeback = () => {
         </section>
         <section className="relative flex w-full flex-col items-center bg-[#E6FBE9] px-4 pb-12 pt-4 lg:w-1/2 lg:px-10">
           <div className="mb-8 w-full max-w-6xl">
-            <Navbar />
           </div>
           <div className="flex w-full flex-1 items-center justify-center">
             <div className="flex w-full max-w-md flex-col items-center gap-6">
               <div className="w-full rounded-xl border border-blue-500 bg-blue-100 p-5 text-center">
                 <h2 className="text-2xl font-semibold text-green-700 md:text-3xl">
-                  {t("hi")} {full_name}!
+                  Hi {full_name}!
                 </h2>
-                <p className="mb-3 mt-1">{t("enjoyStay")}</p>
+                <p className="mb-3 mt-1">Enjoy your stay at West Brook Apartments</p>
                 <p className="mb-3">
-                  {t("visitorRefNo")}:{" "}
+                  Your visitor reference number is:{" "}
                   <span className="font-bold text-blue-800">{refNumber}</span>
                 </p>
-                <p>{t("codeSend")}</p>
+                <p>We’ve also slid this code into your SMS and email</p>
               </div>
               <Link
                 to="/"
                 className="inline-flex items-center gap-2 rounded-2xl bg-green-600 px-6 py-2 font-medium text-white shadow-sm transition-colors hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
               >
                 <HomeIcon className="h-5 w-5" />
-                {t("returnToHome")}
+                Return to Home
               </Link>
             </div>
           </div>
