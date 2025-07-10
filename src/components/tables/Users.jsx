@@ -75,9 +75,9 @@ export default function Users({ users = [], setUsers = () => {} }) {
           <div className="relative text-sm text-gray-600">
             <select className="border border-gray-300 rounded-md px-3 py-2 bg-white pr-8 appearance-none">
               <option value="all">All</option>
-              <option value="recurring">Recurring</option>
-              <option value="service">Service</option>
-              <option value="one-time">One-time</option>
+              <option value="recurring">Resident</option>
+              <option value="service">Security</option>
+              <option value="one-time">Admin</option>
             </select>
             <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
           </div>
@@ -105,7 +105,7 @@ export default function Users({ users = [], setUsers = () => {} }) {
                   <TableRow key={index} className={index % 2 === 0 ? "bg-[#f2f7f3]" : ""}>
                     <TableCell>
                       <img
-                        src={`${BASE_URL}${user.profile_picture}`}
+                        src={user.profile_picture}
                         alt={user.first_name}
                         crossOrigin="anonymous"
                         className="h-10 w-10 rounded-full object-cover"
@@ -170,7 +170,7 @@ export default function Users({ users = [], setUsers = () => {} }) {
             {/* Header */}
             <div className="flex items-center gap-6 border-b pb-4">
               <img
-                src={`${BASE_URL}${selectedUser.profile_picture}`}
+                src={`{selectedUser.profile_picture}`}
                 alt={selectedUser.name}
                 crossOrigin="anonymous"
                 className="w-[140px] h-[140px] rounded-full object-cover"
