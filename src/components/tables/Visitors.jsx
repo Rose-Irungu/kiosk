@@ -63,7 +63,7 @@ export default function Visitors() {
     <>
       <div className="w-full max-w-7xl mx-auto bg-white  rounded-xl shadow-sm mt-5">
         {/* Header */}
-        <div className="flex justify-between items-center p-4 mb-4 border-b border-[rgba(0,0,0,0.3)]">
+        <div className="flex justify-between items-center p-6 mb-4 border-b border-[rgba(0,0,0,0.3)]">
           <h2 className="text-2xl font-semibold">Visitor Logs</h2>
           <button className="flex items-center justify-center h-12 w-[117px] px-4 pr-6 gap-2 bg-[#005E0E] text-white rounded-lg hover:bg-[#123107] transition">
             <Upload />
@@ -73,7 +73,7 @@ export default function Visitors() {
         </div>
 
         {/* Controls */}
-        <div className="flex justify-between items-center p-4">
+        <div className="flex justify-between items-center px-6">
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-600">Show</span>
             <div className="relative">
