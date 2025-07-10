@@ -42,7 +42,6 @@ import Incident_Reports from './pages/Dashboardpages/Incident_Reports';
 
 
 
-
 const App = () => {
   const [users, setUsers] = useState([
     {
@@ -124,6 +123,7 @@ const App = () => {
         <Route path="/incident" element={<Incident />} /> 
         <Route path="/guestregsuccess" element={<GuestRegSuccessPage />} />
         <Route path="/guestregistration" element={<GuestRegistrationPage />} />
+        <Route path="/guestregistrationpage" element={<GuestRegistrationPage />} />
 
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
