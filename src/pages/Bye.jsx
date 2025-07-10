@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 
 const Bye = () => {
 const location = useLocation();
-const { full_name } = location.state || {}; 
+const { name } = location.state || {}; 
   return (
     <div className="flex flex-col min-h-screen w-full max-w-full overflow-x-hidden relative">
       {/* Header */}
@@ -63,7 +63,7 @@ const { full_name } = location.state || {};
                 className="text-lg sm:text-2xl lg:text-[24px] leading-tight lg:leading-[33px] text-[#070D18] text-center font-serif"
                 style={{ fontFamily: '"DM Serif Display", serif' }}
               >
-                👋🏾Bye{full_name}
+                👋🏾Bye {name}
               </p>
 
               <div className="w-full text-center text-[#070D18] font-medium text-sm sm:text-base lg:text-[16px] leading-relaxed lg:leading-[42px] space-y-1">

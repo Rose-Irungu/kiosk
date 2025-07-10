@@ -97,7 +97,7 @@ const VisitorPage = () => {
     setIsSubmitting(true);
 
     const finalForm = {
-      identifier: details,
+      email: details,
     };
 
     try {
@@ -106,8 +106,8 @@ const VisitorPage = () => {
       console.log("Response:", response.data.ref_number);
       navigate("/welcomeback", {
         state: {
-          refNumber: response.data.ref_number,
-          full_name: response.data.visitor.full_name,
+          refNumber: response.data.reference_no,
+          full_name: response.data.full_name,
         },
       });
     } catch (error) {
@@ -162,12 +162,12 @@ const VisitorPage = () => {
                   htmlFor="details"
                   className="block text-sm text-[#00580D] mb-2"
                 >
-                  Phone number / Email / Number plate
+                 Email
                 </label>
                 <input
                   id="details"
-                  type="text"
-                  placeholder="e.g., +254712345678, john@gmail.com, or KCA 123A"
+                  type="email"
+                  placeholder="john@gmail.com"
                   required
                   value={details}
                   onChange={handleInputChange}

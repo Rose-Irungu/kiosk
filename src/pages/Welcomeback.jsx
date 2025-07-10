@@ -55,14 +55,14 @@ const Welcomeback = () => {
             <div className="flex w-full max-w-md flex-col items-center gap-6">
               <div className="w-full rounded-xl border border-blue-500 bg-blue-100 p-5 text-center">
                 <h2 className="text-2xl font-semibold text-green-700 md:text-3xl">
-                  Hi {full_name}!
+                  {t("Hi")} {full_name}!
                 </h2>
-                <p className="mb-3 mt-1">Enjoy your stay at West Brook Apartments</p>
+                <p className="mb-3 mt-1">Enjoy Your Stay At West Brook Apartment</p>
                 <p className="mb-3">
-                  Your visitor reference number is:{" "}
+                  {t("Your visitor Reference No is")}:{" "}
                   <span className="font-bold text-blue-800">{refNumber}</span>
                 </p>
-                <p>We’ve also slid this code into your SMS and email</p>
+                <p>This number has been sent to you via email</p>
               </div>
               <Link
                 to="/"

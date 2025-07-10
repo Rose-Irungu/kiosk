@@ -1,10 +1,8 @@
 import React from 'react';
 import logo from "../../assets/logo.svg";
 import rectangle from "../../assets/rectangle-780.png";
-// import sphere from "../assets/sphere-green-glossy0.png";
 import Header from "../../components/Header";
 import RegistrationForm from "../../components/forms/GuestCheckInForm";
-// import { GuestFormFields } from "../../components/forms/GuestFormFields";
 
 function GuestRegistrationPage() {
   return (
@@ -21,9 +19,7 @@ function GuestRegistrationPage() {
             className="w-32 md:w-44 lg:w-60 xl:w-72"
           />
         </section>
-
         <section className="relative flex w-full flex-col items-center bg-[#E6FBE9] px-4 pb-12 pt-4 lg:w-1/2 lg:px-10">
-          {/* <GuestFormFields /> */}
           <RegistrationForm />
         </section>
       </main>
