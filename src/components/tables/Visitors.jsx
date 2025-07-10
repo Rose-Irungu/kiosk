@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal, ChevronDown } from "lucide-react";
+import { MoreHorizontal, ChevronDown, Upload } from "lucide-react";
 
 const visitors = [
   {
@@ -60,99 +60,129 @@ const visitors = [
 
 export default function Visitors() {
   return (
-    <div className="w-full max-w-7xl mx-auto bg-white p-6 rounded-xl shadow-sm mt-10">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-semibold">Visitor Logs</h2>
-        <Button className="bg-[#502deb] hover:bg-[#005e0e] text-white">
-          Export
-        </Button>
-      </div>
+    <>
+      <div className="w-full max-w-7xl mx-auto bg-white  rounded-xl shadow-sm mt-5">
+        {/* Header */}
+        <div className="flex justify-between items-center p-4 mb-4 border-b border-[rgba(0,0,0,0.3)]">
+          <h2 className="text-2xl font-semibold">Visitor Logs</h2>
+          <button className="flex items-center justify-center h-12 w-[117px] px-4 pr-6 gap-2 bg-[#005E0E] text-white rounded-lg hover:bg-[#123107] transition">
+            <Upload />
+            Export
+          </button>
 
-      {/* Controls */}
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-600">Show</span>
+        </div>
+
+        {/* Controls */}
+        <div className="flex justify-between items-center p-4">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">Show</span>
+            <div className="relative">
+              <select className="border border-gray-300 rounded-md px-3 py-2 text-sm bg-white min-w-16 appearance-none pr-8">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </select>
+              <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+            </div>
+            <span className="text-sm text-gray-600">entries</span>
+          </div>
+
           <div className="relative">
-            <select className="border border-gray-300 rounded-md px-3 py-2 text-sm bg-white min-w-16 appearance-none pr-8">
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
+            <select className="border border-gray-300 rounded-md px-3 py-2 text-sm bg-white min-w-24 appearance-none pr-8" >
+              <option value="all">All</option>
+              <option value="recurring">Recurring</option>
+              <option value="service">Service</option>
+              <option value="onetime">One-time</option>
             </select>
             <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
           </div>
-          <span className="text-sm text-gray-600">entries</span>
         </div>
 
-        <div className="relative">
-          <select className="border border-gray-300 rounded-md px-3 py-2 text-sm bg-white min-w-24 appearance-none pr-8">
-            <option value="all">All</option>
-            <option value="recurring">Recurring</option>
-            <option value="service">Service</option>
-            <option value="onetime">One-time</option>
-          </select>
-          <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-        </div>
-      </div>
 
-      {/* Table */}
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Photo</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Phone</TableHead>
-            <TableHead>Visitor Type</TableHead>
-            <TableHead>Host/Unit</TableHead>
-            <TableHead>Status</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {visitors.map((visitor, index) => (
-            <TableRow
-              key={index}
-              className={
-                (visitor.name === "Haron Mureithi" &&
-                  visitor.phone === "0744678751") ||
-                (visitor.name === "Derick Ochieng" &&
-                  visitor.phone === "0756755634") ||
-                (visitor.name === "Lucy Wanja" &&
-                  visitor.phone === "0108978651")
-                  ? "bg-[#f2f7f3]"
-                  : ""
-              }
-            >
-              <TableCell>
-                <img
-                  src={visitor.photo}
-                  alt={visitor.name}
-                  className="h-10 w-10 rounded-full object-cover"
-                />
-              </TableCell>
-              <TableCell className="font-medium">{visitor.name}</TableCell>
-              <TableCell>{visitor.phone}</TableCell>
-              <TableCell>{visitor.visitorType}</TableCell>
-              <TableCell>{visitor.hostUnit}</TableCell>
-              <TableCell>
-                <span
-                  className={`px-3 py-1 text-xs font-medium rounded-full ${
-                    visitor.status === "Checked-In"
-                      ? "bg-[#c2f0c9]"
-                      : visitor.status === "Checked-Out"
-                      ? "bg-[#e0dbf4]"
-                      : "text-green-700"
-                  }`}
+        <div className="p-4 ">
+          {/* Table */}
+          <Table >
+            <TableHeader>
+              <TableRow>
+                <TableHead>Photo</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Phone</TableHead>
+                <TableHead>Visitor Type</TableHead>
+                <TableHead>Host/Unit</TableHead>
+                <TableHead>Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {visitors.map((visitor, index) => (
+                <TableRow
+                  key={index}
+                  className={
+                    (visitor.name === "Haron Mureithi" &&
+                      visitor.phone === "0744678751") ||
+                      (visitor.name === "Derick Ochieng" &&
+                        visitor.phone === "0756755634") ||
+                      (visitor.name === "Lucy Wanja" &&
+                        visitor.phone === "0108978651")
+                      ? "bg-[#f2f7f3]"
+                      : ""
+                  }
                 >
-                  {visitor.status}
-                </span>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-       <div>
+                  <TableCell>
+                    <img
+                      src={visitor.photo}
+                      alt={visitor.name}
+                      className="h-10 w-10 rounded-full object-cover"
+                    />
+                  </TableCell>
+                  <TableCell className="font-medium">{visitor.name}</TableCell>
+                  <TableCell>{visitor.phone}</TableCell>
+                  <TableCell>{visitor.visitorType}</TableCell>
+                  <TableCell>{visitor.hostUnit}</TableCell>
+                  <TableCell>
+                    <span
+                      className={`px-3 py-1 text-xs font-medium rounded-full ${visitor.status === "Checked-In"
+                        ? "bg-[#c2f0c9]"
+                        : visitor.status === "Checked-Out"
+                          ? "bg-[#e0dbf4]"
+                          : "text-green-700"
+                        }`}
+                    >
+                      {visitor.status}
+                    </span>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div >
+
+
+
+
+      {/* Pagination Section */}
+      {/* Pagination Section */}
+      <div className="mt-4 flex flex-col sm:flex-row items-center justify-between w-full px-4 h-auto sm:h-12 gap-2 sm:gap-0">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <button className="h-12 flex items-center justify-center px-6 py-2 border border-[#005E0E] rounded-lg bg-white text-[#005E0E] hover:bg-[#f4fdf5] transition">
+            Previous
+          </button>
+          <button className="w-14 h-12 flex items-center justify-center bg-[#005E0E] text-white rounded-lg hover:bg-[#004a0b] transition">
+            1
+          </button>
+          <button className="w-14 h-12 flex items-center justify-center bg-[#005E0E] text-white rounded-lg hover:bg-[#004a0b] transition">
+            2
+          </button>
+          <button className="h-12 flex items-center justify-center px-6 py-2 border border-[#005E0E] rounded-lg bg-white text-[#005E0E] hover:bg-[#f4fdf5] transition">
+            Next
+          </button>
+        </div>
+
+        {/* Text Content */}
+        <div className="text-sm text-gray-600 mt-4 sm:mt-0">Showing 1 to 5 out of 20 entries</div>
       </div>
-    </div>
+
+    </>
   );
 }
