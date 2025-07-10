@@ -30,7 +30,7 @@ import Chart from './components/Chart';
 import Chart2 from './components/Chart2';// Ensure Chart is imported correctly
 import Emergencypage from './pages/Dashboardpages/Emergencypage';
 import GuestRegSuccessPage from './pages/Registration/GuestRegSuccessPage';
-
+import GuestRegistrationPage from './pages/Registration/GuestRegistrationPage';
 
 import Dashboard from './pages/Dashboardpages/Dashboard'; 
 import UsersPage from './pages/Dashboardpages/userspage';
@@ -122,6 +122,8 @@ const App = () => {
         <Route path="/userspage" element={<UsersPage users={users} setUsers={setUsers} />} />
         <Route path="/emergencypage" element={<Emergencypage />} />
         <Route path="/incident" element={<Incident />} /> 
+        <Route path="/guestregsuccess" element={<GuestRegSuccessPage />} />
+        <Route path="/guestregistration" element={<GuestRegistrationPage />} />
 
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
