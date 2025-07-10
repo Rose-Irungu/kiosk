@@ -122,7 +122,7 @@ const App = () => {
         <Route path="/emergencypage" element={<Emergencypage />} />
         <Route path="/incident" element={<Incident />} />
         <Route path="/guestregsuccess" element={<GuestRegSuccessPage />} />
-        <Route path="/guestregistrationpage" element={<GuestRegistrationPage />} />
+        <Route path="/guestform" element={<GuestRegistrationPage />} />
 
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />

@@ -1,39 +1,40 @@
 // src/pages/VisitorPage.jsx
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
-import logo from '../assets/logo.svg';
-import rectangle from '../assets/rectangle-780.png';
-import sphere from '../assets/sphere-green-glossy0.png';
-import { kioskService } from '../services/kiosk';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import logo from "../assets/logo.svg";
+import rectangle from "../assets/rectangle-780.png";
+import sphere from "../assets/sphere-green-glossy0.png";
+import { kioskService } from "../services/kiosk";
 
 const Verify = () => {
-  const [refNumber, setRefNumber] = React.useState('');
-  const [error, setError] = React.useState('');
+  const [refNumber, setRefNumber] = React.useState("");
+  const [error, setError] = React.useState("");
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const navigate = useNavigate();
 
-const handleCheckOut = async () => {
-  setIsSubmitting(true);
-  setError('');
-  try {
-    const response = await kioskService.checkOut({ ref_number: refNumber });
-    console.log('Checkout response:', response);
+  const handleCheckOut = async () => {
+    setIsSubmitting(true);
+    setError("");
+    try {
+      const response = await kioskService.checkOut({ reference_no: refNumber });
+      console.log("Checkout response:", response);
+      console.log(`Reult Code: ${response?.result_code}, data ${response?.data}`);
+      
 
-    if (response?.result_code === 0) {
-      const visitorName = response?.data?.full_name || "Visitor";
-      navigate('/bye', { state: { name: visitorName } }); 
-    } else {
-      navigate('/error');
+      if (response?.result_code === 0) {
+        const visitorName = response?.data?.full_name || "Visitor";
+        navigate("/bye", { state: { name: visitorName } });
+      } else {
+        navigate("/error");
+      }
+    } catch (err) {
+      console.error("Checkout error:", err);
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
-  } catch (err) {
-    console.error('Checkout error:', err);
-    setError('Something went wrong. Please try again.');
-  } finally {
-    setIsSubmitting(false);
-  }
-};
-
+  };
 
   return (
     <div className="flex flex-col min-h-screen w-full overflow-x-hidden relative">
@@ -56,13 +57,15 @@ const handleCheckOut = async () => {
 
         {/* Right form section */}
         <div className="w-full lg:w-1/2 bg-[#E6FBE9] relative flex flex-col items-center px-4 sm:px-6 lg:px-8 py-6 lg:pt-0 lg:pb-10 min-h-[500px] lg:min-h-full">
-         <div className="w-full max-w-sm sm:max-w-md text-start mt-4 sm:mt-10 md:mt-16 lg:mt-24">
-
+          <div className="w-full max-w-sm sm:max-w-md text-start mt-4 sm:mt-10 md:mt-16 lg:mt-24">
             <h2 className="text-lg sm:text-xl font-semibold text-[#00580D] mb-4">
               Submit your details below
             </h2>
 
-            <label htmlFor="refNumber" className="block text-sm text-[#00580D] mb-1">
+            <label
+              htmlFor="refNumber"
+              className="block text-sm text-[#00580D] mb-1"
+            >
               Visitor Registration Number
             </label>
             <input
@@ -81,10 +84,11 @@ const handleCheckOut = async () => {
               disabled={!refNumber || isSubmitting}
               className="w-full py-3 text-white font-medium rounded-xl shadow-md disabled:opacity-50"
               style={{
-                background: 'linear-gradient(90deg, rgba(0,210,30,1) 0%, rgba(0,88,13,1) 100%)',
+                background:
+                  "linear-gradient(90deg, rgba(0,210,30,1) 0%, rgba(0,88,13,1) 100%)",
               }}
             >
-              {isSubmitting ? 'Submitting...' : 'Submit'}
+              {isSubmitting ? "Submitting..." : "Submit"}
             </button>
 
             {/* OR Divider */}

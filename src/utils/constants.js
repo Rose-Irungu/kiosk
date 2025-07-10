@@ -1,6 +1,9 @@
 export const API_ENDPOINTS = {
-  VISITOR_CHECKIN: '/kiosk/visitor/checkin/',
-  VISITOR_CHECKOUT: '/kiosk/visitor/checkout/',
+  VISITOR_CHECKIN: '/visits/checkin/',
+  VISITOR_CHECKOUT: '/visits/checkout/',
+  INVITE_VISITOR: '/visitors/send-invite/',
+  REGISTER_VISITOR: '/visitors/register/',
+  GET_VISITOR: '/visitors/get_visitor/',
   // VISITOR_DETAILS: '/kiosk/visitor/details/',
   // VISITOR_QR_CODE: '/kiosk/visitor/qrcode/',
   // VISITOR_LIST: '/kiosk/visitor/list/'
