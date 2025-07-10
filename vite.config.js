@@ -4,6 +4,7 @@ import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
 
 export default defineConfig({
+  base: './', 
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
@@ -19,9 +20,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           react: ['react', 'react-dom'],
-          chart: ['chart.js', 'react-chartjs-2'],
           lucide: ['lucide-react'],
-          // Removed 'shadcn' to avoid referencing a directory
         },
       },
     },

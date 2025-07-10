@@ -1,0 +1,18 @@
+{
+    "sourceFile": "tailwind.config.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1752085168752,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1752085168752,
+            "name": "Commit-0",
+            "content": "module.exports = {\r\n  content: [\r\n    \"./index.html\",\r\n    \"./src/**/*.{js,ts,jsx,tsx}\", // <-- tells Tailwind to scan these files for class names\r\n  ],\r\n  theme: {\r\n    extend: {\r\n      animation: {\r\n        'bounce-once': 'bounce 1s ease-out',\r\n      },\r\n      fontFamily: {\r\n        dmsans: ['DM Sans', 'sans-serif'],\r\n        inter: ['Inter', 'sans-serif']\r\n      },\r\n      colors: {\r\n        babyrose: '#FEEAEF',\r\n        slategray: '#495057',\r\n        grayish: '#495057',\r\n        rosefire: '#F93162',\r\n        deepindigo: '#502DEB',\r\n        slateboost: '#495057'\r\n      }\r\n    }\r\n  }\r\n}\r\n"
+        }
+    ]
+}
