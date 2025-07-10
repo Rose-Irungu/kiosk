@@ -64,8 +64,9 @@ const Dashboard = () => {
         />
       </div>
 
-      {/* Chart */}
-      <div className="bg-white p-6 rounded-lg shadow mb-8 flex flex-col lg:flex-row gap-6">
+      {/* Chart - added overflow-x-auto for it to scroll within the parent container on mobile*/}
+      <div className="overflow-x-auto w-full bg-white p-6 rounded-lg shadow mb-8 flex flex-col lg:flex-row gap-6">
+
         <Chart />
         <Card3 className="lg:ml-4" />
       </div>
