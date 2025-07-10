@@ -6,7 +6,9 @@ import { userService } from "../../services/user";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
-import Layout from "@/components/Navigation";
+import Layout from "../../components/layout/Layout";
+import { useState } from "react";
+
 
 import {
   Form,
@@ -225,35 +227,55 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
                   ))}
                 </div>
 
-                {/* Upload Photo */}
                 <FormField
-                  control={form.control}
-                  name="photo"
-                  render={({ field: { onChange } }) => (
-                    <FormItem>
-                      <FormLabel className="font-medium">Photo</FormLabel>
-                      <FormControl>
-                        <div className="bg-[#f4eaff] h-28 rounded-md border border-dashed flex items-center justify-center text-sm text-gray-500 relative overflow-hidden">
-                          <input
-                            type="file"
-                            onChange={(e) => onChange(e.target.files?.[0])}
-                            accept="image/*"
-                            className="opacity-0 absolute w-full h-full cursor-pointer"
-                          />
-                          <div className="flex flex-col items-center gap-2">
-                            <div className="bg-[#085ca10d] rounded-full p-2 w-12 h-12 flex items-center justify-center">
-                              <img src={uploadIcon} alt="Upload" className="w-6 h-6" />
-                            </div>
-                            <span className="text-sm text-gray-500 text-center">
-                              Upload a User’s Photo
-                            </span>
-                          </div>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+  control={form.control}
+  name="photo"
+  render={({ field: { onChange, value } }) => {
+    const [preview, setPreview] = useState(null);
+
+    const handleFileChange = (e) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        setPreview(URL.createObjectURL(file));
+        onChange(file); // update react-hook-form value
+      }
+    };
+
+    return (
+      <FormItem>
+        <FormLabel className="font-medium">Photo</FormLabel>
+        <FormControl>
+          <div className="bg-[#f4eaff] h-28 rounded-md border border-dashed flex items-center justify-center text-sm text-gray-500 relative overflow-hidden">
+            <input
+              type="file"
+              onChange={handleFileChange}
+              accept="image/*"
+              className="opacity-0 absolute w-full h-full cursor-pointer"
+            />
+            {preview ? (
+              <img
+                src={preview}
+                alt="Preview"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-2">
+                <div className="bg-[#085ca10d] rounded-full p-2 w-12 h-12 flex items-center justify-center">
+                  <img src={uploadIcon} alt="Upload" className="w-6 h-6" />
+                </div>
+                <span className="text-sm text-gray-500 text-center">
+                  Upload a User’s Photo
+                </span>
+              </div>
+            )}
+          </div>
+        </FormControl>
+        <FormMessage />
+      </FormItem>
+    );
+  }}
+/>
+
 
                 {/* Submit */}
                 <Button

@@ -9,7 +9,7 @@ import Card2 from './components/Card2';
 import Card3 from './components/Card3';
 import Card4 from './components/Card4';
 import { SkeletonCard } from './components/SkeletonCard';
-import Home from './pages/Home';
+import Home from './pages/Home';      
 import VisitorPage from './pages/VisitorPage';
 import Verify from './pages/Verify';
 import Bye from './pages/Bye';
@@ -26,17 +26,16 @@ import Layout from './components/layout/Layout';
 import Header1 from './components/layout/Header1';
 import ProfileMenu from './components/layout/ProfileMenu';
 import Sidebar from './components/layout/Sidebar';
-import Chart from './components/Chart'; 
+import Chart from './components/Chart';
 import Chart2 from './components/Chart2';// Ensure Chart is imported correctly
 import Emergencypage from './pages/Dashboardpages/Emergencypage';
 import GuestRegSuccessPage from './pages/Registration/GuestRegSuccessPage';
+import GuestRegistrationPage from './pages/Registration/GuestRegistrationPage';
 
-
-import Dashboard from './pages/Dashboardpages/Dashboard'; 
+import Dashboard from './pages/Dashboardpages/Dashboard';
 import UsersPage from './pages/Dashboardpages/userspage';
 import VisitorLogs from './pages/Dashboardpages/VisitorLogs';
 import Incident_Reports from './pages/Dashboardpages/Incident_Reports';
-
 
 
 
@@ -99,7 +98,7 @@ const App = () => {
   ]);
 
   return (
-  <Router>
+    <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/navigation" element={<Navigation />} />
@@ -121,8 +120,9 @@ const App = () => {
         <Route path="/userform" element={<UserForm setUsers={setUsers} />} />
         <Route path="/userspage" element={<UsersPage users={users} setUsers={setUsers} />} />
         <Route path="/emergencypage" element={<Emergencypage />} />
-        <Route path="/incident" element={<Incident />} /> 
+        <Route path="/incident" element={<Incident />} />
         <Route path="/guestregsuccess" element={<GuestRegSuccessPage />} />
+        <Route path="/guestregistrationpage" element={<GuestRegistrationPage />} />
 
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
@@ -131,10 +131,10 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/skeletoncard" element={<SkeletonCard />} />
         <Route path="/layout" element={<Layout />} />
-        <Route path="/header1" element={<Header1 />} />   
+        <Route path="/header1" element={<Header1 />} />
         <Route path="/profilemenu" element={<ProfileMenu />} />
         <Route path="/sidebar" element={<Sidebar />} />
-        <Route path="/chart" element={<Chart />} /> 
+        <Route path="/chart" element={<Chart />} />
         <Route path="/userspage" element={<UsersPage />} />
         <Route path="/visitorlogs" element={<VisitorLogs />} />
         <Route path="/chart2" element={<Chart2 />} /> {/* Ensure Chart2 is imported correctly */}
