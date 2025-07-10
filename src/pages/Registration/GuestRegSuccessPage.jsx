@@ -56,10 +56,10 @@ function GuestRegSuccessPage() {
           />
 
           {/* Logo */}
-          <img src={logo} className="absolute top-[100px] w-[150px] h-[104.83px]" />
+          <img src={logo} className="absolute top-[227px] w-[150px] h-[104.83px]" />
 
           {/* Success message */}
-          <div className="absolute flex justify-center w-[297px] h-[124px] top-[225px] py-[10px] gap-[10px]">
+          <div className="absolute flex justify-center w-[297px] h-[124px] top-[352px] py-[10px] gap-[10px]">
             <p className="w-[297px] h-[104px] font-dmsans font-normal text-[20px] leading-[100%] tracking-normal mx-auto text-[#00580D] text-center">
               Your details have been successfully submitted. An email and text with your check in details have been sent to you.
             </p>
@@ -68,7 +68,7 @@ function GuestRegSuccessPage() {
           {/* Close button */}
           <button
             onClick={handleClose}
-            className="absolute flex items-center justify-center w-[136px] h-[42px] top-[333px] rounded-[24px] px-[18px] gap-[10px] bg-[#00D21E]"
+            className="absolute flex items-center justify-center w-[136px] h-[42px] top-[483px] rounded-[24px] px-[18px] gap-[10px] bg-[#00D21E]"
           >
             <span className="text-white text-center font-dmsans font-normal text-[16px] leading-[100%] tracking-normal">
               Close
