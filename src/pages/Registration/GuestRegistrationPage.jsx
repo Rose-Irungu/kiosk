@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from "../../assets/logo.svg";
 import rectangle from "../../assets/rectangle-780.png";
-import sphere from "../assets/sphere-green-glossy0.png";
+import sphere from "../../assets/sphere-green-glossy0.png";
 import Header from "../../components/Header";
 
 function GuestRegistrationPage() {
