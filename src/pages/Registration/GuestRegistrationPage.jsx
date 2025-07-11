@@ -35,4 +35,4 @@ function GuestRegistrationPage() {
   );
 }
 
-export default GuestRegSuccessPage;
+export default GuestRegistrationPage;
