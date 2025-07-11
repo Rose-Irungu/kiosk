@@ -9,30 +9,7 @@ import sphere from "../assets/sphere-green-glossy0.png";
 const Welcomeback = () => {
   const location = useLocation();
   const { refNumber, full_name } = location.state || {};
-  
-  useEffect(() => {
-    // Check if data was passed from form submission
-    if (location.state?.visitorData) {
-      const { visitorName, visitorRef } = location.state.visitorData;
-      setVisitorName(visitorName || "Visitor");
-      setVisitorRef(visitorRef || "––");
-    } else {
-      // Fallback: fetch from API if no data passed
-      const fetchVisitorData = async () => {
-        try {
-          const response = await fetch("https://guestapi.zynamis.co.ke/api/kiosk/visitor/create");
-          const data = await response.json();
 
-          setVisitorName(data?.visitorName ?? "Visitor");
-          setVisitorRef(data?.visitorRef ?? "––");
-        } catch (err) {
-          console.error("Error fetching visitor data:", err);
-        }
-      };
-
-      fetchVisitorData();
-    }
-  }, [location.state]);
 
   return (
     <div className="flex min-h-screen w-full flex-col overflow-x-hidden bg-white">
@@ -55,11 +32,11 @@ const Welcomeback = () => {
             <div className="flex w-full max-w-md flex-col items-center gap-6">
               <div className="w-full rounded-xl border border-blue-500 bg-blue-100 p-5 text-center">
                 <h2 className="text-2xl font-semibold text-green-700 md:text-3xl">
-                  {t("Hi")} {full_name}!
+                  Hi {full_name}!
                 </h2>
                 <p className="mb-3 mt-1">Enjoy Your Stay At West Brook Apartment</p>
                 <p className="mb-3">
-                  {t("Your visitor Reference No is")}:{" "}
+                  Your visitor Reference No is: 
                   <span className="font-bold text-blue-800">{refNumber}</span>
                 </p>
                 <p>This number has been sent to you via email</p>

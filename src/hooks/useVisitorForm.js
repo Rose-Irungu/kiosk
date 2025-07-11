@@ -7,7 +7,7 @@ export const useVisitorForm = () => {
   const [searchParams] = useSearchParams();
   const location = useLocation();
   
-  // Get token from either URL params or query params
+  
   const token = urlToken || searchParams.get('token');
   
   const [formData, setFormData] = useState({
@@ -28,9 +28,9 @@ export const useVisitorForm = () => {
   const [isResidentMode, setIsResidentMode] = useState(false);
   const navigate = useNavigate();
 
-  // Determine the mode based on route and token
+  
   useEffect(() => {
-    console.log('Token found:', token); // Debug log
+    console.log('Token found:', token); 
     
     if (token) {
       setIsVisitorMode(true);
@@ -54,9 +54,9 @@ export const useVisitorForm = () => {
     setLoading(true);
     setError('');
     try {
-      console.log('Fetching invitation data for token:', token); // Debug log
+      console.log('Fetching invitation data for token:', token); 
       const response = await getInvitation(token);
-      console.log('Received invitation data:', response); // Debug log
+      console.log('Received invitation data:', response); 
       
       // Extract data from the API response structure
       const { data } = response;
@@ -97,14 +97,14 @@ export const useVisitorForm = () => {
     try {
       if (isVisitorMode && token) {
         // Visitor completing the invitation
-        navigate('/guestregsuccess')
+        navigate('/')
         await submitInvitation(token, formData);
         
       } else {
         // Resident creating invitation or security filling form
         await createInvitation(formData);
         if (isResidentMode) {
-          alert('Invitation sent successfully!');
+           navigate('/guestregsuccess');
         } else {
           alert('Visitor registered successfully!');
         }
@@ -124,7 +124,7 @@ export const useVisitorForm = () => {
     isVisitorMode,
     isSecurityMode,
     isResidentMode,
-    token, // Return token for debugging
+    token, 
     handleInputChange,
     handleSubmit
   };
