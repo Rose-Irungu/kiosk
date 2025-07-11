@@ -26,7 +26,7 @@ const Dashboard = () => {
           cardTitle="Current Visitors"
           count={50}
           link="View log"
-          linkHref="/visitors"
+          linkHref="/visitorlogs"
           icon={
             <img
               src="/doorbell.svg"
@@ -53,7 +53,7 @@ const Dashboard = () => {
           cardTitle="Emergencies Today"
           count={2}
           link="View details"
-          linkHref="/emergencies"
+          linkHref="/emergencypage"
           icon={
             <img
               src="/911.svg"
@@ -89,8 +89,9 @@ const Dashboard = () => {
         />
       </div>
 
-    
-      <div className="bg-white p-6 rounded-lg shadow mb-8 flex flex-col lg:flex-row gap-6">
+      {/* Chart - added overflow-x-auto for it to scroll within the parent container on mobile*/}
+      <div className="overflow-x-auto w-full bg-white p-6 rounded-lg shadow mb-8 flex flex-col lg:flex-row gap-6">
+
         <Chart />
         <Card3 className="lg:ml-4" />
       </div>
