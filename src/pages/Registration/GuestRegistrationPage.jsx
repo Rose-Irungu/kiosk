@@ -3,7 +3,7 @@ import logo from "../../assets/logo.svg";
 import rectangle from "../../assets/rectangle-780.png";
 import sphere from "../../assets/sphere-green-glossy0.png";
 import Header from "../../components/Header";
-import RegistrationForm from "../../components/forms/GuestCheckInForm";
+import GuestCheckInForm from "../../components/forms/GuestCheckInForm";
 
 function GuestRegistrationPage() {
   return (
@@ -21,7 +21,7 @@ function GuestRegistrationPage() {
           />
         </section>
         <section className="relative flex w-full flex-col items-center bg-[#E6FBE9] px-4 pb-12 pt-4 lg:w-1/2 lg:px-10">
-          <RegistrationForm />
+          <GuestCheckInForm />
         </section>
       </main>
     </div>

@@ -31,7 +31,7 @@ export default function GuestCheckInForm() {
     return "Fill in guest details to send an invitation.";
   };
 
-  // Check if field is prefilled and should be disabled
+  
   const isFieldPrefilled = (key) => {
     if (!isVisitorMode) return false;
     
@@ -39,10 +39,10 @@ export default function GuestCheckInForm() {
     return prefilledFields.includes(key) && formData[key];
   };
 
-  // Field configuration based on mode
+  
   const getFieldConfig = () => {
     if (isResidentMode) {
-      // Resident mode - only show fields needed for creating invitation
+      
       return [
         { 
           key: 'full_name', 
@@ -115,7 +115,7 @@ export default function GuestCheckInForm() {
 
     // Add mode-specific fields
     if (isVisitorMode) {
-      // Visitor mode - show host and unit info as readonly
+      
       baseFields.push(
         {
           key: 'host_name',
@@ -133,7 +133,7 @@ export default function GuestCheckInForm() {
         }
       );
     } else if (isSecurityMode) {
-      // Security mode - show all fields as editable
+      
       baseFields.push(
         {
           key: 'unit_number',

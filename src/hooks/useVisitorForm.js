@@ -1,43 +1,50 @@
-import { useState, useEffect } from 'react';
-import { useParams, useLocation, useSearchParams, useNavigate } from 'react-router-dom';
-import { createInvitation, getInvitation, submitInvitation } from '../services/visitorservice';
+import { useState, useEffect } from "react";
+import {
+  useParams,
+  useLocation,
+  useSearchParams,
+  useNavigate,
+} from "react-router-dom";
+import {
+  createInvitation,
+  getInvitation,
+  submitInvitation,
+} from "../services/visitorservice";
 
 export const useVisitorForm = () => {
   const { token: urlToken } = useParams();
   const [searchParams] = useSearchParams();
   const location = useLocation();
-  
-  
-  const token = urlToken || searchParams.get('token');
-  
+
+  const token = urlToken || searchParams.get("token");
+
   const [formData, setFormData] = useState({
-    full_name: '',
-    phone_number: '',
-    email: '',
-    visit_date: '',
-    host_name: '',
-    unit_number: '',
-    plate_number: '',
-    visitor_type: 'visitor',
-    photo: null
+    full_name: "",
+    phone_number: "",
+    email: "",
+    visit_date: "",
+    host_name: "",
+    unit_number: "",
+    plate_number: "",
+    visitor_type: "visitor",
+    photo: null,
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isVisitorMode, setIsVisitorMode] = useState(false);
   const [isSecurityMode, setIsSecurityMode] = useState(false);
   const [isResidentMode, setIsResidentMode] = useState(false);
   const navigate = useNavigate();
 
-  
   useEffect(() => {
-    console.log('Token found:', token); 
-    
+    console.log("Token found:", token);
+
     if (token) {
       setIsVisitorMode(true);
       setIsSecurityMode(false);
       setIsResidentMode(false);
       fetchInvitationData();
-    } else if (location.pathname.includes('security-checkin')) {
+    } else if (location.pathname.includes("security-checkin")) {
       setIsSecurityMode(true);
       setIsVisitorMode(false);
       setIsResidentMode(false);
@@ -50,68 +57,72 @@ export const useVisitorForm = () => {
 
   const fetchInvitationData = async () => {
     if (!token) return;
-    
+
     setLoading(true);
-    setError('');
+    setError("");
     try {
-      console.log('Fetching invitation data for token:', token); 
+      console.log("Fetching invitation data for token:", token);
       const response = await getInvitation(token);
-      console.log('Received invitation data:', response); 
-      
-      // Extract data from the API response structure
+      console.log("Received invitation data:", response);
+
       const { data } = response;
       const visitor = data;
       const visit = visitor.latest_visit;
-      
-      setFormData(prevData => ({
+
+      setFormData((prevData) => ({
         ...prevData,
-        full_name: visitor.full_name || '',
-        email: visitor.email || '',
-        phone_number: visitor.phone_number || '',
-        plate_number: visitor.plate_number || '',
-        visitor_type: visitor.visitor_type || 'visitor',
-        visit_date: visit?.visit_date || '',
-        host_name: visit?.host_name || '',
-        unit_number: visit?.unit_number || '',
+        full_name: visitor.full_name || "",
+        email: visitor.email || "",
+        phone_number: visitor.phone_number || "",
+        plate_number: visitor.plate_number || "",
+        visitor_type: visitor.visitor_type || "visitor",
+        visit_date: visit?.visit_date || "",
+        host_name: visit?.host_name || "",
+        unit_number: visit?.unit_number || "",
       }));
     } catch (err) {
-      setError('Failed to load invitation data');
-      console.error('Error fetching invitation:', err);
+      setError("Failed to load invitation data");
+      console.error("Error fetching invitation:", err);
     } finally {
       setLoading(false);
     }
   };
 
   const handleInputChange = (field, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
+
+    //
+    if (isVisitorMode && !formData.photo) {
+      setError("Please upload a photo before submitting the form.");
+      setLoading(false);
+      return;
+    }
 
     try {
       if (isVisitorMode && token) {
-        // Visitor completing the invitation
-        navigate('/')
         await submitInvitation(token, formData);
-        
+        navigate("/");
       } else {
-        // Resident creating invitation or security filling form
+      
         await createInvitation(formData);
         if (isResidentMode) {
-           navigate('/guestregsuccess');
+          navigate("/guestregsuccess");
         } else {
-          alert('Visitor registered successfully!');
+          alert("Visitor registered successfully!");
         }
       }
     } catch (err) {
-      setError('Failed to submit form');
-      console.error('Error submitting form:', err);
+      setError("Failed to submit form");
+      console.error("Error submitting form:", err);
     } finally {
       setLoading(false);
     }
@@ -124,8 +135,8 @@ export const useVisitorForm = () => {
     isVisitorMode,
     isSecurityMode,
     isResidentMode,
-    token, 
+    token,
     handleInputChange,
-    handleSubmit
+    handleSubmit,
   };
 };
