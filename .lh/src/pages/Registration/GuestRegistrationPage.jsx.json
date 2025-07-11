@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 31,
+            "activePatchIndex": 33,
             "patches": [
                 {
                     "date": 1752142994338,
@@ -132,6 +132,14 @@
                 {
                     "date": 1752153351451,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,30 @@\n+import React from 'react';\r\n+import logo from \"../../assets/logo.svg\";\r\n+import rectangle from \"../../assets/rectangle-780.png\";\r\n+import Header from \"../../components/Header\";\r\n+import RegistrationForm from \"../../components/forms/GuestCheckInForm\";\r\n+\r\n+function GuestRegistrationPage() {\r\n+  return (\r\n+    <div className=\"flex min-h-screen w-full flex-col overflow-x-hidden bg-white\">\r\n+      <Header />\r\n+      <main className=\"flex flex-1 flex-col lg:flex-row\">\r\n+        <section\r\n+          className=\"relative flex h-48 w-full flex-shrink-0 items-center justify-center bg-cover bg-center lg:h-auto lg:w-1/2\"\r\n+          style={{ backgroundImage: `url(${rectangle})` }}\r\n+        >\r\n+          <img\r\n+            src={logo}\r\n+            alt=\"West Brook Logo\"\r\n+            className=\"w-32 md:w-44 lg:w-60 xl:w-72\"\r\n+          />\r\n+        </section>\r\n+        <section className=\"relative flex w-full flex-col items-center bg-[#E6FBE9] px-4 pb-12 pt-4 lg:w-1/2 lg:px-10\">\r\n+          <RegistrationForm />\r\n+        </section>\r\n+      </main>\r\n+    </div>\r\n+  );\r\n+}\r\n+\r\n+export default GuestRegistrationPage;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1752224967914,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,10 @@\n import React from 'react';\r\n import logo from \"../../assets/logo.svg\";\r\n import rectangle from \"../../assets/rectangle-780.png\";\r\n+import sphere from \"../../assets/sphere-green-glossy0.png\";\r\n import Header from \"../../components/Header\";\r\n-import RegistrationForm from \"../../components/forms/GuestCheckInForm\";\r\n+import GuestCheckInForm from \"../../components/forms/GuestCheckInForm\";\r\n \r\n function GuestRegistrationPage() {\r\n   return (\r\n     <div className=\"flex min-h-screen w-full flex-col overflow-x-hidden bg-white\">\r\n@@ -26,35 +27,5 @@\n     </div>\r\n   );\r\n }\r\n \r\n-export default GuestRegistrationPage;\n-import React from 'react';\r\n-import logo from \"../../assets/logo.svg\";\r\n-import rectangle from \"../../assets/rectangle-780.png\";\r\n-import Header from \"../../components/Header\";\r\n-import RegistrationForm from \"../../components/forms/GuestCheckInForm\";\r\n-\r\n-function GuestRegistrationPage() {\r\n-  return (\r\n-    <div className=\"flex min-h-screen w-full flex-col overflow-x-hidden bg-white\">\r\n-      <Header />\r\n-      <main className=\"flex flex-1 flex-col lg:flex-row\">\r\n-        <section\r\n-          className=\"relative flex h-48 w-full flex-shrink-0 items-center justify-center bg-cover bg-center lg:h-auto lg:w-1/2\"\r\n-          style={{ backgroundImage: `url(${rectangle})` }}\r\n-        >\r\n-          <img\r\n-            src={logo}\r\n-            alt=\"West Brook Logo\"\r\n-            className=\"w-32 md:w-44 lg:w-60 xl:w-72\"\r\n-          />\r\n-        </section>\r\n-        <section className=\"relative flex w-full flex-col items-center bg-[#E6FBE9] px-4 pb-12 pt-4 lg:w-1/2 lg:px-10\">\r\n-          <RegistrationForm />\r\n-        </section>\r\n-      </main>\r\n-    </div>\r\n-  );\r\n-}\r\n-\r\n export default GuestRegistrationPage;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1752224974971,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n             className=\"w-32 md:w-44 lg:w-60 xl:w-72\"\r\n           />\r\n         </section>\r\n         <section className=\"relative flex w-full flex-col items-center bg-[#E6FBE9] px-4 pb-12 pt-4 lg:w-1/2 lg:px-10\">\r\n-          <RegistrationForm />\r\n+          <GuestCheckInForm />\r\n         </section>\r\n       </main>\r\n     </div>\r\n   );\r\n"
                 }
             ],
             "date": 1752142994338,
