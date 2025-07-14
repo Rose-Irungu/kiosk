@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from "../../assets/logo.svg";
-// import rectangle from "../../assets/rectangle-780.png";
+import rectangle from "../../assets/rectangle-780.png";
 import sphere from "../../assets/sphere-green-glossy0.png";
 import Header from "../../components/Header";
 import GuestCheckInForm from "../../components/forms/GuestCheckInForm";
@@ -27,7 +27,10 @@ function GuestRegistrationPage() {
             />
           </div>
         </section>
-        <section className="relative flex w-full flex-col items-center bg-[#E6FBE9] px-4 pb-12 pt-4 lg:w-1/2 lg:px-10">
+        <section className="relative z-10 mx-[15px] my-[15px] h-[calc(100vh-30px)] flex flex-col items-center 
+          rounded-[24px] bg-[#E6FBE9] px-4 pt-[20px] pb-[20px] shadow-lg backdrop-blur-sm
+          lg:static lg:mx-0 lg:my-0 lg:min-h-screen lg:w-1/2 lg:rounded-none lg:shadow-none 
+          lg:px-10 lg:justify-center">
           <GuestCheckInForm />
         </section>
       </main>
@@ -35,4 +38,4 @@ function GuestRegistrationPage() {
   );
 }
 
-export default GuestRegSuccessPage;
+export default GuestRegistrationPage;
