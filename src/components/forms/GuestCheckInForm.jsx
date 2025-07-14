@@ -78,8 +78,7 @@ export default function GuestCheckInForm() {
       ];
     }
 
-    // Full field configuration for visitor and security modes
-    const baseFields = [
+      const baseFields = [
       { 
         key: 'full_name', 
         label: 'Guest Name *', 
@@ -113,7 +112,7 @@ export default function GuestCheckInForm() {
       }
     ];
 
-    // Add mode-specific fields
+    
     if (isVisitorMode) {
       
       baseFields.push(
