@@ -14,6 +14,7 @@ import {
   AlarmClock,
 } from "lucide-react";
 import DashboardTable from "../../components/tables/DashboardTable";
+// import { getCurrentVisitors, getActiveIncidents, getEmergenciesToday, getTotalActiveUsers, getLatestPanicAlert, resolvePanicAlert } from '../services/dashboardService';
 
 const Dashboard = () => {
   return (

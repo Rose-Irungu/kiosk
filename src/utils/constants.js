@@ -3,11 +3,13 @@ export const API_ENDPOINTS = {
   VISITOR_CHECKOUT: '/visits/checkout/',
   INVITE_VISITOR: '/visitors/send-invite/',
   REGISTER_VISITOR: '/visitors/register/',
-  GET_VISITOR: '/visitors/get_visitor/',
-  // VISITOR_DETAILS: '/kiosk/visitor/details/',
-  // VISITOR_QR_CODE: '/kiosk/visitor/qrcode/',
-  // VISITOR_LIST: '/kiosk/visitor/list/'
-
+  // GET_VISITOR: '/visitors/get_visitor/',
+  //  GET_CURRENT_VISITORS: '/visitors/current',
+  // GET_ACTIVE_INCIDENTS: '/incidents/active',
+  // GET_EMERGENCIES_TODAY: '/emergencies/today',
+  // GET_TOTAL_ACTIVE_USERS: '/users/active',
+  // GET_LATEST_PANIC_ALERT: '/emergencies/latest-panic',
+  // RESOLVE_PANIC_ALERT: '/emergencies/resolve-panic',
   //users
   ADD_USER: '/user/create/',
   ALL_USERS: '/user/all_users/',
