@@ -40,6 +40,7 @@ import Dashboard from "./pages/Dashboardpages/Dashboard";
 import UsersPage from "./pages/Dashboardpages/userspage";
 import VisitorLogs from "./pages/Dashboardpages/VisitorLogs";
 import Incident_Reports from "./pages/Dashboardpages/Incident_Reports";
+import HelpPage from "./pages/Dashboardpages/Help";
 
 const App = () => {
   const [users, setUsers] = useState([
@@ -135,6 +136,7 @@ const App = () => {
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
         <Route path="/incident_report" element={<Incident_Reports />} />
+        <Route path="/help" element={<HelpPage />} />
         <Route path="/triggers" element={<Triggers />} />{" "}
         {/* Ensure Triggers is imported correctly */}
         <Route path="/dashboard" element={<Dashboard />} />
