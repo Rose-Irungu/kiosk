@@ -14,23 +14,23 @@ const ForgotPasswordForm = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      await authService.sent_password_reset({'email' : email})
+      await authService.sent_password_reset({ 'email': email })
       navigate('/loginform')
     } catch (error) {
-        console.log('-----------------error-----------'); 
+      console.log('-----------------error-----------');
     }
   }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
-      <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl flex flex-col md:flex-row">
+      <div className="bg-white shadow-lg rounded-[16px] w-full max-w-4xl flex flex-col md:flex-row overflow-hidden font-['Inter']">
 
-
+        {/* Left Image Section */}
         <div className="w-full md:w-1/2 relative">
           <img
             src="rectangle-780.png"
             alt="Signup Visual"
-            className="w-full h-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-tr-none"
+            className="w-full h-full object-cover"
           />
           <img
             src="logo copy.svg"
@@ -39,40 +39,39 @@ const ForgotPasswordForm = () => {
           />
         </div>
 
-
-        <div className="w-full md:w-1/2 p-8 mt-14">
-
-          <div className="mb-6">
-            <h2 className="text-2xl font-semibold mb-2">Forgot Your Password?</h2>
-            <p className="text-sm text-gray-600">
+        {/* Right Form Section */}
+        <div className="w-full md:w-1/2 p-15 mx-[37.5px] mt-[50px] mb-[50px] ">
+          <div className="mb-6  ">
+            <h2 className="text-2xl font-semibold mb-2 ">Forgot Your Password?</h2>
+            <p className="text-xs text-gray-600">
               Type the email you used to sign up on West Brook and we’ll send you
               a password reset email.
             </p>
           </div>
 
           <form onSubmit={handleOnSubmit}>
-            <div className="mb-6">
-              <label className="block text-sm font-medium mb-1">Your Email</label>
+            <div className="mb-6 mt-[30px]">
+              <label className="block text-base font-medium mb-1">Your Email</label>
               <input
                 type="email"
                 placeholder="e.g john@gmail.com"
-                className="w-full border border-gray-300 rounded px-3 py-2"
+                className="flex items-center gap-2 px-4 py-2 w-[299px] h-12 bg-[#F5F4F5] rounded-lg"
                 value={email}
                 onChange={handleEmailChange}
               />
             </div>
 
-
-            <div className="mb-6">
-              <button type="submit" onClick={handleOnSubmit} className="w-full bg-[#005e0e] text-white py-2 rounded ">
+            <div className="mt-[30px] mb-6">
+              <button type="submit"
+                onClick={handleOnSubmit} className="hover:bg-[#004a0b] transition-colors duration-200 text-sm flex items-center justify-center gap-2 px-6 w-[299px] h-12 bg-[#005E0E] text-white rounded-lg flex-grow">
                 SEND RESET EMAIL
               </button>
+
+              
             </div>
           </form>
 
-
-
-          <div className="text-center text-sm text-gray-600">
+          <div className="text-start text-sm text-gray-600">
             Go back to{" "}
             <Link
               to="/loginform"
@@ -84,6 +83,9 @@ const ForgotPasswordForm = () => {
         </div>
       </div>
     </div>
+
+
+
   );
 };
 

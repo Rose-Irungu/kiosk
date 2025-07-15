@@ -30,17 +30,36 @@ export default function Visitors() {
     try {
       const res = await getAllVisitors();
       if (res.result_code === 0) {
-        setVisitors(res.data);
+        let allData = res.data;
+
+        // Apply filter (if not 'all')
+        if (visitorTypeFilter !== "all") {
+          allData = allData.filter(
+            (v) => v.visitor_type === visitorTypeFilter
+          );
+        }
+
+        setTotalEntries(allData.length);
+
+        // Slice data for current page
+        const start = (currentPage - 1) * entriesPerPage;
+        const end = start + entriesPerPage;
+        const paginated = allData.slice(start, end);
+
+        setVisitors(paginated);
       } else {
         setVisitors([]);
+        setTotalEntries(0);
       }
     } catch (error) {
       console.error("Error fetching visitors:", error);
       setVisitors([]);
+      setTotalEntries(0);
     } finally {
       setLoading(false);
     }
   };
+
 
 
   const totalPages = Math.ceil(totalEntries / entriesPerPage);
