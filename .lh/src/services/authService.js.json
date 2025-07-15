@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/services/authService.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1752586035008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1752586042337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,11 +12,9 @@\n         }\r\n     },\r\n     loginUser: async (credentials) => {\r\n       try {\r\n-        const response = await api.post(API_ENDPOINTS.LOGIN, {\r\n-          \r\n-        });\r\n+        const response = await api.post(API_ENDPOINTS.LOGIN, );\r\n \r\n         return response.data;\r\n       } catch (error) {\r\n         throw error.response?.data || { message: 'Login failed. Please try again.' };\r\n"
+                },
+                {
+                    "date": 1752586049514,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,24 @@\n+import { API_ENDPOINTS } from \"../utils/constants\";\r\n+import api from \"./api\";\r\n+\r\n+export const authService = {\r\n+    sent_password_reset: async (formData) => {\r\n+        try {\r\n+        const response = await api.post(API_ENDPOINTS.SENT_PASSWORD_RESET, formData);\r\n+        return response.data;\r\n+        } catch (error) {\r\n+        console.error(\"Error during check-in:\", error);\r\n+        throw error;\r\n+        }\r\n+    },\r\n+    loginUser: async (credentials) => {\r\n+      try {\r\n+        const response = await api.post(API_ENDPOINTS.LOGIN, credetials);\r\n+\r\n+        return response.data;\r\n+      } catch (error) {\r\n+        throw error.response?.data || { message: 'Login failed. Please try again.' };\r\n+      }\r\n+    },\r\n+\r\n+}\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1752586035008,
+            "name": "Commit-0",
+            "content": "import { API_ENDPOINTS } from \"../utils/constants\";\r\nimport api from \"./api\";\r\n\r\nexport const authService = {\r\n    sent_password_reset: async (formData) => {\r\n        try {\r\n        const response = await api.post(API_ENDPOINTS.SENT_PASSWORD_RESET, formData);\r\n        return response.data;\r\n        } catch (error) {\r\n        console.error(\"Error during check-in:\", error);\r\n        throw error;\r\n        }\r\n    },\r\n    loginUser: async (credentials) => {\r\n      try {\r\n        const response = await api.post(API_ENDPOINTS.LOGIN, {\r\n          \r\n        });\r\n\r\n        return response.data;\r\n      } catch (error) {\r\n        throw error.response?.data || { message: 'Login failed. Please try again.' };\r\n      }\r\n    },\r\n\r\n}"
+        }
+    ]
+}
