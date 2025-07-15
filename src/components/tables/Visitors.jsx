@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { getAllVisitors } from "../../services/visitorservice";
 import {
   Table,
   TableBody,
@@ -23,14 +24,13 @@ export default function Visitors() {
     fetchVisitors();
   }, [currentPage, entriesPerPage, visitorTypeFilter]);
 
-  const apiURL = "http://guestapi.zynamis.co.ke/api/visitors/all-visitors/";
 
   const fetchVisitors = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(apiURL);
-      if (res.data.result_code === 0) {
-        setVisitors(res.data.data);
+      const res = await getAllVisitors();
+      if (res.result_code === 0) {
+        setVisitors(res.data);
       } else {
         setVisitors([]);
       }

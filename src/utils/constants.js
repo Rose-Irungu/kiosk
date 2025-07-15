@@ -4,6 +4,7 @@ export const API_ENDPOINTS = {
   INVITE_VISITOR: '/visitors/send-invite/',
   REGISTER_VISITOR: '/visitors/register/',
   GET_VISITOR: '/visitors/get_visitor/',
+  GET_ALL_VISITORS : '/visitors/all-visitors/',
   //  GET_CURRENT_VISITORS: '/visitors/current',
   // GET_ACTIVE_INCIDENTS: '/incidents/active',
   // GET_EMERGENCIES_TODAY: '/emergencies/today',
@@ -15,6 +16,7 @@ export const API_ENDPOINTS = {
   ALL_USERS: '/user/all_users/',
   DELETE_USER: '/user/delete/',
   UPDATE_USER: '/user/update/',
+  SENT_PASSWORD_RESET: '/user/password-reset/'
 
 }
 
