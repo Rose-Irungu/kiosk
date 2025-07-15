@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { authService } from "../../services/authService";
 
 const LoginForm = () => {
@@ -103,8 +103,10 @@ const LoginForm = () => {
                 Remember me
               </label>
               <span className="text-sm text-[#005e0e] hover:underline cursor-pointer">
-                Forgot Password?
-              </span>
+              <Link to='/forgotpassword'>
+              Forgot Password?
+              </Link>
+            </span>
             </div>
 
             {error && (
