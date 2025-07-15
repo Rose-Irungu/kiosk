@@ -17,7 +17,7 @@ export const API_ENDPOINTS = {
   ALL_USERS: '/user/all_users/',
   DELETE_USER: '/user/delete/',
   UPDATE_USER: '/user/update/',
-  SENT_PASSWORD_RESET: '/user/password-reset/'
+  SENT_PASSWORD_RESET: '/user/password-reset/',
 
   // Auth
   LOGIN: '/auth/login/',
