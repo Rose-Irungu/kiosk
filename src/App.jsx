@@ -132,7 +132,7 @@ const App = () => {
         <Route path="/loginform" element={<LoginForm />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/forgotpassworderror" element={<ForgotPasswordError />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/reset-password/:uid/:token/" element={<ResetPassword />} />
         <Route path="/resetemail" element={<ResetEmail />} />
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
