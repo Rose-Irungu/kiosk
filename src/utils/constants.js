@@ -18,7 +18,11 @@ export const API_ENDPOINTS = {
   UPDATE_USER: '/user/update/',
 
   // Auth
-  LOGIN: '/auth/login/'
+  LOGIN: '/auth/login/',
+
+  // Emergencies
+  EMERGENCY_LIST: '/incidence-and-emergency/emergency-list/',
+  EMERGENCY_UPDATE: '/incidence-and-emergency/update-emergency/{id}/',
 
 }
 
