@@ -28,6 +28,7 @@ const LoginForm = () => {
             <input
               type="text"
               placeholder="Your Email"
+              required
               className="w-full border border-gray-300 rounded px-3 py-2"
             />
           </div>
@@ -37,6 +38,7 @@ const LoginForm = () => {
             <input
               type="password"
               placeholder="Password"
+              required
               className="w-full border border-gray-300 rounded px-3 py-2"
             />
             <p className="text-xs text-gray-500 mt-1">
@@ -50,7 +52,9 @@ const LoginForm = () => {
               Remember me
             </label>
             <span className="text-sm text-[#005e0e] hover:underline cursor-pointer">
+              <Link to='/forgotpassword'>
               Forgot Password?
+              </Link>
             </span>
           </div>
 

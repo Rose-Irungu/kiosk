@@ -1,13 +1,24 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ForgotPasswordForm = () => {
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // TODO: You can trigger API to send reset email here
+
+    // Redirect to reset confirmation page
+    navigate("/resetemail");
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
       <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl flex flex-col md:flex-row">
         
-        
-       <div className="w-full md:w-1/2 relative">
+        {/* Left Side - Image */}
+        <div className="w-full md:w-1/2 relative">
           <img
             src="rectangle-780.png"
             alt="Signup Visual"
@@ -20,9 +31,8 @@ const ForgotPasswordForm = () => {
           />
         </div>
 
-        
+        {/* Right Side - Form */}
         <div className="w-full md:w-1/2 p-8 mt-14">
-          
           <div className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">Forgot Your Password?</h2>
             <p className="text-sm text-gray-600">
@@ -31,24 +41,30 @@ const ForgotPasswordForm = () => {
             </p>
           </div>
 
-          
-          <div className="mb-6">
-            <label className="block text-sm font-medium mb-1">Your Email</label>
-            <input
-              type="email"
-              placeholder="e.g john@gmail.com"
-              className="w-full border border-gray-300 rounded px-3 py-2"
-            />
-          </div>
+          <form onSubmit={handleSubmit}>
+            {/* Email Input */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium mb-1">Your Email</label>
+              <input
+                type="email"
+                placeholder="e.g john@gmail.com"
+                className="w-full border border-gray-300 rounded px-3 py-2"
+                required
+              />
+            </div>
 
-          
-          <div className="mb-6">
-            <button className="w-full bg-[#005e0e] text-white py-2 rounded ">
-              SEND RESET EMAIL
-            </button>
-          </div>
+            {/* Submit Button */}
+            <div className="mb-6">
+              <button
+                type="submit"
+                className="w-full bg-[#005e0e] text-white py-2 rounded"
+              >
+                SEND RESET EMAIL
+              </button>
+            </div>
+          </form>
 
-          
+          {/* Link Back to Login */}
           <div className="text-center text-sm text-gray-600">
             Go back to{" "}
             <Link
