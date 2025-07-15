@@ -23,7 +23,7 @@ export default function Visitors() {
     fetchVisitors();
   }, [currentPage, entriesPerPage, visitorTypeFilter]);
 
-  const apiURL = "http://localhost:8000/api/visitors/all-visitors/";
+  const apiURL = "http://guestapi.zynamis.co.ke/api/visitors/all-visitors/";
 
   const fetchVisitors = async () => {
     setLoading(true);
