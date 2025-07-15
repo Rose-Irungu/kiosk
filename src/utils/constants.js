@@ -3,6 +3,7 @@ export const API_ENDPOINTS = {
   VISITOR_CHECKOUT: '/visits/checkout/',
   INVITE_VISITOR: '/visitors/send-invite/',
   REGISTER_VISITOR: '/visitors/register/',
+  MOST_VISITED_UNITS: '/visits/most-visited-units/',
   // GET_VISITOR: '/visitors/get_visitor/',
   //  GET_CURRENT_VISITORS: '/visitors/current',
   // GET_ACTIVE_INCIDENTS: '/incidents/active',

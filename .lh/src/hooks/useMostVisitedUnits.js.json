@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/hooks/useMostVisitedUnits.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1752569144318,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1752569629961,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,23 +4,27 @@\n const useMostVisitedUnits = () => {\r\n   const [units, setUnits] = useState([]);\r\n   const [loading, setLoading] = useState(true);\r\n \r\n-  useEffect(() => {\r\n-    const fetchUnits = async () => {\r\n-      try {\r\n-        const data = await getMostVisitedUnits();\r\n-        setUnits(data);\r\n-      } catch (error) {\r\n-        console.error(\"Error fetching most visited units:\", error);\r\n-      } finally {\r\n-        setLoading(false);\r\n+ useEffect(() => {\r\n+  const fetchUnits = async () => {\r\n+    try {\r\n+      const data = await getMostVisitedUnits();\r\n+      setUnits(data);\r\n+    } catch (error) {\r\n+      console.error(\"Error fetching most visited units:\", error);\r\n+      if (error.response) {\r\n+        console.error(\"Server responded with:\", error.response.data);\r\n       }\r\n-    };\r\n+    } finally {\r\n+      setLoading(false);\r\n+    }\r\n+  };\r\n \r\n-    fetchUnits();\r\n-  }, []);\r\n+  fetchUnits();\r\n+}, []);\r\n \r\n+\r\n   return { units, loading };\r\n };\r\n \r\n export default useMostVisitedUnits;\r\n"
+                },
+                {
+                    "date": 1752569887734,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n     try {\r\n       const data = await getMostVisitedUnits();\r\n       setUnits(data);\r\n     } catch (error) {\r\n-      console.error(\"Error fetching most visited units:\", error);\r\n+   \r\n       if (error.response) {\r\n         console.error(\"Server responded with:\", error.response.data);\r\n       }\r\n     } finally {\r\n"
+                }
+            ],
+            "date": 1752569144318,
+            "name": "Commit-0",
+            "content": "import { useEffect, useState } from \"react\";\r\nimport { getMostVisitedUnits } from \"../services/visitorservice\";\r\n\r\nconst useMostVisitedUnits = () => {\r\n  const [units, setUnits] = useState([]);\r\n  const [loading, setLoading] = useState(true);\r\n\r\n  useEffect(() => {\r\n    const fetchUnits = async () => {\r\n      try {\r\n        const data = await getMostVisitedUnits();\r\n        setUnits(data);\r\n      } catch (error) {\r\n        console.error(\"Error fetching most visited units:\", error);\r\n      } finally {\r\n        setLoading(false);\r\n      }\r\n    };\r\n\r\n    fetchUnits();\r\n  }, []);\r\n\r\n  return { units, loading };\r\n};\r\n\r\nexport default useMostVisitedUnits;\r\n"
+        }
+    ]
+}
