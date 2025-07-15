@@ -24,8 +24,6 @@ const ForgotPasswordForm = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
       <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl flex flex-col md:flex-row">
-
-
         <div className="w-full md:w-1/2 relative">
           <img
             src="rectangle-780.png"

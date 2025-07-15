@@ -5,9 +5,7 @@ const ResetPasswordForm = () => {
   const navigate = useNavigate();
 
   const handleResetPassword = () => {
-    // Add form validation or API logic here if needed
-
-    // Redirect to login page after reset
+   
     navigate("/loginform");
   };
 
@@ -17,23 +15,23 @@ const ResetPasswordForm = () => {
         
         <div className="w-full md:w-1/2 relative">
           <img
-            src="rectangle-780.png"
+            src="/rectangle-780.png"
             alt="Signup Visual"
             className="w-full h-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-tr-none"
           />
           <img
-            src="logo copy.svg"
+            src="/logo copy.svg"
             alt="West Brook Logo"
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[150px] sm:max-w-[200px] lg:max-w-[250px] max-h-[200px] sm:max-h-[300px] lg:max-h-[500px] w-full h-auto animate-bounce-once"
           />
         </div>
 
        
-        <div className="w-full md:w-1/2 p-8 mt-10">
+        <div className="w-full md:w-1/2 p-8 mt-10 ">
           <div className="mb-6">
-            <h2 className="text-2xl font-semibold mb-2">Reset Password</h2>
-            <p className="text-sm text-gray-600">
-              Enter your new password so as to continue and login
+            <h2 className="text-2xl font-DM Sans font-bold text-[#445963] mb-2">Reset Password</h2>
+            <p className="text-m text-[#445963]">
+              Enter your new password  so as to <br/>continue and login
             </p>
           </div>
 

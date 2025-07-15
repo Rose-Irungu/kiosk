@@ -7,7 +7,11 @@
 body {
   font-family: 'DM Sans';
 }
-
+@layer base {
+  input, textarea, select, label {
+    @apply text-[#445963] border-[#445963];
+  }
+}
 @keyframes bounce-once {
   0%, 20%, 53%, 80%, 100% {
     transform: translate3d(0,0,0);
