@@ -1,20 +1,29 @@
-import api from './api';
-import { API_ENDPOINTS } from '../utils/constants';
+import { API_ENDPOINTS } from "../utils/constants";
+import api from "./api";
 
-// Logs in the user by posting credentials wrapped in a `user` object.
-// credentials = { email, password }
+export const authService = {
+    sent_password_reset: async (formData) => {
+        try {
+        const response = await api.post(API_ENDPOINTS.SENT_PASSWORD_RESET, formData);
+        return response.data;
+        } catch (error) {
+        console.error("Error during check-in:", error);
+        throw error;
+        }
+    },
+    loginUser: async (credentials) => {
+      try {
+        const response = await api.post(API_ENDPOINTS.LOGIN, {
+          user: {
+            email: credentials.email,
+            password: credentials.password,
+          },
+        });
 
-export const loginUser = async (credentials) => {
-  try {
-    const response = await api.post(API_ENDPOINTS.LOGIN, {
-      user: {
-        email: credentials.email,
-        password: credentials.password,
-      },
-    });
+        return response.data;
+      } catch (error) {
+        throw error.response?.data || { message: 'Login failed. Please try again.' };
+      }
+    },
 
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || { message: 'Login failed. Please try again.' };
-  }
-};
+}

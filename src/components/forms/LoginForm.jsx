@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../../services/authService";
+import { authService } from "../../services/authService";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -17,7 +17,7 @@ const LoginForm = () => {
     const credentials = { email, password };
 
     try {
-      const result = await loginUser(credentials);
+      const result = await authService.loginUser(credentials);
 
       if (result.result_code === 0) {
         const { access, refresh, user } = result.data;

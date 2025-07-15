@@ -22,3 +22,8 @@ export const createInvitation = async (formData) => {
   const res = await api.post(API_ENDPOINTS.INVITE_VISITOR, formData);
   return res.data;
 };
+
+export const getAllVisitors = async () => {
+  const res = await api.get(API_ENDPOINTS.GET_ALL_VISITORS);
+  return res.data;
+}
