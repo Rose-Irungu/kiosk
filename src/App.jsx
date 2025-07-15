@@ -34,6 +34,7 @@ import GuestRegSuccessPage from "./pages/Registration/GuestRegSuccessPage";
 import GuestRegistrationPage from "./pages/Registration/GuestRegistrationPage";
 import RegistrationForm from "./components/forms/RegistrationForm";
 import ForgotPassword from "./components/forms/ForgotPassword";
+import ForgotPasswordError from "./components/forms/ForgotPasswordError";
 import ResetEmail from "./components/forms/ResetEmail";
 import Dashboard from "./pages/Dashboardpages/Dashboard";
 import UsersPage from "./pages/Dashboardpages/userspage";
@@ -128,8 +129,9 @@ const App = () => {
         <Route path="/registrationform" element={<RegistrationForm />} />
         <Route path="/loginform" element={<LoginForm />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/resetpassword" element={<ResetPassword />} />
-         <Route path="/resetemail" element={<ResetEmail />} />
+        <Route path="/forgotpassworderror" element={<ForgotPasswordError />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/resetemail" element={<ResetEmail />} />
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
         <Route path="/incident_report" element={<Incident_Reports />} />

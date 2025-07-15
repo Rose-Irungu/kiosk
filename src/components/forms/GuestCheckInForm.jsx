@@ -24,9 +24,8 @@ export default function GuestCheckInForm() {
     if (isVisitorMode) {
       const full_name = formData?.full_name || "Guest";
       const host_name = formData?.host_name || "a resident";
-      return `Hi ${full_name}, 
-      <br>
-      ${host_name} has sent you an invite link to West Brook Apartments. Complete the form for a smooth check-in process.`;
+      return `Hi ${full_name},\n${host_name} has sent you an invite link to West Brook Apartments.\nComplete the form for a smooth check-in process.`;
+
     }
     if (isSecurityMode) {
       return "Fill in the visitor details for gate entry.";
