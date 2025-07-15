@@ -8,6 +8,8 @@ export const getInvitation = async (token) => {
 };
 
 export const submitInvitation = async (token, formData) => {
+  console.log(`-------------------- ${API_ENDPOINTS.REGISTER_VISITOR}?token=${token}`);
+  
   const res = await api.post(`${API_ENDPOINTS.REGISTER_VISITOR}?token=${token}`, formData,{
       headers: {
           'Content-Type': 'multipart/form-data',
