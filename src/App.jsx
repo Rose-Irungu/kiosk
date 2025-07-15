@@ -1,46 +1,44 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { UserForm } from './components/forms/form';
-import Header from './components/Header';
-import Navbar from './components/Navbar';
-import Navigation from './components/Navigation';
-import Card1 from './components/Card1';
-import Card2 from './components/Card2';
-import Card3 from './components/Card3';
-import Card4 from './components/Card4';
-import { SkeletonCard } from './components/SkeletonCard';
-import Home from './pages/Home';      
-import VisitorPage from './pages/VisitorPage';
-import Verify from './pages/Verify';
-import Bye from './pages/Bye';
-import Error from './pages/Error';
-import Welcomeback from './pages/Welcomeback';
-import { DashboardTable } from './components/tables/DashboardTable';
-import Users from './components/tables/Users';
-import Visitors from './components/tables/Visitors';
-import Emergencies from './components/tables/Emergencies';
-import Incident from './components/tables/Incident';
-
-import Triggers from './components/tables/Triggers'; // Ensure Triggers is imported correctly
-import Layout from './components/layout/Layout';
-import Header1 from './components/layout/Header1';
-import ProfileMenu from './components/layout/ProfileMenu';
-import Sidebar from './components/layout/Sidebar';
-import Chart from './components/Chart';
-import Chart2 from './components/Chart2';// Ensure Chart is imported correctly
-import Emergencypage from './pages/Dashboardpages/Emergencypage';
-import GuestRegSuccessPage from './pages/Registration/GuestRegSuccessPage';
-import GuestRegistrationPage from './pages/Registration/GuestRegistrationPage';
-
-import Dashboard from './pages/Dashboardpages/Dashboard';
-import UsersPage from './pages/Dashboardpages/userspage';
-import VisitorLogs from './pages/Dashboardpages/VisitorLogs';
-import Incident_Reports from './pages/Dashboardpages/Incident_Reports';
-
-
-
-
-
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { UserForm } from "./components/forms/form";
+import Header from "./components/Header";
+import Navbar from "./components/Navbar";
+import Navigation from "./components/Navigation";
+import Card1 from "./components/Card1";
+import Card2 from "./components/Card2";
+import Card3 from "./components/Card3";
+import Card4 from "./components/Card4";
+import { SkeletonCard } from "./components/SkeletonCard";
+import Home from "./pages/Home";
+import VisitorPage from "./pages/VisitorPage";
+import Verify from "./pages/Verify";
+import Bye from "./pages/Bye";
+import Error from "./pages/Error";
+import Welcomeback from "./pages/Welcomeback";
+import { DashboardTable } from "./components/tables/DashboardTable";
+import Users from "./components/tables/Users";
+import Visitors from "./components/tables/Visitors";
+import Emergencies from "./components/tables/Emergencies";
+import Incident from "./components/tables/Incident";
+import LoginForm from "./components/forms/LoginForm";
+import ResetPassword from "./components/forms/ResetPassword";
+import Triggers from "./components/tables/Triggers";
+import Layout from "./components/layout/Layout";
+import Header1 from "./components/layout/Header1";
+import ProfileMenu from "./components/layout/ProfileMenu";
+import Sidebar from "./components/layout/Sidebar";
+import Chart from "./components/Chart";
+import Chart2 from "./components/Chart2";
+import Emergencypage from "./pages/Dashboardpages/Emergencypage";
+import GuestRegSuccessPage from "./pages/Registration/GuestRegSuccessPage";
+import GuestRegistrationPage from "./pages/Registration/GuestRegistrationPage";
+import RegistrationForm from "./components/forms/RegistrationForm";
+import ForgotPassword from "./components/forms/ForgotPassword";
+import ResetEmail from "./components/forms/ResetEmail";
+import Dashboard from "./pages/Dashboardpages/Dashboard";
+import UsersPage from "./pages/Dashboardpages/userspage";
+import VisitorLogs from "./pages/Dashboardpages/VisitorLogs";
+import Incident_Reports from "./pages/Dashboardpages/Incident_Reports";
 
 const App = () => {
   const [users, setUsers] = useState([
@@ -94,7 +92,6 @@ const App = () => {
       email: "mary@example.com",
       id: "55667788",
     },
-
   ]);
 
   return (
@@ -114,21 +111,30 @@ const App = () => {
         <Route path="/bye" element={<Bye />} />
         <Route path="/error" element={<Error />} />
         <Route path="/dashboardtable" element={<DashboardTable />} />
-
-        {/* ✅ Share users state */}
-        <Route path="/users" element={<Users users={users} setUsers={setUsers} />} />
+        <Route
+          path="/users"
+          element={<Users users={users} setUsers={setUsers} />}
+        />
         <Route path="/userform" element={<UserForm setUsers={setUsers} />} />
-        <Route path="/userspage" element={<UsersPage users={users} setUsers={setUsers} />} />
+        <Route
+          path="/userspage"
+          element={<UsersPage users={users} setUsers={setUsers} />}
+        />
         <Route path="/emergencypage" element={<Emergencypage />} />
         <Route path="/incident" element={<Incident />} />
         <Route path="/guestregsuccess" element={<GuestRegSuccessPage />} />
         <Route path="/guestform" element={<GuestRegistrationPage />} />
         <Route path="/guestform/:token" element={<GuestRegistrationPage />} />
-
+        <Route path="/registrationform" element={<RegistrationForm />} />
+        <Route path="/loginform" element={<LoginForm />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
+         <Route path="/resetemail" element={<ResetEmail />} />
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
         <Route path="/incident_report" element={<Incident_Reports />} />
-        <Route path="/triggers" element={<Triggers />} /> {/* Ensure Triggers is imported correctly */}
+        <Route path="/triggers" element={<Triggers />} />{" "}
+        {/* Ensure Triggers is imported correctly */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/skeletoncard" element={<SkeletonCard />} />
         <Route path="/layout" element={<Layout />} />
@@ -138,7 +144,8 @@ const App = () => {
         <Route path="/chart" element={<Chart />} />
         <Route path="/userspage" element={<UsersPage />} />
         <Route path="/visitorlogs" element={<VisitorLogs />} />
-        <Route path="/chart2" element={<Chart2 />} /> {/* Ensure Chart2 is imported correctly */}
+        <Route path="/chart2" element={<Chart2 />} />{" "}
+        {/* Ensure Chart2 is imported correctly */}
         {/* Add more routes as needed */}
       </Routes>
     </Router>

@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  useParams,
-  useLocation,
-  useSearchParams,
-  useNavigate,
-} from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import {
   createInvitation,
   getInvitation,
@@ -13,10 +8,9 @@ import {
 
 export const useVisitorForm = () => {
   const { token: urlToken } = useParams();
-  const [searchParams] = useSearchParams();
   const location = useLocation();
 
-  const token = urlToken || searchParams.get("token");
+  const token = urlToken;
 
   const [formData, setFormData] = useState({
     full_name: "",
@@ -112,7 +106,6 @@ export const useVisitorForm = () => {
         await submitInvitation(token, formData);
         navigate("/");
       } else {
-      
         await createInvitation(formData);
         if (isResidentMode) {
           navigate("/guestregsuccess");

@@ -14,7 +14,6 @@ export default function GuestCheckInForm() {
     handleSubmit
   } = useVisitorForm();
 
-
   const getFormTitle = () => {
     if (isVisitorMode) return "Complete Your Invitation";
     if (isSecurityMode) return "Security Check-in";
@@ -23,7 +22,11 @@ export default function GuestCheckInForm() {
 
   const getFormDescription = () => {
     if (isVisitorMode) {
-      return "Hi there! Please complete the form for a smooth check-in process.";
+      const full_name = formData?.full_name || "Guest";
+      const host_name = formData?.host_name || "a resident";
+      return `Hi ${full_name}, 
+      <br>
+      ${host_name} has sent you an invite link to West Brook Apartments. Complete the form for a smooth check-in process.`;
     }
     if (isSecurityMode) {
       return "Fill in the visitor details for gate entry.";
@@ -31,7 +34,6 @@ export default function GuestCheckInForm() {
     return "Fill in guest details to send an invitation.";
   };
 
-  
   const isFieldPrefilled = (key) => {
     if (!isVisitorMode) return false;
     
@@ -39,10 +41,8 @@ export default function GuestCheckInForm() {
     return prefilledFields.includes(key) && formData[key];
   };
 
-  
   const getFieldConfig = () => {
     if (isResidentMode) {
-      
       return [
         { 
           key: 'full_name', 
@@ -78,7 +78,6 @@ export default function GuestCheckInForm() {
       ];
     }
 
-    // Full field configuration for visitor and security modes
     const baseFields = [
       { 
         key: 'full_name', 
@@ -113,9 +112,7 @@ export default function GuestCheckInForm() {
       }
     ];
 
-    // Add mode-specific fields
     if (isVisitorMode) {
-      
       baseFields.push(
         {
           key: 'host_name',
@@ -133,7 +130,6 @@ export default function GuestCheckInForm() {
         }
       );
     } else if (isSecurityMode) {
-      
       baseFields.push(
         {
           key: 'unit_number',
@@ -165,10 +161,11 @@ export default function GuestCheckInForm() {
     return baseFields;
   };
 
-  if (loading) {
+  // Show loading state while fetching invitation data in visitor mode
+  if (loading && isVisitorMode) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="text-[#00580d]">Loading...</div>
+        <div className="text-[#00580d]">Loading invitation details...</div>
       </div>
     );
   }
@@ -196,7 +193,6 @@ export default function GuestCheckInForm() {
         <div className="text-[#00580d] text-sm font-medium text-left">
           <h2 className="font-bold mb-2">{getFormTitle()}</h2>
           <p>{getFormDescription()}</p>
-          
         </div>
 
         {error && (
@@ -214,7 +210,6 @@ export default function GuestCheckInForm() {
               <div key={key} className="flex flex-col gap-1 w-full">
                 <label className="text-[#00d21e] text-xs font-medium">
                   {label}
-                  
                 </label>
                 <div className={`bg-white border border-[#54e168] rounded-xl px-3 py-2 text-sm text-[#00580d] ${
                   isDisabled ? 'opacity-60 bg-gray-50' : ''

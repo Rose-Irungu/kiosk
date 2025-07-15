@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/services/dashboardService.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1752485726451,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1752485726451,
+            "name": "Commit-0",
+            "content": "import api from './api';\r\nimport { API_ENDPOINTS } from '../utils/constants';\r\n\r\nexport const getCurrentVisitors = async () => {\r\n  const res = await api.get(API_ENDPOINTS.GET_CURRENT_VISITORS);\r\n  return res.data;\r\n};\r\n\r\nexport const getActiveIncidents = async () => {\r\n  const res = await api.get(API_ENDPOINTS.GET_ACTIVE_INCIDENTS);\r\n  return res.data;\r\n};\r\n\r\nexport const getEmergenciesToday = async () => {\r\n  const res = await api.get(API_ENDPOINTS.GET_EMERGENCIES_TODAY);\r\n  return res.data;\r\n};\r\n\r\nexport const getTotalActiveUsers = async () => {\r\n  const res = await api.get(API_ENDPOINTS.GET_TOTAL_ACTIVE_USERS);\r\n  return res.data;\r\n};\r\n\r\nexport const getLatestPanicAlert = async () => {\r\n  const res = await api.get(API_ENDPOINTS.GET_LATEST_PANIC_ALERT);\r\n  return res.data;\r\n};\r\n\r\nexport const resolvePanicAlert = async (alertId) => {\r\n  const res = await api.post(API_ENDPOINTS.RESOLVE_PANIC_ALERT, { alertId });\r\n  return res.data;\r\n};"
+        }
+    ]
+}
