@@ -13,12 +13,7 @@ export const authService = {
     },
     loginUser: async (credentials) => {
       try {
-        const response = await api.post(API_ENDPOINTS.LOGIN, {
-          user: {
-            email: credentials.email,
-            password: credentials.password,
-          },
-        });
+        const response = await api.post(API_ENDPOINTS.LOGIN, credentials);
 
         return response.data;
       } catch (error) {

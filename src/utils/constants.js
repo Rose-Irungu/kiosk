@@ -20,7 +20,7 @@ export const API_ENDPOINTS = {
   SENT_PASSWORD_RESET: '/user/password-reset/',
 
   // Auth
-  LOGIN: '/auth/login/',
+  LOGIN: '/user/login/',
 
   // Emergencies
   EMERGENCY_LIST: '/incidence-and-emergency/emergency-list/',
