@@ -10,11 +10,19 @@ export const API_ENDPOINTS = {
   // GET_TOTAL_ACTIVE_USERS: '/users/active',
   // GET_LATEST_PANIC_ALERT: '/emergencies/latest-panic',
   // RESOLVE_PANIC_ALERT: '/emergencies/resolve-panic',
+
   //users
   ADD_USER: '/user/create/',
   ALL_USERS: '/user/all_users/',
   DELETE_USER: '/user/delete/',
   UPDATE_USER: '/user/update/',
+
+  // Auth
+  LOGIN: '/auth/login/',
+
+  // Emergencies
+  EMERGENCY_LIST: '/incidence-and-emergency/emergency-list/',
+  EMERGENCY_UPDATE: '/incidence-and-emergency/update-emergency/{id}/',
 
 }
 
