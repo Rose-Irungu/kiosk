@@ -41,6 +41,7 @@ import UsersPage from "./pages/Dashboardpages/userspage";
 import VisitorLogs from "./pages/Dashboardpages/VisitorLogs";
 import Incident_Reports from "./pages/Dashboardpages/Incident_Reports";
 
+
 const App = () => {
   const [users, setUsers] = useState([
     {
@@ -130,8 +131,8 @@ const App = () => {
         <Route path="/loginform" element={<LoginForm />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/forgotpassworderror" element={<ForgotPasswordError />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/resetemail" element={<ResetEmail />} />
+        <Route path="/reset-password/:uid/:token/" element={<ResetPassword />} />
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
         <Route path="/incident_report" element={<Incident_Reports />} />

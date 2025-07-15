@@ -11,4 +11,14 @@ export const authService = {
         throw error;
         }
     },
+    loginUser: async (credentials) => {
+      try {
+        const response = await api.post(API_ENDPOINTS.LOGIN, credentials);
+
+        return response.data;
+      } catch (error) {
+        throw error.response?.data || { message: 'Login failed. Please try again.' };
+      }
+    },
+
 }
