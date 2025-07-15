@@ -20,18 +20,18 @@ import Users from './components/tables/Users';
 import Visitors from './components/tables/Visitors';
 import Emergencies from './components/tables/Emergencies';
 import Incident from './components/tables/Incident';
-
-import Triggers from './components/tables/Triggers'; // Ensure Triggers is imported correctly
+import LoginForm from './components/forms/LoginForm'
+import Triggers from './components/tables/Triggers'; 
 import Layout from './components/layout/Layout';
 import Header1 from './components/layout/Header1';
 import ProfileMenu from './components/layout/ProfileMenu';
 import Sidebar from './components/layout/Sidebar';
 import Chart from './components/Chart';
-import Chart2 from './components/Chart2';// Ensure Chart is imported correctly
+import Chart2 from './components/Chart2';
 import Emergencypage from './pages/Dashboardpages/Emergencypage';
 import GuestRegSuccessPage from './pages/Registration/GuestRegSuccessPage';
 import GuestRegistrationPage from './pages/Registration/GuestRegistrationPage';
-
+import RegistrationForm from './components/forms/RegistrationForm'
 import Dashboard from './pages/Dashboardpages/Dashboard';
 import UsersPage from './pages/Dashboardpages/userspage';
 import VisitorLogs from './pages/Dashboardpages/VisitorLogs';
@@ -115,7 +115,8 @@ const App = () => {
         <Route path="/error" element={<Error />} />
         <Route path="/dashboardtable" element={<DashboardTable />} />
 
-        {/* ✅ Share users state */}
+
+      
         <Route path="/users" element={<Users users={users} setUsers={setUsers} />} />
         <Route path="/userform" element={<UserForm setUsers={setUsers} />} />
         <Route path="/userspage" element={<UsersPage users={users} setUsers={setUsers} />} />
@@ -124,6 +125,9 @@ const App = () => {
         <Route path="/guestregsuccess" element={<GuestRegSuccessPage />} />
         <Route path="/guestform" element={<GuestRegistrationPage />} />
         <Route path="/guestform/:token" element={<GuestRegistrationPage />} />
+        <Route path="/registrationform" element={<RegistrationForm /> } />
+         <Route path="/loginform" element={<LoginForm /> } />
+        
 
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
