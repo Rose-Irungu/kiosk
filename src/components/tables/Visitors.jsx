@@ -121,9 +121,9 @@ export default function Visitors() {
               onChange={handleFilterChange}
             >
               <option value="all">All</option>
-              <option value="Recurring">Recurring</option>
-              <option value="Service">Service</option>
-              <option value="One-time">One-time</option>
+              <option value="recurring">Recurring</option>
+              <option value="service">Service</option>
+              <option value="one-time">One-time</option>
             </select>
             <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
           </div>
@@ -131,24 +131,33 @@ export default function Visitors() {
 
         {/* Table */}
         <div className="p-4">
-          {loading ? (
-            <div className="text-center text-gray-500 py-10">Loading...</div>
-          ) : visitors.length === 0 ? (
-            <div className="text-center text-gray-500 py-10">No visitors found.</div>
-          ) : (
-            <Table>
-              <TableHeader>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Photo</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Phone</TableHead>
+                <TableHead>Visitor Type</TableHead>
+                <TableHead>Host/Unit</TableHead>
+                <TableHead>Status</TableHead>
+              </TableRow>
+            </TableHeader>
+
+            <TableBody>
+              {loading ? (
                 <TableRow>
-                  <TableHead>Photo</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Phone</TableHead>
-                  <TableHead>Visitor Type</TableHead>
-                  <TableHead>Host/Unit</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableCell colSpan={6}>
+                    <div className="text-center text-gray-500 py-10">Loading...</div>
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {visitors.map((visitor, index) => (
+              ) : visitors.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6}>
+                    <div className="text-center text-gray-500 py-10">No visitors found.</div>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                visitors.map((visitor, index) => (
                   <TableRow key={index}>
                     <TableCell>
                       {visitor.visitor_photo ? (
@@ -168,24 +177,25 @@ export default function Visitors() {
                     <TableCell>{visitor.visitor_type}</TableCell>
                     <TableCell>{visitor.host_unit || "N/A"}</TableCell>
                     <TableCell>
-                      <span
-                        className={`px-3 py-1 text-xs font-medium rounded-full ${visitor.status === "Checked-In"
-                          ? "bg-[#c2f0c9]"
-                          : visitor.status === "Checked-Out"
-                            ? "bg-[#e0dbf4]"
-                            : "bg-yellow-200 text-yellow-800"
+                      <div
+                        className={`flex items-center justify-center px-1 py-0.5 gap-2 w-[90px] h-[20px] rounded text-xs font-medium ${visitor.status === "checked_in"
+                            ? "bg-[rgba(1,210,30,0.2)] text-green-800"
+                            : visitor.status === "checked_out"
+                              ? "bg-[#E0DBF4] text-purple-800"
+                              : "bg-yellow-200 text-yellow-800"
                           }`}
                       >
                         {visitor.status}
-                      </span>
+                      </div>
+
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-
-            </Table>
-          )}
+                ))
+              )}
+            </TableBody>
+          </Table>
         </div>
+
 
 
       </div>
