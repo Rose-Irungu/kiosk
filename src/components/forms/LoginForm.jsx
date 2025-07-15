@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../../services/loginService";
+import { loginUser } from "../../services/authService";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -14,29 +14,27 @@ const LoginForm = () => {
     setLoading(true);
     setError("");
 
+    const credentials = { email, password };
+
     try {
-      const result = await loginUser({ email, password });
+      const result = await loginUser(credentials);
 
       if (result.result_code === 0) {
         const { access, refresh, user } = result.data;
 
-        // Store tokens + user info
         localStorage.setItem("accessToken", access);
         localStorage.setItem("refreshToken", refresh);
         localStorage.setItem("userInfo", JSON.stringify(user));
         localStorage.setItem("userRole", user.role);
 
-        // Redirect based on role
         switch (user.role) {
           case "admin":
             navigate("/dashboard");
             break;
           case "tenant":
-            // navigate("/tenant/dashboard"); // Enable when ready
             console.log("Tenant login successful – dashboard not ready.");
             break;
           case "security":
-            // navigate("/security/dashboard"); // Enable when ready
             console.log("Security login successful – dashboard not ready.");
             break;
           default:
