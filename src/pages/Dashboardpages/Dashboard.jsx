@@ -14,13 +14,13 @@ import useVisitorStats from "../../hooks/useVisitorStats";
 const Dashboard = () => {
   const [stats, setStats] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   // Use the new visitor stats hook
-  const { 
-    stats: visitorStats, 
-    loading: visitorLoading, 
-    error: visitorError, 
-    totalVisitors 
+  const {
+    stats: visitorStats,
+    loading: visitorLoading,
+    error: visitorError,
+    totalVisitors,
   } = useVisitorStats();
 
   useEffect(() => {
@@ -43,11 +43,10 @@ const Dashboard = () => {
 
   return (
     <Layout>
-    
       <div className="flex flex-wrap justify-start mb-[12px]">
         <Card1
           cardTitle="Current Visitors"
-          count={visitorLoading ? "..." : totalVisitors}
+          count={visitorLoading ? "..." : stats?.visitors?.total}
           link="View log"
           linkHref="/visitorlogs"
           icon={
@@ -60,7 +59,7 @@ const Dashboard = () => {
         />
         <Card1
           cardTitle="Active Incidents"
-          count={loading ? "..." : stats?.incidents?.total || 0}
+          count={loading ? "..." : stats?.incidents_in_progress?.total || 0}
           link="View details"
           linkHref="/incident_report"
           icon={
@@ -73,7 +72,9 @@ const Dashboard = () => {
         />
         <Card1
           cardTitle="Emergencies Today"
-          count={loading ? "..." : stats?.emergencies?.total || 0}
+          count={
+            loading ? "..." : stats?.emergencies?.stats?.today_emergencies || 0
+          }
           link="View details"
           linkHref="/emergencypage"
           icon={
@@ -99,14 +100,12 @@ const Dashboard = () => {
         />
       </div>
 
-     
       {visitorError && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
           {visitorError}
         </div>
       )}
 
-   
       <div className="mb-[30px]">
         <Card2
           label="Active Incidents"
@@ -119,7 +118,12 @@ const Dashboard = () => {
 
       <div className="overflow-x-auto w-full bg-white p-6 rounded-lg shadow mb-8 flex flex-col lg:flex-row gap-6">
         <Chart />
-        <Card3 className="lg:ml-4" />
+        <Card3
+          companyVisitors={loading ? 0 : stats?.visitor_totals?.company || 0}
+          residentVisitors={loading ? 0 : stats?.visitor_totals?.resident || 0}
+          serviceProviders={loading ? 0 : stats?.visitor_totals?.service || 0}
+          className="lg:ml-4"
+        />
       </div>
 
       <DashboardTable />

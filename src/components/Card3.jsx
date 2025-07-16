@@ -17,7 +17,7 @@ export default function Card3({
 }) {
   const cards = [
     { label: "Company's Visitors", value: companyVisitors },
-    { label: "Residents’ Visitors", value: residentVisitors },
+    { label: "Resident's Visitors", value: residentVisitors },
     { label: "Service Providers", value: serviceProviders },
   ];
 

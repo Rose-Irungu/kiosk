@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1752130827786,
@@ -12,6 +12,10 @@
                 {
                     "date": 1752130833651,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n           )}\r\n \r\n           <a\r\n             href={linkHref}\r\n-            className=\"text-xs font-dmsans font-medium text-[] underline\"\r\n+            className=\"text-xs font-dmsans font-medium text-[#40864a] underline\"\r\n           >\r\n             {link}\r\n           </a>\r\n         </div>\r\n"
+                },
+                {
+                    "date": 1752665924263,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,62 +1,27 @@\n-import { useState, useEffect } from \"react\";\r\n-\r\n export default function Card1({\r\n   cardTitle,\r\n   link,\r\n   linkHref,\r\n   icon,\r\n-  endpoint,\r\n+  count,\r\n }) {\r\n-  const [no, setNo] = useState(null);\r\n-  const [loading, setLoading] = useState(true);\r\n-  const [error, setError] = useState(false);\r\n-\r\n-  useEffect(() => {\r\n-    let cancelled = false;\r\n-    fetch(endpoint)\r\n-      .then((res) => res.json())\r\n-      .then((data) => {\r\n-        if (!cancelled) {\r\n-          setNo(data.count);\r\n-          setLoading(false);\r\n-        }\r\n-      })\r\n-      .catch(() => {\r\n-        if (!cancelled) {\r\n-          setError(true);\r\n-          setLoading(false);\r\n-        }\r\n-      });\r\n-\r\n-    return () => {\r\n-      cancelled = true;\r\n-    };\r\n-  }, [endpoint]);\r\n-\r\n   return (\r\n     <div\r\n       id=\"container\"\r\n       className=\"basis-full w-full md:basis-1/2 md:w-1/2 lg:basis-1/4 lg:w-1/4 p-2\"\r\n     >\r\n       <div className=\"flex items-center justify-between h-full rounded-xl bg-white p-6 shadow-md\">\r\n         <div id=\"details\" className=\"flex flex-col gap-1\">\r\n           <h1 className=\"text-sm font-dmsans font-semibold text-gray-700\">{cardTitle}</h1>\r\n-\r\n-          {loading && <h2 className=\"animate-pulse text-gray-400\">…</h2>}\r\n-          {error && <h2 className=\"text-gray-600\">0</h2>}\r\n-          {!loading && !error && (\r\n-            <h2 className=\"text-base font-dmsans font-bold text-gray-600\">{no}</h2>\r\n-          )}\r\n-\r\n+          <h2 className=\"text-base font-dmsans font-bold text-gray-600\">{count}</h2>\r\n           <a\r\n             href={linkHref}\r\n             className=\"text-xs font-dmsans font-medium text-[#40864a] underline\"\r\n           >\r\n             {link}\r\n           </a>\r\n         </div>\r\n-\r\n         <div\r\n           id=\"icon\"\r\n           className=\"flex items-center justify-center ml-4 flex-shrink-0 text-green-500 text-4xl\"\r\n         >\r\n"
                 }
             ],
             "date": 1752130827786,

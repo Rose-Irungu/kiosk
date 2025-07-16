@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/components/Card3.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1752666035110,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1752666035110,
+            "name": "Commit-0",
+            "content": "\r\nimport React from \"react\";\r\n\r\n/**\r\n * Card3 – Visitor totals card\r\n *\r\n * @param {number} companyVisitors   – total company guests\r\n * @param {number} residentVisitors  – total resident guests\r\n * @param {number} serviceProviders  – total service‑provider visits\r\n * @param {string} className         – extra Tailwind classes (optional)\r\n */\r\nexport default function Card3({\r\n  companyVisitors = 0,\r\n  residentVisitors = 0,\r\n  serviceProviders = 0,\r\n  className = \"\",\r\n}) {\r\n  const cards = [\r\n    { label: \"Company's Visitors\", value: companyVisitors },\r\n    { label: \"Residents Visitors\", value: residentVisitors },\r\n    { label: \"Service Providers\", value: serviceProviders },\r\n  ];\r\n\r\n  return (\r\n    <div\r\n      className={`flex h-[340px] w-[260px] flex-col gap-3 rounded-[10px] bg-white py-6 px-4 ${className}`}\r\n    >\r\n      {cards.map(({ label, value }) => (\r\n        <div\r\n          key={label}\r\n          className=\"w-[228px] h-[88px] flex flex-col gap-4 self-center rounded-[10px] border bg-white p-3\"\r\n        >\r\n          <p className=\"font-dmsans text-sm leading-[20px] text-[#495057] lining-nums proportional-nums\">\r\n            {label}\r\n          </p>\r\n          <p className=\"font-dmsans text-[20px] font-bold leading-[20px] text-[#495057] lining-nums proportional-nums\">\r\n            {value}\r\n          </p>\r\n        </div>\r\n      ))}\r\n    </div>\r\n  );\r\n}\r\n"
+        }
+    ]
+}
