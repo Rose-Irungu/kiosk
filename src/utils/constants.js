@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
   MOST_VISITED_UNITS: '/visits/most-visited-units/',
   GET_VISITOR: '/visitors/get_visitor/',
   GET_ALL_VISITORS : '/visitors/all-visitors/',
+  
   //  GET_CURRENT_VISITORS: '/visitors/current',
   // GET_ACTIVE_INCIDENTS: '/incidents/active',
   // GET_EMERGENCIES_TODAY: '/emergencies/today',
