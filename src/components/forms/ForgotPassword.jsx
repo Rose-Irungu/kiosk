@@ -64,7 +64,7 @@ const ForgotPasswordForm = () => {
               <div className="mt-6 mb-6">
                 <button
                   type="submit"
-                  className="w-full h-12 bg-green-700 hover:bg-green-800 transition-colors text-white rounded-lg"
+                  className=" shadow w-full h-12 bg-green-700 hover:bg-green-800 transition-colors text-white rounded-lg"
                 >
                   SEND RESET EMAIL
                 </button>
