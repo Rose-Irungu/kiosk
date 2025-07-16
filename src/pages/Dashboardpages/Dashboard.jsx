@@ -116,14 +116,21 @@ const Dashboard = () => {
         />
       </div>
 
-      <div className="overflow-x-auto w-full bg-white p-6 rounded-lg shadow mb-8 flex flex-col lg:flex-row gap-6">
-        <Chart />
-        <Card3
-          companyVisitors={loading ? 0 : stats?.visitor_totals?.company || 0}
-          residentVisitors={loading ? 0 : stats?.visitor_totals?.resident || 0}
-          serviceProviders={loading ? 0 : stats?.visitor_totals?.service || 0}
-          className="lg:ml-4"
-        />
+      <div className="w-full flex flex-col lg:flex-row gap-6 mb-8">
+        {/* Chart container */}
+        <div className="bg-white lg:w-3/4 p-3 rounded-lg shadow flex-1 lg:flex-initial">
+          <Chart />
+        </div>
+        
+        {/* Card container */}
+        <div className="lg:w-1/4 flex-1 lg:flex-initial">
+          <Card3
+            companyVisitors={loading ? 0 : stats?.visitor_totals?.company || 0}
+            residentVisitors={loading ? 0 : stats?.visitor_totals?.resident || 0}
+            serviceProviders={loading ? 0 : stats?.visitor_totals?.service || 0}
+            className="h-full"
+          />
+        </div>
       </div>
 
       <DashboardTable />
