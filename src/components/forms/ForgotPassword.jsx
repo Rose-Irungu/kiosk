@@ -26,7 +26,7 @@ const ForgotPasswordForm = () => {
       <div className="bg-white shadow-lg rounded-[16px] w-full max-w-4xl flex flex-col md:flex-row overflow-hidden font-['Inter']">
 
         {/* Left Image Section */}
-        <div className="w-full md:w-1/2 relative">
+        <div className="w-full md:w-1/2 relative hidden md:block">
           <img
             src="rectangle-780.png"
             alt="Signup Visual"
@@ -40,47 +40,47 @@ const ForgotPasswordForm = () => {
         </div>
 
         {/* Right Form Section */}
-        <div className="w-full md:w-1/2 p-15 mx-[37.5px] mt-[50px] mb-[50px] ">
-          <div className="mb-6  ">
-            <h2 className="text-2xl font-semibold mb-2 ">Forgot Your Password?</h2>
-            <p className="text-xs text-gray-600">
-              Type the email you used to sign up on West Brook and we’ll send you
-              a password reset email.
-            </p>
-          </div>
-
-          <form onSubmit={handleOnSubmit}>
-            <div className="mb-6 mt-[30px]">
-              <label className="block text-base font-medium mb-1">Your Email</label>
-              <input
-                type="email"
-                placeholder="e.g john@gmail.com"
-                className="flex items-center gap-2 px-4 py-2 w-[299px] h-12 bg-[#F5F4F5] rounded-lg"
-                value={email}
-                onChange={handleEmailChange}
-              />
+        <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-[50px]">
+          <div className="w-full max-w-xs">
+            <div className="mb-6">
+              <h2 className="text-2xl font-semibold mb-2">Forgot Your Password?</h2>
+              <p className="text-xs text-gray-600">
+                Type the email you used to sign up on West Brook and we’ll send you a password reset email.
+              </p>
             </div>
 
-            <div className="mt-[30px] mb-6">
-              <button type="submit"
-                onClick={handleOnSubmit} className="hover:bg-[#004a0b] transition-colors duration-200 text-sm flex items-center justify-center gap-2 px-6 w-[299px] h-12 bg-[#005E0E] text-white rounded-lg flex-grow">
-                SEND RESET EMAIL
-              </button>
+            <form onSubmit={handleOnSubmit} className="w-full">
+              <div className="mb-6 mt-6">
+                <label className="block text-base font-medium mb-1">Your Email</label>
+                <input
+                  type="email"
+                  placeholder="e.g john@gmail.com"
+                  className="px-4 py-2 w-full h-12 bg-[#F5F4F5] rounded-lg"
+                  value={email}
+                  onChange={handleEmailChange}
+                />
+              </div>
 
-              
+              <div className="mt-6 mb-6">
+                <button
+                  type="submit"
+                  className="w-full h-12 bg-green-700 hover:bg-green-800 transition-colors text-white rounded-lg"
+                >
+                  SEND RESET EMAIL
+                </button>
+              </div>
+            </form>
+
+            <div className="text-start text-sm text-gray-600">
+              Go back to{" "}
+              <Link to="/loginform" className="text-green-700 font-medium hover:underline">
+                LOGIN
+              </Link>
             </div>
-          </form>
-
-          <div className="text-start text-sm text-gray-600">
-            Go back to{" "}
-            <Link
-              to="/loginform"
-              className="text-[#005e0e] font-medium hover:underline"
-            >
-              LOGIN
-            </Link>
           </div>
         </div>
+
+
       </div>
     </div>
 
