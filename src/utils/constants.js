@@ -3,15 +3,11 @@ export const API_ENDPOINTS = {
   VISITOR_CHECKOUT: '/visits/checkout/',
   INVITE_VISITOR: '/visitors/send-invite/',
   REGISTER_VISITOR: '/visitors/register/',
+  MOST_VISITED_UNITS: '/visits/most-visited-units/',
   GET_VISITOR: '/visitors/get_visitor/',
   GET_ALL_VISITORS : '/visitors/all-visitors/',
-  //  GET_CURRENT_VISITORS: '/visitors/current',
-  // GET_ACTIVE_INCIDENTS: '/incidents/active',
-  // GET_EMERGENCIES_TODAY: '/emergencies/today',
-  // GET_TOTAL_ACTIVE_USERS: '/users/active',
-  // GET_LATEST_PANIC_ALERT: '/emergencies/latest-panic',
-  // RESOLVE_PANIC_ALERT: '/emergencies/resolve-panic',
-
+  DASHBOARD_STATISTICS: '/statistics/active-users/count/',
+ 
   //users
   ADD_USER: '/user/create/',
   ALL_USERS: '/user/all_users/',

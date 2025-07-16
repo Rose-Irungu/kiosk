@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -10,93 +10,69 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const invoices = [
-  {
-    unit: "B-03",
-    resident: "Joyce Kimani",
-    visit: "37",
-    lastvisit: "Today 10:22 AM",
-    lastvisitor: "John Doe",
-  },
-  {
-    unit: "C-07",
-    resident: "Ali Mwangi",
-    visit: "35",
-    lastvisit: "Yesterday 4:10 PM",
-    lastvisitor: "Esther W.",
-  },
-  {
-    unit: "A-12",
-    resident: "James Okello",
-    visit: "30",
-    lastvisit: "Today 9:40 AM",
-    lastvisitor: "Mary Wanja",
-  },
-];
+import useMostVisitedUnits from "../../hooks/useMostVisitedUnits";
 
 export function DashboardTable() {
+  const [filter, setFilter] = useState("today");
+ const { units, loading, error } = useMostVisitedUnits(filter);
+
   return (
     <div className="w-full max-w-6xl mx-auto bg-white p-6 rounded-xl shadow-sm mt-10">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-semibold">Most Visited Units</h2>
         <div className="relative">
-          <select className="flex h-10 items-center rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
-            <option>Today</option>
-            <option>This Week</option>
-            <option>This Month</option>
-            <option>This Year</option>
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="flex h-10 items-center rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+          >
+            <option value="today">Today</option>
+            <option value="week">This Week</option>
+            <option value="month">This Month</option>
+            <option value="year">This Year</option>
           </select>
         </div>
       </div>
 
       {/* Table */}
-      <Table>
-        <TableCaption className="sr-only">
-          A list of your recent invoices.
-        </TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="font-medium text-muted-foreground">
-              Unit
-            </TableHead>
-            <TableHead className="font-medium text-muted-foreground">
-              Resident
-            </TableHead>
-            <TableHead className="font-medium text-muted-foreground">
-              Visit
-            </TableHead>
-            <TableHead className="font-medium text-muted-foreground">
-              Last Visit
-            </TableHead>
-            <TableHead className=" font-medium text-muted-foreground">
-              Last Visitor
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow
-              key={invoice.unit}
-              className={
-                (invoice.unit === "B-03" &&
-                  invoice.resident === "Joyce Kimani") ||
-                (invoice.unit === "A-12" && invoice.resident === "James Okello")
-                  ? "bg-[#f2f7f3]"
-                  : ""
-              }
-            >
-              <TableCell className="font-medium">{invoice.unit}</TableCell>
-              <TableCell>{invoice.resident}</TableCell>
-              <TableCell>{invoice.visit}</TableCell>
-              <TableCell>{invoice.lastvisit}</TableCell>
-              <TableCell>
-                {invoice.lastvisitor}
-              </TableCell>
+      {loading ? (
+        <p className="text-center py-10">Loading...</p>
+      ) : (
+        <Table>
+          <TableCaption className="sr-only">
+            A list of the most visited units.
+          </TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="font-medium text-muted-foreground">Unit</TableHead>
+              <TableHead className="font-medium text-muted-foreground">Resident</TableHead>
+              <TableHead className="font-medium text-muted-foreground">Visit</TableHead>
+              <TableHead className="font-medium text-muted-foreground">Last Visit</TableHead>
+              <TableHead className="font-medium text-muted-foreground">Last Visitor</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {units.map((unit) => (
+              <TableRow
+                key={unit.unit}
+                className={
+                  (unit.unit === "B-03" && unit.resident === "Joyce Kimani") ||
+                  (unit.unit === "A-12" && unit.resident === "James Okello")
+                    ? "bg-[#f2f7f3]"
+                    : ""
+                }
+              >
+                <TableCell className="font-medium">{unit.unit_number}</TableCell>
+                <TableCell>{unit.resident_name}</TableCell>
+                <TableCell>{unit.visit_count}</TableCell>
+                <TableCell>{new Date(unit.last_visit_date).toLocaleString()}</TableCell>
+                <TableCell>{unit.last_visitor}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
     </div>
   );
 }

@@ -6,74 +6,36 @@ const ResetPasswordForm = () => {
   const navigate = useNavigate();
   const { token, uid } = useParams();
 
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [fieldError, setFieldError] = useState({ password: "", confirmPassword: "" });
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  const validateFields = () => {
-    const errors = { password: "", confirmPassword: "" };
-    if (!password) {
-      errors.password = "Password is required";
-    } else if (password.length < 8) {
-      errors.password = "Password must be at least 8 characters";
-    }
-    if (!confirmPassword) {
-      errors.confirmPassword = "Please confirm your password";
-    } else if (password !== confirmPassword) {
-      errors.confirmPassword = "Passwords do not match";
-    }
-    setFieldError(errors);
-    return !errors.password && !errors.confirmPassword;
-  };
-
-  const handleResetPassword = async (evt) => {
-    evt.preventDefault();
-    setError("");
-    if (!validateFields()) return;
-
-    setIsLoading(true);
-    try {
-      const formData = { token, uid, new_password: password };
-      await authService.password_reset(formData); // uncomment in real usage
-      navigate("/loginform");
-    } catch (err) {
-      console.error(err);
-      setError(err.response?.data?.message || "Failed to reset password. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const onPasswordChange = (e) => {
-    setPassword(e.target.value);
-    if (fieldError.password) {
-      setFieldError({ ...fieldError, password: "" });
-    }
-  };
-  const onConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-    if (fieldError.confirmPassword) {
-      setFieldError({ ...fieldError, confirmPassword: "" });
-    }
+  const handleResetPassword = () => {
+   
+    navigate("/loginform");
   };
 
   return (
     <form onSubmit={handleResetPassword} className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
       <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl flex flex-col md:flex-row">
-        {/* visual side omitted for brevity */}
-        <div className="w-full md:w-1/2 p-8 mt-10">
-          <h2 className="text-2xl font-semibold mb-2">Reset Password</h2>
-          <p className="text-sm text-gray-600 mb-6">
-            Enter your new password to continue and login
-          </p>
+        
+        <div className="w-full md:w-1/2 relative">
+          <img
+            src="/rectangle-780.png"
+            alt="Signup Visual"
+            className="w-full h-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-tr-none"
+          />
+          <img
+            src="/logo copy.svg"
+            alt="West Brook Logo"
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[150px] sm:max-w-[200px] lg:max-w-[250px] max-h-[200px] sm:max-h-[300px] lg:max-h-[500px] w-full h-auto animate-bounce-once"
+          />
+        </div>
 
-          {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
-              {error}
-            </div>
-          )}
+       
+        <div className="w-full md:w-1/2 p-8 mt-10 ">
+          <div className="mb-6">
+            <h2 className="text-2xl font-DM Sans font-bold text-[#445963] mb-2">Reset Password</h2>
+            <p className="text-m text-[#445963]">
+              Enter your new password  so as to <br/>continue and login
+            </p>
+          </div>
 
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">New Password*</label>

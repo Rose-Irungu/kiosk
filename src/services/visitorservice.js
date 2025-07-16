@@ -27,3 +27,7 @@ export const getAllVisitors = async () => {
   const res = await api.get(API_ENDPOINTS.GET_ALL_VISITORS);
   return res.data;
 }
+export const getMostVisitedUnits = async (filter = "today") => {
+  const res = await api.get(`${API_ENDPOINTS.MOST_VISITED_UNITS}?filter=${filter}`);
+  return res.data.results; 
+};

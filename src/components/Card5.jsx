@@ -59,7 +59,7 @@ export default function HelpSupportCard({
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="flex gap-8">
+      <CardContent className="flex gap-8 bg-white">
         {/* FAQ Section */}
         <div className="flex-1 space-y-4">
           <h3 className="text-sm font-medium text-gray-700">

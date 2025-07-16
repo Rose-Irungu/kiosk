@@ -30,3 +30,7 @@ export const resolvePanicAlert = async (alertId) => {
   const res = await api.post(API_ENDPOINTS.RESOLVE_PANIC_ALERT, { alertId });
   return res.data;
 };
+export const getDashboardStatistics = async () => {
+  const res = await api.get(API_ENDPOINTS.DASHBOARD_STATISTICS);
+  return res.data;
+};
