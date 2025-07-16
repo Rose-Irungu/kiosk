@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -13,7 +13,8 @@ import {
 import useMostVisitedUnits from "../../hooks/useMostVisitedUnits";
 
 export function DashboardTable() {
-  const { units, loading } = useMostVisitedUnits();
+  const [filter, setFilter] = useState("today");
+ const { units, loading, error } = useMostVisitedUnits(filter);
 
   return (
     <div className="w-full max-w-6xl mx-auto bg-white p-6 rounded-xl shadow-sm mt-10">
@@ -21,11 +22,15 @@ export function DashboardTable() {
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-semibold">Most Visited Units</h2>
         <div className="relative">
-          <select className="flex h-10 items-center rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
-            <option>Today</option>
-            <option>This Week</option>
-            <option>This Month</option>
-            <option>This Year</option>
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="flex h-10 items-center rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+          >
+            <option value="today">Today</option>
+            <option value="week">This Week</option>
+            <option value="month">This Month</option>
+            <option value="year">This Year</option>
           </select>
         </div>
       </div>
@@ -58,10 +63,10 @@ export function DashboardTable() {
                     : ""
                 }
               >
-                <TableCell className="font-medium">{unit.unit}</TableCell>
-                <TableCell>{unit.resident}</TableCell>
+                <TableCell className="font-medium">{unit.unit_number}</TableCell>
+                <TableCell>{unit.resident_name}</TableCell>
                 <TableCell>{unit.visit_count}</TableCell>
-                <TableCell>{new Date(unit.last_visited).toLocaleString()}</TableCell>
+                <TableCell>{new Date(unit.last_visit_date).toLocaleString()}</TableCell>
                 <TableCell>{unit.last_visitor}</TableCell>
               </TableRow>
             ))}
