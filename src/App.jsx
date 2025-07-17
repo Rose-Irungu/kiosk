@@ -148,8 +148,8 @@ const App = () => {
         <Route path="/userspage" element={<UsersPage />} />
         <Route path="/visitorlogs" element={<VisitorLogs />} />
         <Route path="/chart2" element={<Chart2 />} />{" "}
-        {/* Ensure Chart2 is imported correctly */}
-        {/* Add more routes as needed */}
+        
+       
       </Routes>
     </Router>
   );
