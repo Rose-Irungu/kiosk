@@ -16,7 +16,7 @@ export default function Emergencypage() {
   const [resolvedCount, setResolvedCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [timeFilter, setTimeFilter] = useState("Today");
+  const [timeFilter, setTimeFilter] = useState("This Week");
 
   // Fetch data
   useEffect(() => {
