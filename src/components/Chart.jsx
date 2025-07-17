@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   BarChart,
@@ -8,22 +8,14 @@ import {
   YAxis,
   ResponsiveContainer,
   Legend,
-} from "recharts"
+} from "recharts";
 
 import {
   ChartContainer,
   ChartLegendContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 
-const chartData = [
-  { day: "M", company: 155, resident: 180, service: 110 },
-  { day: "T", company: 198, resident: 148, service: 90 },
-  { day: "W", company: 182, resident: 158, service: 158 },
-  { day: "T", company: 200, resident: 178, service: 104 },
-  { day: "F", company: 168, resident: 135, service: 75 },
-  { day: "S", company: 30, resident: 140, service: 70 },
-  { day: "S", company: 55, resident: 150, service: 68 },
-]
+import useVisitorStats from "@/hooks/useVisitorStats";
 
 const chartConfig = {
   company: {
@@ -38,44 +30,65 @@ const chartConfig = {
     label: "Service Providers",
     color: "#a996fe",
   },
-}
+};
+
+
+const transformVisitorTrend = (trendData) => {
+  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const labels = { Mon: "M", Tue: "T", Wed: "W", Thu: "T", Fri: "F", Sat: "S", Sun: "S" };
+
+  return days.map((day) => ({
+    day: labels[day],
+    company: trendData?.company_visitor?.[day] || 0,
+    resident: trendData?.visitor?.[day] || 0,
+    service: trendData?.service_provider?.[day] || 0,
+  }));
+};
 
 export default function ChartPage() {
+  const { stats, loading, error } = useVisitorStats();
+  const visitorTrend = stats?.visitor_trend || {};
+  const chartData = transformVisitorTrend(visitorTrend);
+
   return (
-    <div className=" max-w-3xl mx-auto">
+    <div className="max-w-3xl mx-auto">
       <h2 className="text-2xl font-bold text-gray-800">Visitors Trend</h2>
 
-      <ChartContainer config={chartConfig} className="h-[280px] w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
-            <XAxis
-              dataKey="day"
-              axisLine
-              tickLine
-              tickMargin={8}
-              label={{
-                value: "Day of the Week",
-                position: "insideBottom",
-                dy: 10,
-              }}
-            />
-            <YAxis
-              axisLine
-              tickLine
-              tick={{ fontSize: 12 }}
-              
-            />
-            
-            <Legend content={<ChartLegendContent />} verticalAlign="top"
-                align="center"/>
-            
-            <Bar dataKey="company" fill="var(--color-company)" />
-            <Bar dataKey="resident" fill="var(--color-resident)" />
-            <Bar dataKey="service" fill="var(--color-service)" />
-          </BarChart>
-        </ResponsiveContainer>
-      </ChartContainer>
+      {loading ? (
+        <p className="text-center py-10">Loading chart...</p>
+      ) : error ? (
+        <p className="text-red-500 text-center py-10">{error}</p>
+      ) : (
+        <ChartContainer config={chartConfig} className="h-[280px] w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
+              <XAxis
+                dataKey="day"
+                axisLine
+                tickLine
+                tickMargin={8}
+                label={{
+                  value: "Day of the Week",
+                  position: "insideBottom",
+                  dy: 10,
+                }}
+              />
+              <YAxis
+                axisLine
+                tickLine
+                tick={{ fontSize: 12 }}
+                ticks={[0, 10, 20, 30, 40]}
+                domain={[0, 40]}
+              />
+              <Legend content={<ChartLegendContent />} verticalAlign="top" align="center" />
+              <Bar dataKey="company" fill={chartConfig.company.color} />
+              <Bar dataKey="resident" fill={chartConfig.resident.color} />
+              <Bar dataKey="service" fill={chartConfig.service.color} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartContainer>
+      )}
     </div>
-  )
+  );
 }

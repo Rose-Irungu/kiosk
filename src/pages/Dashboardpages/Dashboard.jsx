@@ -15,7 +15,7 @@ const Dashboard = () => {
   const [stats, setStats] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Use the new visitor stats hook
+  
   const {
     stats: visitorStats,
     loading: visitorLoading,
@@ -117,12 +117,12 @@ const Dashboard = () => {
       </div>
 
       <div className="w-full flex flex-col lg:flex-row gap-6 mb-8">
-        {/* Chart container */}
+        
         <div className="bg-white lg:w-3/4 p-3 rounded-lg shadow flex-1 lg:flex-initial">
           <Chart />
         </div>
         
-        {/* Card container */}
+
         <div className="lg:w-1/4 flex-1 lg:flex-initial">
           <Card3
             companyVisitors={loading ? 0 : stats?.visitor_totals?.company || 0}
