@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { userService } from "../../services/user";
+
 import {
   Table,
   TableBody,
@@ -24,6 +26,20 @@ export default function Users({ users = [], setUsers = () => {} }) {
     if (roleFilter === "all") return true;
     return user.role === roleFilter;
   });
+  const handleToggleStatus = async () => {
+  try {
+    console.log("Selected User ID:", selectedUser.id);
+    const updatedUser = await userService.toggleUserStatus(selectedUser.id, selectedUser);
+    setSelectedUser(updatedUser);
+
+    // Optional: only if fetchUsers is defined
+    // fetchUsers();
+  } catch (error) {
+    console.error("Failed to toggle user status:", error);
+  }
+};
+
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -117,14 +133,21 @@ export default function Users({ users = [], setUsers = () => {} }) {
                   key={index}
                   className={index % 2 === 0 ? "bg-[#f2f7f3]" : ""}
                 >
-                  <TableCell>
+                <TableCell>
+                  {user.profile_picture ? (
                     <img
-                      src={user.profile_picture || "/default-user.png"}
+                      src={user.profile_picture}
                       alt={user.first_name}
                       crossOrigin="anonymous"
                       className="h-10 w-10 rounded-full object-cover"
                     />
-                  </TableCell>
+                  ) : (
+                    <div className="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center text-xs text-white">
+                      N/A
+                    </div>
+                  )}
+                </TableCell>
+
                   <TableCell className="font-medium">
                     {user.first_name} {user.last_name}
                   </TableCell>
@@ -187,6 +210,8 @@ export default function Users({ users = [], setUsers = () => {} }) {
         </div>
       </div>
 
+      
+
       {/* View Modal */}
       {showModal && selectedUser && (
         <div className="absolute top-20 right-8 bg-white border border-gray-300 shadow-lg rounded-lg w-[400px] z-50 p-6">
@@ -200,12 +225,19 @@ export default function Users({ users = [], setUsers = () => {} }) {
           <div className="flex flex-col gap-8">
             {/* Header */}
             <div className="flex items-center gap-6 border-b pb-4">
-              <img
-                src={selectedUser.profile_picture || "/default-user.png"}
-                alt={`${selectedUser.first_name} ${selectedUser.last_name}`}
-                crossOrigin="anonymous"
-                className="w-[140px] h-[140px] rounded-full object-cover"
-              />
+              {selectedUser.profile_picture ? (
+                  <img
+                    src={selectedUser.profile_picture}
+                    alt={`${selectedUser.first_name} ${selectedUser.last_name}`}
+                    crossOrigin="anonymous"
+                    className="w-[140px] h-[140px] rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-[140px] h-[140px] rounded-full bg-gray-300 flex items-center justify-center text-xl text-white">
+                    N/A
+                  </div>
+                )}
+
               <div>
                 <h2 className="text-xl font-bold text-gray-700">
                   {selectedUser.first_name} {selectedUser.last_name}
@@ -268,9 +300,17 @@ export default function Users({ users = [], setUsers = () => {} }) {
 
             {/* Buttons */}
             <div className="flex gap-4">
-              <button className="border border-green-800 text-green-800 px-6 py-2 rounded">
-                {selectedUser.is_active ? "DISABLE" : "ENABLE"}
+              <button
+                onClick={handleToggleStatus}
+                className={`border px-6 py-2 rounded font-semibold ${
+                  selectedUser?.is_active
+                    ? "border-red-600 text-red-600 hover:bg-red-100"
+                    : "border-green-600 text-green-600 hover:bg-green-100"
+                }`}
+              >
+                {selectedUser?.is_active ? "DISABLE" : "ENABLE"}
               </button>
+
               <button
                 className="bg-red-600 text-white px-6 py-2 rounded shadow"
                 onClick={() => {
@@ -286,7 +326,6 @@ export default function Users({ users = [], setUsers = () => {} }) {
         </div>
       )}
 
-      {/* Delete Modal */}
       {showDeleteModal && userToDelete && (
         <div className="absolute top-24 right-8 bg-white rounded-xl border shadow-lg p-6 w-[300px] z-50 flex flex-col items-center gap-6">
           <div className="bg-[#fee9e7] p-2 rounded-full">
@@ -306,12 +345,23 @@ export default function Users({ users = [], setUsers = () => {} }) {
           </p>
           <div className="w-full flex flex-col gap-3">
             <button
-              onClick={() => {
-                setUsers((prev) =>
-                  prev.filter((u) => u.id !== userToDelete.id)
-                );
-                setShowDeleteModal(false);
-                setUserToDelete(null);
+              onClick={async () => {
+                try {
+                  // Call your delete API
+                  await userService.deleteUser(userToDelete.id);
+
+                  // Update local state
+                  setUsers((prev) =>
+                    prev.filter((u) => u.id !== userToDelete.id)
+                  );
+
+                  // Close modal
+                  setShowDeleteModal(false);
+                  setUserToDelete(null);
+                } catch (error) {
+                  console.error("Failed to delete user:", error);
+                  alert("Something went wrong while deleting the user.");
+                }
               }}
               className="bg-[#e61c11] text-white w-full py-2 rounded shadow"
             >
@@ -326,6 +376,7 @@ export default function Users({ users = [], setUsers = () => {} }) {
           </div>
         </div>
       )}
+
     </div>
   );
 }
