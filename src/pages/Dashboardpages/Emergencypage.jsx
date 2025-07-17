@@ -37,7 +37,7 @@ export default function Emergencypage() {
     getData();
   }, []);
 
-  // Time filter logic (basic for demo – you can expand it based on created_at timestamps)
+  // Time filter logic - can be expanded based on created_at timestamps
   const filterEventsByTime = (events, filter) => {
     const now = new Date();
     return events.filter((e) => {
@@ -85,7 +85,7 @@ export default function Emergencypage() {
             <Card4
               floor="5"
               unit="B05A"
-              name={latest?.user_id} // Replace with actual name if possible
+              name={latest?.user_id} // Replace with name if possible
               status={latest?.emergency_status}
             />
           </div>
@@ -105,7 +105,7 @@ export default function Emergencypage() {
             events={filteredEvents.map((e) => ({
               id: e.id,
               location: e.emergency_location || "Unknown",
-              visitor: e.user_id || "N/A", // Replace if actual user/visitor name exists
+              visitor: e.user_id || "N/A", // Replace with actual user/visitor
               type: e.emergency_type,
               time: new Date(e.created_at).toLocaleString(),
               status: e.emergency_status === "resolved" ? "Resolved" : "Ongoing"
@@ -117,7 +117,7 @@ export default function Emergencypage() {
             highlightConditions={[{ emergency_status: "ongoing" }]}
             onStatusChange={(action, event) => {
               console.log(`Status change clicked: ${action}`, event);
-              // Optional: Call updateEmergency(event.id, newStatus) here
+              // Call updateEmergency(event.id, newStatus) here
             }}
           />
         </div>
