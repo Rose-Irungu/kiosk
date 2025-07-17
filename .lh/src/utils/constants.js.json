@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 21,
+            "activePatchIndex": 20,
             "patches": [
                 {
                     "date": 1752149823597,
@@ -88,10 +88,6 @@
                 {
                     "date": 1752588734639,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n   VISITOR_CHECKIN: '/visits/checkin/',\r\n   VISITOR_CHECKOUT: '/visits/checkout/',\r\n   INVITE_VISITOR: '/visitors/send-invite/',\r\n   REGISTER_VISITOR: '/visitors/register/',\r\n+  MOST_VISITED_UNITS: '/visits/most-visited-units/',\r\n   GET_VISITOR: '/visitors/get_visitor/',\r\n   GET_ALL_VISITORS : '/visitors/all-visitors/',\r\n   //  GET_CURRENT_VISITORS: '/visitors/current',\r\n   // GET_ACTIVE_INCIDENTS: '/incidents/active',\r\n"
-                },
-                {
-                    "date": 1752651937550,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n   REGISTER_VISITOR: '/visitors/register/',\r\n   MOST_VISITED_UNITS: '/visits/most-visited-units/',\r\n   GET_VISITOR: '/visitors/get_visitor/',\r\n   GET_ALL_VISITORS : '/visitors/all-visitors/',\r\n+  \r\n   //  GET_CURRENT_VISITORS: '/visitors/current',\r\n   // GET_ACTIVE_INCIDENTS: '/incidents/active',\r\n   // GET_EMERGENCIES_TODAY: '/emergencies/today',\r\n   // GET_TOTAL_ACTIVE_USERS: '/users/active',\r\n"
                 }
             ],
             "date": 1752149823597,

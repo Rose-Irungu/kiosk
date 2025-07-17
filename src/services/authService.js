@@ -7,7 +7,16 @@ export const authService = {
         const response = await api.post(API_ENDPOINTS.SENT_PASSWORD_RESET, formData);
         return response.data;
         } catch (error) {
-        console.error("Error during check-in:", error);
+        console.error("Error during sent email:", error);
+        throw error;
+        }
+    },
+    password_reset: async (formData) => {
+        try {
+        const response = await api.post(API_ENDPOINTS.SENT_PASSWORD_RESET, formData);
+        return response.data;
+        } catch (error) {
+        console.error("Error during reset password:", error);
         throw error;
         }
     },
