@@ -32,7 +32,7 @@ const chartConfig = {
   },
 };
 
-// Utility to transform the nested object
+
 const transformVisitorTrend = (trendData) => {
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const labels = { Mon: "M", Tue: "T", Wed: "W", Thu: "T", Fri: "F", Sat: "S", Sun: "S" };
