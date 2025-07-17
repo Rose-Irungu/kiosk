@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { userService } from "../../services/user";
+
 import {
   Table,
   TableBody,
@@ -10,16 +12,34 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal, ChevronDown, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "../../utils/constants";
 
 export default function Users({ users = [], setUsers = () => {} }) {
   const navigate = useNavigate();
-
   const [openMenuIndex, setOpenMenuIndex] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
+  const [roleFilter, setRoleFilter] = useState("all");
+
+  const filteredUsers = users.filter(user => {
+    if (roleFilter === "all") return true;
+    return user.role === roleFilter;
+  });
+  const handleToggleStatus = async () => {
+  try {
+    console.log("Selected User ID:", selectedUser.id);
+    const updatedUser = await userService.toggleUserStatus(selectedUser.id, selectedUser);
+    setSelectedUser(updatedUser);
+
+    // Optional: only if fetchUsers is defined
+    // fetchUsers();
+  } catch (error) {
+    console.error("Failed to toggle user status:", error);
+  }
+};
+
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -38,6 +58,10 @@ export default function Users({ users = [], setUsers = () => {} }) {
     setSelectedUser(user);
     setShowModal(true);
     setOpenMenuIndex(null);
+  };
+
+  const handleEdit = (user) => {
+    navigate("/userform", { state: { user, editMode: true } });
   };
 
   return (
@@ -73,11 +97,15 @@ export default function Users({ users = [], setUsers = () => {} }) {
           </div>
 
           <div className="relative text-sm text-gray-600">
-            <select className="border border-gray-300 rounded-md px-3 py-2 bg-white pr-8 appearance-none">
+            <select
+              className="border border-gray-300 rounded-md px-3 py-2 bg-white pr-8 appearance-none"
+              value={roleFilter}
+              onChange={(e) => setRoleFilter(e.target.value)}
+            >
               <option value="all">All</option>
-              <option value="recurring">Resident</option>
-              <option value="service">Security</option>
-              <option value="one-time">Admin</option>
+              <option value="tenant">Resident</option>
+              <option value="security">Security</option>
+              <option value="admin">Admin</option>
             </select>
             <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
           </div>
@@ -100,61 +128,89 @@ export default function Users({ users = [], setUsers = () => {} }) {
             </TableHeader>
 
             <TableBody>
-              {Array.isArray(users) &&
-                users.map((user, index) => (
-                  <TableRow key={index} className={index % 2 === 0 ? "bg-[#f2f7f3]" : ""}>
-                    <TableCell>
-                      <img
-                        src={user.profile_picture}
-                        alt={user.first_name}
-                        crossOrigin="anonymous"
-                        className="h-10 w-10 rounded-full object-cover"
-                      />
-                    </TableCell>
-                    <TableCell className="font-medium">{user.first_name} {user.last_name}</TableCell>
-                    <TableCell />
-                    <TableCell>{user.phone_number}</TableCell>
-                    <TableCell>{user.role}</TableCell>
-                    <TableCell>{user.unit_number}</TableCell>
-                    <TableCell>{user.status}</TableCell>
-                    <TableCell className="relative user-menu-trigger">
-                      <MoreHorizontal
-                        className="cursor-pointer text-muted-foreground"
-                        onClick={() =>
-                          setOpenMenuIndex(openMenuIndex === index ? null : index)
-                        }
-                      />
-                      {openMenuIndex === index && (
-                        <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded-md shadow-md z-10 user-menu-dropdown">
-                          <ul className="text-sm text-gray-700">
-                            <li
-                              className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                              onClick={() => handleView(user)}
-                            >
-                              View
-                            </li>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit</li>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Disable</li>
-                            <li
-                              className="px-4 py-2 hover:bg-red-50 text-red-600 cursor-pointer"
-                              onClick={() => {
-                                setUserToDelete(user);
-                                setShowDeleteModal(true);
-                                setOpenMenuIndex(null);
-                              }}
-                            >
-                              Delete
-                            </li>
-                          </ul>
-                        </div>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
+              {filteredUsers.map((user, index) => (
+                <TableRow
+                  key={index}
+                  className={index % 2 === 0 ? "bg-[#f2f7f3]" : ""}
+                >
+                <TableCell>
+                  {user.profile_picture ? (
+                    <img
+                      src={user.profile_picture}
+                      alt={user.first_name}
+                      crossOrigin="anonymous"
+                      className="h-10 w-10 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center text-xs text-white">
+                      N/A
+                    </div>
+                  )}
+                </TableCell>
+
+                  <TableCell className="font-medium">
+                    {user.first_name} {user.last_name}
+                  </TableCell>
+                  <TableCell />
+                  <TableCell>
+                    {user.phone_number || (
+                      <span className="text-gray-400 italic">No Phone</span>
+                    )}
+                  </TableCell>
+                  <TableCell>{user.role}</TableCell>
+                  <TableCell>{user.unit_number}</TableCell>
+                  <TableCell>
+                    {user.is_active ? (
+                      <span className="text-green-600 font-semibold">
+                        Active
+                      </span>
+                    ) : (
+                      <span className="text-red-600 font-semibold">
+                        Inactive
+                      </span>
+                    )}
+                  </TableCell>
+                  <TableCell className="relative user-menu-trigger">
+                    <MoreHorizontal
+                      className="cursor-pointer text-muted-foreground"
+                      onClick={() =>
+                        setOpenMenuIndex(openMenuIndex === index ? null : index)
+                      }
+                    />
+                    {openMenuIndex === index && (
+                      <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded-md shadow-md z-10 user-menu-dropdown">
+                        <ul className="text-sm text-gray-700">
+                          <li
+                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                            onClick={() => handleView(user)}
+                          >
+                            View
+                          </li>
+                          <li
+                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                            onClick={() => handleEdit(user)}
+                          >
+                            Edit
+                          </li>
+                          <li className="px-4 py-2 hover:bg-red-50 text-red-600 cursor-pointer" onClick={() => {
+                            setUserToDelete(user);
+                            setShowDeleteModal(true);
+                            setOpenMenuIndex(null);
+                          }}>
+                            Delete
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
       </div>
+
+      
 
       {/* View Modal */}
       {showModal && selectedUser && (
@@ -169,14 +225,23 @@ export default function Users({ users = [], setUsers = () => {} }) {
           <div className="flex flex-col gap-8">
             {/* Header */}
             <div className="flex items-center gap-6 border-b pb-4">
-              <img
-                src={`{selectedUser.profile_picture}`}
-                alt={selectedUser.name}
-                crossOrigin="anonymous"
-                className="w-[140px] h-[140px] rounded-full object-cover"
-              />
+              {selectedUser.profile_picture ? (
+                  <img
+                    src={selectedUser.profile_picture}
+                    alt={`${selectedUser.first_name} ${selectedUser.last_name}`}
+                    crossOrigin="anonymous"
+                    className="w-[140px] h-[140px] rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-[140px] h-[140px] rounded-full bg-gray-300 flex items-center justify-center text-xl text-white">
+                    N/A
+                  </div>
+                )}
+
               <div>
-                <h2 className="text-xl font-bold text-gray-700">{selectedUser.name}</h2>
+                <h2 className="text-xl font-bold text-gray-700">
+                  {selectedUser.first_name} {selectedUser.last_name}
+                </h2>
                 <div className="flex gap-6 mt-4 text-sm text-gray-700">
                   <div>
                     <div>Phone</div>
@@ -187,7 +252,7 @@ export default function Users({ users = [], setUsers = () => {} }) {
                     <div>:</div>
                   </div>
                   <div>
-                    <div>{selectedUser.phone}</div>
+                    <div>{selectedUser.phone_number || "No Phone"}</div>
                     <div>{selectedUser.role}</div>
                   </div>
                 </div>
@@ -196,7 +261,9 @@ export default function Users({ users = [], setUsers = () => {} }) {
 
             {/* Contact Info */}
             <div>
-              <h3 className="text-green-800 font-bold mb-2">Contact Information</h3>
+              <h3 className="text-green-800 font-bold mb-2">
+                Contact Information
+              </h3>
               <div className="flex gap-12 text-sm text-gray-700">
                 <div>
                   <div>Email</div>
@@ -208,7 +275,7 @@ export default function Users({ users = [], setUsers = () => {} }) {
                 </div>
                 <div>
                   <div>{selectedUser.email}</div>
-                  <div>{selectedUser.id}</div>
+                  <div>{selectedUser.id_number || "N/A"}</div>
                 </div>
               </div>
             </div>
@@ -219,17 +286,31 @@ export default function Users({ users = [], setUsers = () => {} }) {
               <div className="flex gap-12 items-center text-sm text-gray-700">
                 <div>Current Status</div>
                 <div>:</div>
-                <div className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm w-[90px] text-center">
-                  {selectedUser.status}
+                <div
+                  className={`${
+                    selectedUser.is_active
+                      ? "bg-green-100 text-green-800"
+                      : "bg-red-100 text-red-800"
+                  } px-2 py-1 rounded text-sm w-[90px] text-center`}
+                >
+                  {selectedUser.is_active ? "Active" : "Inactive"}
                 </div>
               </div>
             </div>
 
             {/* Buttons */}
             <div className="flex gap-4">
-              <button className="border border-green-800 text-green-800 px-6 py-2 rounded">
-                DISABLE
+              <button
+                onClick={handleToggleStatus}
+                className={`border px-6 py-2 rounded font-semibold ${
+                  selectedUser?.is_active
+                    ? "border-red-600 text-red-600 hover:bg-red-100"
+                    : "border-green-600 text-green-600 hover:bg-green-100"
+                }`}
+              >
+                {selectedUser?.is_active ? "DISABLE" : "ENABLE"}
               </button>
+
               <button
                 className="bg-red-600 text-white px-6 py-2 rounded shadow"
                 onClick={() => {
@@ -245,7 +326,6 @@ export default function Users({ users = [], setUsers = () => {} }) {
         </div>
       )}
 
-      {/* Delete Modal */}
       {showDeleteModal && userToDelete && (
         <div className="absolute top-24 right-8 bg-white rounded-xl border shadow-lg p-6 w-[300px] z-50 flex flex-col items-center gap-6">
           <div className="bg-[#fee9e7] p-2 rounded-full">
@@ -256,15 +336,32 @@ export default function Users({ users = [], setUsers = () => {} }) {
             />
           </div>
           <p className="text-center text-sm text-black">
-            Are you sure you want to delete <strong>{userToDelete.name}</strong>?<br />
+            Are you sure you want to delete{" "}
+            <strong>
+              {userToDelete.first_name} {userToDelete.last_name}
+            </strong>
+            ?<br />
             This action is irreversible.
           </p>
           <div className="w-full flex flex-col gap-3">
             <button
-              onClick={() => {
-                setUsers((prev) => prev.filter((u) => u.id !== userToDelete.id));
-                setShowDeleteModal(false);
-                setUserToDelete(null);
+              onClick={async () => {
+                try {
+                  // Call your delete API
+                  await userService.deleteUser(userToDelete.id);
+
+                  // Update local state
+                  setUsers((prev) =>
+                    prev.filter((u) => u.id !== userToDelete.id)
+                  );
+
+                  // Close modal
+                  setShowDeleteModal(false);
+                  setUserToDelete(null);
+                } catch (error) {
+                  console.error("Failed to delete user:", error);
+                  alert("Something went wrong while deleting the user.");
+                }
               }}
               className="bg-[#e61c11] text-white w-full py-2 rounded shadow"
             >
@@ -279,6 +376,7 @@ export default function Users({ users = [], setUsers = () => {} }) {
           </div>
         </div>
       )}
+
     </div>
   );
 }

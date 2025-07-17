@@ -8,7 +8,7 @@ body {
   font-family: 'DM Sans', 'Inter', 'Roboto';
 }
 @layer base {
-  input, textarea, select, label {
+  input, textarea, select, label, h2 {
     @apply text-[#445963] border-[#445963];
   }
 }
