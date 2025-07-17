@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/table";
 import { MoreHorizontal } from "lucide-react";
 import { Label } from "recharts";
-import Layout from "../layout/Layout";
 
 export function EmergencyTable({ 
   events = [], 

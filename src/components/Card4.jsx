@@ -1,4 +1,5 @@
 import { Siren } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Card4({ floor, unit, name, status }) {
   return (
@@ -49,9 +50,13 @@ export default function Card4({ floor, unit, name, status }) {
 
         {/* Button Row */}
         <div className="flex flex-col sm:flex-row justify-between gap-2 sm:gap-4">
-          <button className="w-full sm:w-[256px] h-[40px] bg-[#005E0E] text-white rounded hover:bg-[#002A05] px-6 py-2">
-            Open Roll Call
-          </button>
+          <div>
+            <Link to="/triggers">
+              <button className="w-full sm:w-[256px] h-[40px] bg-[#005E0E] text-white rounded hover:bg-[#002A05] px-6 py-2">
+                Open Roll Call
+              </button>
+            </Link>
+          </div>
           <button className="w-full sm:w-[165px] h-[40px] border text-[#005E0E] border-[#005E0E] hover:bg-[#CCCCCC] hover:text-white px-4 py-2 rounded-sm">
             Mark Resolved
           </button>

@@ -9,12 +9,12 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-const chartData = [
-  { name: "Resolved", value: 4, fill: "#22C55E" },
-  { name: "Ongoing", value: 1, fill: "#8B5CF6" },
-]
+export default function EmergencyStatsChart({ ongoing, resolved }) {
+  const chartData = [
+    { name: "Resolved", value: resolved, fill: "#22C55E" },
+    { name: "Ongoing", value: ongoing, fill: "#8B5CF6" },
+  ]
 
-export default function EmergencyStatsChart() {
   const total = chartData.reduce((sum, item) => sum + item.value, 0)
 
   return (
@@ -26,14 +26,13 @@ export default function EmergencyStatsChart() {
       </CardHeader>
 
       <CardContent className="flex items-center justify-between gap-3 px-0 pt-2">
-        {/* ✅ Increased Chart Size */}
         <PieChart width={140} height={140}>
           <Pie
             data={chartData}
             dataKey="value"
             nameKey="name"
-            innerRadius={50}     // ⬆️ Increased
-            outerRadius={68}     // ⬆️ Increased
+            innerRadius={50}
+            outerRadius={68}
             stroke="none"
             startAngle={90}
             endAngle={-270}
@@ -72,20 +71,19 @@ export default function EmergencyStatsChart() {
           </Pie>
         </PieChart>
 
-        {/* Legend (unchanged) */}
         <div className="flex flex-col gap-3 text-sm pl-2">
           <div className="flex items-center gap-2">
             <div className="h-3 w-3 bg-[#22C55E]" />
             <span className="text-gray-700">Resolved</span>
             <span className="ml-auto font-semibold text-green-600">
-              {chartData[0].value}
+              {resolved}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <div className="h-3 w-3 bg-[#8B5CF6]" />
             <span className="text-gray-700">Ongoing</span>
             <span className="ml-auto font-semibold text-purple-600">
-              {chartData[1].value}
+              {ongoing}
             </span>
           </div>
         </div>
