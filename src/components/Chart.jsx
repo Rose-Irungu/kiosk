@@ -42,10 +42,10 @@ const chartConfig = {
 
 export default function ChartPage() {
   return (
-    <div className="p-6 space-y-4 max-w-3xl mx-auto">
+    <div className=" max-w-3xl mx-auto">
       <h2 className="text-2xl font-bold text-gray-800">Visitors Trend</h2>
 
-      <ChartContainer config={chartConfig} className="h-[300px] w-full">
+      <ChartContainer config={chartConfig} className="h-[280px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
