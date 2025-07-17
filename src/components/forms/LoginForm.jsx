@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { Eye, EyeOff, Shield, Heart } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { authService } from "../../services/authService";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -82,16 +84,26 @@ const LoginForm = () => {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-4 relative">
               <label className="block text-sm font-medium mb-1">Password*</label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full border border-gray-300 rounded px-3 py-2"
+                className="w-full border border-gray-300 rounded px-3 py-2 pr-10"
                 required
               />
+              <div
+                className="absolute top-9 right-3 cursor-pointer text-gray-500"
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                {showPassword ? (
+                  <EyeOff className="w-5 h-5" />
+                ) : (
+                  <Eye className="w-5 h-5" />
+                )}
+              </div>
               <p className="text-xs text-gray-500 mt-1">
                 Must be 8 characters at least
               </p>
@@ -103,10 +115,8 @@ const LoginForm = () => {
                 Remember me
               </label>
               <span className="text-sm text-[#005e0e] hover:underline cursor-pointer">
-              <Link to='/forgotpassword'>
-              Forgot Password?
-              </Link>
-            </span>
+                <Link to="/forgotpassword">Forgot Password?</Link>
+              </span>
             </div>
 
             {error && (
