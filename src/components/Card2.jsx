@@ -51,12 +51,12 @@ export default function Card2({
           <div className="w-[60px] h-[60px] flex items-center justify-center rounded-sm">
             <Siren className="w-6 h-6 text-[#F93162] animate-ping flex-shrink-0" />
           </div>
-          <h1 className="font-dmsans text-xl text-grayish font-normal">
+          <h1 className="font-DM Sans text-xl text-[#a3a7aa] font-medium">
             PANIC BUTTON TRIGGERED AT {unit} – {floor}
           </h1>
         </div>
 
-        <p className="font-inter text-sm text-slategray font-normal">
+        <p className="font-DM Sans text-sm text-slategray font-medium text-[#a3a7aa]" >
           {minute} minute{minute !== 1 && "s"} ago
         </p>
 
