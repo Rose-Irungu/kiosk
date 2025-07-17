@@ -30,4 +30,14 @@ export const authService = {
       }
     },
 
+    changePassword: async (formData) => {
+      try {
+        const response = await api.post(API_ENDPOINTS.CHANGE_PASSWORD, formData);
+
+        return response.data;
+      } catch (error) {
+        throw error.response?.data || { message: 'Password change failed. Please try again.' };
+      }
+    }
+
 }
