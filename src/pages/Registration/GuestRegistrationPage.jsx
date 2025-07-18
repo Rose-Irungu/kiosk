@@ -27,10 +27,10 @@ function GuestRegistrationPage() {
             />
           </div>
         </section>
-        <section className="relative z-10 mx-[15px] my-[15px] h-[calc(100vh-30px)] flex flex-col items-center 
+        <section className="relative z-10 mx-[10px] my-[15px] flex flex-col items-center 
           rounded-[24px] bg-[#E6FBE9] px-4 pt-[20px] pb-[20px] shadow-lg backdrop-blur-sm
           lg:static lg:mx-0 lg:my-0 lg:min-h-screen lg:w-1/2 lg:rounded-none lg:shadow-none 
-          lg:px-10 lg:justify-center">
+          lg:px-10 ">
           <GuestCheckInForm />
         </section>
       </main>
