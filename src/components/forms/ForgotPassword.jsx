@@ -3,23 +3,31 @@ import { Link, useNavigate } from "react-router-dom";
 import { authService } from "../../services/authService";
 
 const ForgotPasswordForm = () => {
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // ⬅️ new
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail(value);
-  }
+    setEmail(e.target.value);
+    setErrorMessage(""); // Clear error when user types again
+  };
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      await authService.sent_password_reset({ 'email': email })
-      navigate('/loginform')
+      await authService.sent_password_reset({ email });
+      navigate("/loginform");
     } catch (error) {
-      console.log('-----------------error-----------');
+      console.log("Error sending reset email:", error);
+
+      
+      if (error?.response?.status === 404) {
+        setErrorMessage("Email not found.");
+      } else {
+        setErrorMessage("Email not found. Try again.");
+      }
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
@@ -59,12 +67,15 @@ const ForgotPasswordForm = () => {
                   value={email}
                   onChange={handleEmailChange}
                 />
+                {errorMessage && (
+                  <p className="text-red-600 text-sm mt-2">{errorMessage}</p>
+                )}
               </div>
 
               <div className="mt-6 mb-6">
                 <button
                   type="submit"
-                  className=" shadow w-full h-12 bg-green-700 hover:bg-green-800 transition-colors text-white rounded-lg"
+                  className="shadow w-full h-12 bg-green-700 hover:bg-green-800 transition-colors text-white rounded-lg"
                 >
                   SEND RESET EMAIL
                 </button>
@@ -80,12 +91,8 @@ const ForgotPasswordForm = () => {
           </div>
         </div>
 
-
       </div>
     </div>
-
-
-
   );
 };
 
