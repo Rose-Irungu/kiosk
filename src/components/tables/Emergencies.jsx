@@ -111,7 +111,7 @@ export function EmergencyTable({
         <TableHeader>
           <TableRow>
             <TableHead className="font-medium text-muted-foreground">Location</TableHead>
-            <TableHead className="font-medium text-muted-foreground">Visitor</TableHead>
+            <TableHead className="font-medium text-muted-foreground">Triggered By</TableHead>
             <TableHead className="font-medium text-muted-foreground">Type</TableHead>
             <TableHead className="font-medium text-muted-foreground">Time</TableHead>
             <TableHead className="font-medium text-muted-foreground">Status</TableHead>

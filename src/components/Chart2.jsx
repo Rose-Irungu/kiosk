@@ -18,7 +18,7 @@ export default function EmergencyStatsChart({ ongoing, resolved }) {
   const total = chartData.reduce((sum, item) => sum + item.value, 0)
 
   return (
-    <Card className="w-full max-w-[300px] bg-white p-4 shadow-sm rounded-xl">
+    <Card className="flex flex-col justify-center w-full max-w-[537px] h-auto md:h-[221px] rounded-[10px] p-4 md:p-6 bg-white gap-[12px]">
       <CardHeader className="pb-3 px-0">
         <CardTitle className="text-sm font-semibold text-gray-900">
           Emergency Dashboard Stats
