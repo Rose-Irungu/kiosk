@@ -12,7 +12,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
   // User data state
   const [userData, setUserData] = useState({
-    id : '',
+    id: '',
     first_name: '',
     last_name: '',
     email: '',
@@ -48,11 +48,11 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
         const userDataFormatted = {
           id: user.id,
           first_name: user.first_name || '',
-          last_name: user.last_name  || '',
+          last_name: user.last_name || '',
           email: user.email || '',
           phone: user.phone || '',
           residence: user.residence || 'Westbrook Apartments',
-          fullName: `${user.first_name || ''} ${user.last_name  || ''}`.trim() || user.name || 'User'
+          fullName: `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.name || 'User'
         };
         setUserData(userDataFormatted);
         setEditFormData(userDataFormatted);
@@ -77,8 +77,8 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
     try {
       // Call your update profile API here
-      const response = await userService.updateUser(userData.id,editFormData);
-    
+      const response = await userService.updateUser(userData.id, editFormData);
+
 
       // For now, we'll just update local state and localStorage
       const updatedUserData = {
@@ -295,11 +295,17 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                 <div className="flex flex-col gap-8 w-full max-w-[358px] h-[341px]">
                   <div className="flex items-center gap-6 pb-4 w-full max-w-[358px] h-[156px] border-b border-[#6C757D]/50 isolate">
                     <div className="w-[140px] h-[140px] rounded-full border border-[#005E0E] bg-gray-400 overflow-hidden relative">
-                      <img
-                        src="/path-to-your-image.jpg"
-                        alt="Profile"
-                        className="w-full h-full object-cover"
-                      />
+                      {userData.photo ? (
+                        <img
+                          src={userData.photo}
+                          alt="profile photo"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className=" w-full h-full object-cover bg-gray-300 flex items-center justify-center text-xs text-white">
+                          N/A
+                        </div>
+                      )}
                     </div>
 
                     <div className="flex flex-col items-start gap-6 w-[194px] h-[120px] flex-grow z-[1]">
