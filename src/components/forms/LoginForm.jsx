@@ -105,7 +105,7 @@ const LoginForm = () => {
                 )}
               </div>
               <p className="text-xs text-gray-500 mt-1">
-                Must be 8 characters at least
+              
               </p>
             </div>
 
