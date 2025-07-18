@@ -164,7 +164,7 @@ export function EmergencyTable({
                         onClick={() => handleAction("Unresolved", event, index)}
                         className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                       >
-                        Unresolved
+                        Ongoing
                       </button>
                     </div>
                   )}
