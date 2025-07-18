@@ -14,6 +14,7 @@ export default function GuestCheckInForm() {
     handleSubmit
   } = useVisitorForm();
 
+
   const getFormTitle = () => {
     if (isVisitorMode) return "Complete Your Invitation";
     if (isSecurityMode) return "Security Check-in";
@@ -35,7 +36,7 @@ export default function GuestCheckInForm() {
 
   const isFieldPrefilled = (key) => {
     if (!isVisitorMode) return false;
-    
+
     const prefilledFields = ['full_name', 'email', 'visit_date', 'host_name', 'unit_number'];
     return prefilledFields.includes(key) && formData[key];
   };
@@ -43,21 +44,21 @@ export default function GuestCheckInForm() {
   const getFieldConfig = () => {
     if (isResidentMode) {
       return [
-        { 
-          key: 'full_name', 
-          label: 'Guest Name *', 
+        {
+          key: 'full_name',
+          label: 'Guest Name *',
           placeholder: 'Enter guest name',
           required: true
         },
-        { 
-          key: 'email', 
-          label: 'Email *', 
+        {
+          key: 'email',
+          label: 'Email *',
           placeholder: 'e.g guest@email.com',
           required: true
         },
-        { 
-          key: 'visit_date', 
-          label: 'Visit Date *', 
+        {
+          key: 'visit_date',
+          label: 'Visit Date *',
           placeholder: 'dd/mm/yyyy',
           type: 'date',
           required: true
@@ -78,34 +79,34 @@ export default function GuestCheckInForm() {
     }
 
     const baseFields = [
-      { 
-        key: 'full_name', 
-        label: 'Guest Name *', 
+      {
+        key: 'full_name',
+        label: 'Guest Name *',
         placeholder: 'Enter guest name',
         required: true
       },
-      { 
-        key: 'phone_number', 
-        label: 'Phone Number *', 
+      {
+        key: 'phone_number',
+        label: 'Phone Number *',
         placeholder: '+254-723-456-789',
         required: true
       },
-      { 
-        key: 'email', 
-        label: 'Email *', 
+      {
+        key: 'email',
+        label: 'Email *',
         placeholder: 'e.g guest@email.com',
         required: true
       },
-      { 
-        key: 'visit_date', 
-        label: 'Visit Date *', 
+      {
+        key: 'visit_date',
+        label: 'Visit Date *',
         placeholder: 'dd/mm/yyyy',
         type: 'date',
         required: true
       },
-      { 
-        key: 'plate_number', 
-        label: 'Car Number Plate (Optional)', 
+      {
+        key: 'plate_number',
+        label: 'Car Number Plate (Optional)',
         placeholder: 'e.g KCW 123K',
         required: false
       }
@@ -173,25 +174,26 @@ export default function GuestCheckInForm() {
     <div className="flex flex-col gap-16 w-[280px]">
       {/* Header */}
       <div className="flex items-center justify-between w-full">
-        <div className="flex items-center gap-1 bg-[#d1c9fa] border border-[#2d2264] rounded px-1 py-1 h-[29px]">
-          <div className="flex items-center gap-1">
-            <img src="mask-group0.svg" alt="Flag" className="w-4 h-4" />
-            <div className="text-[#2d2264] text-sm font-medium">EN</div>
+        <div className="flex items-center gap-5  px-1 py-1 h-[29px]">
+          <div className="flex items-center gap-5">
+
+            <img src="/logo.svg" alt="Flag" className="w-1/2 mt-7 ml-12" />
           </div>
-          <img src="dropdown0.svg" alt="Dropdown" className="w-5 h-5" />
+
         </div>
-        <img
-          src="material-symbols-light-close-rounded0.svg"
+        {/* <img
+          src="/iconoir-cancel0.svg"
           alt="Close"
-          className="w-[29px] h-[29px] rounded cursor-pointer"
-        />
+          className="w-50 h-50 ml-2 cursor-pointer"
+        /> */}
+
       </div>
 
       {/* Form Content */}
-      <div className="flex flex-col items-center gap-4 w-full">
+      <div className="flex flex-col items-center gap-4 w-full h-full">
         <div className="text-[#00580d] text-sm font-medium text-left">
           <h2 className="font-bold mb-2">{getFormTitle()}</h2>
-          <p>{getFormDescription()}</p>
+          <p className="whitespace-pre-line text-sm text-[#00580d] font-medium text-left">{getFormDescription()}</p>
         </div>
 
         {error && (
@@ -204,15 +206,14 @@ export default function GuestCheckInForm() {
           {getFieldConfig().map(({ key, label, placeholder, type = 'text', required, readOnly, options }) => {
             const isPrefilled = isFieldPrefilled(key);
             const isDisabled = readOnly || isPrefilled;
-            
+
             return (
               <div key={key} className="flex flex-col gap-1 w-full">
                 <label className="text-[#00d21e] text-xs font-medium">
                   {label}
                 </label>
-                <div className={`bg-white border border-[#54e168] rounded-xl px-3 py-2 text-sm text-[#00580d] ${
-                  isDisabled ? 'opacity-60 bg-gray-50' : ''
-                }`}>
+                <div className={`bg-white border border-[#54e168] rounded-xl px-3 py-2 text-sm text-[#00580d] ${isDisabled ? 'opacity-60 bg-gray-50' : ''
+                  }`}>
                   {type === 'select' ? (
                     <select
                       value={formData[key]}
@@ -236,9 +237,8 @@ export default function GuestCheckInForm() {
                       onChange={(e) => handleInputChange(key, e.target.value)}
                       required={required}
                       disabled={isDisabled}
-                      className={`w-full outline-none bg-transparent placeholder:text-xs placeholder:font-medium ${
-                        isDisabled ? 'cursor-not-allowed' : ''
-                      }`}
+                      className={`w-full outline-none bg-transparent placeholder:text-xs placeholder:font-medium ${isDisabled ? 'cursor-not-allowed' : ''
+                        }`}
                     />
                   )}
                 </div>
@@ -257,7 +257,7 @@ export default function GuestCheckInForm() {
                 <button
                   type="button"
                   onClick={() => document.getElementById('photo-upload').click()}
-                  className="bg-[#00d21e] text-white text-xs font-semibold px-4 py-2 rounded-r-xl"
+                  className="bg-[#00d21e] hover:bg-[#1ba134] text-white text-xs font-semibold px-4 py-2 rounded-r-xl"
                 >
                   Upload
                 </button>
@@ -267,22 +267,22 @@ export default function GuestCheckInForm() {
                   accept="image/*"
                   onChange={(e) => handleInputChange('photo', e.target.files[0])}
                   className="hidden"
-                  required={isVisitorMode}
+
                 />
               </div>
             </div>
           )}
 
           {/* Submit Button */}
-          <div className="bg-[#00d21e] text-white rounded-[24px] px-6 py-2 shadow-md text-center mt-4">
-            <button 
-              type="submit" 
+          <div className="bg-[#00d21e] hover:bg-[#1ba134] text-white rounded-[24px] px-6 py-2 shadow-md text-center mt-4">
+            <button
+              type="submit"
               disabled={loading}
               className="text-white text-base font-medium w-full"
             >
-              {loading ? 'Submitting...' : 
-               isVisitorMode ? 'Complete Registration' :
-               isResidentMode ? 'Send Invitation' : 'Register Visitor'}
+              {loading ? 'Submitting...' :
+                isVisitorMode ? 'Complete Registration' :
+                  isResidentMode ? 'Send Invitation' : 'Register Visitor'}
             </button>
           </div>
         </form>
