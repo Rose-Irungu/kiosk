@@ -29,6 +29,9 @@ export default function Emergencypage() {
         setOngoingCount(ongoingCount);
         setResolvedCount(resolvedCount);
         setLoading(false);
+
+        //Test
+        console.log(all);
       } catch (err) {
         setError(err);
         setLoading(false);
@@ -83,9 +86,9 @@ export default function Emergencypage() {
           {/* Left Card (Card4) */}
           <div className="w-full md:w-1/2">
             <Card4
-              floor="5"
-              unit="B05A"
-              name={latest?.user_id} // Replace with name if possible
+              floor={latest?.triggerer_floor_number}
+              unit={latest?.triggerer_unit_number}
+              name={latest?.triggered_by}
               status={latest?.emergency_status}
             />
           </div>
@@ -105,7 +108,7 @@ export default function Emergencypage() {
             events={filteredEvents.map((e) => ({
               id: e.id,
               location: e.emergency_location || "Unknown",
-              visitor: e.user_id || "N/A", // Replace with actual user/visitor
+              visitor: e.triggered_by || "Unknown", // Replace with actual user/visitor
               type: e.emergency_type,
               time: new Date(e.created_at).toLocaleString(),
               status: e.emergency_status === "resolved" ? "Resolved" : "Ongoing"
