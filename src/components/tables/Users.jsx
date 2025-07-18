@@ -71,7 +71,7 @@ export default function Users({ users = [], setUsers = () => {} }) {
         <div className="flex justify-between items-center p-4">
           <h2 className="text-xl font-semibold text-[#000]">Manage Users</h2>
           <Button
-            className="bg-[#502deb] hover:bg-[#3a1fb4] text-white px-5 py-2 rounded-md"
+            className="bg-[#005e0e] hover:bg-[#033e0c] text-white px-5 py-2 rounded-md"
             onClick={() => navigate("/userform")}
           >
             + Add User

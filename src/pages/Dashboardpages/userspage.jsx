@@ -67,7 +67,7 @@ export default function UsersPage() {
               >
                 Previous
               </button>
-              <div className="bg-[#502deb] text-white rounded-lg px-6 py-2.5 text-sm sm:text-base">
+              <div className="bg-[#005e0e] text-white rounded-lg px-6 py-2.5 text-sm sm:text-base">
                 {currentPage}
               </div>
               <button
