@@ -1,59 +1,73 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Card4 from "../../components/Card4";
-import Chart2 from "../../components/Chart2";              
+import EmergencyStatsChart from "../../components/Chart2";              
 import EmergencyTable from "../../components/tables/Emergencies";
 import Layout from "../../components/layout/Layout";
-
-// import { useState, useEffect } from "react";
+import {
+  fetchEmergencies
+} from "../../services/adminEmergencyServices";
 
 export default function Emergencypage() {
-  // ---------- STATE ----------
-  // const [feed,   setFeed]   = useState(null);           // { floor, unit, name, status }
-  // const [stats,  setStats]  = useState(null);           // { resolved, ongoing }
-  // const [events, setEvents] = useState([]);             // array of event objects
+  const [latest, setLatest] = useState(null);
+  const [all, setAll] = useState([]);
+  const [ongoingCount, setOngoingCount] = useState(0);
+  const [resolvedCount, setResolvedCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [timeFilter, setTimeFilter] = useState("This Week");
 
-  // const [loading, setLoading] = useState(true);
-  // const [error,   setError]   = useState(null);
+  // Fetch data
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        setLoading(true);
+        const { latest, all, ongoingCount, resolvedCount } = await fetchEmergencies();
+        setLatest(latest);
+        setAll(all);
+        setOngoingCount(ongoingCount);
+        setResolvedCount(resolvedCount);
+        setLoading(false);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    };
+    getData();
+  }, []);
 
-  // ---------- EFFECT ----------
-  // useEffect(() => {
-  //   const fetchEmergencies = async () => {
-  //     try {
-  //       // 🔗 swap with your real endpoint
-  //       const res = await fetch("/api/emergencies/summary");
-  //       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  //       const data = await res.json();
+  // Time filter logic - can be expanded based on created_at timestamps
+  const filterEventsByTime = (events, filter) => {
+    const now = new Date();
+    return events.filter((e) => {
+      const created = new Date(e.created_at);
+      switch (filter) {
+        case "Today":
+          return (
+            created.toDateString() === now.toDateString()
+          );
+        case "This Week": {
+          const weekAgo = new Date();
+          weekAgo.setDate(now.getDate() - 7);
+          return created >= weekAgo;
+        }
+        case "This Month": {
+          return (
+            created.getMonth() === now.getMonth() &&
+            created.getFullYear() === now.getFullYear()
+          );
+        }
+        case "This Year":
+          return created.getFullYear() === now.getFullYear();
+        default:
+          return true;
+      }
+    });
+  };
 
-  //       /* Expected payload:
-  //          {
-  //            feed:   { floor, unit, name, status },
-  //            stats:  { resolved, ongoing },
-  //            events: [ { location, visitor, type, time, status }, ... ]
-  //          }
-  //       */
-  //       setFeed(data.feed);
-  //       setStats(data.stats);
-  //       setEvents(data.events);
-  //     } catch (err) {
-  //       setError(err.message || "Unknown error");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+  const filteredEvents = filterEventsByTime(all, timeFilter);
 
-  //   fetchEmergencies();
-
-  //   // optional polling every 10 seconds
-  //   const id = setInterval(fetchEmergencies, 10_000);
-  //   return () => clearInterval(id);
-  // }, []);
-
-  // ---------- GUARDS ----------
-  // if (loading) return <p className="p-6">Loading emergencies…</p>;
-  // if (error)   return <p className="p-6 text-red-600">Error: {error}</p>;
-
-  // ---------- UI ----------
   return (
     <Layout>
       <div className="flex flex-col min-h-screen w-full items-center px-4 md:px-8">
@@ -71,26 +85,41 @@ export default function Emergencypage() {
             <Card4
               floor="5"
               unit="B05A"
-              name="Wan Tam"
-              status="Active"
+              name={latest?.user_id} // Replace with name if possible
+              status={latest?.emergency_status}
             />
           </div>
 
-          {/* Right Card (Chart2) - same dimensions as left */}
+          {/* Right Card (EmergencyStatsChart) */}
           <div className="w-full md:w-1/2">
-            <Chart2 />
+            <EmergencyStatsChart
+              ongoing={ongoingCount}
+              resolved={resolvedCount}
+            />
           </div>
         </div>
 
         {/* ---- Lower Row ---- */}
-        <div
-          id="lower"
-          className="
-            w-full max-w-[1140px]
-            mt-10
-          "
-        >
-          <EmergencyTable />
+        <div id="lower" className="w-full max-w-[1140px] mt-10">
+          <EmergencyTable
+            events={filteredEvents.map((e) => ({
+              id: e.id,
+              location: e.emergency_location || "Unknown",
+              visitor: e.user_id || "N/A", // Replace with actual user/visitor
+              type: e.emergency_type,
+              time: new Date(e.created_at).toLocaleString(),
+              status: e.emergency_status === "resolved" ? "Resolved" : "Ongoing"
+            }))}
+            isLoading={loading}
+            error={error}
+            timeFilter={timeFilter}
+            onTimeFilterChange={setTimeFilter}
+            highlightConditions={[{ emergency_status: "ongoing" }]}
+            onStatusChange={(action, event) => {
+              console.log(`Status change clicked: ${action}`, event);
+              // Call updateEmergency(event.id, newStatus) here
+            }}
+          />
         </div>
       </div>
     </Layout>

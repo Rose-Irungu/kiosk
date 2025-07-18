@@ -1,6 +1,32 @@
+"use client";
+import { useState } from "react";
 import { Siren } from "lucide-react";
+import { Link } from "react-router-dom";
+import { updateEmergency } from "../services/adminEmergencyServices";
 
-export default function Card4({ floor, unit, name, status }) {
+export default function Card4({ id, floor, unit, name, status, onResolved }) {
+  const [isResolved, setIsResolved] = useState(status === "resolved");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleResolve = async () => {
+    if (isResolved || loading) return;
+
+    try {
+      setLoading(true);
+      setError("");
+      const result = await updateEmergency(id);
+      if (result?.emergency_status === "resolved") {
+        setIsResolved(true);
+        onResolved?.(); // Notify parent to refetch data
+      }
+    } catch (err) {
+      setError(err?.toString() || "Failed to update.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-center w-full max-w-[537px] h-auto md:h-[221px] rounded-[10px] p-4 md:p-6 bg-white gap-[12px]">
       {/* Title Row */}
@@ -25,23 +51,19 @@ export default function Card4({ floor, unit, name, status }) {
 
           <div className="flex justify-between md:w-[166px] gap-[6px]">
             <div className="flex flex-col justify-between w-[86px] gap-[12px]">
-              <p className="font-inter font-normal text-sm leading-5 tracking-[1%]">
-                Triggered By
-              </p>
-              <p className="font-inter font-normal text-sm leading-5 tracking-[1%]">
-                Status
-              </p>
+              <p className="font-inter font-normal text-sm leading-5 tracking-[1%]">Triggered By</p>
+              <p className="font-inter font-normal text-sm leading-5 tracking-[1%]">Status</p>
             </div>
             <div className="flex flex-col justify-between w-[4px] gap-[12px]">
               <p className="font-inter font-normal text-sm leading-5 tracking-[1%]">:</p>
               <p className="font-inter font-normal text-sm leading-5 tracking-[1%]">:</p>
             </div>
             <div className="flex flex-col justify-between w-[64px] gap-[12px]">
-              <p className="font-inter font-normal text-sm leading-5 tracking-[1%]">
-                {name}
-              </p>
-              <p className="font-inter font-normal text-sm leading-5 tracking-[1%]">
-                {status}
+              <p className="font-inter font-normal text-sm leading-5 tracking-[1%]">{name}</p>
+              <p className={`font-inter font-normal text-sm leading-5 tracking-[1%] ${
+                isResolved ? "text-green-700" : "text-red-600"
+              }`}>
+                {isResolved ? "Resolved" : "Ongoing"}
               </p>
             </div>
           </div>
@@ -49,13 +71,27 @@ export default function Card4({ floor, unit, name, status }) {
 
         {/* Button Row */}
         <div className="flex flex-col sm:flex-row justify-between gap-2 sm:gap-4">
-          <button className="w-full sm:w-[256px] h-[40px] bg-[#005E0E] text-white rounded hover:bg-[#002A05] px-6 py-2">
-            Open Roll Call
-          </button>
-          <button className="w-full sm:w-[165px] h-[40px] border text-[#005E0E] border-[#005E0E] hover:bg-[#CCCCCC] hover:text-white px-4 py-2 rounded-sm">
-            Mark Resolved
+          <div>
+            <Link to="/triggers">
+              <button className="w-full sm:w-[256px] h-[40px] bg-[#005E0E] text-white rounded hover:bg-[#002A05] px-6 py-2">
+                Open Roll Call
+              </button>
+            </Link>
+          </div>
+          <button
+            onClick={handleResolve}
+            disabled={isResolved || loading}
+            className={`w-full sm:w-[165px] h-[40px] px-4 py-2 rounded-sm transition-all duration-300 ${
+              isResolved
+                ? "bg-[#CCCCCC] text-white border border-[#CCCCCC] cursor-not-allowed"
+                : "text-[#005E0E] border border-[#005E0E] hover:bg-[#CCCCCC] hover:text-white"
+            }`}
+          >
+            {loading ? "Updating..." : isResolved ? "Resolved ✅" : "Mark Resolved"}
           </button>
         </div>
+
+        {error && <p className="text-red-500 text-sm mt-1 font-inter">{error}</p>}
       </div>
     </div>
   );
