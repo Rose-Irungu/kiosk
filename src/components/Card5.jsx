@@ -1,13 +1,11 @@
-import React, { useState } from "react"
-import { Plus, X } from "lucide-react"
+import React, { useState } from "react";
+import { Plus, X } from "lucide-react";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-
-// PropTypes for FAQ items and component props
+} from "@/components/ui/card";
 
 export default function HelpSupportCard({
   title = "Help & Support",
@@ -19,74 +17,72 @@ export default function HelpSupportCard({
         "b) Search for the resident's name or unit number.",
         "c) Click the 'three dot' button in the action column.",
         "d) Select 'Freeze Account'.",
-        "e) Confirm the action in the popup. The resident will no longer have access until unfrozen."
-      ]
+        "e) Confirm the action in the popup. The resident will no longer have access until unfrozen.",
+      ],
     },
     {
       question: "What happens when SOS is triggered?",
       answer: [
         "a) An instant alert is sent to Security Personnel and Super Admins.",
         "b) The system starts an emergency roll call to track all users currently on-site.",
-        "c) A real-time notification log is created under the Emergency Oversight section."
-      ]
+        "c) A real-time notification log is created under the Emergency Oversight section.",
+      ],
     },
     {
       question: "How do I customize notification settings?",
       answer: [
         "a) Navigate to Notification Settings in the Admin Dashboard.",
-        "b) Choose the notification type (visitor arrival,approval status,emergency alert ,etc).",
-        "c) You Can.",
-        "   1.Edit the message template",
-        "   2.Choose delivery method(SMS,email,in-app)",
-        "d) Click Save Changes to apply"
-      ]
-    }
+        "b) Choose the notification type (visitor arrival, approval status, emergency alert, etc).",
+        "c) You can:",
+        "   1. Edit the message template",
+        "   2. Choose delivery method (SMS, email, in-app)",
+        "d) Click Save Changes to apply.",
+      ],
+    },
   ],
   contactEmail = "support@visitorgate.com",
-  contactPhone = "+254 XXX XXX XXX"
+  contactPhone = "+254 XXX XXX XXX",
 }) {
-  const [openIndex, setOpenIndex] = useState(null)
+  const [openIndex, setOpenIndex] = useState(null);
 
   const toggleFAQ = (index) => {
-    setOpenIndex(openIndex === index ? null : index)
-  }
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
-    <Card className="w-full max-w-4xl bg-white shadow-sm">
-      <CardHeader className="pb-6">
-        <CardTitle className="text-lg font-semibold text-gray-900">
+    <Card className="w-full max-w-[740px] p-4 shadow-sm border border-gray-200 bg-white">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-base font-semibold text-gray-900">
           {title}
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="flex gap-8 bg-white">
-        {/* FAQ Section */}
-        <div className="flex-1 space-y-4">
-          <h3 className="text-sm font-medium text-gray-700">
+      <CardContent className="flex gap-6 border-t border-gray-100 pt-4">
+        {/* FAQs */}
+        <div className="flex-1 pr-4 border-r border-gray-200">
+          <h3 className="text-sm font-medium text-gray-800 mb-4">
             Frequently Asked questions (FAQs)
           </h3>
-          
-          <div className="space-y-1">
+          <div className="space-y-2">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-gray-100 last:border-b-0">
+              <div key={index}>
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between py-3 text-left hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center justify-between py-2 text-left"
                 >
-                  <span className="text-sm text-gray-700 pr-4">
+                  <span className="text-sm text-gray-700 font-medium">
                     {index + 1}. {faq.question}
                   </span>
                   {openIndex === index ? (
-                    <X className="h-4 w-4 text-gray-500 flex-shrink-0 transition-all duration-200 rotate-0" />
+                    <X className="h-4 w-4 text-gray-500" />
                   ) : (
-                    <Plus className="h-4 w-4 text-gray-500 flex-shrink-0 transition-all duration-200 rotate-0" />
+                    <Plus className="h-4 w-4 text-gray-500" />
                   )}
                 </button>
-                
                 {openIndex === index && (
-                  <div className="pb-4 pl-4 space-y-1 bg-gray-50 border border-gray-200 rounded-md mx-2 mb-2 p-3 transition-all duration-200 ease-in-out">
-                    {faq.answer.map((step, stepIndex) => (
-                      <p key={stepIndex} className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">
+                  <div className="bg-gray-50 border border-gray-200 rounded-md p-3 mt-1 text-sm text-gray-600 space-y-1">
+                    {faq.answer.map((step, i) => (
+                      <p key={i} className="leading-relaxed">
                         {step}
                       </p>
                     ))}
@@ -97,24 +93,15 @@ export default function HelpSupportCard({
           </div>
         </div>
 
-        {/* Vertical Divider */}
-        <div className="w-px bg-gray-200"></div>
-
-        {/* Contact Support Section */}
-        <div className="w-64 space-y-4">
-          <h3 className="text-sm font-medium text-gray-700">
+        {/* Contact */}
+        <div className="w-64 pl-4">
+          <h3 className="text-sm font-medium text-gray-800 mb-3">
             Contact Support
           </h3>
-          <div className="space-y-2">
-            <p className="text-sm text-gray-600">
-              {contactEmail}
-            </p>
-            <p className="text-sm text-gray-600">
-              {contactPhone}
-            </p>
-          </div>
+          <p className="text-sm text-gray-600 mb-2">{contactEmail}</p>
+          <p className="text-sm text-gray-600">{contactPhone}</p>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
