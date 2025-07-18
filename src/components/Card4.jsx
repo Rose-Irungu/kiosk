@@ -15,10 +15,10 @@ export default function Card4({ id, floor, unit, name, status, onResolved }) {
     try {
       setLoading(true);
       setError("");
-      const result = await updateEmergency(id);
+      const result = await updateEmergency(id, "resolved");
       if (result?.emergency_status === "resolved") {
         setIsResolved(true);
-        onResolved?.(); // Notify parent to refetch data
+        onResolved(); // Notify parent to refetch data
       }
     } catch (err) {
       setError(err?.toString() || "Failed to update.");
@@ -28,7 +28,7 @@ export default function Card4({ id, floor, unit, name, status, onResolved }) {
   };
 
   return (
-    <div className="flex flex-col justify-center w-full max-w-[537px] h-auto md:h-[221px] rounded-[10px] p-4 md:p-6 bg-white gap-[12px]">
+    <div className="flex flex-col justify-center w-full max-w-[537px] rounded-[10px] p-4 md:p-6 bg-white gap-[12px] mx-auto">
       {/* Title Row */}
       <div className="flex items-center gap-2">
         <div className="w-[60px] h-[60px] flex items-center justify-center rounded-sm">
@@ -60,9 +60,11 @@ export default function Card4({ id, floor, unit, name, status, onResolved }) {
             </div>
             <div className="flex flex-col justify-between w-[64px] gap-[12px]">
               <p className="font-inter font-normal text-sm leading-5 tracking-[1%]">{name}</p>
-              <p className={`font-inter font-normal text-sm leading-5 tracking-[1%] ${
-                isResolved ? "text-green-700" : "text-red-600"
-              }`}>
+              <p
+                className={`font-inter font-normal text-sm leading-5 tracking-[1%] ${
+                  isResolved ? "text-green-700" : "text-red-600"
+                }`}
+              >
                 {isResolved ? "Resolved" : "Ongoing"}
               </p>
             </div>
@@ -70,25 +72,24 @@ export default function Card4({ id, floor, unit, name, status, onResolved }) {
         </div>
 
         {/* Button Row */}
-        <div className="flex flex-col sm:flex-row justify-between gap-2 sm:gap-4">
-          <div>
-            <Link to="/triggers">
-              <button className="w-full sm:w-[256px] h-[40px] bg-[#005E0E] text-white rounded hover:bg-[#002A05] px-6 py-2">
+        <div className="flex flex-col sm:flex-row w-full gap-3 min-w-0">
+            <Link to="/triggers" className="flex-1 min-w-0">
+              <button className="w-full min-h-[40px] bg-[#005E0E] text-white rounded hover:bg-[#002A05] px-4 py-2 transition-all duration-300 text-center whitespace-normal break-words">
                 Open Roll Call
               </button>
             </Link>
-          </div>
-          <button
-            onClick={handleResolve}
-            disabled={isResolved || loading}
-            className={`w-full sm:w-[165px] h-[40px] px-4 py-2 rounded-sm transition-all duration-300 ${
-              isResolved
-                ? "bg-[#CCCCCC] text-white border border-[#CCCCCC] cursor-not-allowed"
-                : "text-[#005E0E] border border-[#005E0E] hover:bg-[#CCCCCC] hover:text-white"
-            }`}
-          >
-            {loading ? "Updating..." : isResolved ? "Resolved ✅" : "Mark Resolved"}
-          </button>
+
+            <button
+              onClick={handleResolve}
+              disabled={isResolved || loading}
+              className={`flex-1 min-w-0 px-4 py-2 min-h-[40px] rounded-sm transition-all duration-300 text-center whitespace-normal break-words ${
+                isResolved
+                  ? "bg-[#CCCCCC] text-white border border-[#CCCCCC] cursor-not-allowed"
+                  : "text-[#005E0E] border border-[#005E0E] hover:bg-[#CCCCCC] hover:text-white"
+              }`}
+            >
+              {loading ? "Updating..." : isResolved ? "Resolved ✅" : "Mark Resolved"}
+            </button>
         </div>
 
         {error && <p className="text-red-500 text-sm mt-1 font-inter">{error}</p>}
