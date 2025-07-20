@@ -1,8 +1,10 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { authService } from "../../services/authService";
 
 const ResetPasswordForm = () => {
   const navigate = useNavigate();
+  const { token, uid } = useParams();
 
   const handleResetPassword = () => {
    
@@ -10,7 +12,7 @@ const ResetPasswordForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+    <form onSubmit={handleResetPassword} className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
       <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl flex flex-col md:flex-row">
         
         <div className="w-full md:w-1/2 relative">
@@ -36,50 +38,50 @@ const ResetPasswordForm = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">
-              New Password*
-            </label>
+            <label className="block text-sm font-medium mb-1">New Password*</label>
             <input
               type="password"
               placeholder="Create New Password"
-              className="w-full border border-gray-300 rounded px-3 py-2"
+              className={`w-full border rounded px-3 py-2 ${fieldError.password && "border-red-500"}`}
+              value={password}
+              onChange={onPasswordChange}
             />
+            {fieldError.password && (
+              <p className="text-red-600 text-sm mt-1">{fieldError.password}</p>
+            )}
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-medium mb-1">
-              Confirm New Password*
-            </label>
+            <label className="block text-sm font-medium mb-1">Confirm New Password*</label>
             <input
               type="password"
               placeholder="Enter Password Again"
-              className="w-full border border-gray-300 rounded px-3 py-2"
+              className={`w-full border rounded px-3 py-2 ${fieldError.confirmPassword && "border-red-500"}`}
+              value={confirmPassword}
+              onChange={onConfirmPasswordChange}
             />
+            {fieldError.confirmPassword && (
+              <p className="text-red-600 text-sm mt-1">{fieldError.confirmPassword}</p>
+            )}
           </div>
 
-        
-          <div className="mb-6">
-            <button
-              onClick={handleResetPassword}
-              className="w-full bg-[#005e0e] text-white py-2 rounded"
-            >
-              RESET PASSWORD
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full bg-[#005e0e] text-white py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed mb-6"
+          >
+            {isLoading ? "RESETTING..." : "RESET PASSWORD"}
+          </button>
 
-        
           <div className="text-center text-sm text-gray-600">
             Go back to{" "}
-            <Link
-              to="/loginform"
-              className="text-[#005e0e] font-medium hover:underline"
-            >
+            <Link to="/loginform" className="text-[#005e0e] font-medium hover:underline">
               LOGIN
             </Link>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

@@ -44,6 +44,7 @@ import Settings from "./pages/Dashboardpages/Settings";
 import SecurityOverview from "./pages/SecurityPages/SecurityOverview";
 import SystemPreferences from "./components/SystemPreference";
 import SessionManagement from "./components/SessionManagement";
+import HelpPage from "./pages/Dashboardpages/Help";
 
 
 const App = () => {
@@ -143,6 +144,7 @@ const App = () => {
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
         <Route path="/incident_report" element={<Incident_Reports />} />
+        <Route path="/help" element={<HelpPage />} />
         <Route path="/triggers" element={<Triggers />} />{" "}
         {/* Ensure Triggers is imported correctly */}
         <Route path="/dashboard" element={<Dashboard />} />

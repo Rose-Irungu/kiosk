@@ -17,10 +17,14 @@ export const API_ENDPOINTS = {
 
   // Auth
   LOGIN: '/user/login/',
+  CHANGE_PASSWORD: '/user/change_password/',
 
   // Emergencies
   EMERGENCY_LIST: '/incidence-and-emergency/emergency-list/',
   EMERGENCY_UPDATE: '/incidence-and-emergency/update-emergency/{id}/',
+
+  //Incidence Management
+  INCIDENCE_LIST: '/incidence-and-emergency/incidence-list/'
 
 }
 

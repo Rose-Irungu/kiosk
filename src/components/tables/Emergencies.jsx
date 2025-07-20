@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/table";
 import { MoreHorizontal } from "lucide-react";
 import { Label } from "recharts";
-import Layout from "../layout/Layout";
 
 export function EmergencyTable({ 
   events = [], 
@@ -112,7 +111,7 @@ export function EmergencyTable({
         <TableHeader>
           <TableRow>
             <TableHead className="font-medium text-muted-foreground">Location</TableHead>
-            <TableHead className="font-medium text-muted-foreground">Visitor</TableHead>
+            <TableHead className="font-medium text-muted-foreground">Triggered By</TableHead>
             <TableHead className="font-medium text-muted-foreground">Type</TableHead>
             <TableHead className="font-medium text-muted-foreground">Time</TableHead>
             <TableHead className="font-medium text-muted-foreground">Status</TableHead>
@@ -165,7 +164,7 @@ export function EmergencyTable({
                         onClick={() => handleAction("Unresolved", event, index)}
                         className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                       >
-                        Unresolved
+                        Ongoing
                       </button>
                     </div>
                   )}

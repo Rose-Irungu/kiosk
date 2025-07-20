@@ -24,15 +24,15 @@ export const fetchEmergencies = async () => {
 };
 
 // Update an existing emergency
-export const updateEmergency = async (id) => {
+export const updateEmergency = async (id, newStatus = "resolved") => {
   try {
     const url = API_ENDPOINTS.EMERGENCY_UPDATE.replace("{id}", id);
-    const response = await api.put(url, { emergency_status: "resolved" });
+    const response = await api.patch(url, { emergency_status: newStatus });
 
     const result = response.data;
 
     if (result.result_code === 0) {
-      return result.data; // returns { id: <id>, emergency_status: "resolved" }
+      return result.data; // { id, emergency_status }
     } else {
       throw new Error(result.message || "Emergency update failed.");
     }
