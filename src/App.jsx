@@ -42,6 +42,9 @@ import VisitorLogs from "./pages/Dashboardpages/VisitorLogs";
 import Incident_Reports from "./pages/Dashboardpages/Incident_Reports";
 import Settings from "./pages/Dashboardpages/Settings";
 import SecurityOverview from "./pages/SecurityPages/SecurityOverview";
+import SystemPreferences from "./components/SystemPreference";
+import SessionManagement from "./components/SessionManagement";
+
 
 const App = () => {
   const [users, setUsers] = useState([
@@ -154,6 +157,10 @@ const App = () => {
         <Route path="/chart2" element={<Chart2 />} />{" "}
         <Route path="/settings" element={<Settings />} />{" "}
         <Route path="/security/overview" element={<SecurityOverview />} />
+        <Route path="/systempreference" element={<SystemPreferences />} />
+        <Route path="/session" element={<SessionManagement />} />
+        
+
       </Routes>
     </Router>
   );
