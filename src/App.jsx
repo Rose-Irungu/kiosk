@@ -40,7 +40,8 @@ import Dashboard from "./pages/Dashboardpages/Dashboard";
 import UsersPage from "./pages/Dashboardpages/userspage";
 import VisitorLogs from "./pages/Dashboardpages/VisitorLogs";
 import Incident_Reports from "./pages/Dashboardpages/Incident_Reports";
-
+import Settings from "./pages/Dashboardpages/Settings";
+import SecurityOverview from "./pages/SecurityPages/SecurityOverview";
 
 const App = () => {
   const [users, setUsers] = useState([
@@ -132,7 +133,10 @@ const App = () => {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/forgotpassworderror" element={<ForgotPasswordError />} />
         <Route path="/resetemail" element={<ResetEmail />} />
-        <Route path="/reset-password/:uid/:token/" element={<ResetPassword />} />
+        <Route
+          path="/reset-password/:uid/:token/"
+          element={<ResetPassword />}
+        />
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
         <Route path="/incident_report" element={<Incident_Reports />} />
@@ -148,8 +152,8 @@ const App = () => {
         <Route path="/userspage" element={<UsersPage />} />
         <Route path="/visitorlogs" element={<VisitorLogs />} />
         <Route path="/chart2" element={<Chart2 />} />{" "}
-        {/* Ensure Chart2 is imported correctly */}
-        {/* Add more routes as needed */}
+        <Route path="/settings" element={<Settings />} />{" "}
+        <Route path="/security/overview" element={<SecurityOverview />} />
       </Routes>
     </Router>
   );
