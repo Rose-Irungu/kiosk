@@ -23,25 +23,25 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
   // Edit form state
   const [editFormData, setEditFormData] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    phone: '',
-    residence: ''
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone_number: "",
+    residence: "",
   });
 
   // Password form state
   const [passwordForm, setPasswordForm] = useState({
-    oldPassword: '',
-    newPassword: '',
-    confirmPassword: ''
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
   });
   const [passwordErrors, setPasswordErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Fetch user data on component mount
   useEffect(() => {
-    const userInfo = localStorage.getItem('userInfo');
+    const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {
       try {
         const user = JSON.parse(userInfo);
@@ -57,16 +57,16 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
         setUserData(userDataFormatted);
         setEditFormData(userDataFormatted);
       } catch (error) {
-        console.error('Error parsing user data:', error);
+        console.error("Error parsing user data:", error);
       }
     }
   }, []);
 
   // Handle edit form input changes
   const handleEditFormChange = (field, value) => {
-    setEditFormData(prev => ({
+    setEditFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -84,43 +84,49 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
       const updatedUserData = {
         ...userData,
         ...editFormData,
-        fullName: `${editFormData.first_name} ${editFormData.last_name}`.trim()
+        fullName: `${editFormData.first_name} ${editFormData.last_name}`.trim(),
       };
 
       setUserData(updatedUserData);
 
       // Update localStorage
-      const currentUserInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+      const currentUserInfo = JSON.parse(
+        localStorage.getItem("userInfo") || "{}"
+      );
       const updatedUserInfo = {
         ...currentUserInfo,
         first_name: editFormData.first_name,
         last_name: editFormData.last_name,
         email: editFormData.email,
-        phone: editFormData.phone,
-        residence: editFormData.residence
+        phone_number: editFormData.phone_number,
+        residence: editFormData.residence,
       };
-      localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
+      localStorage.setItem("userInfo", JSON.stringify(updatedUserInfo));
 
-      alert('Profile updated successfully!');
+      alert("Profile updated successfully!");
       setShowEditForm(false);
     } catch (error) {
-      alert('Failed to update profile. Please try again.');
+      alert("Failed to update profile. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const handleLogout = () => {
+    authService.logoutUser();
+  };
+
   // Handle password form input changes
   const handlePasswordChange = (field, value) => {
-    setPasswordForm(prev => ({
+    setPasswordForm((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
     // Clear error for this field when user starts typing
     if (passwordErrors[field]) {
-      setPasswordErrors(prev => ({
+      setPasswordErrors((prev) => ({
         ...prev,
-        [field]: ''
+        [field]: "",
       }));
     }
   };
@@ -130,19 +136,19 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     const errors = {};
 
     if (!passwordForm.oldPassword) {
-      errors.oldPassword = 'Old password is required';
+      errors.oldPassword = "Old password is required";
     }
 
     if (!passwordForm.newPassword) {
-      errors.newPassword = 'New password is required';
+      errors.newPassword = "New password is required";
     } else if (passwordForm.newPassword.length < 6) {
-      errors.newPassword = 'Password must be at least 6 characters';
+      errors.newPassword = "Password must be at least 6 characters";
     }
 
     if (!passwordForm.confirmPassword) {
-      errors.confirmPassword = 'Please confirm your password';
+      errors.confirmPassword = "Please confirm your password";
     } else if (passwordForm.newPassword !== passwordForm.confirmPassword) {
-      errors.confirmPassword = 'Passwords do not match';
+      errors.confirmPassword = "Passwords do not match";
     }
 
     return errors;
@@ -165,16 +171,16 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
       // Call API
       const response = await authService.changePassword({
         old_password: passwordForm.oldPassword,
-        new_password: passwordForm.newPassword
+        new_password: passwordForm.newPassword,
       });
 
       // Success - close modal and reset form
-      alert('Password changed successfully!');
+      alert("Password changed successfully!");
       setshowChangePasswordForm(false);
       setPasswordForm({
-        oldPassword: '',
-        newPassword: '',
-        confirmPassword: ''
+        oldPassword: "",
+        newPassword: "",
+        confirmPassword: "",
       });
       setPasswordErrors({});
     } catch (error) {
@@ -182,7 +188,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
       if (error.message) {
         alert(error.message);
       } else {
-        alert('Failed to change password. Please try again.');
+        alert("Failed to change password. Please try again.");
       }
     } finally {
       setIsSubmitting(false);
@@ -204,7 +210,11 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
             stroke="currentColor"
             strokeWidth={2}
           >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
           </svg>
         </button>
         <h1 className="text-lg md:text-xl font-bold hidden sm:block">
@@ -250,7 +260,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
             >
               <CircleUser className="h-6 w-6 text-gray-700" />
               <span className="hidden sm:inline text-sm font-medium text-gray-700">
-                {userData.first_name || 'User'}
+                {userData.first_name || "User"}
               </span>
             </button>
 
@@ -260,7 +270,9 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                 <div className="flex items-center gap-2 w-full p-2 border-b border-gray-200">
                   <CircleUser className="h-10 w-10 text-gray-600" />
                   <div className="flex flex-col">
-                    <span className="font-medium text-gray-800">{userData.fullName}</span>
+                    <span className="font-medium text-gray-800">
+                      {userData.fullName}
+                    </span>
                   </div>
                 </div>
                 <button
@@ -273,7 +285,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                   <User className="h-6 w-6 text-gray-400" />
                   <span className="text-sm text-[#495057]">View Profile</span>
                 </button>
-                <button className="flex items-center w-full h-10 p-2 gap-2 rounded hover:bg-gray-100 transition">
+                <button className="flex items-center w-full h-10 p-2 gap-2 rounded hover:bg-gray-100 transition" onClick={handleLogout}>
                   <img src="./logout.svg" alt="Logout" className="w-6 h-6" />
                   <span className="text-sm text-[#495057]">Logout</span>
                 </button>
@@ -310,12 +322,16 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
                     <div className="flex flex-col items-start gap-6 w-[194px] h-[120px] flex-grow z-[1]">
                       <div>
-                        <h2 className="text-lg font-bold text-[#495057]">{userData.fullName}</h2>
+                        <h2 className="text-lg font-bold text-[#495057]">
+                          {userData.fullName}
+                        </h2>
                       </div>
 
                       <div className="grid grid-cols-[max-content_1fr] gap-x-4 gap-y-2 text-sm text-[#495057]">
-                        <div>Phone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</div>
-                        <div>{userData.phone || 'Not provided'}</div>
+                        <div>
+                          Phone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                        </div>
+                        <div>{userData.phone_number || "Not provided"}</div>
                         <div>Residence&nbsp;&nbsp;:</div>
                         <div>{userData.residence}</div>
                       </div>
@@ -329,12 +345,14 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
                     <div className="text-[#495057]">
                       Phone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{userData.phone || 'Not provided'}
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      {userData.phone_number || "Not provided"}
                     </div>
 
                     <div className="text-[#495057]">
                       Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{userData.email || 'Not provided'}
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      {userData.email || "Not provided"}
                     </div>
 
                     <div className="flex flex-row items-center gap-[30px] w-[342px] h-[40px]">
@@ -349,8 +367,8 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                       </button>
                       <button
                         onClick={() => setshowChangePasswordForm(true)}
-                        className=" font-['Inter'] font-light flex items-center justify-center px-6 py-2 gap-2 border border-[#005E0E] rounded-[4px] text-[#005E0E] text-sm font-medium whitespace-nowrap h-[40PX] hover:bg-[#D5DFD7]">
-
+                        className=" font-['Inter'] font-light flex items-center justify-center px-6 py-2 gap-2 border border-[#005E0E] rounded-[4px] text-[#005E0E] text-sm font-medium whitespace-nowrap h-[40PX] hover:bg-[#D5DFD7]"
+                      >
                         CHANGE PASSWORD
                       </button>
                     </div>
@@ -374,83 +392,104 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
               <X className="w-6 h-6 text-gray-500 hover:text-gray-800" />
             </button>
 
-            <h2 className="text-lg font-bold text-[#495057] font-['Inter']">Edit Profile</h2>
+            <h2 className="text-lg font-bold text-[#495057] font-['Inter']">
+              Edit Profile
+            </h2>
 
-            <form onSubmit={handleEditFormSubmit} className="flex flex-col gap-4 w-full px-4 font-['Inter']">
-
+            <form
+              onSubmit={handleEditFormSubmit}
+              className="flex flex-col gap-4 w-full px-4 font-['Inter']"
+            >
               <div className="flex gap-4">
                 <div className="flex-1">
-                  <label className="block text-sm text-[#495057] mb-2">First Name</label>
+                  <label className="block text-sm text-[#495057] mb-2">
+                    First Name
+                  </label>
                   <input
                     type="text"
                     placeholder="Enter first name"
                     value={editFormData.first_name}
-                    onChange={(e) => handleEditFormChange('first_name', e.target.value)}
+                    onChange={(e) =>
+                      handleEditFormChange("first_name", e.target.value)
+                    }
                     className="w-full h-[48px] px-4 py-2 border border-[#005E0E]/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
                   />
                 </div>
                 <div className="flex-1">
-                  <label className="block text-sm text-[#495057] mb-2">Last Name</label>
+                  <label className="block text-sm text-[#495057] mb-2">
+                    Last Name
+                  </label>
                   <input
                     type="text"
                     placeholder="Enter last name"
                     value={editFormData.last_name}
-                    onChange={(e) => handleEditFormChange('last_name', e.target.value)}
+                    onChange={(e) =>
+                      handleEditFormChange("last_name", e.target.value)
+                    }
                     className="w-full h-[48px] px-4 py-2 border border-[#005E0E]/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-sm  text-[#495057] mb-2">Email</label>
+                <label className="block text-sm  text-[#495057] mb-2">
+                  Email
+                </label>
                 <input
                   type="email"
                   placeholder="Enter email"
                   value={editFormData.email}
-                  onChange={(e) => handleEditFormChange('email', e.target.value)}
+                  onChange={(e) =>
+                    handleEditFormChange("email", e.target.value)
+                  }
                   className=" flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border border-[#005E0E]/50 rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
                 />
               </div>
 
-
-
               <div>
-                <label className="block text-sm  text-[#495057] mb-2">Phone</label>
+                <label className="block text-sm  text-[#495057] mb-2">
+                  Phone
+                </label>
                 <input
                   type="text"
-                  placeholder="Enter phone"
-                  value={editFormData.phone}
-                  onChange={(e) => handleEditFormChange('phone', e.target.value)}
+                  placeholder="Enter phone_number"
+                  value={editFormData.phone_number}
+                  onChange={(e) =>
+                    handleEditFormChange("phone_number", e.target.value)
+                  }
                   className=" flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border border-[#005E0E]/50 rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
                 />
               </div>
 
               <div>
-                <label className="block text-sm  text-[#495057] mb-2">Residence/Facility</label>
+                <label className="block text-sm  text-[#495057] mb-2">
+                  Residence/Facility
+                </label>
                 <input
                   type="text"
                   placeholder="Enter residence"
                   value={editFormData.residence}
-                  onChange={(e) => handleEditFormChange('residence', e.target.value)}
+                  onChange={(e) =>
+                    handleEditFormChange("residence", e.target.value)
+                  }
                   className=" flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border border-[#005E0E]/50 rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
                 />
               </div>
 
-
-
-
-
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-[351px] h-[48px] mt-auto w-full ${isSubmitting ? 'bg-gray-400' : 'bg-[#005E0E] hover:bg-green-700'} text-white py-2 rounded-md transition`}
+                className={`w-[351px] h-[48px] mt-auto w-full ${
+                  isSubmitting
+                    ? "bg-gray-400"
+                    : "bg-[#005E0E] hover:bg-green-700"
+                } text-white py-2 rounded-md transition`}
               >
-                {isSubmitting ? 'UPDATING...' : 'UPDATE PROFILE'}
+                {isSubmitting ? "UPDATING..." : "UPDATE PROFILE"}
               </button>
             </form>
           </div>
         </div>
       )}
-
 
       {/* Change Password Modal */}
       {showChangePasswordForm && (
@@ -460,9 +499,9 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
               onClick={() => {
                 setshowChangePasswordForm(false);
                 setPasswordForm({
-                  oldPassword: '',
-                  newPassword: '',
-                  confirmPassword: ''
+                  oldPassword: "",
+                  newPassword: "",
+                  confirmPassword: "",
                 });
                 setPasswordErrors({});
               }}
@@ -472,66 +511,98 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
               <X className="w-6 h-6 text-gray-500 hover:text-gray-800" />
             </button>
 
-            <h2 className="text-lg font-bold text-[#495057] font-['Inter']">Change Password</h2>
+            <h2 className="text-lg font-bold text-[#495057] font-['Inter']">
+              Change Password
+            </h2>
 
-            <form onSubmit={handlePasswordSubmit} className="flex flex-col gap-4 w-full px-4 font-['Inter']">
-
-
+            <form
+              onSubmit={handlePasswordSubmit}
+              className="flex flex-col gap-4 w-full px-4 font-['Inter']"
+            >
               <div>
-                <label className="block text-sm  text-[#495057] mb-2">Old Password</label>
+                <label className="block text-sm  text-[#495057] mb-2">
+                  Old Password
+                </label>
                 <input
                   type="password"
                   value={passwordForm.oldPassword}
-                  onChange={(e) => handlePasswordChange('oldPassword', e.target.value)}
-                  className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${passwordErrors.oldPassword ? 'border-red-500' : 'border-[#005E0E]/50'} rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
+                  onChange={(e) =>
+                    handlePasswordChange("oldPassword", e.target.value)
+                  }
+                  className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${
+                    passwordErrors.oldPassword
+                      ? "border-red-500"
+                      : "border-[#005E0E]/50"
+                  } rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
                 />
                 {passwordErrors.oldPassword && (
-                  <p className="text-red-500 text-xs mt-1">{passwordErrors.oldPassword}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {passwordErrors.oldPassword}
+                  </p>
                 )}
               </div>
 
-
-
               <div>
-                <label className="block text-sm  text-[#495057] mb-2">New Password</label>
+                <label className="block text-sm  text-[#495057] mb-2">
+                  New Password
+                </label>
                 <input
                   type="password"
                   value={passwordForm.newPassword}
-                  onChange={(e) => handlePasswordChange('newPassword', e.target.value)}
-                  className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${passwordErrors.newPassword ? 'border-red-500' : 'border-[#005E0E]/50'} rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
+                  onChange={(e) =>
+                    handlePasswordChange("newPassword", e.target.value)
+                  }
+                  className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${
+                    passwordErrors.newPassword
+                      ? "border-red-500"
+                      : "border-[#005E0E]/50"
+                  } rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
                 />
                 {passwordErrors.newPassword && (
-                  <p className="text-red-500 text-xs mt-1">{passwordErrors.newPassword}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {passwordErrors.newPassword}
+                  </p>
                 )}
               </div>
 
               <div>
-                <label className="block text-sm  text-[#495057] mb-2">Confirm Password</label>
+                <label className="block text-sm  text-[#495057] mb-2">
+                  Confirm Password
+                </label>
                 <input
                   type="password"
                   value={passwordForm.confirmPassword}
-                  onChange={(e) => handlePasswordChange('confirmPassword', e.target.value)}
-                  className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${passwordErrors.confirmPassword ? 'border-red-500' : 'border-[#005E0E]/50'} rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
+                  onChange={(e) =>
+                    handlePasswordChange("confirmPassword", e.target.value)
+                  }
+                  className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${
+                    passwordErrors.confirmPassword
+                      ? "border-red-500"
+                      : "border-[#005E0E]/50"
+                  } rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
                 />
                 {passwordErrors.confirmPassword && (
-                  <p className="text-red-500 text-xs mt-1">{passwordErrors.confirmPassword}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {passwordErrors.confirmPassword}
+                  </p>
                 )}
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-[351px] h-[48px] mt-auto w-full ${isSubmitting ? 'bg-gray-400' : 'bg-[#005E0E] hover:bg-green-700'} text-white py-2 rounded-md transition`}
+                className={`w-[351px] h-[48px] mt-auto w-full ${
+                  isSubmitting
+                    ? "bg-gray-400"
+                    : "bg-[#005E0E] hover:bg-green-700"
+                } text-white py-2 rounded-md transition`}
               >
-                {isSubmitting ? 'CHANGING PASSWORD...' : 'CHANGE PASSWORD'}
+                {isSubmitting ? "CHANGING PASSWORD..." : "CHANGE PASSWORD"}
               </button>
             </form>
           </div>
         </div>
       )}
-
-
-
     </header>
   );
 }
