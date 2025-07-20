@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { getAllVisitors } from "../../services/visitorservice";
 import {
   Table,
@@ -13,6 +12,7 @@ import { Upload, ChevronDown } from "lucide-react";
 
 export default function Visitors() {
   const [visitors, setVisitors] = useState([]);
+  const [filteredAllVisitors, setFilteredAllVisitors] = useState([]); // For export
   const [loading, setLoading] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +24,6 @@ export default function Visitors() {
     fetchVisitors();
   }, [currentPage, entriesPerPage, visitorTypeFilter]);
 
-
   const fetchVisitors = async () => {
     setLoading(true);
     try {
@@ -32,16 +31,13 @@ export default function Visitors() {
       if (res.result_code === 0) {
         let allData = res.data;
 
-        // Apply filter (if not 'all')
         if (visitorTypeFilter !== "all") {
-          allData = allData.filter(
-            (v) => v.visitor_type === visitorTypeFilter
-          );
+          allData = allData.filter((v) => v.visitor_type === visitorTypeFilter);
         }
 
+        setFilteredAllVisitors(allData); // Save all filtered data for export
         setTotalEntries(allData.length);
 
-        // Slice data for current page
         const start = (currentPage - 1) * entriesPerPage;
         const end = start + entriesPerPage;
         const paginated = allData.slice(start, end);
@@ -49,18 +45,40 @@ export default function Visitors() {
         setVisitors(paginated);
       } else {
         setVisitors([]);
+        setFilteredAllVisitors([]);
         setTotalEntries(0);
       }
     } catch (error) {
       console.error("Error fetching visitors:", error);
       setVisitors([]);
+      setFilteredAllVisitors([]);
       setTotalEntries(0);
     } finally {
       setLoading(false);
     }
   };
 
+  const handleExportCSV = () => {
+    const headers = ["Name", "Phone", "Visitor Type", "Host/Unit", "Status"];
+    const rows = filteredAllVisitors.map((v) => [
+      v.visitor_name,
+      v.phone_number,
+      v.visitor_type,
+      v.host_unit || "N/A",
+      v.status,
+    ]);
 
+    let csvContent = "data:text/csv;charset=utf-8," +
+      [headers, ...rows].map((row) => row.join(",")).join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.href = encodedUri;
+    link.download = "visitor_logs.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const totalPages = Math.ceil(totalEntries / entriesPerPage);
 
@@ -85,16 +103,17 @@ export default function Visitors() {
   return (
     <>
       <div className="w-full max-w-7xl mx-auto bg-white rounded-xl shadow-sm mt-5">
-        {/* Header */}
         <div className="flex justify-between items-center p-6 mb-4 border-b border-[rgba(0,0,0,0.3)]">
           <h2 className="text-2xl font-semibold">Visitor Logs</h2>
-          <button className="flex items-center gap-2 h-12 px-4 pr-6 bg-[#005E0E] text-white rounded-lg hover:bg-[#123107] transition">
+          <button
+            onClick={handleExportCSV}
+            className="flex items-center gap-2 h-12 px-4 pr-6 bg-[#005E0E] text-white rounded-lg hover:bg-[#123107] transition"
+          >
             <Upload />
             Export
           </button>
         </div>
 
-        {/* Controls */}
         <div className="flex justify-between items-center px-6">
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-600">Show</span>
@@ -129,7 +148,6 @@ export default function Visitors() {
           </div>
         </div>
 
-        {/* Table */}
         <div className="p-4">
           <Table>
             <TableHeader>
@@ -179,15 +197,14 @@ export default function Visitors() {
                     <TableCell>
                       <div
                         className={`flex items-center justify-center px-1 py-0.5 gap-2 w-[90px] h-[20px] rounded text-xs font-medium ${visitor.status === "checked_in"
-                            ? "bg-[rgba(1,210,30,0.2)] text-green-800"
-                            : visitor.status === "checked_out"
-                              ? "bg-[#E0DBF4] text-purple-800"
-                              : "bg-yellow-200 text-yellow-800"
+                          ? "bg-[rgba(1,210,30,0.2)] text-green-800"
+                          : visitor.status === "checked_out"
+                            ? "bg-[#E0DBF4] text-purple-800"
+                            : "bg-yellow-200 text-yellow-800"
                           }`}
                       >
                         {visitor.status}
                       </div>
-
                     </TableCell>
                   </TableRow>
                 ))
@@ -195,12 +212,8 @@ export default function Visitors() {
             </TableBody>
           </Table>
         </div>
-
-
-
       </div>
 
-      {/* Pagination */}
       <div className="mt-4 flex flex-col sm:flex-row items-center justify-between w-full px-4 h-auto sm:h-12 gap-2 sm:gap-0">
         <div className="flex items-center gap-2 w-full sm:w-auto">
           <button

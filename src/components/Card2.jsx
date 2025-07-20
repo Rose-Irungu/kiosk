@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Siren } from "lucide-react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { updateEmergency } from "../services/adminEmergencyServices";
 
 /**
  * Card2 – Panic‑button incident card
@@ -12,33 +13,34 @@ import { useNavigate, Link } from "react-router-dom";
  * @param {String} status
  */
 export default function Card2({
-  unit,
+  id,
   floor,
+  unit,
   minute,
-  resident,
-  status = "Unresolved",
+  name,
+  status,
+  onResolved
 }) {
-  const [currentStatus, setCurrentStatus] = useState(status);
-  const [loadingResolve, setLoadingResolve] = useState(false);
-  const [error, setError] = useState(null);
+  const [isResolved, setIsResolved] = useState(status === "resolved");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const isResolved = currentStatus.toLowerCase() === "resolved";
 
   const handleResolve = async () => {
-    if (isResolved || loadingResolve) return;
-
-    setLoadingResolve(true);
-    setError(null);
+    if (isResolved || loading) return;
 
     try {
-      // simulate async resolve
-      await new Promise((r) => setTimeout(r, 800));
-      setCurrentStatus("Resolved");
+      setLoading(true);
+      setError("");
+      const result = await updateEmergency(id, "resolved");
+      if (result?.emergency_status === "resolved") {
+        setIsResolved(true);
+        onResolved(); // Notify parent to refetch data
+      }
     } catch (err) {
-      console.error(err);
-      setError("Couldn’t mark as resolved.");
+      setError(err?.toString() || "Failed to update.");
     } finally {
-      setLoadingResolve(false);
+      setLoading(false);
     }
   };
 
@@ -52,7 +54,7 @@ export default function Card2({
             <Siren className="w-6 h-6 text-[#F93162] animate-ping flex-shrink-0" />
           </div>
           <h1 className="font-DM Sans text-xl text-[#a3a7aa] font-medium">
-            PANIC BUTTON TRIGGERED AT {unit} – {floor}
+            PANIC BUTTON TRIGGERED AT {floor} – {unit}
           </h1>
         </div>
 
@@ -69,20 +71,14 @@ export default function Card2({
 
           <button
             onClick={handleResolve}
-            disabled={isResolved || loadingResolve}
+            disabled={isResolved || loading}
             className={`border border-[#005E0E] text-sm font-inter font-normal px-3 py-1 rounded transition-colors hover:bg-[#CCCCCC] ${
-              isResolved
-                ? "border-green-600 text-[#005E0E] cursor-default"
-                : loadingResolve
-                ? "border-[#005E0E] text-[#005E0E] cursor-wait"
-                : "border-[#005E0E] text-[#005E0E]"
+                isResolved
+                  ? "bg-[#CCCCCC] text-white border border-[#CCCCCC] cursor-not-allowed"
+                  : "text-[#005E0E] border border-[#005E0E] hover:bg-[#CCCCCC] hover:text-white"
             }`}
           >
-            {isResolved
-              ? "Resolved"
-              : loadingResolve
-              ? "Resolving…"
-              : "Mark Resolved"}
+            {loading ? "Updating..." : isResolved ? "Resolved ✅" : "Mark Resolved"}
           </button>
         </div>
 
@@ -111,10 +107,10 @@ export default function Card2({
         </div>
         <div className="flex flex-col justify-between w-[69px] h-[52px] gap-[12px]">
           <p className="font-dmsans text-sm text-slateboost w-[69px] h-[20px]">
-            {resident}
+            {name}
           </p>
           <p className="font-dmsans text-sm text-slateboost w-[69px] h-[20px]">
-            {currentStatus}
+            {status}
           </p>
         </div>
       </div>

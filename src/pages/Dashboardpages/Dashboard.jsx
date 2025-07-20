@@ -10,10 +10,16 @@ import { AlertTriangle } from "lucide-react";
 import DashboardTable from "../../components/tables/DashboardTable";
 import { getDashboardStatistics } from "../../services/dashboardService";
 import useVisitorStats from "../../hooks/useVisitorStats";
+import {
+  fetchEmergencies,
+} from "../../services/adminEmergencyServices";
+
 
 const Dashboard = () => {
   const [stats, setStats] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [latest, setLatest] = useState(null);
+  
 
   
   const {
@@ -22,6 +28,24 @@ const Dashboard = () => {
     error: visitorError,
     totalVisitors,
   } = useVisitorStats();
+
+    const getData = async () => {
+      try {
+        setLoading(true);
+  
+        const { all } = await fetchEmergencies();
+  
+        const ongoingOnly = all.filter(
+          (e) => e.emergency_status?.toLowerCase() === "ongoing"
+        );
+  
+        setLatest(ongoingOnly.length > 0 ? ongoingOnly[0] : null);
+      } catch (err) {
+        console.error("Error fetching emergencies:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -34,7 +58,7 @@ const Dashboard = () => {
         setLoading(false);
       }
     };
-
+    getData();
     fetchStats();
   }, []);
 
@@ -107,13 +131,24 @@ const Dashboard = () => {
       )}
 
       <div className="mb-[30px]">
+        {latest ? (
         <Card2
-          label="Active Incidents"
-          value={loading ? "..." : stats?.incidents?.total || 0}
-          icon={<AlertTriangle className="h-6 w-6 text-red-600" />}
-          iconBg="bg-red-100"
+          id={latest?.id}
+          floor={latest?.triggerer_floor_number}
+          unit={latest?.triggerer_unit_number}
+          minute={latest?.minute}
+          name={latest?.triggered_by}
+          status={latest?.emergency_status}
           buttonText="View details"
+          onResolved={getData}
         />
+        ) : (
+              <div className="bg-white p-6 rounded shadow w-full">
+                <p className="text-center text-gray-600 font-semibold">
+                  No unresolved emergencies
+                </p>
+              </div>
+            )}
       </div>
 
       <div className="w-full flex flex-col lg:flex-row gap-6 mb-8">
