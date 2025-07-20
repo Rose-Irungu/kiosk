@@ -25,7 +25,7 @@ export default function SystemPreferences({
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-md p-8 flex flex-col space-y-6">
         
-        <h1 className="text-2xl  font-sans font-semibold text-[#777c81]">{title}</h1>
+        <h1 className="text-xl  font-sans font-semibold text-[#777c81]">{title}</h1>
 
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -34,7 +34,7 @@ export default function SystemPreferences({
             <div className="space-y-4">
               
               <div className="flex items-center justify-between ">
-                <h2 className="text-md font-semibold text-[#777c81] items-start">
+                <h2 className="text-md font-bold text-[#777c81] items-start">
                   Maintenance Mode
                 </h2>
                 <button

@@ -1,14 +1,16 @@
 import React from 'react';
 import { AlertTriangle } from 'lucide-react';
+import { authService } from "../services/authService";
 
 export default function SessionManagementCard() {
   const handleLogout = () => {
-    
-    console.log('Logging out...');
+    authService.logoutUser();
   };
+    
+
 
   return (
-    <div className=" p-5 mx-auto  ml-1  max-w-[950px] w-[950px] ">
+    <div className=" p-5 mx-auto    max-w-[950px] w-[950px] ">
       
       <div className="border-1  rounded-lg bg-white p-6 shadow-2xl  ">
         
