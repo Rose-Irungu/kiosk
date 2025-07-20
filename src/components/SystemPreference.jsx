@@ -24,15 +24,15 @@ export default function SystemPreferences({
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-md p-8 flex flex-col space-y-6">
-        {/* Title */}
-        <h1 className="text-2xl  font-sans font-bold text-[#777c81]">{title}</h1>
+        
+        <h1 className="text-2xl  font-sans font-semibold text-[#777c81]">{title}</h1>
 
-        {/* Main Grid */}
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Maintenance Mode Section */}
+          
           <div className="flex flex-col justify-between">
             <div className="space-y-4">
-              {/* Title and toggle in one line */}
+              
               <div className="flex items-center justify-between ">
                 <h2 className="text-md font-semibold text-[#777c81] items-start">
                   Maintenance Mode
@@ -66,10 +66,10 @@ export default function SystemPreferences({
             )}
           </div>
             <div className="flex">
-    {/* Vertical line */}
+  
     <div className="w-px bg-[#038516] mx-30" />
  
-          {/* Data Retention Period Section */}
+          
           <div className="justify-end ml-auto flex flex-col space-y-3 -mt-[20px]">
             <h2 className="text-md font-semibold text-gray-800 mb-4">
               Data Retention Period for Logs
