@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -17,6 +17,50 @@ const statusStyles = {
 };
 
 export default function IncidentTable({ incidentReports }) {
+  const [selectedFilter, setSelectedFilter] = useState("all");
+  const [showActionsFor, setShowActionsFor] = useState(null);
+  const [localIncidentReports, setLocalIncidentReports] = useState(incidentReports || []);
+
+  // Update local state when props change
+  React.useEffect(() => {
+    setLocalIncidentReports(incidentReports || []);
+  }, [incidentReports]);
+
+  // Get unique statuses from data for filter buttons
+  const availableStatuses = useMemo(() => {
+    const statuses = new Set(localIncidentReports?.map(report => report.incident_status));
+    return Array.from(statuses).filter(Boolean);
+  }, [localIncidentReports]);
+
+  // Filter incidents based on selected status
+  const filteredIncidents = useMemo(() => {
+    if (!localIncidentReports) return [];
+    if (selectedFilter === "all") return localIncidentReports;
+    return localIncidentReports.filter(report => report.incident_status === selectedFilter);
+  }, [localIncidentReports, selectedFilter]);
+
+  // Get counts for each status
+  const statusCounts = useMemo(() => {
+    const counts = {};
+    localIncidentReports?.forEach(report => {
+      const status = report.incident_status;
+      counts[status] = (counts[status] || 0) + 1;
+    });
+    return counts;
+  }, [localIncidentReports]);
+
+  const handleStatusUpdate = (reportId, newStatus) => {
+    // Update status in frontend only
+    setLocalIncidentReports(prev => 
+      prev.map(report => 
+        report.id === reportId 
+          ? { ...report, incident_status: newStatus }
+          : report
+      )
+    );
+    setShowActionsFor(null);
+  };
+
   return (
     <div className="w-full max-w-6xl mx-auto bg-white p-6 rounded-xl shadow-sm mt-10">
       <div className="flex items-center justify-between mb-4">
@@ -29,6 +73,34 @@ export default function IncidentTable({ incidentReports }) {
             <option>This Year</option>
           </select>
         </div>
+      </div>
+
+      {/* Status Filter Buttons */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        <button
+          onClick={() => setSelectedFilter("all")}
+          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            selectedFilter === "all"
+              ? "bg-blue-100 text-blue-700 border border-blue-200"
+              : "bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200"
+          }`}
+        >
+          All ({localIncidentReports?.length || 0})
+        </button>
+        
+        {availableStatuses.map(status => (
+          <button
+            key={status}
+            onClick={() => setSelectedFilter(status)}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              selectedFilter === status
+                ? statusStyles[status] + " border border-current"
+                : "bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200"
+            }`}
+          >
+            {status?.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} ({statusCounts[status] || 0})
+          </button>
+        ))}
       </div>
       
       <Table>
@@ -44,8 +116,8 @@ export default function IncidentTable({ incidentReports }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {incidentReports?.length > 0 ? (
-            incidentReports.map((report) => (
+          {filteredIncidents?.length > 0 ? (
+            filteredIncidents.map((report) => (
               <TableRow
                 key={report.id}
                 className={
@@ -68,20 +140,62 @@ export default function IncidentTable({ incidentReports }) {
                     {report.incident_status?.replace(/_/g, ' ')}
                   </span>
                 </TableCell>
-                <TableCell>
-                  <MoreHorizontal className="cursor-pointer text-muted-foreground" />
+                <TableCell className="relative">
+                  <button
+                    onClick={() => setShowActionsFor(showActionsFor === report.id ? null : report.id)}
+                    className="p-1 hover:bg-gray-100 rounded transition-colors"
+                  >
+                    <MoreHorizontal className="cursor-pointer text-muted-foreground" />
+                  </button>
+                  
+                  {/* Action Dropdown */}
+                  {showActionsFor === report.id && (
+                    <div className="absolute right-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg z-10 min-w-[160px]">
+                      <div className="py-1">
+                        {/* Mark as New - only show if not already new */}
+                        {report.incident_status !== "new" && (
+                          <button
+                            onClick={() => handleStatusUpdate(report.id, "new")}
+                            className="flex items-center gap-2 px-4 py-2 text-sm text-red-700 hover:bg-red-50 w-full text-left"
+                          >
+                            Mark as New
+                          </button>
+                        )}
+                        
+                        {/* Mark as Resolved - only show if not already resolved */}
+                        {report.incident_status !== "resolved" && (
+                          <button
+                            onClick={() => handleStatusUpdate(report.id, "resolved")}
+                            className="flex items-center gap-2 px-4 py-2 text-sm text-green-700 hover:bg-green-50 w-full text-left"
+                          >
+                            Mark as Resolved
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
               <TableCell colSpan={6} className="text-center py-6">
-                No incident reports found.
+                {selectedFilter === "all" 
+                  ? "No incident reports found." 
+                  : `No ${selectedFilter.replace(/_/g, ' ')} incidents found.`}
               </TableCell>
             </TableRow>
           )}
         </TableBody>
       </Table>
+
+      {/* Click outside to close dropdown */}
+      {showActionsFor && (
+        <div 
+          className="fixed inset-0 z-5" 
+          onClick={() => setShowActionsFor(null)}
+        />
+      )}
     </div>
   );
 }
