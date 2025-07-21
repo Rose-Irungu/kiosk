@@ -5,16 +5,10 @@ import SessionManagement from "../../components/SessionManagement";
 export default function Settings() {
   return (
     <Layout>
-     <div>
-  <div className="w-full">
-    <SystemPreference />
-  </div>
-
-  <div className="w-full">
-    <SessionManagement />
-  </div>
-</div>
-
+      <div className="flex flex-col items-center gap-6 py-6">
+        <SystemPreference />
+        <SessionManagement />
+      </div>
     </Layout>
   );
 }

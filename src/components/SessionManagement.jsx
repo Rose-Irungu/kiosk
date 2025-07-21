@@ -13,7 +13,7 @@ export default function SessionManagementCard() {
     <div className="p-5 w-full max-w-6xl mx-auto">
 
       
-      <div className="border-1  rounded-lg bg-white p-6 shadow-2xl  ">
+      <div className="border-1  rounded-lg bg-white p-6 shadow-2xl  max-w-6xl mx-auto">
         
         <div className="flex items-center gap-3 mb-4">
           <AlertTriangle className="w-6 h-6 text-gray-600" />
