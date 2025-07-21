@@ -35,7 +35,7 @@ export default function Card2({
       const result = await updateEmergency(id, "resolved");
       if (result?.emergency_status === "resolved") {
         setIsResolved(true);
-        onResolved(); // Notify parent to refetch data
+        onResolved(); 
       }
     } catch (err) {
       setError(err?.toString() || "Failed to update.");

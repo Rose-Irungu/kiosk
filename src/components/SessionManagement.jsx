@@ -33,7 +33,7 @@ export default function SessionManagementCard() {
           
           <button
             onClick={handleLogout}
-            className="ml-6 px-6 py-2 bg-[#e61c11] text-white font-medium text-sm rounded font-sans hover:bg-red-700  transition-colors"
+            className="ml-6 px-6 py-2 mt-5 bg-[#e61c11] text-white font-medium text-sm rounded font-sans hover:bg-red-700  transition-colors]"
           >
             LOGOUT
           </button>
