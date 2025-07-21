@@ -22,8 +22,8 @@ export default function SystemPreferences({
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-md p-8 flex flex-col space-y-6">
+    <div className="bg-gray-100 p-6">
+      <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-md p-8 flex flex-col space-y-6">
         
         <h1 className="text-xl  font-sans font-semibold text-[#777c81]">{title}</h1>
 
