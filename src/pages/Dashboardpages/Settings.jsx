@@ -5,18 +5,16 @@ import SessionManagement from "../../components/SessionManagement";
 export default function Settings() {
   return (
     <Layout>
-      <div className="p-2">
-        <div className=" p-2 -mt-10 ">
-          {" "}
-          
-          <SystemPreference />
-        </div>
-        <div className="-mt-[260px] ">
-          {" "}
-          
-          <SessionManagement />
-        </div>
-      </div>
+     <div>
+  <div className="w-full">
+    <SystemPreference />
+  </div>
+
+  <div className="w-full">
+    <SessionManagement />
+  </div>
+</div>
+
     </Layout>
   );
 }
