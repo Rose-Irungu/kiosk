@@ -10,7 +10,7 @@ export default function SessionManagementCard() {
 
 
   return (
-    <div className="p-5 w-full max-w-6xl mx-auto">
+    <div className="p-5 w-full">
 
       
       <div className="border-1  rounded-lg bg-white p-6 shadow-2xl  max-w-6xl mx-auto">

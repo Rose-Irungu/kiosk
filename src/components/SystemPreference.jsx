@@ -22,7 +22,7 @@ export default function SystemPreferences({
   };
 
   return (
-    <div className="bg-gray-100 p-6">
+    <div className="bg-gray-100 p-6 w-full">
       <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-md p-8 flex flex-col space-y-6">
 
         <h1 className="text-xl  font-sans font-semibold text-[#777c81]">{title}</h1>
@@ -63,12 +63,11 @@ export default function SystemPreferences({
               </button>
             )}
           </div>
-          <div className="flex flex-col md:flex-row md:items-start md:space-x-8">
+          <div className="flex flex-col md:flex-row md:items-end md:space-x-8">
             {/* Vertical Divider */}
             <div className="hidden md:block w-px bg-[#038516]" />
 
-            {/* Retention Options */}
-            <div className="flex-1 mt-6 md:mt-0">
+            <div className="justify-between ml-auto flex flex-col space-y-3 -mt-[20px]">
               <h2 className="text-md font-semibold text-gray-800 mb-4">
                 Data Retention Period for Logs
               </h2>
