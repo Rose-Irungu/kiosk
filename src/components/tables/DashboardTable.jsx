@@ -17,7 +17,7 @@ export function DashboardTable() {
   const { units, loading, error } = useMostVisitedUnits(filter);
 
   return (
-    <div className="w-full max-w-6xl mx-auto bg-white p-6 rounded-xl shadow-sm mt-10">
+    <div className="w-full mx-auto bg-white p-6 rounded-xl shadow-sm mt-10">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-semibold">Most Visited Units</h2>
