@@ -17,6 +17,8 @@ import Error from "./pages/Error";
 import Welcomeback from "./pages/Welcomeback";
 import { DashboardTable } from "./components/tables/DashboardTable";
 import Users from "./components/tables/Users";
+import SecuritySidebar from "./components/SecurityComponents/SecuritySidebar";
+import SecurityLayout from "./components/SecurityComponents/SecurityLayout";
 import Visitors from "./components/tables/Visitors";
 import Emergencies from "./components/tables/Emergencies";
 import Incident from "./components/tables/Incident";
@@ -151,6 +153,8 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/skeletoncard" element={<SkeletonCard />} />
         <Route path="/layout" element={<Layout />} />
+        <Route path="/securitylayout" element={<SecurityLayout />} />
+        <Route path="/securitysidebar" element={<SecuritySidebar />} />
         <Route path="/header1" element={<Header1 />} />
         <Route path="/profilemenu" element={<ProfileMenu />} />
         <Route path="/sidebar" element={<Sidebar />} />
@@ -160,6 +164,7 @@ const App = () => {
         <Route path="/chart2" element={<Chart2 />} />{" "}
         <Route path="/settings" element={<Settings />} />{" "}
         <Route path="/security/overview" element={<SecurityOverview />} />
+      
         <Route path="/systempreference" element={<SystemPreferences />} />
         <Route path="/session" element={<SessionManagement />} />
         

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import Layout from "../../components/layout/Layout";
+import SecurityLayout from "../../components/SecurityComponents/SecurityLayout";
 import Navigation from "../../components/Navigation";
 import Card1 from "../../components/Card1";
 import Card2 from "../../components/Card2";
@@ -42,7 +42,7 @@ const SecurityOverview = () => {
   console.log("Visitor stats:", visitorStats);
 
   return (
-    <Layout>
+    <SecurityLayout>
       <div className="flex flex-wrap justify-start mb-[12px]">
         <Card1
           cardTitle="Current Visitors"
@@ -134,7 +134,7 @@ const SecurityOverview = () => {
       </div>
 
       <DashboardTable />
-    </Layout>
+    </SecurityLayout>
   );
 };
 
