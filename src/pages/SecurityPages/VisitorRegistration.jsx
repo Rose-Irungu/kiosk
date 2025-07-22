@@ -1,11 +1,12 @@
 import React from 'react'
 import Layout from '../../components/layout/Layout.jsx'
 import { Upload, ChevronDown, Calendar } from "lucide-react";
+import SecurityLayout from '../../components/SecurityComponents/SecurityLayout.jsx';
 
 
 export default function VisitorRegistration() {
     return (
-        <Layout>
+        <SecurityLayout>
             <div className="flex flex-col items-start p-6 gap-8 w-full max-w-md md:max-w-xl bg-white rounded-[10px] shadow-md mx-auto mt-10">
                 <h2 className="text-2xl font-bold text-[#495057] font-['Inter']">
                     Visitor Registration
@@ -138,6 +139,6 @@ export default function VisitorRegistration() {
 
 
             </div>
-        </Layout>
+        </SecurityLayout>
     );
 }
