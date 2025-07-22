@@ -9,8 +9,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     const [showProfileCard, setShowProfileCard] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
     const [showChangePasswordForm, setshowChangePasswordForm] = useState(false);
-
-    const [passwordChangeStep, setPasswordChangeStep] = useState(1); // 1 = current password, 2 = new password
+    const [showNotification, setShowNotification] = useState(false);
 
     // User data state
     const [userData, setUserData] = useState({
@@ -246,16 +245,16 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
                     <div className="relative flex items-center justify-center">
                         <button className="text-gray-600 hover:text-gray-800 relative">
-                            <Bell className="w-6 h-6" />
+                            <img src="/bell.svg" alt="" />
                             <span
                                 className="absolute"
                                 style={{
-                                    width: "10px",
-                                    height: "10px",
+                                    width: "11px",
+                                    height: "11px",
                                     backgroundColor: "#005E0E",
                                     borderRadius: "50%",
-                                    top: "-1px",
-                                    right: "2px",
+                                    top: "0px",
+                                    right: "-1px",
                                 }}
                             ></span>
                         </button>
@@ -268,7 +267,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                             onClick={() => setProfileOpen(!profileOpen)}
                             className="flex items-center gap-2 focus:outline-none"
                         >
-                            <CircleUser className="h-6 w-6 text-gray-700" />
+                            <img src="/profile-pic2.svg" alt="" />
                             <span className="hidden sm:inline text-sm font-medium text-gray-700">
                                 {userData.first_name || "User"}
                             </span>
@@ -400,6 +399,17 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                 </div>
             </div>
 
+
+            {/* Notification Modal */}
+            {showNotification && (
+                <div className="flex flex-col items-start gap-2 p-4 bg-white shadow-[0px_1px_20px_rgba(0,0,0,0.25)] rounded-2xl w-full max-w-md relative">
+                    <div className="flex items-center justify-between p-4 bg-[#005E0E] rounded-t-2xl w-full">
+                        {/* Left and right content go here */}
+                    </div>
+
+                </div>
+            )}
+
             {/* Edit Profile Modal */}
             {showEditForm && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
@@ -431,7 +441,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                                     onChange={(e) =>
                                         handleEditFormChange("residence", e.target.value)
                                     }
-                                    className=" flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border border-[#005E0E]/50 rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
+                                    className=" flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border border-[#005E0E]/50 rounded-lg w-full px-4 py-2 border rounded-md  bg-[rgba(29,29,29,0.1)] " readOnly
                                 />
                             </div>
                             <div className="flex gap-4">
@@ -523,8 +533,9 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                                     onChange={(e) =>
                                         handleEditFormChange("residence", e.target.value)
                                     }
-                                    className=" flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border border-[#005E0E]/50 rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
+                                    className=" flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border border-[#005E0E]/50 rounded-lg w-full px-4 py-2 border rounded-md bg-[rgba(29,29,29,0.1)] " readOnly
                                 />
+
                             </div>
 
                             <button
@@ -597,8 +608,8 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                                                 handlePasswordChange("oldPassword", e.target.value)
                                             }
                                             className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${passwordErrors.oldPassword
-                                                    ? "border-red-500"
-                                                    : "border-[#005E0E]/50"
+                                                ? "border-red-500"
+                                                : "border-[#005E0E]/50"
                                                 } rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
                                         />
                                         {passwordErrors.oldPassword && (
@@ -645,8 +656,8 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                                                 handlePasswordChange("newPassword", e.target.value)
                                             }
                                             className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${passwordErrors.newPassword
-                                                    ? "border-red-500"
-                                                    : "border-[#005E0E]/50"
+                                                ? "border-red-500"
+                                                : "border-[#005E0E]/50"
                                                 } rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
                                         />
                                         {passwordErrors.newPassword && (
@@ -668,8 +679,8 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                                                 handlePasswordChange("confirmPassword", e.target.value)
                                             }
                                             className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${passwordErrors.confirmPassword
-                                                    ? "border-red-500"
-                                                    : "border-[#005E0E]/50"
+                                                ? "border-red-500"
+                                                : "border-[#005E0E]/50"
                                                 } rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
                                         />
                                         {passwordErrors.confirmPassword && (
@@ -683,8 +694,8 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                                         type="submit"
                                         disabled={isSubmitting}
                                         className={`w-[351px] h-[48px] mt-auto w-full ${isSubmitting
-                                                ? "bg-gray-400"
-                                                : "bg-[#005E0E] hover:bg-green-700"
+                                            ? "bg-gray-400"
+                                            : "bg-[#005E0E] hover:bg-green-700"
                                             } text-white py-2 rounded-md transition`}
                                     >
                                         {isSubmitting ? "RESETTING..." : "RESET PASSWORD"}
@@ -695,6 +706,9 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                     </div>
                 </div>
             )}
+
+
+
         </header>
     );
 }
