@@ -6,15 +6,82 @@ const ResetPasswordForm = () => {
   const navigate = useNavigate();
   const { token, uid } = useParams();
 
-  const handleResetPassword = () => {
-   
-    navigate("/loginform");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [fieldError, setFieldError] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
+
+  const onPasswordChange = (e) => {
+    setPassword(e.target.value);
+    setFieldError((prev) => ({ ...prev, password: "" }));
   };
+
+  const onConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+    setFieldError((prev) => ({ ...prev, confirmPassword: "" }));
+  };
+
+  const validate = () => {
+    const errors = {};
+    if (!password) {
+      errors.password = "Password is required";
+    } else if (password.length < 8) {
+      errors.password = "Password must be at least 8 characters";
+    }
+
+    if (!confirmPassword) {
+      errors.confirmPassword = "Please confirm your password";
+    } else if (password !== confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
+    }
+
+    return errors;
+  };
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+
+    const errors = validate();
+    if (Object.keys(errors).length > 0) {
+      setFieldError(errors);
+      return;
+    }
+
+    setIsLoading(true);
+    setServerError("");
+
+    try {
+      await authService.password_reset({
+        uid,
+        token,
+        new_password: password,
+      });
+
+      navigate("/loginform");
+    } catch (error) {
+      // Extract server-side token validation errors if present
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.data &&
+        error.response.data.data.token
+      ) {
+        const tokenErrors = error.response.data.data.token.join(" ");
+        setServerError(tokenErrors);
+      } else {
+        setServerError("Password reset failed. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
 
   return (
     <form onSubmit={handleResetPassword} className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
       <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl flex flex-col md:flex-row">
-        
+
         <div className="w-full md:w-1/2 relative">
           <img
             src="/rectangle-780.png"
@@ -28,14 +95,17 @@ const ResetPasswordForm = () => {
           />
         </div>
 
-       
         <div className="w-full md:w-1/2 p-8 mt-10 ">
           <div className="mb-6">
             <h2 className="text-2xl font-DM Sans font-bold text-[#445963] mb-2">Reset Password</h2>
             <p className="text-m text-[#445963]">
-              Enter your new password  so as to <br/>continue and login
+              Enter your new password so as to <br /> continue and login
             </p>
           </div>
+
+          {serverError && (
+            <p className="text-red-600 text-sm mb-4">{serverError}</p>
+          )}
 
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">New Password*</label>

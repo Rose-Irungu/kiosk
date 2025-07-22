@@ -10,18 +10,13 @@ import { AlertTriangle } from "lucide-react";
 import DashboardTable from "../../components/tables/DashboardTable";
 import { getDashboardStatistics } from "../../services/dashboardService";
 import useVisitorStats from "../../hooks/useVisitorStats";
-import {
-  fetchEmergencies,
-} from "../../services/adminEmergencyServices";
-
+import { fetchEmergencies } from "../../services/adminEmergencyServices";
 
 const Dashboard = () => {
   const [stats, setStats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [latest, setLatest] = useState(null);
-  
 
-  
   const {
     stats: visitorStats,
     loading: visitorLoading,
@@ -29,23 +24,23 @@ const Dashboard = () => {
     totalVisitors,
   } = useVisitorStats();
 
-    const getData = async () => {
-      try {
-        setLoading(true);
-  
-        const { all } = await fetchEmergencies();
-  
-        const ongoingOnly = all.filter(
-          (e) => e.emergency_status?.toLowerCase() === "ongoing"
-        );
-  
-        setLatest(ongoingOnly.length > 0 ? ongoingOnly[0] : null);
-      } catch (err) {
-        console.error("Error fetching emergencies:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const getData = async () => {
+    try {
+      setLoading(true);
+
+      const { all } = await fetchEmergencies();
+
+      const ongoingOnly = all.filter(
+        (e) => e.emergency_status?.toLowerCase() === "ongoing"
+      );
+
+      setLatest(ongoingOnly.length > 0 ? ongoingOnly[0] : null);
+    } catch (err) {
+      console.error("Error fetching emergencies:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -132,39 +127,47 @@ const Dashboard = () => {
 
       <div className="mb-[30px]">
         {latest ? (
-        <Card2
-          id={latest?.id}
-          floor={latest?.triggerer_floor_number}
-          unit={latest?.triggerer_unit_number}
-          minute={latest?.minute}
-          name={latest?.triggered_by}
-          status={latest?.emergency_status}
-          buttonText="View details"
-          onResolved={getData}
-        />
+          <Card2
+            id={latest?.id}
+            floor={latest?.triggerer_floor_number}
+            unit={latest?.triggerer_unit_number}
+            minute={latest?.minute}
+            name={latest?.triggered_by}
+            status={latest?.emergency_status}
+            buttonText="View details"
+            onResolved={getData}
+          />
         ) : (
-              <div className="bg-white p-6 rounded shadow w-full">
-                <p className="text-center text-gray-600 font-semibold">
-                  No unresolved emergencies
-                </p>
-              </div>
-            )}
+          <div className="bg-white p-6 rounded shadow w-full">
+            <p className="text-center text-gray-600 font-semibold">
+              No unresolved emergencies
+            </p>
+          </div>
+        )}
       </div>
 
       <div className="w-full flex flex-col lg:flex-row gap-6 mb-8">
-        
-        <div className="bg-white lg:w-3/4 p-3 rounded-lg shadow flex-1 lg:flex-initial">
-          <Chart />
+        <div className="bg-white p-3 rounded-lg shadow flex-1">
+          <div className="h-full">
+            <Chart />
+          </div>
         </div>
-        
 
-        <div className="lg:w-1/4 flex-1 lg:flex-initial">
-          <Card3
-            companyVisitors={loading ? 0 : stats?.visitor_totals?.company || 0}
-            residentVisitors={loading ? 0 : stats?.visitor_totals?.resident || 0}
-            serviceProviders={loading ? 0 : stats?.visitor_totals?.service || 0}
-            className="h-full"
-          />
+        <div className="flex-1 lg:max-w-sm">
+          <div className="bg-white p-3 rounded-lg shadow h-full">
+            <Card3
+              companyVisitors={
+                loading ? 0 : stats?.visitor_totals?.company || 0
+              }
+              residentVisitors={
+                loading ? 0 : stats?.visitor_totals?.resident || 0
+              }
+              serviceProviders={
+                loading ? 0 : stats?.visitor_totals?.service || 0
+              }
+              className="h-full"
+            />
+          </div>
         </div>
       </div>
 
