@@ -9,6 +9,7 @@ import Card1 from "./components/Card1";
 import Card2 from "./components/Card2";
 import Card3 from "./components/Card3";
 import Card4 from "./components/Card4";
+import Card6 from "./components/Card6";
 import { SkeletonCard } from "./components/SkeletonCard";
 import Home from "./pages/Home";
 import VisitorPage from "./pages/VisitorPage";
@@ -49,7 +50,8 @@ import SecurityOverview from "./pages/SecurityPages/SecurityOverview";
 import SystemPreferences from "./components/SystemPreference";
 import SessionManagement from "./components/SessionManagement";
 import HelpPage from "./pages/Dashboardpages/Help";
-import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
+import EmergencyPageSecurity from "./pages/SecurityPages/Emergencypage";
+import SecurityDashboard from "./pages/SecurityPages/Securitydashboard";
 
 
 
@@ -177,8 +179,11 @@ const App = () => {
       
         <Route path="/systempreference" element={<SystemPreferences />} />
         <Route path="/session" element={<SessionManagement />} />
-        <Route path="/visitorregistration" element={<VisitorRegistration />} />
-        
+
+        {/* Security Dashboard Routes */}
+        <Route path="/security/dashboard" element={<SecurityDashboard />} />
+        <Route path="/security/emergencypage" element={<EmergencyPageSecurity />} />
+        <Route path="/security/card6" element={<Card6 />} />
 
       </Routes>
     </Router>
