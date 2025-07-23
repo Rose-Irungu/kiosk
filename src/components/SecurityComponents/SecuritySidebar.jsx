@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const navItems = [
   { id: "dashboard", label: "Dashboard", icon: "/material-symbols-dashboard-rounded0.svg", path: "/security/overview" },
   { id: "visitor_registration", label: "Visitor Registration", icon: "/visitor_registration.svg", path: "/visitorregistration" },
-  { id: "checkin_checkout_logs", label: "Check In/Out Logs", icon: "/check_in_out.svg", path: "/checkincheckout" },
+  { id: "checkincheckout", label: "Check In/Out Logs", icon: "/check_in_out.svg", path: "/checkincheckout" },
   { id: "emergencies", label: "Emergencies", icon: "/material-symbols-e-911-emergency-rounded0.svg", path: "" },
   { id: "incidents", label: "Incident Reports", icon: "/tabler-message-report-filled0.svg", path: "" },
 ];
