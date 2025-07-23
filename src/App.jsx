@@ -50,6 +50,7 @@ import SystemPreferences from "./components/SystemPreference";
 import SessionManagement from "./components/SessionManagement";
 import HelpPage from "./pages/Dashboardpages/Help";
 import EmergencyPageSecurity from "./pages/SecurityPages/Emergencypage";
+import SecurityDashboard from "./pages/SecurityPages/Securitydashboard";
 
 
 const App = () => {
@@ -174,6 +175,7 @@ const App = () => {
         <Route path="/session" element={<SessionManagement />} />
 
         {/* Security Dashboard Routes */}
+        <Route path="/security/dashboard" element={<SecurityDashboard />} />
         <Route path="/security/emergencypage" element={<EmergencyPageSecurity />} />
         <Route path="/security/card6" element={<Card6 />} />
 

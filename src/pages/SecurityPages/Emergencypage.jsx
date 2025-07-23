@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Card4 from "../../components/Card4";
 import EmergencyStatsChart from "../../components/Chart2";
 import EmergencyTable from "../../components/tables/Emergencies";
-import Layout from "../../components/layout/Layout";
+import SecurityLayout from "../../components/SecurityComponents/SecurityLayout";
 import {
   fetchEmergencies,
   updateEmergency,
@@ -75,7 +75,7 @@ export default function Emergencypage() {
   const filteredEvents = filterEventsByTime(all, timeFilter);
 
   return (
-    <Layout>
+    <SecurityLayout>
       <div className="flex flex-col min-h-screen w-full items-center px-4 md:px-8">
         {/* ---- Upper Row ---- */}
         <div className="flex flex-col md:flex-row w-full max-w-[1140px] gap-6 md:gap-8">
@@ -146,6 +146,6 @@ export default function Emergencypage() {
           />
         </div>
       </div>
-    </Layout>
+    </SecurityLayout>
   );
 }
