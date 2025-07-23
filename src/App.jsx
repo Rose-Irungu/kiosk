@@ -48,6 +48,7 @@ import SecurityOverview from "./pages/SecurityPages/SecurityOverview";
 import SystemPreferences from "./components/SystemPreference";
 import SessionManagement from "./components/SessionManagement";
 import HelpPage from "./pages/Dashboardpages/Help";
+import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
 
 
 const App = () => {
@@ -170,6 +171,7 @@ const App = () => {
       
         <Route path="/systempreference" element={<SystemPreferences />} />
         <Route path="/session" element={<SessionManagement />} />
+        <Route path="/visitorregistration" element={<VisitorRegistration />} />
         
 
       </Routes>

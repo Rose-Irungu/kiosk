@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import SecuritySidebar from "./SecuritySidebar"; 
+import SecurityHeader from "./SecurityHeader";
+import SecuritySidebar from "./SecuritySidebar";  
 import Header from "../layout/Header1";
 
 
 const navItems = [
   { id: "dashboard", path: "/dashboard" },
   { id: "users", path: "/userspage" },
-  { id: "visitors", path: "/visitorlogs" },
+  { id: "visitor_registration", path: "/visitorregistration" },
   { id: "emergencies", path: "/emergencypage" },
   { id: "incidents", path: "/incident_report" },
 ];
@@ -46,7 +47,7 @@ export default function Layout({ children }) {
 
       <div className="relative flex flex-col flex-1 overflow-hidden">
         <header className="sticky top-0 z-40 bg-[#EEEAFD]">
-          <Header
+          <SecurityHeader
             setMobileOpen={setMobileOpen}
             profileOpen={profileOpen}
             setProfileOpen={setProfileOpen}

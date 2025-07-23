@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 
 const navItems = [
   { id: "dashboard", label: "Dashboard", icon: "/material-symbols-dashboard-rounded0.svg", path: "" },
-  { id: "Visitor Registration", label: "Visitor Registration", icon: "/mdi-users0.svg", path: "" },
-  { id: "Checkin/Checkout Logs", label: "Checkin/Checkout Logs", icon: "/material-symbols-nest-doorbell-visitor0.svg", path: "" },
-  { id: "emergencies", label: "Emergencies", icon: "/material-symbols-e-911-emergency-rounded0.svg", path: "/emergencypage" },
-  { id: "incidents", label: "Incident Reports", icon: "/tabler-message-report-filled0.svg", path: "/incident_report" },
+  { id: "visitor_registration", label: "Visitor Registration", icon: "/visitor_registration.svg", path: "/visitorregistration" },
+  { id: "checkin_checkout_logs", label: "Check In/Out Logs", icon: "/check_in_out.svg", path: "" },
+  { id: "emergencies", label: "Emergencies", icon: "/material-symbols-e-911-emergency-rounded0.svg", path: "" },
+  { id: "incidents", label: "Incident Reports", icon: "/tabler-message-report-filled0.svg", path: "" },
 ];
 
 const secondaryItems = [
-  { id: "settings", label: "Settings", icon: "/ic-round-settings0.svg", path: "/settings" },
-  { id: "help", label: "Help", icon: "/material-symbols-help-outline0.svg", path: "/help" },
+  { id: "settings", label: "Settings", icon: "/ic-round-settings0.svg", path: "" },
+  { id: "help", label: "Help", icon: "/material-symbols-help-outline0.svg", path: "" },
 ];
 
 export default function SecuritySidebar({
