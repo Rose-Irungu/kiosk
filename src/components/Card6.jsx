@@ -2,17 +2,57 @@ import React from 'react';
 import { Siren } from "lucide-react";
 import { useState } from 'react';
 import { Upload } from 'lucide-react';
+import {createEmergency, createIncidence} from '../services/securityDashboardService';
 
 function Card6() {
   const [description, setDescription] = useState('');
   const [type, setType] = useState('');
   const [image, setImage] = useState('');
-  const handleSubmit = (type, description, image) =>{
+  const submitIncidence = (type, description, image) =>{
+
+    const incidenceData = {
+        incident_type: type,
+        incident_description: description,
+        incident_image_url: image
+    };
+
     console.log(`${type}, ${description}, ${image} submitted successfully`);
-  }
-  const selectImage = () =>{
-    console.log("Image selected successfully");
-  }
+    createIncidence(incidenceData);
+   }
+    const selectImage = () => {
+    return new Promise((resolve, reject) => {
+        // Create an invisible file input
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*"; // Only images
+
+        input.onchange = async (event) => {
+        const file = event.target.files[0];
+        if (!file) {
+            reject("No image selected");
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            const base64Image = reader.result;
+            localStorage.setItem("selectedImage", base64Image); // Store in localStorage
+            console.log("Image selected and stored successfully");
+            resolve(base64Image); // Return the image data
+        };
+
+        reader.onerror = () => {
+            reject("Failed to read the image file");
+        };
+
+        reader.readAsDataURL(file); // Convert to base64
+        };
+
+        input.click(); // Trigger file selection
+    });
+    };
+
   return (
     <div className='flex flex-col justify-between w-[237px] h-[594px] rounded-[10px] p-[16px] gap-[33px] bg-[#ffffff] border-[1px]'>
         <div className='flex flex-col justify-between w-[205px] h-[173px] gap-[24px]'>
@@ -52,7 +92,7 @@ function Card6() {
                     </div>
                 </div>
                 <button className='flex flex-col w-[205px] h-[56px] gap-[8px] rounded-[8px] px-[24px] bg-[#005E0E] justify-center font-inter text-sm leading-5 tracking-[1%] text-white'
-                    onClick={() => {handleSubmit(type, description);}}>
+                    onClick={() => {submitIncidence(type, description);}}>
                         SUBMIT
                 </button>
             </div>

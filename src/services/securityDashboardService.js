@@ -1,0 +1,32 @@
+import api from "./api";
+import { API_ENDPOINTS } from "../utils/constants";
+
+export const createEmergencies = async (emergencyData) => {
+    try{
+        const url = API_ENDPOINTS.CREATE_EMERGENCY;
+        const response = await api.post(url, emergencyData);
+        const result = response.data;
+        if(result.result_code === 0){
+            return result.data;
+        }else{
+            throw new Error(result.message || "Emergency creation failed.");
+        }
+    } catch(error){
+        throw error.message || "Something went wrong while creating emergencies.";
+    }
+};
+
+export const createIncidence = async (incidenceData) => {
+    try{
+        const url = API_ENDPOINTS.CREATE_INCIDENCE;
+        const response = await api.post(url, incidenceData);
+        const result = response.data;
+        if(result.result_code === 0){
+            return result.data;
+        }else{
+            throw new Error(result.message || "Incidence creation failed.");
+        }
+    } catch(error){
+        throw error.message || "Something went wrong while creating the incidence.";
+    }
+};
