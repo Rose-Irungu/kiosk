@@ -10,6 +10,10 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     const [showEditForm, setShowEditForm] = useState(false);
     const [showChangePasswordForm, setshowChangePasswordForm] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
+    const [passwordChangeStep, setPasswordChangeStep] = useState(0);
+
+
+
 
     // User data state
     const [userData, setUserData] = useState({
@@ -244,7 +248,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                     {/* Notification */}
 
                     <div className="relative flex items-center justify-center">
-                        <button className="text-gray-600 hover:text-gray-800 relative">
+                        <button className="text-gray-600 hover:text-gray-800 relative" onClick={() => setShowNotification(!showNotification)}>
                             <img src="/bell.svg" alt="" />
                             <span
                                 className="absolute"
@@ -402,12 +406,31 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
             {/* Notification Modal */}
             {showNotification && (
-                <div className="flex flex-col items-start gap-2 p-4 bg-white shadow-[0px_1px_20px_rgba(0,0,0,0.25)] rounded-2xl w-full max-w-md relative">
-                    <div className="flex items-center justify-between p-4 bg-[#005E0E] rounded-t-2xl w-full">
-                        {/* Left and right content go here */}
+                <div className="absolute top-full right-0 mt-2 z-50 w-full max-w-[417px] h-[400px] flex flex-col items-start bg-white shadow-[0px_1px_20px_rgba(0,0,0,0.25)] rounded-2xl overflow-hidden">
+                    {/* Header */}
+                    <div className="flex flex-col items-start justify-between p-4 bg-[#005E0E] rounded-t-2xl w-full font-['Inter']">
+                        <p className="font-bold text-white text-xl">Notifications</p>
+                        <p className="text-white text-xs">1 Unread</p>
                     </div>
 
+                    {/* Notification Row */}
+                    <div className="flex flex-row items-start p-4 gap-2 w-full bg-[#F5F4F5] border-b border-[#005E0E]/50">
+                        {/* Icon */}
+                        <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
+                            <img src="/" alt="" />
+                        </div>
+
+                        {/* Text */}
+                        <div className="flex flex-col items-start gap-2 font-['Inter'] w-full">
+                            <p className="font-bold text-sm">Emergency triggered</p>
+                            <p className="font-light text-sm">Panic Button activated by </p>
+                            <p className="font-light text-xs">30 min ago</p>
+                        </div>
+                    </div>
                 </div>
+
+
+
             )}
 
             {/* Edit Profile Modal */}
