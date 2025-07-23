@@ -7,6 +7,7 @@ export const API_ENDPOINTS = {
   GET_VISITOR: '/visitors/get_visitor/',
   GET_ALL_VISITORS : '/visitors/all-visitors/',
   DASHBOARD_STATISTICS: '/statistics/active-users/count/',
+
  
   //users
   ADD_USER: '/user/create/',
@@ -26,6 +27,9 @@ export const API_ENDPOINTS = {
 
   //Incidence Management
   INCIDENCE_LIST: '/incidence-and-emergency/incidence-list/',
+  
+  // security registering visitor
+  SECURITY_REGISTER_VISITOR: '/visitors/security-check-in/'
 
   //Security dashboard 
   CREATE_EMERGENCY: '/incidence-and-emergency/create-emergency/',
