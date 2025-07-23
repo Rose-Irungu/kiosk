@@ -36,3 +36,17 @@ export const createIncidence = async (incidenceData) => {
         throw error.message || "Something went wrong while creating the incidence.";
     }
 };
+
+export const fetchStatistics = async () =>{
+    try{
+        const response = await api.get(API_ENDPOINTS.STATISTICS);
+        const result = response.data;
+        if(result.result_code === 0){
+            return result.data;
+        }else{
+            throw new Error(result.message || "Failed to fetch statistics.");
+        }
+    } catch(error){
+        throw error.message || "Something went wrong while fetching statistics.";
+    }
+};
