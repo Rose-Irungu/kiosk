@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route,   useLocation } from "react-router-dom";
+
 import { UserForm } from "./components/forms/form";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
@@ -49,6 +50,10 @@ import SystemPreferences from "./components/SystemPreference";
 import SessionManagement from "./components/SessionManagement";
 import HelpPage from "./pages/Dashboardpages/Help";
 import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
+
+
+
+
 
 
 const App = () => {
@@ -106,6 +111,7 @@ const App = () => {
   ]);
 
   return (
+  
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -176,6 +182,7 @@ const App = () => {
 
       </Routes>
     </Router>
+    
   );
 };
 
