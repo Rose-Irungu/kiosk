@@ -150,7 +150,7 @@ const App = () => {
         <Route path="/incident_report" element={<Incident_Reports />} />
         <Route path="/help" element={<HelpPage />} />
         <Route path="/triggers" element={<Triggers />} />{" "}
-        {/* Ensure Triggers is imported correctly */}
+        
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/skeletoncard" element={<SkeletonCard />} />
         <Route path="/layout" element={<Layout />} />
