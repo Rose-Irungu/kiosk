@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route,   useLocation } from "react-router-dom";
+
 import { UserForm } from "./components/forms/form";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
@@ -11,6 +12,7 @@ import Card4 from "./components/Card4";
 import { SkeletonCard } from "./components/SkeletonCard";
 import Home from "./pages/Home";
 import VisitorPage from "./pages/VisitorPage";
+import CheckinCheckout from "./pages/SecurityPages/CheckinCheckout";
 import Verify from "./pages/Verify";
 import Bye from "./pages/Bye";
 import Error from "./pages/Error";
@@ -48,6 +50,10 @@ import SystemPreferences from "./components/SystemPreference";
 import SessionManagement from "./components/SessionManagement";
 import HelpPage from "./pages/Dashboardpages/Help";
 import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
+
+
+
+
 
 
 const App = () => {
@@ -105,6 +111,7 @@ const App = () => {
   ]);
 
   return (
+  
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -150,7 +157,7 @@ const App = () => {
         <Route path="/incident_report" element={<Incident_Reports />} />
         <Route path="/help" element={<HelpPage />} />
         <Route path="/triggers" element={<Triggers />} />{" "}
-        {/* Ensure Triggers is imported correctly */}
+        
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/skeletoncard" element={<SkeletonCard />} />
         <Route path="/layout" element={<Layout />} />
@@ -161,6 +168,8 @@ const App = () => {
         <Route path="/sidebar" element={<Sidebar />} />
         <Route path="/chart" element={<Chart />} />
         <Route path="/userspage" element={<UsersPage />} />
+        <Route path="/checkincheckout" element={<CheckinCheckout />} />
+        
         <Route path="/visitorlogs" element={<VisitorLogs />} />
         <Route path="/chart2" element={<Chart2 />} />{" "}
         <Route path="/settings" element={<Settings />} />{" "}
@@ -173,6 +182,7 @@ const App = () => {
 
       </Routes>
     </Router>
+    
   );
 };
 

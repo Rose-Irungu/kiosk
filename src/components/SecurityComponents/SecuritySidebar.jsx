@@ -1,17 +1,20 @@
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+
+
+
 const navItems = [
-  { id: "dashboard", label: "Dashboard", icon: "/material-symbols-dashboard-rounded0.svg", path: "" },
+  { id: "dashboard", label: "Dashboard", icon: "/material-symbols-dashboard-rounded0.svg", path: "/security/overview" },
   { id: "visitor_registration", label: "Visitor Registration", icon: "/visitor_registration.svg", path: "/visitorregistration" },
-  { id: "checkin_checkout_logs", label: "Check In/Out Logs", icon: "/check_in_out.svg", path: "" },
+  { id: "checkin_checkout_logs", label: "Check In/Out Logs", icon: "/check_in_out.svg", path: "/checkincheckout" },
   { id: "emergencies", label: "Emergencies", icon: "/material-symbols-e-911-emergency-rounded0.svg", path: "" },
   { id: "incidents", label: "Incident Reports", icon: "/tabler-message-report-filled0.svg", path: "" },
 ];
 
 const secondaryItems = [
-  { id: "settings", label: "Settings", icon: "/ic-round-settings0.svg", path: "" },
-  { id: "help", label: "Help", icon: "/material-symbols-help-outline0.svg", path: "" },
+  { id: "settings", label: "Settings", icon: "/ic-round-settings0.svg", path: "/settings" },
+  { id: "help", label: "Help", icon: "/material-symbols-help-outline0.svg", path: "/help" },
 ];
 
 export default function SecuritySidebar({
@@ -39,7 +42,7 @@ export default function SecuritySidebar({
         transition-all duration-300
       `}
     >
-      {/* Logo and Close Button */}
+      
       <div className={`flex items-center justify-between ${collapsed ? "p-2" : "p-5"}`}>
         <div className="flex-1 flex justify-center">
           <img
