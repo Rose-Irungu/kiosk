@@ -8,6 +8,10 @@ function Card6() {
   const [description, setDescription] = useState('');
   const [type, setType] = useState('');
   const [image, setImage] = useState('');
+
+  const submitEmergency = () => {
+    console.log("Emergency submitted successfully");
+  };
   const submitIncidence = (type, description, image) =>{
 
     const incidenceData = {
@@ -57,7 +61,9 @@ function Card6() {
     <div className='flex flex-col justify-between w-[237px] h-[594px] rounded-[10px] p-[16px] gap-[33px] bg-[#ffffff] border-[1px]'>
         <div className='flex flex-col justify-between w-[205px] h-[173px] gap-[24px]'>
             <h1 className='w-[205px] h[-20px] font-inter font-bold text-[18px] leading-5 tracking-[1%] text-[#495057]'>Emergency Actions</h1>
-            <button className='flex flex-row justify-between w-[205px] h-[56px] border-[1px] rounded-[4px] px-[24px] py-[18px] bg-[#E61C11] gap-[8px] text-white text-center'>
+            <button className='flex flex-row justify-between w-[205px] h-[56px] border-[1px] rounded-[4px] px-[24px] py-[18px] bg-[#E61C11] gap-[8px] text-white text-center'
+                  onClick={() =>{submitEmergency()}}>
+
                  <div className='flex flex-row'>
                     {/* <Siren className="text-[#FFFFFF] flex-shrink-0" /> */}
                     <span>Trigger Emergency</span>

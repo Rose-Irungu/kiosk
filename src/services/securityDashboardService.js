@@ -1,7 +1,7 @@
 import api from "./api";
 import { API_ENDPOINTS } from "../utils/constants";
 
-export const createEmergencies = async (emergencyData) => {
+export const createEmergency = async (emergencyData) => {
     try{
         const url = API_ENDPOINTS.CREATE_EMERGENCY;
         const response = await api.post(url, emergencyData);
