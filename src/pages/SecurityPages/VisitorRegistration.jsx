@@ -6,38 +6,38 @@ import { securityRegistervisitor } from '../../services/securityVisitorRegister.
 
 
 export default function VisitorRegistration() {
-    const [success,setSuccess] = useState('')
-    const [error,setError] = useState('')
-    const[FormData,setFormData] = useState({
-        full_name:'',
-        email:'',
-        phone_number:'',
-        visitor_type:'',
-        visit_date:'',
-        unit_number:'',
-        plate_number:'',
-        photo:''
+    const [success, setSuccess] = useState('')
+    const [error, setError] = useState('')
+    const [FormData, setFormData] = useState({
+        full_name: '',
+        email: '',
+        phone_number: '',
+        visitor_type: '',
+        visit_date: '',
+        unit_number: '',
+        plate_number: '',
+        photo: ''
     })
 
-    const handleChange=(e)=>{
-      setFormData({...FormData,[e.target.name]:e.target.value})
+    const handleChange = (e) => {
+        setFormData({ ...FormData, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit= async (e)=>{
+    const handleSubmit = async (e) => {
         //  writing logic to send form to backend
-      e.preventDefault()
-      try {
+        e.preventDefault()
+        try {
 
-        const result = await securityRegistervisitor(FormData);
-        setSuccess("Visitor successfully registered")
-        setError('')
-        console.log(FormData)
+            const result = await securityRegistervisitor(FormData);
+            setSuccess("Visitor successfully registered")
+            setError('')
+            console.log(FormData)
 
-      } catch (error) {
-        console.error("failed to register visitor",error);
-        setError("Registration Failed, Please try again");
-        setSuccess('')
-      }
+        } catch (error) {
+            console.error("failed to register visitor", error);
+            setError("Registration Failed, Please try again");
+            setSuccess('')
+        }
     };
 
     return (
@@ -51,20 +51,20 @@ export default function VisitorRegistration() {
                     {success && <p>{success}</p>}
 
                     <div className="flex flex-col gap-2 w-full mt-1">
-                        <label className="text-sm text-[#495057] font-medium ">Full Name <span className='text-[#E61C11]'>*</span></label>
+                        <label className="text-sm text-[#495057]  ">Full Name<span className='text-[#E61C11]'>*</span></label>
                         <input
                             type="text"
                             placeholder='e.g John Doe'
                             name='full_name'
                             value={FormData.full_name} onChange={handleChange}
-                            className="h-12 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 bg-[#F4F4F4] w-full"
+                            className="h-12 px-4 rounded-lg   focus:ring-2 focus:ring-green-600 bg-[#F4F4F4] w-full"
                         />
                     </div>
 
                     <div className="flex flex-col md:flex-row gap-6 w-full mt-4">
                         <div className="flex flex-col gap-2 w-full md:w-1/2">
-                            <label className="text-sm text-[#495057] font-medium">
-                                Email <span className="text-[#E61C11]">*</span>
+                            <label className="text-sm text-[#495057] ">
+                                Email<span className="text-[#E61C11]">*</span>
                             </label>
                             <input
                                 type="text"
@@ -76,8 +76,8 @@ export default function VisitorRegistration() {
                         </div>
 
                         <div className="flex flex-col gap-2 w-full md:w-1/2">
-                            <label className="text-sm text-[#495057] font-medium">
-                                Phone No. <span className="text-[#E61C11]">*</span>
+                            <label className="text-sm text-[#495057] ">
+                                Phone No.<span className="text-[#E61C11]">*</span>
                             </label>
                             <input
                                 type="text"
@@ -90,57 +90,37 @@ export default function VisitorRegistration() {
                     </div>
 
 
-                    {/* Visitor Type + Date */}
-                    <div className="flex flex-col md:flex-row gap-6 w-full mt-4">
-                        <div className="flex flex-col gap-2 w-full md:w-1/2">
-                            <label className="text-sm text-[#495057] font-medium">
-                                Visitor Type <span className="text-[#E61C11]">*</span>
-                            </label>
+                    {/* Visitor Type */}
+                    <div className="flex flex-col gap-2 w-full mt-4">
+                        <label className="text-sm text-[#495057]  ">Visitor Type<span className='text-[#E61C11]'>*</span></label>
+                        <div className="relative">
+                            <select
+                                className="appearance-none h-12 px-4 pr-10 rounded-lg bg-[#F4F4F4] focus:outline-none focus:ring-2 focus:ring-green-600 w-full text-[#495057]"
+                                name='visitor_type'
+                                value={FormData.visitor_type} onChange={handleChange}
+                                required
+                            >
+                                <option value="">Select type</option>
+                                <option value="visitor">visitor</option>
+                                <option value="service_provider">service_provider</option>
+                                <option value="company_visitor">company_visitor</option>
+                            </select>
 
-                            <div className="relative">
-                                <select
-                                    className="appearance-none h-12 px-4 pr-10 rounded-lg bg-[#F4F4F4] focus:outline-none focus:ring-2 focus:ring-green-600 w-full text-[#495057]"
-                                    name='visitor_type'
-                                    value={FormData.visitor_type} onChange={handleChange}
-                                    required
-                                >
-                                    <option value="">Select type</option>
-                                    <option value="visitor">visitor</option>
-                                    <option value="service_provider">service_provider</option>
-                                    <option value="company_visitor">company_visitor</option>
-                                </select>
-
-                                <ChevronDown
-                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#495057] pointer-events-none w-4 h-4"
-                                />
-                            </div>
+                            <ChevronDown
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#495057] pointer-events-none w-4 h-4"
+                            />
                         </div>
-
-
-                        <div className="flex flex-col gap-2 w-full md:w-1/2">
-                            <label className="text-sm text-[#495057] font-medium">
-                                Date <span className="text-[#E61C11]">*</span>
-                            </label>
-
-                            <div className="relative w-full">
-                                <input
-
-                                    type="date"
-                                    className="h-12 px-4 pr-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 bg-[#F4F4F4] w-full text-[#495057]"
-                                    placeholder="Select a date"
-                                    name='visit_date'
-                                    value={FormData.visit_date} onChange={handleChange}
-                                />
-                                {/* <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#495057] w-5 h-5 pointer-events-none" /> */}
-                            </div>
-                        </div>
-
                     </div>
+
+
+
+
+
 
                     {/* House Number + Car Number Plate */}
                     <div className="flex flex-col md:flex-row gap-6 w-full mt-4">
                         <div className="flex flex-col gap-2 w-full md:w-1/2">
-                            <label className="text-sm text-[#495057] font-medium">
+                            <label className="text-sm text-[#495057] ">
                                 House Number
                             </label>
                             <input
@@ -153,7 +133,7 @@ export default function VisitorRegistration() {
                         </div>
 
                         <div className="flex flex-col gap-2 w-full md:w-1/2">
-                            <label className="text-sm text-[#495057] font-medium">
+                            <label className="text-sm text-[#495057] ">
                                 Car Number Plate
                             </label>
                             <input
@@ -168,14 +148,14 @@ export default function VisitorRegistration() {
 
 
                     <div className="flex flex-col gap-2 w-full mt-4">
-                        <label className="text-sm text-[#495057] font-medium">Photo</label>
+                        <label className="text-sm text-[#495057] ">Photo</label>
                         <label
                             htmlFor="photo"
                             className="flex flex-col justify-center items-center gap-2 w-full h-[98px] bg-[#F4F4F4] rounded-[4px] cursor-pointer"
                         >
                             <Upload className="text-[#495057]" />
                             <span className="text-sm text-[#6C757D]">
-                                {FormData.photo ? FormData.photo.name : "Upload Photo"}
+                                {FormData.photo ? FormData.photo.name : "Upload a Photo"}
                             </span>
                             <input
                                 id="photo"
@@ -188,7 +168,7 @@ export default function VisitorRegistration() {
                         </label>
                     </div>
 
-                    <button className="flex items-center justify-center gap-4 w-full h-12 shadow-[0_1px_10px_rgba(0,0,0,0.25)] bg-[#005E0E] text-white font-medium rounded-md hover:bg-green-700 transition mt-4 text-sm">
+                    <button className="flex items-center justify-center gap-4 w-full h-12 shadow-[0_1px_10px_rgba(0,0,0,0.25)] bg-[#005E0E] text-white  rounded-md hover:bg-green-700 transition mt-4 text-sm">
                         SUBMIT
                     </button>
 

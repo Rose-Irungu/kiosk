@@ -63,13 +63,13 @@ export default function SecuritySidebar({
       </div>
 
       {/* Main Navigation */}
-      <div className="flex flex-col w-full space-y-3 font-[Roboto]">
+      <div className="flex flex-col w-full space-y-3 font-[Roboto] ">
         {navItems.map((item) => (
           <button
             key={item.id}
             onClick={() => handleNavigation(item.path)}
             className={`
-              group flex items-center w-full h-12 gap-3 px-4 font-medium text-[13px] transition
+              group flex items-center w-full h-12 gap-3 px-4 font-light text-[13px] transition
               ${active === item.id
                 ? "bg-[#F5F4F5] border-l-2 border-[#005E0E] text-gray-800"
                 : "text-white hover:bg-[#F5F4F5] hover:text-gray-800"}
@@ -110,7 +110,7 @@ export default function SecuritySidebar({
             key={item.id}
             onClick={() => handleNavigation(item.path)}
             className={`
-              group flex items-center w-full h-12 gap-3 px-4 font-medium text-[13px] transition
+              group flex items-center w-full h-12 gap-3 px-4 font-light text-[13px] transition
               ${active === item.id
                 ? "bg-[#F5F4F5] border-l-2 border-[#005E0E] text-gray-800"
                 : "text-white hover:bg-[#F5F4F5] hover:text-gray-800"}
