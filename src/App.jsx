@@ -12,6 +12,7 @@ import Card6 from "./components/Card6";
 import { SkeletonCard } from "./components/SkeletonCard";
 import Home from "./pages/Home";
 import VisitorPage from "./pages/VisitorPage";
+import CheckinCheckout from "./pages/SecurityPages/CheckinCheckout";
 import Verify from "./pages/Verify";
 import Bye from "./pages/Bye";
 import Error from "./pages/Error";
@@ -162,6 +163,8 @@ const App = () => {
         <Route path="/sidebar" element={<Sidebar />} />
         <Route path="/chart" element={<Chart />} />
         <Route path="/userspage" element={<UsersPage />} />
+        <Route path="/checkincheckout" element={<CheckinCheckout />} />
+        
         <Route path="/visitorlogs" element={<VisitorLogs />} />
         <Route path="/chart2" element={<Chart2 />} />{" "}
         <Route path="/settings" element={<Settings />} />{" "}
