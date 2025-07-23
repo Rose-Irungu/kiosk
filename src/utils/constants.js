@@ -25,8 +25,11 @@ export const API_ENDPOINTS = {
   EMERGENCY_UPDATE: '/incidence-and-emergency/update-emergency/{id}/',
 
   //Incidence Management
-  INCIDENCE_LIST: '/incidence-and-emergency/incidence-list/'
+  INCIDENCE_LIST: '/incidence-and-emergency/incidence-list/',
 
+  //Security dashboard 
+  CREATE_EMERGENCY: '/incidence-and-emergency/create-emergency/',
+  CREATE_INCIDENCE: '/incidence-and-emergency/create-incidence/'
 }
 
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://292695e84858.ngrok-free.app'
