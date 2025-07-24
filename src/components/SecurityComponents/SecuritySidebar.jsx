@@ -96,7 +96,7 @@ export default function SecuritySidebar({
           style={{ width: 32, height: 32 }}
         >
           <img
-            src="./dash-collapse.svg"
+            src="/dash-collapse.svg"
             className={`transition-transform duration-300 ${collapsed ? "scale-x-[-1]" : "scale-x-100"}`}
             alt=""
           />
