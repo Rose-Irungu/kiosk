@@ -4,6 +4,7 @@ import SecurityLayout from "../../components/SecurityComponents/SecurityLayout";
 import Navigation from "../../components/Navigation";
 import Card1 from "../../components/Card1";
 import Card6 from "../../components/Card6";
+import LiveLogsTable from "../../components/SecurityComponents/LiveLogsTable";
 import { getDashboardStatistics } from "../../services/dashboardService";
 import useSecurityDashboardStats from "../../hooks/useSecurityDashboardStats";
 
@@ -98,10 +99,8 @@ export default function SecurityDashboard(){
 
 
       <div className="w-full flex flex-row gap-6 mb-8">
-        <div className="bg-white p-3 rounded-lg shadow flex-3">
-          <div className="h-full">
-            {/* Table in here */}
-          </div>
+        <div className="bg-white p-3 rounded-lg shadow flex-3 overflow-auto">  
+            <LiveLogsTable/>  
         </div>
 
         <div className="">
