@@ -37,6 +37,7 @@ const LoginForm = () => {
             console.log("Tenant login successful – dashboard not ready.");
             break;
           case "security":
+             navigate("/security/dashboard");
             console.log("Security login successful – dashboard not ready.");
             break;
           default:
