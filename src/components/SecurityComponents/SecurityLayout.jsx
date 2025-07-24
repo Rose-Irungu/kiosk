@@ -9,7 +9,7 @@ const navItems = [
   { id: "dashboard", path: "/dashboard" },
   { id: "users", path: "/userspage" },
   { id: "visitor_registration", path: "/visitorregistration" },
-  { id: "emergencies", path: "/emergencypage" },
+  { id: "checkincheckout", path: "/checkincheckout" },
   { id: "incidents", path: "/incident_report" },
 ];
 

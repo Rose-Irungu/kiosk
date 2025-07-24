@@ -9,10 +9,12 @@ import Card1 from "./components/Card1";
 import Card2 from "./components/Card2";
 import Card3 from "./components/Card3";
 import Card4 from "./components/Card4";
+import Card6 from "./components/Card6";
 import { SkeletonCard } from "./components/SkeletonCard";
 import Home from "./pages/Home";
 import VisitorPage from "./pages/VisitorPage";
 import CheckinCheckout from "./pages/SecurityPages/CheckinCheckout";
+import View from "./pages/SecurityPages/view";
 import Verify from "./pages/Verify";
 import Bye from "./pages/Bye";
 import Error from "./pages/Error";
@@ -20,7 +22,11 @@ import Welcomeback from "./pages/Welcomeback";
 import { DashboardTable } from "./components/tables/DashboardTable";
 import Users from "./components/tables/Users";
 import SecuritySidebar from "./components/SecurityComponents/SecuritySidebar";
+import LiveLogsTable from "./components/SecurityComponents/LiveLogsTable";
 import SecurityLayout from "./components/SecurityComponents/SecurityLayout";
+import ViewCard1 from "./components/SecurityComponents/ViewCard1";
+import ViewCard2 from "./components/SecurityComponents/ViewCard2";
+import ViewCard3 from "./components/SecurityComponents/ViewCard3";
 import Visitors from "./components/tables/Visitors";
 import Emergencies from "./components/tables/Emergencies";
 import Incident from "./components/tables/Incident";
@@ -49,6 +55,8 @@ import SecurityOverview from "./pages/SecurityPages/SecurityOverview";
 import SystemPreferences from "./components/SystemPreference";
 import SessionManagement from "./components/SessionManagement";
 import HelpPage from "./pages/Dashboardpages/Help";
+import EmergencyPageSecurity from "./pages/SecurityPages/Emergencypage";
+import SecurityDashboard from "./pages/SecurityPages/Securitydashboard";
 import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
 
 
@@ -163,12 +171,17 @@ const App = () => {
         <Route path="/layout" element={<Layout />} />
         <Route path="/securitylayout" element={<SecurityLayout />} />
         <Route path="/securitysidebar" element={<SecuritySidebar />} />
+        <Route path="/viewcard1" element={<ViewCard1 />} />
+        <Route path="/viewcard2" element={<ViewCard2 />} />
+        <Route path="/viewcard3" element={<ViewCard3 />} />
+         <Route path="/livelogstable" element={<LiveLogsTable />} />
         <Route path="/header1" element={<Header1 />} />
         <Route path="/profilemenu" element={<ProfileMenu />} />
         <Route path="/sidebar" element={<Sidebar />} />
         <Route path="/chart" element={<Chart />} />
         <Route path="/userspage" element={<UsersPage />} />
         <Route path="/checkincheckout" element={<CheckinCheckout />} />
+        <Route path="/view" element={<View />} />
         
         <Route path="/visitorlogs" element={<VisitorLogs />} />
         <Route path="/chart2" element={<Chart2 />} />{" "}
@@ -177,8 +190,14 @@ const App = () => {
       
         <Route path="/systempreference" element={<SystemPreferences />} />
         <Route path="/session" element={<SessionManagement />} />
-        <Route path="/visitorregistration" element={<VisitorRegistration />} />
-        
+
+        {/* Security Dashboard Routes */}
+        <Route path="/security/dashboard" element={<SecurityDashboard />} />
+        <Route path="/security/emergencypage" element={<EmergencyPageSecurity />} />
+        <Route path="/security/card6" element={<Card6 />} />
+
+      {/* Kindly whoever removed my path, next time inform me */}
+        <Route path="/visitorregistration" element={<VisitorRegistration />} />  
 
       </Routes>
     </Router>
