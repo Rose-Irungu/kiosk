@@ -79,7 +79,7 @@ export default function CheckinCheckoutTable() {
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Live Logs</h2>
+      
         <div className="flex items-center gap-2">
           <select
             value={visitorTypeFilter}
@@ -102,16 +102,15 @@ export default function CheckinCheckoutTable() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Phone</TableHead>
-              <TableHead>Unit</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Check-in</TableHead>
-              <TableHead>Check-out</TableHead>
-              <TableHead>Duration</TableHead>
-              <TableHead>Car Plate</TableHead>
-              <TableHead>Action</TableHead>
+              <TableHead>Visitor Name</TableHead>
+              <TableHead>Phone No.</TableHead>
+              <TableHead>Visit Unit</TableHead>
+              
+              <TableHead>Check-In Time </TableHead>
+              <TableHead>Check-Out Time</TableHead>
+              <TableHead>Status</TableHead>
+              
+             
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -125,20 +124,13 @@ export default function CheckinCheckoutTable() {
                   <TableCell>{visitor.visitor_name}</TableCell>
                   <TableCell>{visitor.phone_number}</TableCell>
                   <TableCell>{visitor.unit_number}</TableCell>
-                  <TableCell>{visitor.visitor_type}</TableCell>
-                  <TableCell>{visitor.visit_date}</TableCell>
+                 
+                  
                   <TableCell>{formatDate(visitor.check_in_time)}</TableCell>
                   <TableCell>{formatDate(visitor.check_out_time)}</TableCell>
-                  <TableCell>{visitor.duration}</TableCell>
-                  <TableCell>{visitor.car_no_plate}</TableCell>
-                  <TableCell>
-                    <button
-                      className="text-blue-600 hover:underline"
-                      onClick={() => handleView(visitor)}
-                    >
-                      View
-                    </button>
-                  </TableCell>
+                   <TableCell>{formatDate(visitor.status)}</TableCell>
+                 
+                 
                 </TableRow>
               ))
             ) : (
