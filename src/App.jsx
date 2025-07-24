@@ -58,6 +58,7 @@ import HelpPage from "./pages/Dashboardpages/Help";
 import EmergencyPageSecurity from "./pages/SecurityPages/Emergencypage";
 import SecurityDashboard from "./pages/SecurityPages/Securitydashboard";
 import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
+import ExpectedVisitors from "./components/tables/ExpectedVisitors"
 
 
 
@@ -198,6 +199,7 @@ const App = () => {
 
       {/* Kindly whoever removed my path, next time inform me */}
         <Route path="/visitorregistration" element={<VisitorRegistration />} />  
+        <Route path="/expectedvisitors" element={<ExpectedVisitors />} />
 
       </Routes>
     </Router>

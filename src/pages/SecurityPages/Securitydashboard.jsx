@@ -10,7 +10,7 @@ import useSecurityDashboardStats from "../../hooks/useSecurityDashboardStats";
 
 export default function SecurityDashboard(){
   const [stats, setStats] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [/*loading*/, setLoading] = useState(true);
 
   const statistics = useSecurityDashboardStats();
 
@@ -51,7 +51,7 @@ export default function SecurityDashboard(){
         <Card1
           cardTitle="Checked In Visitors"
           count={statistics.loading ? "..." : statistics.checkedInVisitors || 0}
-          link="View details"
+          link="View log"
           linkHref="/incident_report"
           icon={
             <img
@@ -66,7 +66,7 @@ export default function SecurityDashboard(){
           count={
             statistics.loading ? "..." : statistics.checkedOutVisitors || 0
           }
-          link="View details"
+          link="View log"
           linkHref="/checkincheckout"
           icon={
             <img
