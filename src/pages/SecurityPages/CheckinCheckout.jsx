@@ -1,61 +1,48 @@
-import Navigation from '../../components/Navigation.jsx';
-import SecurityLayout from '../../components/SecurityComponents/SecurityLayout.jsx';
-import CheckinCheckoutTable from '../../components/tables/CheckinCheckoutTable.jsx';
-import { Button } from "@/components/ui/button";
-import { Upload } from "lucide-react";
-
-const visitors = [
-  {
-    name: "Haron Mureithi",
-    phone: "0744678751",
-    visitorType: "Recurring",
-    hostUnit: "B-04",
-    status: "Checked-In",
-    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-  },
-  {
-    name: "Jackson Munene",
-    phone: "0709787856",
-    visitorType: "Service",
-    hostUnit: "B-01",
-    status: "Checked-Out",
-    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
-  },
-  {
-    name: "Derick Ochieng",
-    phone: "0756755634",
-    visitorType: "One-time",
-    hostUnit: "C-04",
-    status: "Checked-In",
-    photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-  },
-  {
-    name: "Mary Adhiambo",
-    phone: "0718674563",
-    visitorType: "Recurring",
-    hostUnit: "B-10",
-    status: "Checked-In",
-    photo: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
-  },
-  {
-    name: "Lucy Wanja",
-    phone: "0108978651",
-    visitorType: "Recurring",
-    hostUnit: "A-20",
-    status: "Checked-Out",
-    photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-  },
-];
+import React, { useEffect, useState } from "react";
+import SecurityLayout from "../../components/SecurityComponents/SecurityLayout.jsx";
+import CheckinCheckoutTable from "../../components/tables/CheckinCheckoutTable.jsx";
 
 export default function VisitorLog() {
+  const [visitors, setVisitors] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchVisitorLogs() {
+      try {
+        const response = await fetch("/api/visits/visit-logs/");
+        const data = await response.json();
+
+        const formattedData = data.map((visitor) => ({
+          name: visitor.visitor_name,
+          phone: visitor.phone_number,
+          visitorType: visitor.visitor_type,
+          hostUnit: visitor.unit_number,
+          status: visitor.status,
+          photo: "https://via.placeholder.com/150", 
+        }));
+
+        setVisitors(formattedData);
+      } catch (error) {
+        console.error("Failed to fetch visitor logs:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchVisitorLogs();
+  }, []);
+
   return (
     <SecurityLayout>
       <div className="p-6">
         <div className="flex items-center justify-between mb-4">
-          
-          
+          <h2 className="text-lg font-semibold">Visitor Check-In/Out Logs</h2>
         </div>
-        <CheckinCheckoutTable data={visitors} />
+        {loading ? (
+          <p>Loading visitor logs...</p>
+        ) : (
+          <CheckinCheckoutTable data={visitors} />
+        )}
       </div>
     </SecurityLayout>
   );
