@@ -52,6 +52,7 @@ import SessionManagement from "./components/SessionManagement";
 import HelpPage from "./pages/Dashboardpages/Help";
 import EmergencyPageSecurity from "./pages/SecurityPages/Emergencypage";
 import SecurityDashboard from "./pages/SecurityPages/Securitydashboard";
+import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
 
 
 
@@ -184,6 +185,9 @@ const App = () => {
         <Route path="/security/dashboard" element={<SecurityDashboard />} />
         <Route path="/security/emergencypage" element={<EmergencyPageSecurity />} />
         <Route path="/security/card6" element={<Card6 />} />
+
+      {/* Kindly whoever removed my path, next time inform me */}
+        <Route path="/visitorregistration" element={<VisitorRegistration />} />  
 
       </Routes>
     </Router>

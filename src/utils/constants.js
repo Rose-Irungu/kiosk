@@ -29,7 +29,7 @@ export const API_ENDPOINTS = {
   INCIDENCE_LIST: '/incidence-and-emergency/incidence-list/',
   
   // security registering visitor
-  SECURITY_REGISTER_VISITOR: '/visitors/security-check-in/'
+  SECURITY_REGISTER_VISITOR: '/visitors/security-check-in/',
 
   //Security dashboard 
   CREATE_EMERGENCY: '/incidence-and-emergency/create-emergency/',
