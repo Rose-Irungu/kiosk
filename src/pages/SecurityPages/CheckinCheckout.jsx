@@ -23,7 +23,7 @@ export default function VisitorLog() {
 
         setVisitors(formattedData);
       } catch (error) {
-        console.error("Failed to fetch visitor logs:", error);
+        // console.error("Failed to fetch visitor logs:", error);
       } finally {
         setLoading(false);
       }
