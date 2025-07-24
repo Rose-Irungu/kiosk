@@ -10,10 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Upload, ChevronDown } from "lucide-react";
-import { getVisitLogs } from "@/services/checkincheckout";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-// import { getVisitLogs } from "ser";
+import { getVisitLogs } from "@/services/checkincheckout"; 
 
 export default function CheckinCheckoutTable() {
   const [visitors, setVisitors] = useState([]);
@@ -31,31 +28,76 @@ export default function CheckinCheckoutTable() {
   }, [visitorTypeFilter, currentPage]);
 
   const fetchVisitors = async () => {
-    setLoading(true);
-    try {
-      const data = await getVisitLogs();
-      console.log(data)
+  setLoading(true);
+  try {
+    const data = await getVisitLogs(); // Call your API here
 
-      let allData = data;
+    let allData = data;
 
-      if (visitorTypeFilter !== "all") {
-        allData = allData.filter((v) => v.visitor_type === visitorTypeFilter);
-      }
-
-      setFilteredAllVisitors(allData);
-      setTotalEntries(allData.length);
-
-      const start = (currentPage - 1) * entriesPerPage;
-      const paginated = allData.slice(start, start + entriesPerPage);
-      setVisitors(paginated);
-    } catch (error) {
-      console.error("Error fetching visitors:", error);
-      setVisitors([]);
-      setFilteredAllVisitors([]);
-      setTotalEntries(0);
-    } finally {
-      setLoading(false);
+    if (visitorTypeFilter !== "all") {
+      allData = allData.filter(
+        (v) => v.visitor_type.toLowerCase() === visitorTypeFilter.toLowerCase()
+      );
     }
+
+    setFilteredAllVisitors(allData);
+    setTotalEntries(allData.length);
+
+    const start = (currentPage - 1) * entriesPerPage;
+    const paginated = allData.slice(start, start + entriesPerPage);
+    setVisitors(paginated);
+  } catch (error) {
+    console.error("Error fetching visitors:", error);
+    setVisitors([]);
+    setFilteredAllVisitors([]);
+    setTotalEntries(0);
+  } finally {
+    setLoading(false);
+  }
+};
+
+  const handleExportCSV = () => {
+    const headers = [
+      "Visitor Name",
+      "Phone No",
+      "Visit Unit",
+      "Check-In Time",
+      "Check-Out Time",
+      "Status",
+    ];
+    const rows = filteredAllVisitors.map((v) => [
+      v.visitor_name,
+      v.phone_number,
+      v.host_unit || "N/A",
+      v.check_in_time || "--",
+      v.check_out_time || "--",
+      v.status,
+    ]);
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      [headers, ...rows].map((r) => r.join(",")).join("\n");
+
+    const link = document.createElement("a");
+    link.href = encodeURI(csvContent);
+    link.download = "visitor_logs.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const totalPages = Math.ceil(totalEntries / entriesPerPage);
+
+  const handleNext = () => {
+    if (currentPage < totalPages) setCurrentPage((p) => p + 1);
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 1) setCurrentPage((p) => p - 1);
+  };
+
+  const handleEntriesChange = (e) => {
+    setEntriesPerPage(Number(e.target.value));
+    setCurrentPage(1);
   };
 
   const handleFilterChange = (e) => {
