@@ -31,7 +31,7 @@ export const API_ENDPOINTS = {
   
   // security registering visitor
   SECURITY_REGISTER_VISITOR: '/visitors/security-check-in/',
-  VISIT_LOGS: '/api/visits/visit-logs/',
+  VISIT_LOGS: '/visits/visit-logs/',
 
 
   //Security dashboard 

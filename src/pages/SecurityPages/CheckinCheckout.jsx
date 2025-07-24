@@ -9,7 +9,7 @@ export default function VisitorLog() {
   useEffect(() => {
     async function fetchVisitorLogs() {
       try {
-        const response = await fetch("/api/visits/visit-logs/");
+        const response = await fetch("/visits/visit-logs/");
         const data = await response.json();
 
         const formattedData = data.map((visitor) => ({
