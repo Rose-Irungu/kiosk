@@ -30,8 +30,7 @@ export default function CheckinCheckoutTable() {
   const fetchVisitors = async () => {
   setLoading(true);
   try {
-    const data = await getVisitLogs(); // Call your API here
-
+    const data = await getVisitLogs(); 
     let allData = data;
 
     if (visitorTypeFilter !== "all") {
