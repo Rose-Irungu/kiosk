@@ -29,11 +29,12 @@ export const API_ENDPOINTS = {
   INCIDENCE_LIST: '/incidence-and-emergency/incidence-list/',
   
   // security registering visitor
-  SECURITY_REGISTER_VISITOR: '/visitors/security-check-in/'
+  SECURITY_REGISTER_VISITOR: '/visitors/security-check-in/',
 
   //Security dashboard 
-  // CREATE_EMERGENCY: '/incidence-and-emergency/create-emergency/',
-  //                  
+  CREATE_EMERGENCY: '/incidence-and-emergency/create-emergency/',
+  CREATE_INCIDENCE: '/incidence-and-emergency/create-incidence/',
+  STATISTICS: '/statistics/active-users/count/'
 }
 
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://292695e84858.ngrok-free.app'
