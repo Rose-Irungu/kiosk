@@ -22,13 +22,8 @@ export default function Navbar() {
 
   return (
     <nav className="bg-[#e6fbe9] px-6 py-4 w-full">
-      <div className="flex justify-between items-center">
-        {/* colour bars */}
-        <div className="flex space-x-2">
-          <div className="w-12 h-2 bg-[#08cd24] border border-[#009515] rounded-sm" />
-          <div className="w-12 h-2 bg-[#6c50ef] border border-[#4D39AA] rounded-sm" />
-          <div className="w-12 h-2 bg-[#6c50ef] border border-[#4D39AA] rounded-sm" />
-        </div>
+      <div className="flex  justify-end items-center">
+        
         
         {/* dropdown */}
         <div className="relative">

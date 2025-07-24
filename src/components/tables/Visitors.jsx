@@ -203,7 +203,13 @@ export default function Visitors() {
                             : "bg-yellow-200 text-yellow-800"
                           }`}
                       >
-                        {visitor.status}
+                        {
+                          visitor.status == "checked_in"
+                            ? "Checked In"
+                            : visitor.status == "checked_out"
+                              ? "Checked Out"
+                              : "Registered"
+                        }
                       </div>
                     </TableCell>
                   </TableRow>

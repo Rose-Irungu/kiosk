@@ -19,10 +19,13 @@ export default function VisitorRegistration() {
         photo: ''
     })
     const navigate = useNavigate();
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...FormData, [e.target.name]: e.target.value })
     }
+
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,7 +44,7 @@ export default function VisitorRegistration() {
     };
 
 
-    const [isSubmitting, setIsSubmitting] = useState(false);
+
 
 
     return (
@@ -172,10 +175,11 @@ export default function VisitorRegistration() {
                         </label>
                     </div>
 
-                    <button disabled={isSubmitting} className={`flex items-center justify-center gap-4 w-full h-12 shadow-[0_1px_10px_rgba(0,0,0,0.25)] bg-[#005E0E] text-white  rounded-md hover:bg-green-700 transition mt-4 text-sm ${isSubmitting
-                        ? "bg-gray-400"
-                        : "bg-[#005E0E] hover:bg-green-700"
-                        } text-white py-2 rounded-md transition`}
+                    <button
+                        type='submit'
+                        disabled={isSubmitting}
+                        className={`flex items-center justify-center gap-4 w-full h-12 shadow-[0_1px_10px_rgba(0,0,0,0.25)] text-white rounded-md transition mt-4 text-sm ${isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-[#005E0E] hover:bg-green-700"
+                            }`}
                     >
 
                         {isSubmitting ? "SUBMITTING..." : "SUBMIT"}
