@@ -22,16 +22,7 @@ export function DashboardTable() {
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-semibold">Most Visited Units</h2>
         <div className="relative">
-          {/* <select
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            className="flex h-10 items-center rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-          >
-            <option value="today">Today</option>
-            <option value="week">This Week</option>
-            <option value="month">This Month</option>
-            <option value="year">This Year</option>
-          </select> */}
+         
         </div>
       </div>
 
