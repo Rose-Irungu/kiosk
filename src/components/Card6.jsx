@@ -76,7 +76,7 @@ function Card6() {
                  </div>
             </button>
             <button className='flex flex-row justify-center border-[1px] border-[#005E0E] w-[205px] h-[56px] rounded-[4px] py-[10px] px-[24px] gap-[10px] text-center'>
-                <span className='w-[119px] h-[20px] font-inter text-[14px] leading-5 tracking-[1%] text-[#005E0E]'>
+                <span className='w-[119px] h-[20px] font-inter text-[14px] leading-5 tracking-[1%] text-[#005E0E] text-center'>
                     OPEN ROLL CALL
                 </span>
             </button>

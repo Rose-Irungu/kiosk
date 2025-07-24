@@ -15,6 +15,7 @@ export const API_ENDPOINTS = {
   DELETE_USER: '/user/delete/',
   UPDATE_USER: '/user/update/',
   SENT_PASSWORD_RESET: '/user/password-reset/',
+  GET_UNITS: '/visitors/units/',
 
   // Auth
   LOGIN: '/user/login/',
