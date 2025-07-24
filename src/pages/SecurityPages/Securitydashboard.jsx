@@ -4,22 +4,14 @@ import SecurityLayout from "../../components/SecurityComponents/SecurityLayout";
 import Navigation from "../../components/Navigation";
 import Card1 from "../../components/Card1";
 import Card6 from "../../components/Card6";
-import Card3 from "../../components/Card3";
-import Chart from "../../components/Chart";
-import { AlertTriangle } from "lucide-react";
-import DashboardTable from "../../components/tables/DashboardTable";
 import { getDashboardStatistics } from "../../services/dashboardService";
-import useVisitorStats from "../../hooks/useVisitorStats";
+import useSecurityDashboardStats from "../../hooks/useSecurityDashboardStats";
 
 export default function SecurityDashboard(){
   const [stats, setStats] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const {
-            stats: visitorStats,
-            loading: visitorLoading,
-            error: visitorError
-        } = useVisitorStats();
+  const statistics = useSecurityDashboardStats();
 
 
   useEffect(() => {
@@ -37,14 +29,14 @@ export default function SecurityDashboard(){
   }, []);
 
   console.log(stats);
-  console.log("Visitor stats:", visitorStats);
+  console.log("Statistics:", statistics);
 
   return (
     <SecurityLayout>
       <div className="flex flex-wrap justify-start mb-[12px]">
         <Card1
           cardTitle="Expected Visitors"
-          count={visitorLoading ? "..." : stats?.visitors?.total}
+          count={statistics.loading ? "..." : statistics.expectedVisitors || 0}
           link="View log"
           linkHref="/visitorlogs"
           icon={
@@ -57,7 +49,7 @@ export default function SecurityDashboard(){
         />
         <Card1
           cardTitle="Checked In Visitors"
-          count={loading ? "..." : stats?.incidents_in_progress?.total || 0}
+          count={statistics.loading ? "..." : statistics.checkedInVisitors || 0}
           link="View details"
           linkHref="/incident_report"
           icon={
@@ -71,7 +63,7 @@ export default function SecurityDashboard(){
         <Card1
           cardTitle="Checked Out Visitors"
           count={
-            loading ? "..." : stats?.emergencies?.stats?.today_emergencies || 0
+            statistics.loading ? "..." : statistics.checkedOutVisitors || 0
           }
           link="View details"
           linkHref="/checkincheckout"
@@ -85,7 +77,7 @@ export default function SecurityDashboard(){
         />
         <Card1
           cardTitle="Emergency Today"
-          count={loading ? "..." : stats?.users?.total || 0}
+          count={statistics.loading ? "..." : statistics.emergencyToday || 0}
           link="View users"
           linkHref="/security/emergencypage"
           icon={
@@ -98,9 +90,9 @@ export default function SecurityDashboard(){
         />
       </div>
 
-      {visitorError && (
+      {statistics.error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          {visitorError}
+          {statistics.error}
         </div>
       )}
 
