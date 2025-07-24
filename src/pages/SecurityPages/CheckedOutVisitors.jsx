@@ -1,5 +1,5 @@
 import Navigation from '../../components/Navigation.jsx';
-import Layout from '../../components/layout/Layout.jsx'
+import SecurityLayout from '../../components/SecurityComponents/SecurityLayout.jsx'
 import CheckedOutVisitorsTable from '../../components/tables/CheckedOutVisitorsTable.jsx';
 import {
   Table,
@@ -16,8 +16,8 @@ import { MoreHorizontal, ChevronDown, Upload } from "lucide-react";
 
 export default function VisitorLog() {
   return (
-    <Layout>
+    <SecurityLayout>
       <CheckedOutVisitorsTable />
-    </Layout>
+    </SecurityLayout>
   );
 }

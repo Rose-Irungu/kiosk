@@ -67,7 +67,7 @@ export default function SecurityDashboard(){
             statistics.loading ? "..." : statistics.checkedOutVisitors || 0
           }
           link="View log"
-          linkHref="/checkincheckout"
+          linkHref="/checkedoutvisitors"
           icon={
             <img
               src="/911.svg"

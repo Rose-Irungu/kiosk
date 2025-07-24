@@ -59,6 +59,7 @@ import EmergencyPageSecurity from "./pages/SecurityPages/Emergencypage";
 import SecurityDashboard from "./pages/SecurityPages/Securitydashboard";
 import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
 import ExpectedVisitors from "./components/tables/ExpectedVisitors"
+import CheckedOutVisitors from "./pages/SecurityPages/CheckedOutVisitors";
 
 
 

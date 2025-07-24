@@ -104,11 +104,11 @@ export default function Visitors() {
     <>
       <div className="w-full max-w-7xl mx-auto bg-white rounded-xl shadow-sm mt-5">
         <div className="flex justify-between items-start p-6 ">
-          <h2 className="text-lg font-bold font-['Inter']">Checked Out Visitors</h2>
+          <h2 className="text-lg  font-bold font-['Inter']">Checked Out Visitors</h2>
 
         </div>
 
-        <div className="flex flex-row justify-between pb-3 px-6">
+        <div className="flex flex-row flex-wrap justify-between gap-4 px-6 pb-3 w-full  ">
           <div>
             <div className="flex items-center gap-2">
               <span className="text-[16px] text-gray-600">Show</span>
@@ -168,13 +168,13 @@ export default function Visitors() {
           <Table>
             <TableHeader >
               <TableRow >
-                <TableHead className="text-[#495057] text-[16px] font-bold font-['Inter'] ">Visitor Name</TableHead>
-                <TableHead className="text-[#495057] text-[16px] font-bold font-['Inter'] ">Phone No.</TableHead>
-                <TableHead className="text-[#495057] text-[16px] font-bold font-['Inter'] ">Visit Unit</TableHead>
-                <TableHead className="text-[#495057] text-[16px] font-bold font-['Inter'] ">Check-In Time</TableHead>
-                <TableHead className="text-[#495057] text-[16px] font-bold font-['Inter'] ">Check-Out Time</TableHead>
-                <TableHead className="text-[#495057] text-[16px] font-bold font-['Inter'] ">Verified By</TableHead>
-                <TableHead className="text-[#495057] text-[16px] font-bold font-['Inter'] ">Status</TableHead>
+                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Visitor Name</TableHead>
+                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Phone No.</TableHead>
+                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Visit Unit</TableHead>
+                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Check-In Time</TableHead>
+                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Check-Out Time</TableHead>
+                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Verified By</TableHead>
+                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Status</TableHead>
               </TableRow>
             </TableHeader>
 
@@ -193,20 +193,31 @@ export default function Visitors() {
                 </TableRow>
               ) : (
                 visitors
-                  .filter(visitor => visitor.status === "checked_out") // ✅ Only "checked_in" visitors
+
                   .map((visitor, index) => (
                     <TableRow key={index} className="even:bg-[#E0DBF4]/5 odd:bg-[#005E0E]/5">
-                      <TableCell className="p-4">{visitor.visitor_name}</TableCell>
-                      <TableCell>{visitor.phone_number}</TableCell>
-                      <TableCell>{visitor.unit_number}</TableCell>
-                      <TableCell>{visitor.check_in_time}</TableCell>
-                      <TableCell>{visitor.check_out_time}</TableCell>
-                      <TableCell>{visitor.verifier}</TableCell>
-                      <TableCell>
+                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.visitor_name}</TableCell>
+                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.phone_number}</TableCell>
+                      <TableCell className="text-[#495057] text-[13px]  font-['Inter'] p-4">{visitor.unit_number}</TableCell>
+                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.check_in_time}</TableCell>
+                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.check_out_time}</TableCell>
+                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.verifier}</TableCell>
+                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">
                         <div
-                          className="flex items-center justify-center px-1 py-0.5 gap-2 w-[90px] h-[20px] rounded text-xs font-medium bg-[rgba(1,210,30,0.2)] text-green-800"
+                          className={`flex items-center justify-center px-1 py-0.5 gap-2 w-[90px] h-[20px] rounded text-xs  ${visitor.status === "checked_in"
+                            ? "bg-[rgba(1,210,30,0.2)] text-green-800"
+                            : visitor.status === "checked_out"
+                              ? "bg-[#E0DBF4] text-purple-800"
+                              : "bg-yellow-200 text-yellow-800"
+                            }`}
                         >
-                          Checked Out
+                          {
+                            visitor.status == "checked_in"
+                              ? "Checked In"
+                              : visitor.status == "checked_out"
+                                ? "Checked Out"
+                                : "Registered"
+                          }
                         </div>
                       </TableCell>
                     </TableRow>
