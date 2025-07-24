@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route,   useLocation } from "react-router-dom";
+
 import { UserForm } from "./components/forms/form";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
@@ -8,6 +9,7 @@ import Card1 from "./components/Card1";
 import Card2 from "./components/Card2";
 import Card3 from "./components/Card3";
 import Card4 from "./components/Card4";
+import Card6 from "./components/Card6";
 import { SkeletonCard } from "./components/SkeletonCard";
 import Home from "./pages/Home";
 import VisitorPage from "./pages/VisitorPage";
@@ -53,7 +55,13 @@ import SecurityOverview from "./pages/SecurityPages/SecurityOverview";
 import SystemPreferences from "./components/SystemPreference";
 import SessionManagement from "./components/SessionManagement";
 import HelpPage from "./pages/Dashboardpages/Help";
+import EmergencyPageSecurity from "./pages/SecurityPages/Emergencypage";
+import SecurityDashboard from "./pages/SecurityPages/Securitydashboard";
 import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
+
+
+
+
 
 
 const App = () => {
@@ -111,6 +119,7 @@ const App = () => {
   ]);
 
   return (
+  
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -156,7 +165,7 @@ const App = () => {
         <Route path="/incident_report" element={<Incident_Reports />} />
         <Route path="/help" element={<HelpPage />} />
         <Route path="/triggers" element={<Triggers />} />{" "}
-        {/* Ensure Triggers is imported correctly */}
+        
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/skeletoncard" element={<SkeletonCard />} />
         <Route path="/layout" element={<Layout />} />
@@ -181,11 +190,18 @@ const App = () => {
       
         <Route path="/systempreference" element={<SystemPreferences />} />
         <Route path="/session" element={<SessionManagement />} />
-        <Route path="/visitorregistration" element={<VisitorRegistration />} />
-        
+
+        {/* Security Dashboard Routes */}
+        <Route path="/security/dashboard" element={<SecurityDashboard />} />
+        <Route path="/security/emergencypage" element={<EmergencyPageSecurity />} />
+        <Route path="/security/card6" element={<Card6 />} />
+
+      {/* Kindly whoever removed my path, next time inform me */}
+        <Route path="/visitorregistration" element={<VisitorRegistration />} />  
 
       </Routes>
     </Router>
+    
   );
 };
 
