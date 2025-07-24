@@ -3,7 +3,7 @@ import Layout from '../../components/layout/Layout.jsx'
 import { Upload, ChevronDown, Calendar } from "lucide-react";
 import SecurityLayout from '../../components/SecurityComponents/SecurityLayout.jsx';
 import { securityRegistervisitor } from '../../services/securityVisitorRegister.js';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function VisitorRegistration() {
     const [success, setSuccess] = useState('')
@@ -18,27 +18,31 @@ export default function VisitorRegistration() {
         plate_number: '',
         photo: ''
     })
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({ ...FormData, [e.target.name]: e.target.value })
     }
 
     const handleSubmit = async (e) => {
-        //  writing logic to send form to backend
-        e.preventDefault()
+        e.preventDefault();
+        setIsSubmitting(true);
         try {
-
-            const result = await securityRegistervisitor(FormData);
-            setSuccess("Visitor successfully registered")
-            setError('')
-            console.log(FormData)
-
+            await securityRegistervisitor(FormData);
+            alert("Visitor successfully registered");
+            // Redirect to dashboard
+            navigate('/security/dashboard');
         } catch (error) {
             console.error("failed to register visitor", error);
-            setError("Registration Failed, Please try again");
-            setSuccess('')
+            alert("Registration failed. Please try again.");
+        } finally {
+            setIsSubmitting(false);
         }
     };
+
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
 
     return (
         <SecurityLayout>
@@ -57,7 +61,7 @@ export default function VisitorRegistration() {
                             placeholder='e.g John Doe'
                             name='full_name'
                             value={FormData.full_name} onChange={handleChange}
-                            className="h-12 px-4 rounded-lg   focus:ring-2 focus:ring-green-600 bg-[#F4F4F4] w-full"
+                            className="h-12 px-4 rounded-lg  focus:outline-none focus:ring-2 focus:ring-green-600 bg-[#F4F4F4] w-full"
                         />
                     </div>
 
@@ -101,9 +105,9 @@ export default function VisitorRegistration() {
                                 required
                             >
                                 <option value="">Select type</option>
-                                <option value="visitor">visitor</option>
-                                <option value="service_provider">service_provider</option>
-                                <option value="company_visitor">company_visitor</option>
+                                <option value="visitor">Visitor</option>
+                                <option value="service_provider">Service Provider</option>
+                                <option value="company_visitor">Company Visitor</option>
                             </select>
 
                             <ChevronDown
@@ -168,8 +172,13 @@ export default function VisitorRegistration() {
                         </label>
                     </div>
 
-                    <button className="flex items-center justify-center gap-4 w-full h-12 shadow-[0_1px_10px_rgba(0,0,0,0.25)] bg-[#005E0E] text-white  rounded-md hover:bg-green-700 transition mt-4 text-sm">
-                        SUBMIT
+                    <button disabled={isSubmitting} className={`flex items-center justify-center gap-4 w-full h-12 shadow-[0_1px_10px_rgba(0,0,0,0.25)] bg-[#005E0E] text-white  rounded-md hover:bg-green-700 transition mt-4 text-sm ${isSubmitting
+                        ? "bg-gray-400"
+                        : "bg-[#005E0E] hover:bg-green-700"
+                        } text-white py-2 rounded-md transition`}
+                    >
+
+                        {isSubmitting ? "SUBMITTING..." : "SUBMIT"}
                     </button>
 
                 </form>
