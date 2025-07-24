@@ -130,7 +130,7 @@ export default function LiveLogsTable() {
 
       {/* Visitor Table */}
       <div className="p-4">
-        <Table className="w-full border-separate border-spacing-y-2">
+        <Table className="w-full">
           <TableHeader>
             <TableRow className="bg-[#F5F6FA] text-[#3A3F51] rounded-lg">
               <TableHead className="text-sm font-semibold px-4 py-3">

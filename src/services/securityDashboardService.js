@@ -19,6 +19,8 @@ export const createEmergency = async (emergencyData) => {
         }
     } catch(error){
         throw error.message || "Something went wrong while creating emergencies.";
+    } finally{
+        console.log("Emergency created successfully");
     }
 };
 
@@ -34,6 +36,8 @@ export const createIncidence = async (incidenceData) => {
         }
     } catch(error){
         throw error.message || "Something went wrong while creating the incidence.";
+    } finally {
+        console.log("Incidence created successfully");
     }
 };
 
