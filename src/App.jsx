@@ -58,7 +58,7 @@ import HelpPage from "./pages/Dashboardpages/Help";
 import EmergencyPageSecurity from "./pages/SecurityPages/Emergencypage";
 import SecurityDashboard from "./pages/SecurityPages/Securitydashboard";
 import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
-
+import CheckedOutVisitors from "./pages/SecurityPages/CheckedOutVisitors";
 
 
 
@@ -197,7 +197,8 @@ const App = () => {
         <Route path="/security/card6" element={<Card6 />} />
 
       {/* Kindly whoever removed my path, next time inform me */}
-        <Route path="/visitorregistration" element={<VisitorRegistration />} />  
+        <Route path="/visitorregistration" element={<VisitorRegistration />} /> 
+        <Route path="/checkedoutvisitors" element={<CheckedOutVisitors />} />
 
       </Routes>
     </Router>
