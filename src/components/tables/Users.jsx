@@ -116,7 +116,7 @@ export default function Users({ users = [], setUsers = () => {} }) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Photo</TableHead>
+                {/* <TableHead>Photo</TableHead> */}
                 <TableHead>Name</TableHead>
                 <TableHead />
                 <TableHead>Phone</TableHead>
@@ -133,7 +133,7 @@ export default function Users({ users = [], setUsers = () => {} }) {
                   key={index}
                   className={index % 2 === 0 ? "bg-[#f2f7f3]" : ""}
                 >
-                <TableCell>
+                {/* <TableCell>
                   {user.profile_picture ? (
                     <img
                       src={user.profile_picture}
@@ -146,7 +146,7 @@ export default function Users({ users = [], setUsers = () => {} }) {
                       N/A
                     </div>
                   )}
-                </TableCell>
+                </TableCell> */}
 
                   <TableCell className="font-medium">
                     {user.first_name} {user.last_name}

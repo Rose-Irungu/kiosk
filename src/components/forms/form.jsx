@@ -1,5 +1,3 @@
-// Updated UserForm to handle edit mode and prefill fields
-
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -62,6 +60,8 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
   const editUser = location.state?.user;
   const editMode = location.state?.editMode;
 
+  const [units, setUnits] = useState([]);
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -71,7 +71,7 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
       email: editUser?.email || "",
       phone: editUser?.phone_number || "",
       idNo: editUser?.id_number || "",
-      unit: editUser?.unit_number || "",
+      unit: editUser?.unit_number?.toString() || "",
       password: "",
       confirmPassword: "",
       photo: null,
@@ -87,13 +87,26 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
         email: editUser.email,
         phone: editUser.phone_number,
         idNo: editUser.id_number,
-        unit: editUser.unit_number,
+        unit: editUser.unit_number?.toString() || "",
         password: "",
         confirmPassword: "",
         photo: null,
       });
     }
   }, [editMode, editUser, form]);
+
+  // Fetch unit list from API
+  useEffect(() => {
+    const fetchUnits = async () => {
+      try {
+        const data = await userService.getAllUnits();
+        setUnits(data);
+      } catch (err) {
+        console.error("Failed to fetch units:", err);
+      }
+    };
+    fetchUnits();
+  }, []);
 
   const onSubmit = async (values) => {
     try {
@@ -166,58 +179,92 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
 
                 {/* Name + Email */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {[
-                    ["firstName", "First Name"],
-                    ["lastName", "Last Name"],
-                    ["email", "Email"],
-                  ].map(([name, label]) => (
-                    <FormField
-                      key={name}
-                      control={form.control}
-                      name={name}
-                      render={({ field }) => (
-                        <FormItem>
-                          <RequiredLabel>{label}</RequiredLabel>
-                          <FormControl>
-                            <Input
-                              className="bg-[#f4eaff] placeholder-gray-600"
-                              placeholder={`Enter ${label}`}
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  ))}
+                  {[["firstName", "First Name"], ["lastName", "Last Name"], ["email", "Email"]].map(
+                    ([name, label]) => (
+                      <FormField
+                        key={name}
+                        control={form.control}
+                        name={name}
+                        render={({ field }) => (
+                          <FormItem>
+                            <RequiredLabel>{label}</RequiredLabel>
+                            <FormControl>
+                              <Input
+                                className="bg-[#f4eaff] placeholder-gray-600"
+                                placeholder={`Enter ${label}`}
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )
+                  )}
                 </div>
 
                 {/* Phone, ID, Unit */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {[
-                    ["phone", "Phone No."],
-                    ["idNo", "ID No."],
-                    ["unit", "Unit"],
-                  ].map(([name, label]) => (
-                    <FormField
-                      key={name}
-                      control={form.control}
-                      name={name}
-                      render={({ field }) => (
-                        <FormItem>
-                          <RequiredLabel>{label}</RequiredLabel>
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <RequiredLabel>Phone No.</RequiredLabel>
+                        <FormControl>
+                          <Input
+                            className="bg-[#f4eaff] placeholder-gray-600"
+                            placeholder="Enter Phone No."
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="idNo"
+                    render={({ field }) => (
+                      <FormItem>
+                        <RequiredLabel>ID No.</RequiredLabel>
+                        <FormControl>
+                          <Input
+                            className="bg-[#f4eaff] placeholder-gray-600"
+                            placeholder="Enter ID No."
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="unit"
+                    render={({ field }) => (
+                      <FormItem>
+                        <RequiredLabel>Unit</RequiredLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
-                            <Input
-                              className="bg-[#f4eaff] placeholder-gray-600"
-                              placeholder={`Enter ${label}`}
-                              {...field}
-                            />
+                            <SelectTrigger className="bg-[#f4eaff]">
+                              <SelectValue placeholder="Select a unit" />
+                            </SelectTrigger>
                           </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  ))}
+                          <SelectContent>
+                            {units.map((unit) => (
+                              <SelectItem key={unit.id} value={String(unit.id)}>
+                                {unit.unit_name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
 
                 {/* Password + Confirm */}
@@ -236,8 +283,8 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
                             <RequiredLabel>{label}</RequiredLabel>
                             <FormControl>
                               <Input
-                                className="bg-[#f4eaff] placeholder-gray-600"
                                 type="password"
+                                className="bg-[#f4eaff] placeholder-gray-600"
                                 placeholder={`Enter ${label}`}
                                 {...field}
                               />
@@ -250,10 +297,11 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
                   </div>
                 )}
 
+                {/* Photo Upload */}
                 <FormField
                   control={form.control}
                   name="photo"
-                  render={({ field: { onChange, value } }) => {
+                  render={({ field: { onChange } }) => {
                     const [preview, setPreview] = useState(null);
 
                     const handleFileChange = (e) => {
@@ -313,3 +361,5 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
     </div>
   );
 }
+export default UserForm;
+export const UserFormSchema = formSchema;
