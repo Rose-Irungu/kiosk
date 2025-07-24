@@ -186,7 +186,7 @@ const App = () => {
         <Route path="/visitorlogs" element={<VisitorLogs />} />
         <Route path="/chart2" element={<Chart2 />} />{" "}
         <Route path="/settings" element={<Settings />} />{" "}
-        <Route path="/security/overview" element={<SecurityOverview />} />
+        <Route path="/security" element={<SecurityOverview />} />
       
         <Route path="/systempreference" element={<SystemPreferences />} />
         <Route path="/session" element={<SessionManagement />} />
