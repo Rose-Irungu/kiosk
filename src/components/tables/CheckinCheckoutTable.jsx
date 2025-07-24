@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Upload, ChevronDown } from "lucide-react";
+import { getVisitLogs } from "@/services/checkincheckout"; 
 
 export default function CheckinCheckoutTable() {
   const [visitors, setVisitors] = useState([]);
@@ -27,89 +28,33 @@ export default function CheckinCheckoutTable() {
   }, [currentPage, entriesPerPage, visitorTypeFilter]);
 
   const fetchVisitors = async () => {
-    setLoading(true);
-    try {
-      const res = {
-        result_code: 0,
-        data: [
-          {
-            visitor_name: "Haron Mureithi",
-            phone_number: "0744678751",
-            visitor_type: "recurring",
-            host_unit: "B-04",
-            status: "checked_in",
-            check_in_time: "2024-07-22 10:00 AM",
-            check_out_time: "--",
-          },
-          {
-            visitor_name: "Lucy Wanja",
-            phone_number: "0108978651",
-            visitor_type: "service",
-            host_unit: "A-20",
-            status: "checked_out",
-            check_in_time: "2024-07-21 2:00 PM",
-            check_out_time: "2024-07-21 4:30 PM",
-          },
-          {
-            visitor_name: "Lucy Wanja",
-            phone_number: "0108978651",
-            visitor_type: "service",
-            host_unit: "A-20",
-            status: "checked_out",
-            check_in_time: "2024-07-21 2:00 PM",
-            check_out_time: "2024-07-21 4:30 PM",
-          },
-          {
-            visitor_name: "Lucy Wanja",
-            phone_number: "0108978651",
-            visitor_type: "service",
-            host_unit: "A-20",
-            status: "checked_out",
-            check_in_time: "2024-07-21 2:00 PM",
-            check_out_time: "2024-07-21 4:30 PM",
-          },
-          {
-            visitor_name: "Lucy Wanja",
-            phone_number: "0108978651",
-            visitor_type: "service",
-            host_unit: "A-20",
-            status: "checked_out",
-            check_in_time: "2024-07-21 2:00 PM",
-            check_out_time: "2024-07-21 4:30 PM",
-          },
+  setLoading(true);
+  try {
+    const data = await getVisitLogs(); // Call your API here
 
-        ],
-      };
+    let allData = data;
 
-      if (res.result_code === 0) {
-        let allData = res.data;
-
-        if (visitorTypeFilter !== "all") {
-          allData = allData.filter(
-            (v) => v.visitor_type === visitorTypeFilter
-          );
-        }
-
-        setFilteredAllVisitors(allData);
-        setTotalEntries(allData.length);
-
-        const start = (currentPage - 1) * entriesPerPage;
-        const paginated = allData.slice(start, start + entriesPerPage);
-        setVisitors(paginated);
-      } else {
-        setVisitors([]);
-        setFilteredAllVisitors([]);
-        setTotalEntries(0);
-      }
-    } catch (error) {
-      console.error("Error fetching visitors:", error);
-      setVisitors([]);
-      setFilteredAllVisitors([]);
-      setTotalEntries(0);
-    } finally {
-      setLoading(false);
+    if (visitorTypeFilter !== "all") {
+      allData = allData.filter(
+        (v) => v.visitor_type.toLowerCase() === visitorTypeFilter.toLowerCase()
+      );
     }
-  };
+
+    setFilteredAllVisitors(allData);
+    setTotalEntries(allData.length);
+
+    const start = (currentPage - 1) * entriesPerPage;
+    const paginated = allData.slice(start, start + entriesPerPage);
+    setVisitors(paginated);
+  } catch (error) {
+    console.error("Error fetching visitors:", error);
+    setVisitors([]);
+    setFilteredAllVisitors([]);
+    setTotalEntries(0);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleExportCSV = () => {
     const headers = [
