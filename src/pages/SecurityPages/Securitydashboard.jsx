@@ -3,25 +3,16 @@ import React, { useState, useEffect } from "react";
 import SecurityLayout from "../../components/SecurityComponents/SecurityLayout";
 import Navigation from "../../components/Navigation";
 import Card1 from "../../components/Card1";
-import Card2 from "../../components/Card2";
-import Card3 from "../../components/Card3";
-import Chart from "../../components/Chart";
-import { AlertTriangle } from "lucide-react";
-import DashboardTable from "../../components/tables/DashboardTable";
+import Card6 from "../../components/Card6";
 import { getDashboardStatistics } from "../../services/dashboardService";
-import useVisitorStats from "../../hooks/useVisitorStats";
+import useSecurityDashboardStats from "../../hooks/useSecurityDashboardStats";
 
-const SecurityOverview = () => {
+export default function SecurityDashboard(){
   const [stats, setStats] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  
-  const {
-    stats: visitorStats,
-    loading: visitorLoading,
-    error: visitorError,
-    totalVisitors,
-  } = useVisitorStats();
+  const statistics = useSecurityDashboardStats();
+
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -34,19 +25,18 @@ const SecurityOverview = () => {
         setLoading(false);
       }
     };
-
     fetchStats();
   }, []);
 
   console.log(stats);
-  console.log("Visitor stats:", visitorStats);
+  console.log("Statistics:", statistics);
 
   return (
     <SecurityLayout>
       <div className="flex flex-wrap justify-start mb-[12px]">
         <Card1
-          cardTitle="Current Visitors"
-          count={visitorLoading ? "..." : stats?.visitors?.total}
+          cardTitle="Expected Visitors"
+          count={statistics.loading ? "..." : statistics.expectedVisitors || 0}
           link="View log"
           linkHref="/visitorlogs"
           icon={
@@ -58,8 +48,8 @@ const SecurityOverview = () => {
           }
         />
         <Card1
-          cardTitle="Active Incidents"
-          count={loading ? "..." : stats?.incidents_in_progress?.total || 0}
+          cardTitle="Checked In Visitors"
+          count={statistics.loading ? "..." : statistics.checkedInVisitors || 0}
           link="View details"
           linkHref="/incident_report"
           icon={
@@ -71,12 +61,12 @@ const SecurityOverview = () => {
           }
         />
         <Card1
-          cardTitle="Emergencies Today"
+          cardTitle="Checked Out Visitors"
           count={
-            loading ? "..." : stats?.emergencies?.stats?.today_emergencies || 0
+            statistics.loading ? "..." : statistics.checkedOutVisitors || 0
           }
           link="View details"
-          linkHref="/emergencypage"
+          linkHref="/checkincheckout"
           icon={
             <img
               src="/911.svg"
@@ -86,10 +76,10 @@ const SecurityOverview = () => {
           }
         />
         <Card1
-          cardTitle="Total Active Users"
-          count={loading ? "..." : stats?.users?.total || 0}
+          cardTitle="Emergency Today"
+          count={statistics.loading ? "..." : statistics.emergencyToday || 0}
           link="View users"
-          linkHref="/userspage"
+          linkHref="/security/emergencypage"
           icon={
             <img
               src="/users.svg"
@@ -100,42 +90,27 @@ const SecurityOverview = () => {
         />
       </div>
 
-      {visitorError && (
+      {statistics.error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          {visitorError}
+          {statistics.error}
         </div>
       )}
 
-      <div className="mb-[30px]">
-        <Card2
-          label="Active Incidents"
-          value={loading ? "..." : stats?.incidents?.total || 0}
-          icon={<AlertTriangle className="h-6 w-6 text-red-600" />}
-          iconBg="bg-red-100"
-          buttonText="View details"
-        />
-      </div>
 
-      <div className="w-full flex flex-col lg:flex-row gap-6 mb-8">
-        
-        <div className="bg-white lg:w-3/4 p-3 rounded-lg shadow flex-1 lg:flex-initial">
-          <Chart />
+      <div className="w-full flex flex-row gap-6 mb-8">
+        <div className="bg-white p-3 rounded-lg shadow flex-3">
+          <div className="h-full">
+            {/* Table in here */}
+          </div>
         </div>
-        
 
-        <div className="lg:w-1/4 flex-1 lg:flex-initial">
-          <Card3
-            companyVisitors={loading ? 0 : stats?.visitor_totals?.company || 0}
-            residentVisitors={loading ? 0 : stats?.visitor_totals?.resident || 0}
-            serviceProviders={loading ? 0 : stats?.visitor_totals?.service || 0}
-            className="h-full"
-          />
+        <div className="">
+          <div className="bg-white p-3 rounded-lg shadow h-full">
+            <Card6/>
+          </div>
         </div>
       </div>
-
-      <DashboardTable />
     </SecurityLayout>
   );
 };
 
-export default SecurityOverview;

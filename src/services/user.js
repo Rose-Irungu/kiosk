@@ -81,6 +81,16 @@ export const userService = {
 },
 
 
+getAllUnits: async () => {
+  try {
+    const response = await api.get(API_ENDPOINTS.GET_UNITS);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching units:", error);
+    throw error;
+  }
+},
+
 
 };
 

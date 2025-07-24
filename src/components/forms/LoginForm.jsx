@@ -37,6 +37,7 @@ const LoginForm = () => {
             console.log("Tenant login successful – dashboard not ready.");
             break;
           case "security":
+             navigate("/security");
             console.log("Security login successful – dashboard not ready.");
             break;
           default:
@@ -68,7 +69,7 @@ const LoginForm = () => {
           />
         </div>
 
-        <div className="w-full md:w-1/2 p-8">
+        <div className="w-full md:w-1/2 p-8 mt-17">
           <h2 className="text-2xl font-semibold mb-6">Welcome Back</h2>
 
           <form onSubmit={handleLogin}>
@@ -111,8 +112,8 @@ const LoginForm = () => {
 
             <div className="flex items-center justify-between mb-6">
               <label className="flex items-center gap-2 text-sm text-gray-700">
-                <input type="checkbox" className="accent-blue-[#005e0e]" />
-                Remember me
+                
+                
               </label>
               <span className="text-sm text-[#005e0e] hover:underline cursor-pointer">
                 <Link to="/forgotpassword">Forgot Password?</Link>
