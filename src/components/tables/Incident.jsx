@@ -1,201 +1,220 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
+  Table, TableBody, TableCaption,
+  TableCell, TableHead, TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, Eye, User, FileText, X } from "lucide-react";
 
 const statusStyles = {
   new: "bg-red-100 text-red-700",
-  "under_review": "bg-yellow-100 text-yellow-700", 
+  under_review: "bg-yellow-100 text-yellow-700",
   resolved: "bg-green-100 text-green-700",
 };
 
-export default function IncidentTable({ incidentReports }) {
-  const [selectedFilter, setSelectedFilter] = useState("all");
-  const [showActionsFor, setShowActionsFor] = useState(null);
-  const [localIncidentReports, setLocalIncidentReports] = useState(incidentReports || []);
+export default function IncidentTable({ incidentReports = [] }) {
+  const [incidents, setIncidents] = useState(incidentReports);
+  const [actionsFor, setActionsFor] = useState(null);
+  const [selected, setSelected] = useState(null);
 
-  // Update local state when props change
-  React.useEffect(() => {
-    setLocalIncidentReports(incidentReports || []);
+  useEffect(() => {
+    setIncidents(incidentReports);
   }, [incidentReports]);
 
-  // Get unique statuses from data for filter buttons
-  const availableStatuses = useMemo(() => {
-    const statuses = new Set(localIncidentReports?.map(report => report.incident_status));
-    return Array.from(statuses).filter(Boolean);
-  }, [localIncidentReports]);
+  const formatStatus = s => {
+    if (s === "new") return "New Incident";
+    if (s === "under_review") return "Under Review";
+    if (s === "resolved") return "Resolved";
+    return s;
+  };
 
-  // Filter incidents based on selected status
-  const filteredIncidents = useMemo(() => {
-    if (!localIncidentReports) return [];
-    if (selectedFilter === "all") return localIncidentReports;
-    return localIncidentReports.filter(report => report.incident_status === selectedFilter);
-  }, [localIncidentReports, selectedFilter]);
-
-  // Get counts for each status
-  const statusCounts = useMemo(() => {
-    const counts = {};
-    localIncidentReports?.forEach(report => {
-      const status = report.incident_status;
-      counts[status] = (counts[status] || 0) + 1;
-    });
-    return counts;
-  }, [localIncidentReports]);
-
-  const handleStatusUpdate = (reportId, newStatus) => {
-    // Update status in frontend only
-    setLocalIncidentReports(prev => 
-      prev.map(report => 
-        report.id === reportId 
-          ? { ...report, incident_status: newStatus }
-          : report
-      )
+  const updateStatus = (id, newStatus) => {
+    setIncidents(prev =>
+      prev.map(r => (r.id === id ? { ...r, incident_status: newStatus } : r))
     );
-    setShowActionsFor(null);
+    setActionsFor(null);
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto bg-white p-6 rounded-xl shadow-sm mt-10">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-semibold">Reported Incidents</h2>
-        <div className="relative">
-          <select className="flex h-10 items-center rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
-            <option>Today</option>
-            <option>This Week</option>
-            <option>This Month</option>
-            <option>This Year</option>
-          </select>
-        </div>
+    <div className="relative max-w-6xl mx-auto bg-white rounded-xl shadow-sm">
+      {/* Header */}
+      <div className="flex justify-between items-center p-6 pb-4">
+        <h2 className="text-xl font-semibold">Reported Incidents</h2>
+        <select className="h-10 px-3 rounded-md border text-sm">
+          {["This Week", "Today", "This Month", "This Year"].map(opt => (
+            <option key={opt}>{opt}</option>
+          ))}
+        </select>
       </div>
 
-      {/* Status Filter Buttons */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        <button
-          onClick={() => setSelectedFilter("all")}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            selectedFilter === "all"
-              ? "bg-blue-100 text-blue-700 border border-blue-200"
-              : "bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200"
-          }`}
-        >
-          All ({localIncidentReports?.length || 0})
-        </button>
-        
-        {availableStatuses.map(status => (
-          <button
-            key={status}
-            onClick={() => setSelectedFilter(status)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              selectedFilter === status
-                ? statusStyles[status] + " border border-current"
-                : "bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200"
-            }`}
-          >
-            {status?.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} ({statusCounts[status] || 0})
-          </button>
-        ))}
-      </div>
       
-      <Table>
-        <TableCaption className="sr-only">A list of incident reports.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="font-medium text-muted-foreground">Reporter Name</TableHead>
-            <TableHead className="font-medium text-muted-foreground">Reporter Role</TableHead>
-            <TableHead className="font-medium text-muted-foreground">Incident Type</TableHead>
-            <TableHead className="font-medium text-muted-foreground">Short Description</TableHead>
-            <TableHead className="font-medium text-muted-foreground">Status</TableHead>
-            <TableHead className="font-medium text-muted-foreground">Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filteredIncidents?.length > 0 ? (
-            filteredIncidents.map((report) => (
-              <TableRow
-                key={report.id}
-                className={
-                  (report.reporter_name === "George Weru" && report.incident_status === "new") ||
-                  (report.reporter_name === "Lewis Oduor" && report.incident_status === "resolved")
-                    ? "bg-[#f2f7f3]"
-                    : ""
-                }
-              >
-                <TableCell className="font-medium">{report.reporter_name}</TableCell>
-                <TableCell className="capitalize">{report.reporter_role}</TableCell>
-                <TableCell className="capitalize">{report.incident_type?.replace(/_/g, ' ')}</TableCell>
-                <TableCell>{report.incident_description}</TableCell>
+      <div className="overflow-auto">
+        <Table>
+          <TableCaption className="sr-only">Incident reports</TableCaption>
+          <TableHeader>
+            <TableRow className="border-b">
+              {[
+                "Reporter Name",
+                "Reporter Role",
+                "Incident Type",
+                "Short Description",
+                "Status",
+                "Action",
+              ].map(h => (
+                <TableHead key={h}>{h}</TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {incidents.map(r => (
+              <TableRow key={r.id} className="hover:bg-gray-50 border-b">
+                <TableCell>{r.reporter_name}</TableCell>
+                <TableCell className="capitalize">{r.reporter_role}</TableCell>
+                <TableCell>{r.incident_type.replace(/_/g, " ")}</TableCell>
+                <TableCell>
+                  {r.incident_description.slice(0, 50)}...
+                </TableCell>
                 <TableCell>
                   <span
-                    className={`text-xs font-medium px-3 py-1 rounded-full capitalize ${
-                      statusStyles[report.incident_status] || "bg-gray-100 text-gray-700"
+                    className={`text-xs px-3 py-1 rounded-full ${
+                      statusStyles[r.incident_status] || ""
                     }`}
                   >
-                    {report.incident_status?.replace(/_/g, ' ')}
+                    {formatStatus(r.incident_status)}
                   </span>
                 </TableCell>
-                <TableCell className="relative">
+                <TableCell className="relative overflow-visible">
                   <button
-                    onClick={() => setShowActionsFor(showActionsFor === report.id ? null : report.id)}
-                    className="p-1 hover:bg-gray-100 rounded transition-colors"
+                    onClick={() =>
+                      setActionsFor(actionsFor === r.id ? null : r.id)
+                    }
+                    className="p-2 rounded hover:bg-gray-100 overflow-visible"
                   >
-                    <MoreHorizontal className="cursor-pointer text-muted-foreground" />
+                    <MoreHorizontal />
                   </button>
-                  
-                  {/* Action Dropdown */}
-                  {showActionsFor === report.id && (
-                    <div className="absolute right-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg z-10 min-w-[160px]">
-                      <div className="py-1">
-                        {/* Mark as New - only show if not already new */}
-                        {report.incident_status !== "new" && (
+
+                  {actionsFor === r.id && (
+                    <div className="absolute right-0 top-10 bg-white border rounded-lg shadow-lg z-20 w-48 overflow-visible sticky-bottom-0">
+                      <button
+                        onClick={() => {
+                          setSelected(r);
+                          setActionsFor(null);
+                        }}
+                        className="flex items-center w-full px-4 py-2 hover:bg-gray-50"
+                      >
+                        <Eye className="mr-2" /> View Details
+                      </button>
+                      <div className="border-t my-1" />
+                      {["new", "under_review", "resolved"].map(st =>
+                        r.incident_status !== st ? (
                           <button
-                            onClick={() => handleStatusUpdate(report.id, "new")}
-                            className="flex items-center gap-2 px-4 py-2 text-sm text-red-700 hover:bg-red-50 w-full text-left"
+                            key={st}
+                            onClick={() => updateStatus(r.id, st)}
+                            className={`flex w-full px-4 py-2 text-sm ${
+                              st === "new"
+                                ? "text-red-700 hover:bg-red-50"
+                                : st === "under_review"
+                                ? "text-yellow-700 hover:bg-yellow-50"
+                                : "text-green-700 hover:bg-green-50"
+                            }`}
                           >
-                            Mark as New
+                            Mark as {formatStatus(st)}
                           </button>
-                        )}
-                        
-                        {/* Mark as Resolved - only show if not already resolved */}
-                        {report.incident_status !== "resolved" && (
-                          <button
-                            onClick={() => handleStatusUpdate(report.id, "resolved")}
-                            className="flex items-center gap-2 px-4 py-2 text-sm text-green-700 hover:bg-green-50 w-full text-left"
-                          >
-                            Mark as Resolved
-                          </button>
-                        )}
-                      </div>
+                        ) : null
+                      )}
                     </div>
                   )}
                 </TableCell>
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={6} className="text-center py-6">
-                {selectedFilter === "all" 
-                  ? "No incident reports found." 
-                  : `No ${selectedFilter.replace(/_/g, ' ')} incidents found.`}
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
 
-      {/* Click outside to close dropdown */}
-      {showActionsFor && (
-        <div 
-          className="fixed inset-0 z-5" 
-          onClick={() => setShowActionsFor(null)}
-        />
-      )}
+{selected && (
+  <div className="absolute inset-0 bg-gray-100 rounded-lg   border-hidden  ">
+    {/* Header */}
+    <div className="flex justify-between items-center bg-white shadow rounded px-4 py-2 mb-4">
+      <div className="flex items-center gap-2">
+        <div className="w-2 place-self-start h-10 bg-green-500 rounded" />
+        <h2 className="text-xl font-semibold capitalize">
+          {selected.incident_type.replace(/_/g, " ")}
+        </h2>
+      </div>
+      <div className="flex items-center gap-2">
+
+      </div>
+      <div className="flex items-center gap-4">
+        <span
+          className={`text-xs px-3 py-1 rounded-full ${
+            statusStyles[selected.incident_status]
+          }`}
+        >
+          {formatStatus(selected.incident_status)}
+        </span>
+        <button onClick={() => setSelected(null)} className="p-1 rounded hover:bg-gray-100">
+          <X />
+        </button>
+      </div>
     </div>
+
+    
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      
+      <div className="lg:col-span-1  bg-white shadow rounded p-4">
+        <div className="flex items-center gap-2 mb-2">
+          <FileText className="text-gray-500" />
+          <h3 className="text-lg font-medium">Incident Description</h3>
+        </div>
+        <div className="bg-gray-50 rounded p-4">
+          <p className="text-gray-700">{selected.incident_description}</p>
+        </div>
+      </div>
+
+      
+      <div className="grid grid-cols-2 bg-white shadow rounded p-4 space-y-6 flex ">
+        
+        <div >
+          <div className="flex items-center gap-2 mb-2">
+            <User className="text-gray-500" />
+            <h3 className="text-lg font-medium">Reporter Information</h3>
+          </div>
+          <div className="bg-gray-50 rounded p-4 space-y-2">
+            <div>
+              <span className="text-sm text-gray-500">Name:</span>
+              <p className="font-medium">{selected.reporter_name}</p>
+            </div>
+            <div>
+              <span className="text-sm text-gray-500">Role:</span>
+              <p className="font-medium capitalize">{selected.reporter_role}</p>
+            </div>
+          </div>
+        </div>
+
+        
+        <div>
+          <h3 className="text-lg font-medium mb-2">Photo</h3>
+          <div className="bg-gray-100 rounded overflow-hidden aspect-square flex items-center justify-center">
+            {selected.photo_url ? (
+              <img
+                src={selected.photo_url}
+                alt="Incident"
+                className="object-cover "
+              />
+            ) : (
+              <div className="text-gray-400 text-center p-4">
+                {/* placeholder icon */}
+                <svg className="w-16 h-16 mx-auto mb-2" fill="currentColor" /*...*/ />
+                <p className="text-sm">No photo available</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+)}
+</div>
   );
 }

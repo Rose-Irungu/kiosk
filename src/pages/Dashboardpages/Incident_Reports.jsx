@@ -12,9 +12,7 @@ export default function IncidentReportsPage() {
       try {
         const response = await incidenceService.getAllIncidence();
         
-        // Extract the data array from the response
-        // The API returns: { result_code: 0, message: "...", data: [...] }
-        const incidents = response.data || response; // Handle both cases
+        const incidents = response.data || response;  
         
         setIncidentData(incidents);
       } catch (error) {
