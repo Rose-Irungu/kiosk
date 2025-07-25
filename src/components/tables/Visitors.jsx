@@ -35,7 +35,7 @@ export default function Visitors() {
           allData = allData.filter((v) => v.visitor_type === visitorTypeFilter);
         }
 
-        setFilteredAllVisitors(allData); // Save all filtered data for export
+        setFilteredAllVisitors(allData); 
         setTotalEntries(allData.length);
 
         const start = (currentPage - 1) * entriesPerPage;

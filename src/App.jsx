@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route,   useLocation } from "react-router-dom";
-
 import { UserForm } from "./components/forms/form";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
@@ -57,10 +56,17 @@ import SessionManagement from "./components/SessionManagement";
 import HelpPage from "./pages/Dashboardpages/Help";
 import EmergencyPageSecurity from "./pages/SecurityPages/Emergencypage";
 import SecurityDashboard from "./pages/SecurityPages/Securitydashboard";
+import SecuritySettingPage from "./pages/SecurityPages/SecuritySettingPage";
 import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
-import ExpectedVisitors from "./components/tables/ExpectedVisitors"
-import CheckedOutVisitors from "./pages/SecurityPages/CheckedOutVisitors";
-import SecurityIncidentPage from "./pages/SecurityPages/Incidentpage";
+import ExpectedVisitors from "./components/tables/ExpectedVisitors";
+import VisitorsExpected from "./pages/SecurityPages/VisitorsExpected";
+import UserProfile from "./components/UserProfile";
+
+import ProfileCard from "./components/SecurityComponents/ProfileCard";
+import ProfileCard1 from "./components/SecurityComponents/ProfileCard1";
+import ProfileCard2 from "./components/SecurityComponents/ProfileCard2";
+
+
 
 
 
@@ -197,12 +203,21 @@ const App = () => {
         <Route path="/security/dashboard" element={<SecurityDashboard />} />
         <Route path="/security/emergencypage" element={<EmergencyPageSecurity />} />
         <Route path="/security/card6" element={<Card6 />} />
-        <Route path="/security/incidentpage" element={< SecurityIncidentPage />} />
+        <Route path="/security/settings"element ={<SecuritySettingPage /> } />
+
+
       {/* Kindly whoever removed my path, next time inform me */}
         <Route path="/visitorregistration" element={<VisitorRegistration />} /> 
         <Route path="/checkedoutvisitors" element={<CheckedOutVisitors />} />
         <Route path="/visitorregistration" element={<VisitorRegistration />} />  
         <Route path="/expectedvisitors" element={<ExpectedVisitors />} />
+        <Route path="/visitorsexpected" element={<VisitorsExpected />} />
+         <Route path="/userprofile" element={<UserProfile />} />
+{/* 
+         <Route path="/profile" element={<ProfileCard />} />
+         <Route path="/profile1" element={<ProfileCard1 />} />
+         <Route path="/profile2" element={<ProfileCard2  />} /> */}
+
 
       </Routes>
     </Router>

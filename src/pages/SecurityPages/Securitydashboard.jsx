@@ -39,7 +39,7 @@ export default function SecurityDashboard(){
           cardTitle="Expected Visitors"
           count={statistics.loading ? "..." : statistics.expectedVisitors || 0}
           link="View log"
-          linkHref="/visitorlogs"
+          linkHref="/visitorsexpected"
           icon={
             <img
               src="/doorbell.svg"
