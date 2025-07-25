@@ -54,3 +54,4 @@ export const fetchStatistics = async () =>{
         throw error.message || "Something went wrong while fetching statistics.";
     }
 };
+
