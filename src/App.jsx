@@ -167,7 +167,7 @@ const App = () => {
           path="/reset-password/:uid/:token/"
           element={<ResetPassword />}
         />
-        <Route path="/incidentpage" element={<SecurityIncidentPage />} />
+        {/* <Route path="/incidentpage" element={<SecurityIncidentPage />} /> */}
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
         <Route path="/incident_report" element={<Incident_Reports />} />
@@ -208,7 +208,7 @@ const App = () => {
 
       {/* Kindly whoever removed my path, next time inform me */}
         <Route path="/visitorregistration" element={<VisitorRegistration />} /> 
-        <Route path="/checkedoutvisitors" element={<CheckedOutVisitors />} />
+        {/* <Route path="/checkedoutvisitors" element={<CheckedOutVisitors />} /> */}
         <Route path="/visitorregistration" element={<VisitorRegistration />} />  
         <Route path="/expectedvisitors" element={<ExpectedVisitors />} />
         <Route path="/visitorsexpected" element={<VisitorsExpected />} />
