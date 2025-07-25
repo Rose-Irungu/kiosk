@@ -10,7 +10,6 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
   const [showEditForm, setShowEditForm] = useState(false);
   const [showChangePasswordForm, setshowChangePasswordForm] = useState(false);
 
-  // User data state
   const [userData, setUserData] = useState({
     id: '',
     first_name: '',
@@ -21,7 +20,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     fullName: ''
   });
 
-  // Edit form state
+  
   const [editFormData, setEditFormData] = useState({
     first_name: "",
     last_name: "",
@@ -30,7 +29,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     residence: "",
   });
 
-  // Password form state
+  
   const [passwordForm, setPasswordForm] = useState({
     oldPassword: "",
     newPassword: "",
@@ -39,7 +38,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
   const [passwordErrors, setPasswordErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Fetch user data on component mount
+  
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {
@@ -62,7 +61,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     }
   }, []);
 
-  // Handle edit form input changes
+  
   const handleEditFormChange = (field, value) => {
     setEditFormData((prev) => ({
       ...prev,
@@ -70,17 +69,17 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     }));
   };
 
-  // Handle edit form submission
+  
   const handleEditFormSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // Call your update profile API here
+      
       const response = await userService.updateUser(userData.id, editFormData);
 
 
-      // For now, we'll just update local state and localStorage
+      
       const updatedUserData = {
         ...userData,
         ...editFormData,
@@ -89,7 +88,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
       setUserData(updatedUserData);
 
-      // Update localStorage
+      
       const currentUserInfo = JSON.parse(
         localStorage.getItem("userInfo") || "{}"
       );
@@ -116,13 +115,13 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     authService.logoutUser();
   };
 
-  // Handle password form input changes
+  
   const handlePasswordChange = (field, value) => {
     setPasswordForm((prev) => ({
       ...prev,
       [field]: value,
     }));
-    // Clear error for this field when user starts typing
+    
     if (passwordErrors[field]) {
       setPasswordErrors((prev) => ({
         ...prev,
@@ -131,7 +130,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     }
   };
 
-  // Validate password form
+  
   const validatePasswordForm = () => {
     const errors = {};
 
@@ -154,11 +153,11 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     return errors;
   };
 
-  // Handle password form submission
+  
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate form
+    
     const errors = validatePasswordForm();
     if (Object.keys(errors).length > 0) {
       setPasswordErrors(errors);
@@ -168,13 +167,13 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     setIsSubmitting(true);
 
     try {
-      // Call API
+      
       const response = await authService.changePassword({
         old_password: passwordForm.oldPassword,
         new_password: passwordForm.newPassword,
       });
 
-      // Success - close modal and reset form
+      
       alert("Password changed successfully!");
       setshowChangePasswordForm(false);
       setPasswordForm({
@@ -184,7 +183,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
       });
       setPasswordErrors({});
     } catch (error) {
-      // Handle API errors
+      
       if (error.message) {
         alert(error.message);
       } else {

@@ -13,8 +13,8 @@ const navItems = [
 ];
 
 const secondaryItems = [
-  { id: "settings", label: "Settings", icon: "/ic-round-settings0.svg", path: "/settings" },
-  { id: "help", label: "Help", icon: "/material-symbols-help-outline0.svg", path: "/help" },
+  { id: "settings", label: "Settings", icon: "/ic-round-settings0.svg", path: "/security/settings" },
+  { id: "help", label: "Help", icon: "/material-symbols-help-outline0.svg", path: "/incidentpage" },
 ];
 
 export default function SecuritySidebar({

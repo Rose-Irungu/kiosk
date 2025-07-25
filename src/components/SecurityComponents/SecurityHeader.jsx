@@ -576,9 +576,9 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                                     <input
                                         type="text"
                                         placeholder="0712345678"
-                                        value={editFormData.first_name}
+                                        value={editFormData.phone_number}
                                         onChange={(e) =>
-                                            handleEditFormChange("first_name", e.target.value)
+                                            handleEditFormChange("phone_number", e.target.value)
                                         }
                                         className="w-full h-[48px] px-4 py-2 border border-[#005E0E]/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
                                     />
@@ -590,9 +590,9 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                                     <input
                                         type="text"
                                         placeholder="312345678"
-                                        value={editFormData.last_name}
+                                        value={editFormData.id_number}
                                         onChange={(e) =>
-                                            handleEditFormChange("last_name", e.target.value)
+                                            handleEditFormChange("id_number", e.target.value)
                                         }
                                         className="w-full h-[48px] px-4 py-2 border border-[#005E0E]/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
                                     />

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../../components/layout/Layout";
+
 import IncidentTable from "../../components/tables/Incident";
 import { incidenceService } from "../../services/incident";
-
-export default function IncidentReportsPage() {
+import SecurityLayout from "../../components/SecurityComponents/SecurityLayout";
+export default function SecurityIncidentPage() {
   const [incidentData, setIncidentData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -26,12 +26,12 @@ export default function IncidentReportsPage() {
   }, []);
 
   return (
-    <Layout>
+    <SecurityLayout>
       {loading ? (
         <div className="text-center py-10 text-gray-500">Loading incidents...</div>
       ) : (
         <IncidentTable incidentReports={incidentData} />
       )}
-    </Layout>
+    </SecurityLayout>
   );
 }
