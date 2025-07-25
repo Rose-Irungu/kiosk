@@ -65,6 +65,8 @@ import UserProfile from "./components/UserProfile";
 import ProfileCard from "./components/SecurityComponents/ProfileCard";
 import ProfileCard1 from "./components/SecurityComponents/ProfileCard1";
 import ProfileCard2 from "./components/SecurityComponents/ProfileCard2";
+{/* Again, ye who commented my path and removed my import up here, please inform me next time kindly, becca :) */}
+import CheckedOutVisitors from "./pages/SecurityPages/CheckedOutVisitors";
 
 
 
@@ -208,7 +210,7 @@ const App = () => {
 
       {/* Kindly whoever removed my path, next time inform me */}
         <Route path="/visitorregistration" element={<VisitorRegistration />} /> 
-        {/* <Route path="/checkedoutvisitors" element={<CheckedOutVisitors />} /> */}
+        <Route path="/checkedoutvisitors" element={<CheckedOutVisitors />} />
         <Route path="/visitorregistration" element={<VisitorRegistration />} />  
         <Route path="/expectedvisitors" element={<ExpectedVisitors />} />
         <Route path="/visitorsexpected" element={<VisitorsExpected />} />
