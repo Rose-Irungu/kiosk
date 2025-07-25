@@ -60,7 +60,7 @@ import SecurityDashboard from "./pages/SecurityPages/Securitydashboard";
 import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
 import ExpectedVisitors from "./components/tables/ExpectedVisitors"
 import CheckedOutVisitors from "./pages/SecurityPages/CheckedOutVisitors";
-
+import SecurityIncidentPage from "./pages/SecurityPages/Incidentpage";
 
 
 
@@ -161,7 +161,7 @@ const App = () => {
           path="/reset-password/:uid/:token/"
           element={<ResetPassword />}
         />
-        
+        <Route path="/incidentpage" element={<SecurityIncidentPage />} />
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
         <Route path="/incident_report" element={<Incident_Reports />} />
@@ -197,7 +197,7 @@ const App = () => {
         <Route path="/security/dashboard" element={<SecurityDashboard />} />
         <Route path="/security/emergencypage" element={<EmergencyPageSecurity />} />
         <Route path="/security/card6" element={<Card6 />} />
-
+        <Route path="/security/incidentpage" element={< SecurityIncidentPage />} />
       {/* Kindly whoever removed my path, next time inform me */}
         <Route path="/visitorregistration" element={<VisitorRegistration />} /> 
         <Route path="/checkedoutvisitors" element={<CheckedOutVisitors />} />
