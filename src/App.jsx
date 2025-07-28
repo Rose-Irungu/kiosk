@@ -67,6 +67,7 @@ import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
 import ExpectedVisitors from "./components/tables/ExpectedVisitors";
 import VisitorsExpected from "./pages/SecurityPages/VisitorsExpected";
 import UserProfile from "./components/UserProfile";
+import CheckedOutVisitors from "./components/tables/CheckedOutVisitors"
 
 import ProfileCard from "./components/SecurityComponents/ProfileCard";
 import ProfileCard1 from "./components/SecurityComponents/ProfileCard1";
@@ -205,6 +206,7 @@ const App = () => {
         <Route path="/security/card6" element={<Card6 />} />
         <Route path="/security/settings" element={<SecuritySettingPage />} />
         {/* Kindly whoever removed my path, next time inform me */}
+        <Route path="/checkedoutvisitors" element={<CheckedOutVisitors />} />
         <Route path="/visitorregistration" element={<VisitorRegistration />} />
         <Route path="/expectedvisitors" element={<ExpectedVisitors />} />
         <Route path="/visitorsexpected" element={<VisitorsExpected />} />
