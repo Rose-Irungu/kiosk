@@ -71,6 +71,14 @@ import CheckedOutVisitors from "./components/tables/CheckedOutVisitorsTable";
 import ProfileCard from "./components/SecurityComponents/ProfileCard";
 import ProfileCard1 from "./components/SecurityComponents/ProfileCard1";
 import ProfileCard2 from "./components/SecurityComponents/ProfileCard2";
+{/* Again, ye who commented my path and removed my import up here, please inform me next time kindly, becca :) */}
+import CheckedOutVisitors from "./pages/SecurityPages/CheckedOutVisitors";
+import SecurityHelpPage from "./pages/SecurityPages/Help";
+import SecurityIncidentPage from "./pages/SecurityPages/Incidentpage";
+
+
+
+
 
 const App = () => {
   const [users, setUsers] = useState([
@@ -205,6 +213,12 @@ const App = () => {
         <Route path="/security/card6" element={<Card6 />} />
         <Route path="/security/settings" element={<SecuritySettingPage />} />
         {/* Kindly whoever removed my path, next time inform me */}
+        <Route path="/security/settings"element ={<SecuritySettingPage /> } />
+        <Route path="/security/help"element ={<SecurityHelpPage /> } />
+        <Route path="/security/incident"element ={<SecurityIncidentPage /> } />
+        
+      {/* Kindly whoever removed my path, next time inform me */}
+        <Route path="/visitorregistration" element={<VisitorRegistration />} /> 
         <Route path="/checkedoutvisitors" element={<CheckedOutVisitors />} />
         <Route path="/visitorregistration" element={<VisitorRegistration />} />
         <Route path="/expectedvisitors" element={<ExpectedVisitors />} />
