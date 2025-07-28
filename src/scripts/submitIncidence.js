@@ -1,12 +1,11 @@
- import { createIncidence } from "../services/securityDashboardService";
- export const submitIncidence = (type, description, image) =>{
+import { createIncidence } from "../services/securityDashboardService";
 
-    const incidenceData = {
-        incident_type: type,
-        incident_description: description,
-        incident_image_url: image
-    };
+export const submitIncidence = (type, description, imageFile) => {
+  const formData = new FormData();
+  formData.append("incident_type", type);
+  formData.append("incident_description", description);
+  formData.append("incident_image", imageFile); // ← this should match the backend's expected field name
 
-    console.log(`${type}, ${description}, ${image} submitted successfully`);
-    createIncidence(incidenceData);
-}
+  console.log(`${type}, ${description}, ${imageFile.name} submitted successfully`);
+  createIncidence(formData); // Pass FormData instead of a plain object
+};
