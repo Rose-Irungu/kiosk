@@ -172,11 +172,9 @@ const App = () => {
         <Route path="/incident_report" element={<Incident_Reports />} />
         <Route path="/help" element={<HelpPage />} />
         <Route path="/triggers" element={<Triggers />} />{" "}
-<<<<<<< HEAD
+
         <Route path="/triggers/security" element={<TriggersSecurity />} />{" "}
         
-=======
->>>>>>> b9cf8859dced4d8a35317655a9c0d4b9769c9b6b
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/layout" element={<Layout />} />
         <Route path="/sidebar" element={<Sidebar />} />
