@@ -24,7 +24,7 @@ export default function LiveLogsTable() {
   const [dropdownOpen, setDropdownOpen] = useState(null);
 
   const dropdownRef = useRef(null);
-  const navigate = useNavigate(); // ⬅️ For routing
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchVisitors();
