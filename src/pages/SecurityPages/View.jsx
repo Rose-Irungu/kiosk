@@ -20,10 +20,9 @@ export default function View() {
   return (
     <SecurityLayout>
       <div className="p-6 space-y-6">
-        {/* Top Full Width Card */}
+        
         <ViewCard1 visitor={visitor} />
-
-        {/* Two Cards Side by Side */}
+        
         <div className="flex flex-col md:flex-row gap-6 items-stretch">
           <div className="w-full md:w-1/2">
             <ViewCard2 visitor={visitor} />

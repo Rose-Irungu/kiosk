@@ -12,7 +12,7 @@ const statusStyles = {
   resolved: "bg-green-100 text-green-700",
 };
 
-export default function IncidentTable({ incidentReports = [] }) {
+export default function SecurityIncidentTable({ incidentReports = [] }) {
   const [incidents, setIncidents] = useState(incidentReports);
   const [actionsFor, setActionsFor] = useState(null);
   const [selected, setSelected] = useState(null);
