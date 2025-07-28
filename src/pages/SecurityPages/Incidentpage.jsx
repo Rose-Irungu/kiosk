@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-
-import IncidentTable from "../../components/tables/Incident";
-import { incidenceService } from "../../services/incident";
+import SecurityIncidentTable from "../../components/tables/SecurityIncident";
+import { securityIncidenceService } from "../../services/securityIncidence";
 import SecurityLayout from "../../components/SecurityComponents/SecurityLayout";
 export default function SecurityIncidentPage() {
   const [incidentData, setIncidentData] = useState([]);
@@ -10,7 +9,7 @@ export default function SecurityIncidentPage() {
   useEffect(() => {
     const fetchIncidents = async () => {
       try {
-        const response = await incidenceService.getAllIncidence();
+        const response = await securityIncidenceService.getAllIncidence();
         
         const incidents = response.data || response;  
         
@@ -30,7 +29,7 @@ export default function SecurityIncidentPage() {
       {loading ? (
         <div className="text-center py-10 text-gray-500">Loading incidents...</div>
       ) : (
-        <IncidentTable incidentReports={incidentData} />
+        <SecurityIncidentTable incidentReports={incidentData} />
       )}
     </SecurityLayout>
   );

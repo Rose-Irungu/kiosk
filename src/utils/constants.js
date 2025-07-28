@@ -28,7 +28,7 @@ export const API_ENDPOINTS = {
 
   //Incidence Management
   INCIDENCE_LIST: '/incidence-and-emergency/incidence-list/',
-  
+  SECURITY_INCIDENCE: '/incidence-and-emergency/view-my-incidence/',
   // security registering visitor
   SECURITY_REGISTER_VISITOR: '/visitors/security-check-in/',
   VISIT_LOGS: '/visits/visit-logs/',

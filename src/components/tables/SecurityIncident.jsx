@@ -12,7 +12,7 @@ const statusStyles = {
   resolved: "bg-green-100 text-green-700",
 };
 
-export default function IncidentTable({ incidentReports = [] }) {
+export default function SecurityIncidentTable({ incidentReports = [] }) {
   const [incidents, setIncidents] = useState(incidentReports);
   const [actionsFor, setActionsFor] = useState(null);
   const [selected, setSelected] = useState(null);
@@ -28,12 +28,12 @@ export default function IncidentTable({ incidentReports = [] }) {
     return s;
   };
 
-  const updateStatus = (id, newStatus) => {
-    setIncidents(prev =>
-      prev.map(r => (r.id === id ? { ...r, incident_status: newStatus } : r))
-    );
-    setActionsFor(null);
-  };
+  // const updateStatus = (id, newStatus) => {
+  //   setIncidents(prev =>
+  //     prev.map(r => (r.id === id ? { ...r, incident_status: newStatus } : r))
+  //   );
+  //   setActionsFor(null);
+  // };
 
   return (
     <div className="relative max-w-6xl mx-auto bg-white rounded-xl shadow-sm">
@@ -104,8 +104,8 @@ export default function IncidentTable({ incidentReports = [] }) {
                       >
                         <Eye className="mr-2" /> View Details
                       </button>
-                      <div className="border-t my-1" />
-                      {["new", "under_review", "resolved"].map(st =>
+                      {/* <div className="border-t my-1" /> */}
+                      {/* {["new", "under_review", "resolved"].map(st =>
                         r.incident_status !== st ? (
                           <button
                             key={st}
@@ -121,7 +121,7 @@ export default function IncidentTable({ incidentReports = [] }) {
                             Mark as {formatStatus(st)}
                           </button>
                         ) : null
-                      )}
+                      )} */}
                     </div>
                   )}
                 </TableCell>

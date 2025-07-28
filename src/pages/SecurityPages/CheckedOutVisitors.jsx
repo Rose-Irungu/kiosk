@@ -12,8 +12,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal, ChevronDown, Upload } from "lucide-react";
 
-
-
 export default function VisitorLog() {
   return (
     <SecurityLayout>
