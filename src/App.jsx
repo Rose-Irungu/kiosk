@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useLocation,
 } from "react-router-dom";
 import { UserForm } from "./components/forms/form";
 import Header from "./components/Header";
@@ -67,11 +66,19 @@ import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
 import ExpectedVisitors from "./components/tables/ExpectedVisitors";
 import VisitorsExpected from "./pages/SecurityPages/VisitorsExpected";
 import UserProfile from "./components/UserProfile";
-import CheckedOutVisitors from "./pages/SecurityPages/CheckedOutVisitors"
+import CheckedOutVisitorsTable from "./pages/SecurityPages/CheckedOutVisitorsTable";
 
 import ProfileCard from "./components/SecurityComponents/ProfileCard";
 import ProfileCard1 from "./components/SecurityComponents/ProfileCard1";
 import ProfileCard2 from "./components/SecurityComponents/ProfileCard2";
+{/* Again, ye who commented my path and removed my import up here, please inform me next time kindly, becca :) */}
+import CheckedOutVisitors from "./pages/SecurityPages/CheckedOutVisitors";
+import SecurityHelpPage from "./pages/SecurityPages/Help";
+import SecurityIncidentPage from "./pages/SecurityPages/Incidentpage";
+
+
+
+
 
 const App = () => {
   const [users, setUsers] = useState([
@@ -206,6 +213,12 @@ const App = () => {
         <Route path="/security/card6" element={<Card6 />} />
         <Route path="/security/settings" element={<SecuritySettingPage />} />
         {/* Kindly whoever removed my path, next time inform me */}
+        <Route path="/security/settings"element ={<SecuritySettingPage /> } />
+        <Route path="/security/help"element ={<SecurityHelpPage /> } />
+        <Route path="/security/incident"element ={<SecurityIncidentPage /> } />
+        
+      {/* Kindly whoever removed my path, next time inform me */}
+        <Route path="/visitorregistration" element={<VisitorRegistration />} /> 
         <Route path="/checkedoutvisitors" element={<CheckedOutVisitors />} />
         <Route path="/visitorregistration" element={<VisitorRegistration />} />
         <Route path="/expectedvisitors" element={<ExpectedVisitors />} />
