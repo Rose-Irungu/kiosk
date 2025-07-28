@@ -17,7 +17,7 @@ import { SkeletonCard } from "./components/SkeletonCard";
 import Home from "./pages/Home";
 import VisitorPage from "./pages/VisitorPage";
 import CheckinCheckout from "./pages/SecurityPages/CheckinCheckout";
-import View from "./pages/SecurityPages/view";
+// import View from "./pages/SecurityPages/view";
 import Verify from "./pages/Verify";
 import Bye from "./pages/Bye";
 import Error from "./pages/Error";
@@ -201,7 +201,7 @@ const App = () => {
         <Route path="/livelogstable" element={<LiveLogsTable />} />
         <Route path="/userspage" element={<UsersPage />} />
         <Route path="/checkincheckout" element={<CheckinCheckout />} />
-        <Route path="/view" element={<View />} />
+        {/* <Route path="/view" element={<View />} /> */}
         <Route path="/security" element={<SecurityOverview />} />
         <Route path="/systempreference" element={<SystemPreferences />} />
         <Route path="/session" element={<SessionManagement />} />
