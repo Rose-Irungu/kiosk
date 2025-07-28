@@ -15,8 +15,8 @@ const navItems = [
 ];
 
 const secondaryItems = [
-  { id: "settings", path: "/settings" },
-  { id: "help", path: "/help" },
+  { id: "security/settings", path: "/security/settings" },
+  { id: "security/help", path: "/security/help" },
 ];
 
 export default function Layout({ children }) {
