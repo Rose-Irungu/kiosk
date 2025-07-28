@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getDashboardStatistics } from "../services/dashboardService";
-import dayjs from "dayjs";
 
 export function useExpectedVisitors() {
   const [expectedVisitors, setExpectedVisitors] = useState([]);

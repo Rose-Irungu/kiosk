@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route,   useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import { UserForm } from "./components/forms/form";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
@@ -65,14 +70,6 @@ import UserProfile from "./components/UserProfile";
 import ProfileCard from "./components/SecurityComponents/ProfileCard";
 import ProfileCard1 from "./components/SecurityComponents/ProfileCard1";
 import ProfileCard2 from "./components/SecurityComponents/ProfileCard2";
-{/* Again, ye who commented my path and removed my import up here, please inform me next time kindly, becca :) */}
-import CheckedOutVisitors from "./pages/SecurityPages/CheckedOutVisitors";
-
-
-
-
-
-
 
 const App = () => {
   const [users, setUsers] = useState([
@@ -129,7 +126,6 @@ const App = () => {
   ]);
 
   return (
-  
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -169,61 +165,48 @@ const App = () => {
           path="/reset-password/:uid/:token/"
           element={<ResetPassword />}
         />
-        {/* <Route path="/incidentpage" element={<SecurityIncidentPage />} /> */}
+        {/*admin dashboard Routes*/}
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/emergencies" element={<Emergencies />} />
         <Route path="/incident_report" element={<Incident_Reports />} />
         <Route path="/help" element={<HelpPage />} />
         <Route path="/triggers" element={<Triggers />} />{" "}
-        
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/skeletoncard" element={<SkeletonCard />} />
         <Route path="/layout" element={<Layout />} />
+        <Route path="/sidebar" element={<Sidebar />} />
+        <Route path="/chart" element={<Chart />} />
+        <Route path="/header1" element={<Header1 />} />
+        <Route path="/profilemenu" element={<ProfileMenu />} />
+        <Route path="/visitorlogs" element={<VisitorLogs />} />
+        <Route path="/chart2" element={<Chart2 />} />{" "}
+        <Route path="/settings" element={<Settings />} />
+        {/*security dashboard Routes*/}
         <Route path="/securitylayout" element={<SecurityLayout />} />
         <Route path="/securitysidebar" element={<SecuritySidebar />} />
         <Route path="/viewcard1" element={<ViewCard1 />} />
         <Route path="/viewcard2" element={<ViewCard2 />} />
         <Route path="/viewcard3" element={<ViewCard3 />} />
-         <Route path="/livelogstable" element={<LiveLogsTable />} />
-        <Route path="/header1" element={<Header1 />} />
-        <Route path="/profilemenu" element={<ProfileMenu />} />
-        <Route path="/sidebar" element={<Sidebar />} />
-        <Route path="/chart" element={<Chart />} />
+        <Route path="/livelogstable" element={<LiveLogsTable />} />
         <Route path="/userspage" element={<UsersPage />} />
         <Route path="/checkincheckout" element={<CheckinCheckout />} />
         <Route path="/view" element={<View />} />
-        
-        <Route path="/visitorlogs" element={<VisitorLogs />} />
-        <Route path="/chart2" element={<Chart2 />} />{" "}
-        <Route path="/settings" element={<Settings />} />{" "}
         <Route path="/security" element={<SecurityOverview />} />
-      
         <Route path="/systempreference" element={<SystemPreferences />} />
         <Route path="/session" element={<SessionManagement />} />
-
-        {/* Security Dashboard Routes */}
         <Route path="/security/dashboard" element={<SecurityDashboard />} />
-        <Route path="/security/emergencypage" element={<EmergencyPageSecurity />} />
+        <Route
+          path="/security/emergencypage"
+          element={<EmergencyPageSecurity />}
+        />
         <Route path="/security/card6" element={<Card6 />} />
-        <Route path="/security/settings"element ={<SecuritySettingPage /> } />
-
-
-      {/* Kindly whoever removed my path, next time inform me */}
-        <Route path="/visitorregistration" element={<VisitorRegistration />} /> 
-        <Route path="/checkedoutvisitors" element={<CheckedOutVisitors />} />
-        <Route path="/visitorregistration" element={<VisitorRegistration />} />  
+        <Route path="/security/settings" element={<SecuritySettingPage />} />
+        {/* Kindly whoever removed my path, next time inform me */}
+        <Route path="/visitorregistration" element={<VisitorRegistration />} />
         <Route path="/expectedvisitors" element={<ExpectedVisitors />} />
         <Route path="/visitorsexpected" element={<VisitorsExpected />} />
-         <Route path="/userprofile" element={<UserProfile />} />
-{/* 
-         <Route path="/profile" element={<ProfileCard />} />
-         <Route path="/profile1" element={<ProfileCard1 />} />
-         <Route path="/profile2" element={<ProfileCard2  />} /> */}
-
-
+        <Route path="/userprofile" element={<UserProfile />} />
       </Routes>
     </Router>
-    
   );
 };
 
