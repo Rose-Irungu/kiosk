@@ -66,7 +66,7 @@ import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
 import ExpectedVisitors from "./components/tables/ExpectedVisitors";
 import VisitorsExpected from "./pages/SecurityPages/VisitorsExpected";
 import UserProfile from "./components/UserProfile";
-import CheckedOutVisitors from "./components/tables/CheckedOutVisitors"
+import CheckedOutVisitors from "./components/tables/CheckedOutVisitorsTable";
 
 import ProfileCard from "./components/SecurityComponents/ProfileCard";
 import ProfileCard1 from "./components/SecurityComponents/ProfileCard1";
