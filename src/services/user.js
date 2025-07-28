@@ -37,6 +37,7 @@ export const userService = {
   },
 
   updateUser: async (userId, updatedData) => {
+    console.log(updatedData)
     try {
       const response = await api.put(`${API_ENDPOINTS.UPDATE_USER}${userId}/`, updatedData, {
         headers: {

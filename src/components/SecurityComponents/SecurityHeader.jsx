@@ -21,21 +21,23 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
         first_name: '',
         last_name: '',
         email: '',
-        phone: '',
-        residence: '',
+        phone_number: '',
+        unit_number: '',
+        id_number: '',
+        role : '',
         fullName: ''
     });
 
     // Edit form state
     const [editFormData, setEditFormData] = useState({
-        role:"",
+        // role:"",
         first_name: "",
         last_name: "",
-        email: "",
-        phone: "",
-        id_number:"",
-        post:"",
-        unit_number: "",
+        // email: "",
+        phone_number: "",
+        // id_number:"",
+        // post:"",
+        // unit_number: "",
     });
 
     // Password form state
@@ -59,15 +61,21 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                     first_name: user.first_name || '',
                     last_name: user.last_name || '',
                     email: user.email || '',
-                    phone: user.phone || '',
+                    phone_number: user.phone_number || '',
                     id_number: user.id_number || '',
-                    unit_number: user.unit_number|| '',
+                    unit_number: user.unit_number || '',
 
                     
                     fullName: `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.name || 'User'
                 };
                 setUserData(userDataFormatted);
-                setEditFormData(userDataFormatted);
+                setEditFormData(
+                    {
+                        first_name: userDataFormatted.first_name,
+                        last_name: userDataFormatted.last_name,
+                        phone_number: userDataFormatted.phone_number
+                    }
+                );
             } catch (error) {
                 console.error("Error parsing user data:", error);
             }
@@ -89,7 +97,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
         try {
             // Call your update profile API here
-            const response = await userService.updateUser(userData.id, editFormData);
+            const response = await userService.updateUser(userData.id, editFormData);     
 
 
             // For now, we'll just update local state and localStorage
@@ -355,11 +363,11 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                                                 </div>
                                                 <div>{userData.phone_number || "Not provided"}</div>
                                                 <div>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</div>
-                                                <div>{userData.residence}</div>
+                                                <div>{userData.role}</div>
                                                 <div>
                                                     Post&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
                                                 </div>
-                                                <div>{userData.phone_number || "Not provided"}</div>
+                                                <div>{userData.unit_number || "Not provided"}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -384,7 +392,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                                         <div className="text-[#495057]">
                                             ID No.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            {userData.email || "Not provided"}
+                                            {userData.id_number || "Not provided"}
                                         </div>
 
                                         <div className="flex flex-row items-center gap-[30px] w-[342px] ">
@@ -516,9 +524,9 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                                 <input
                                     type="text"
                                     placeholder="Security"
-                                    value={editFormData.residence}
+                                    value={editFormData.role}
                                     onChange={(e) =>
-                                        handleEditFormChange("residence", e.target.value)
+                                        handleEditFormChange("role", e.target.value)
                                     }
                                     className=" flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border border-[#005E0E]/50 rounded-lg w-full px-4 py-2 border rounded-md  bg-[rgba(29,29,29,0.1)] " readOnly
                                 />
@@ -594,7 +602,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                                         onChange={(e) =>
                                             handleEditFormChange("id_number", e.target.value)
                                         }
-                                        className="w-full h-[48px] px-4 py-2 border border-[#005E0E]/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                                        className=" flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border border-[#005E0E]/50 rounded-lg w-full px-4 py-2 border rounded-md bg-[rgba(29,29,29,0.1)] " readOnly
                                     />
                                 </div>
                             </div>
