@@ -32,6 +32,7 @@ import Incident from "./components/tables/Incident";
 import LoginForm from "./components/forms/LoginForm";
 import ResetPassword from "./components/forms/ResetPassword";
 import Triggers from "./components/tables/Triggers";
+import TriggersSecurity from "./components/tables/TriggersSecurity";
 import Layout from "./components/layout/Layout";
 import Header1 from "./components/layout/Header1";
 import ProfileMenu from "./components/layout/ProfileMenu";
@@ -175,6 +176,7 @@ const App = () => {
         <Route path="/incident_report" element={<Incident_Reports />} />
         <Route path="/help" element={<HelpPage />} />
         <Route path="/triggers" element={<Triggers />} />{" "}
+        <Route path="/triggers/security" element={<TriggersSecurity />} />{" "}
         
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/skeletoncard" element={<SkeletonCard />} />

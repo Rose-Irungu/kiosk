@@ -8,12 +8,10 @@ import LiveLogsTable from "../../components/SecurityComponents/LiveLogsTable";
 import { getDashboardStatistics } from "../../services/dashboardService";
 import useSecurityDashboardStats from "../../hooks/useSecurityDashboardStats";
 
-export default function SecurityDashboard(){
+export default function SecurityDashboard() {
   const [stats, setStats] = useState([]);
-  const [/*loading*/, setLoading] = useState(true);
-
+  const [, setLoading] = useState(true);
   const statistics = useSecurityDashboardStats();
-
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -30,14 +28,13 @@ export default function SecurityDashboard(){
   }, []);
 
   console.log(stats);
-  console.log("Statistics:", statistics);
 
   return (
     <SecurityLayout>
       <div className="flex flex-wrap justify-start mb-[12px]">
         <Card1
           cardTitle="Expected Visitors"
-          count={statistics.loading ? "..." : statistics.expectedVisitors || 0}
+          count={stats?.expected_visitors?.count || 0}
           link="View log"
           linkHref="/visitorsexpected"
           icon={
@@ -50,7 +47,7 @@ export default function SecurityDashboard(){
         />
         <Card1
           cardTitle="Checked In Visitors"
-          count={statistics.loading ? "..." : statistics.checkedInVisitors || 0}
+          count={stats?.current_visitors?.count || 0}
           link="View log"
           linkHref="/incident_report"
           icon={
@@ -64,7 +61,7 @@ export default function SecurityDashboard(){
         <Card1
           cardTitle="Checked Out Visitors"
           count={
-            statistics.loading ? "..." : statistics.checkedOutVisitors || 0
+            stats?.checked_out_visitors?.count || 0
           }
           link="View log"
           linkHref="/checkedoutvisitors"
@@ -78,7 +75,7 @@ export default function SecurityDashboard(){
         />
         <Card1
           cardTitle="Emergency Today"
-          count={statistics.loading ? "..." : statistics.emergencyToday || 0}
+          count={stats?.emergencies?.stats?.today_emergencies || 0}
           link="View users"
           linkHref="/security/emergencypage"
           icon={
@@ -97,19 +94,24 @@ export default function SecurityDashboard(){
         </div>
       )}
 
+<div className="w-full flex flex-col lg:flex-row gap-6 mb-8 items-start">
+  {/* Left Panel - 3/4 width on large screens */}
+  <div className="w-full lg:w-3/4 bg-white p-3 rounded-lg shadow">
+    <LiveLogsTable
+      title="Expected Visitors Today"
+      visitorData={stats?.expected_visitors?.data || []}
+      isLoading={statistics.loading}
+    />
+  </div>
 
-      <div className="w-full flex flex-row gap-6 mb-8">
-        <div className="bg-white p-3 rounded-lg shadow flex-3 overflow-auto">  
-            <LiveLogsTable/>  
-        </div>
+  {/* Right Panel - 1/4 width on large screens */}
+  <div className="w-full lg:w-1/4 ">
+    <div className="bg-white p-3 rounded-lg shadow">
+      <Card6 />
+    </div>
+  </div>
+</div>
 
-        <div className="">
-          <div className="bg-white p-3 rounded-lg shadow h-full">
-            <Card6/>
-          </div>
-        </div>
-      </div>
     </SecurityLayout>
   );
-};
-
+}
