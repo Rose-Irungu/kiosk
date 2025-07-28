@@ -7,6 +7,7 @@ import Card6 from "../../components/Card6";
 import LiveLogsTable from "../../components/SecurityComponents/LiveLogsTable";
 import { getDashboardStatistics } from "../../services/dashboardService";
 import useSecurityDashboardStats from "../../hooks/useSecurityDashboardStats";
+//import { todaysVisitors } from "../../scripts/securityDashboardUtils";
 
 export default function SecurityDashboard() {
   const [stats, setStats] = useState([]);
@@ -25,7 +26,7 @@ export default function SecurityDashboard() {
       }
     };
     fetchStats();
-  }, []);
+  }, [stats]);
 
   console.log(stats);
 
@@ -80,7 +81,7 @@ export default function SecurityDashboard() {
           linkHref="/security/emergencypage"
           icon={
             <img
-              src="/users.svg"
+              src="/911.svg"
               alt="Users Icon"
               className="w-6 h-6 object-contain"
             />

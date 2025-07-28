@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/pages/SecurityPages/View.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1753687587394,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1753687593892,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n       <div className=\"p-6 space-y-6\">\r\n         \r\n         <ViewCard1 visitor={visitor} />\r\n \r\n-        {/* Two Cards Side by Side */}\r\n+        \r\n         <div className=\"flex flex-col md:flex-row gap-6 items-stretch\">\r\n           <div className=\"w-full md:w-1/2\">\r\n             <ViewCard2 visitor={visitor} />\r\n           </div>\r\n"
+                }
+            ],
+            "date": 1753687587394,
+            "name": "Commit-0",
+            "content": "import React from \"react\";\r\nimport { useLocation } from \"react-router-dom\";\r\nimport SecurityLayout from \"../../components/SecurityComponents/SecurityLayout\";\r\nimport ViewCard1 from \"../../components/SecurityComponents/ViewCard1\";\r\nimport ViewCard2 from \"../../components/SecurityComponents/ViewCard2\";\r\nimport ViewCard3 from \"../../components/SecurityComponents/ViewCard3\";\r\n\r\nexport default function View() {\r\n  const location = useLocation();\r\n  const visitor = location.state?.visitor;\r\n\r\n  if (!visitor) {\r\n    return (\r\n      <SecurityLayout>\r\n        <div className=\"p-6 text-red-500\">No visitor selected.</div>\r\n      </SecurityLayout>\r\n    );\r\n  }\r\n\r\n  return (\r\n    <SecurityLayout>\r\n      <div className=\"p-6 space-y-6\">\r\n        \r\n        <ViewCard1 visitor={visitor} />\r\n\r\n        {/* Two Cards Side by Side */}\r\n        <div className=\"flex flex-col md:flex-row gap-6 items-stretch\">\r\n          <div className=\"w-full md:w-1/2\">\r\n            <ViewCard2 visitor={visitor} />\r\n          </div>\r\n          <div className=\"w-full md:w-1/2\">\r\n            <ViewCard3 visitor={visitor} />\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </SecurityLayout>\r\n  );\r\n}\r\n"
+        }
+    ]
+}
