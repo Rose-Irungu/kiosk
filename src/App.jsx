@@ -68,7 +68,6 @@ import VisitorsExpected from "./pages/SecurityPages/VisitorsExpected";
 import UserProfile from "./components/UserProfile";
 
 
-
 import ProfileCard from "./components/SecurityComponents/ProfileCard";
 import ProfileCard1 from "./components/SecurityComponents/ProfileCard1";
 import ProfileCard2 from "./components/SecurityComponents/ProfileCard2";
@@ -76,6 +75,9 @@ import ProfileCard2 from "./components/SecurityComponents/ProfileCard2";
 import CheckedOutVisitors from "./pages/SecurityPages/CheckedOutVisitors";
 import SecurityHelpPage from "./pages/SecurityPages/Help";
 import SecurityIncidentPage from "./pages/SecurityPages/Incidentpage";
+
+//Resident module imports
+import ResidentDashboard from "./pages/ResidentPages/ResidentDashboard";
 
 
 
@@ -225,6 +227,9 @@ const App = () => {
         <Route path="/expectedvisitors" element={<ExpectedVisitors />} />
         <Route path="/visitorsexpected" element={<VisitorsExpected />} />
         <Route path="/userprofile" element={<UserProfile />} />
+
+        {/*Resident module routes */}
+        <Route path="/resident/dashboard" element={<ResidentDashboard />} />
       </Routes>
     </Router>
   );
