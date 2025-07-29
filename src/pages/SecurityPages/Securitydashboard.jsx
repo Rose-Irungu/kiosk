@@ -53,7 +53,7 @@ export default function SecurityDashboard() {
           linkHref="/incident_report"
           icon={
             <img
-              src="/active.svg"
+              src="/tick.svg"
               alt="Incidents Icon"
               className="w-6 h-6 object-contain"
             />
@@ -68,7 +68,7 @@ export default function SecurityDashboard() {
           linkHref="/checkedoutvisitors"
           icon={
             <img
-              src="/911.svg"
+              src="/checkout.svg"
               alt="Emergency Icon"
               className="w-6 h-6 object-contain"
             />
