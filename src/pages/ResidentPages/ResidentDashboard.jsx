@@ -1,5 +1,5 @@
 import React from 'react';
-import ResidentLayout from '../../components/ResidentComponents/ResidentLayout';
+//import ResidentLayout from '../../components/ResidentComponents/ResidentLayout';
 
 function ResidentDashboard() {
   return (
