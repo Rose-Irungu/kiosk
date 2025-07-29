@@ -11,6 +11,8 @@ import Navigation from "./components/Navigation";
 import Card1 from "./components/Card1";
 import Card2 from "./components/Card2";
 import Card3 from "./components/Card3";
+import CardA from "./components/ResidentComponents/ResidentCards/CardA";
+import MyGuestsFrame from "./components/ResidentComponents/ResidentCards/MyGuestsFrame";
 import Card4 from "./components/Card4";
 import Card6 from "./components/Card6";
 import { SkeletonCard } from "./components/SkeletonCard";
@@ -145,6 +147,8 @@ const App = () => {
         <Route path="/card1" element={<Card1 />} />
         <Route path="/card2" element={<Card2 />} />
         <Route path="/card3" element={<Card3 />} />
+        <Route path="/CardA" element={<CardA />} />
+        <Route path="/MyGuestsFrame" element={<MyGuestsFrame />} />
         <Route path="/card4" element={<Card4 />} />
         <Route path="/visitorpage" element={<VisitorPage />} />
         <Route path="/header" element={<Header />} />
