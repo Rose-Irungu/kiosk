@@ -76,9 +76,9 @@ import SecurityHelpPage from "./pages/SecurityPages/Help";
 import SecurityIncidentPage from "./pages/SecurityPages/Incidentpage";
 
 import ResidentEmergencypage from "./pages/ResidentPages/ResidentEmergencyPage";
-import AlertCard from "./components/ResidentComponents.jsx/AlertCard";
-import EmergencyAlert from "./components/ResidentComponents.jsx/EmergencyAlert";
-import EmergencyContacts from "./components/ResidentComponents.jsx/EmergencyContacts";
+import AlertCard from "./components/ResidentComponents/AlertCard";
+import EmergencyAlert from "./components/ResidentComponents/EmergencyAlert";
+import EmergencyContacts from "./components/ResidentComponents/EmergencyContacts";
 
 
 
