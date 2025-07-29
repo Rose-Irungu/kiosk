@@ -11,6 +11,7 @@ import {inviteGuest, triggerSOS, clickTest} from '../../services/residentDashboa
 function ResidentDashboard() {
   return (
      <div className="flex flex-wrap justify-start mb-[12px] space-y-4">
+        <input type="text" className='flex flex-row w-full h-[40px] rounded-[8px] border-[1px] border-[#6C757D4D] py-[3px] px-[16px] gap-[10px]' placeholder='search'/>
         <div className='flex flex-col w-full lg:h-[222px] top-[521px] rounded-[12px] py-[8px] px-[12px] bg-[#F0EEFD] gap-[10px]'>
             <div className='flex flex-row justify-between w-full h-[32px]'>
                 <div className='flex flex-row w-[182px] h-[32px]'>
