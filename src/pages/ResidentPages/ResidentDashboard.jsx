@@ -29,7 +29,7 @@ function ResidentDashboard() {
                 <PastGuestsButton label={"This Week"} callback={() => clickTest} onCardClick={handleCardClick} id = "card2" activeCardId={activeCardId}/>
                 <PastGuestsButton label={"This Month"} callback={() => clickTest} onCardClick={handleCardClick} id = "card3" activeCardId={activeCardId}/>
             </div>
-            <div className='flex flex-row w-full h-[106px] py-[12px] px-[8px] gap-[10px]'>
+            <div className='flex flex-row w-full h-[106px] py-[12px] px-[8px] gap-[10px] overflow-y-scroll'>
                 {activeCardId == 'card1' ? (<p>card 1</p>) : activeCardId == 'card2' ? (<p>card 2</p>) : <p>card 3</p>}
             </div>
         </div>
