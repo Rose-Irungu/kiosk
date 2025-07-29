@@ -35,7 +35,7 @@ export default function Visitors() {
           allData = allData.filter((v) => v.visitor_type === visitorTypeFilter);
         }
 
-        setFilteredAllVisitors(allData); 
+        setFilteredAllVisitors(allData); // Save all filtered data for export
         setTotalEntries(allData.length);
 
         const start = (currentPage - 1) * entriesPerPage;
@@ -103,67 +103,84 @@ export default function Visitors() {
   return (
     <>
       <div className="w-full max-w-7xl mx-auto bg-white rounded-xl shadow-sm mt-5">
-        <div className="flex justify-between items-center p-6 mb-4 border-b border-[rgba(0,0,0,0.3)]">
-          <h2 className="text-2xl font-semibold">Visitor Logs</h2>
-          <button
-            onClick={handleExportCSV}
-            className="flex items-center gap-2 h-12 px-4 pr-6 bg-[#005E0E] text-white rounded-lg hover:bg-[#123107] transition"
-          >
-            <Upload />
-            Export
-          </button>
+        <div className="flex justify-between items-start p-6 ">
+          <h2 className="text-lg  font-bold font-['Inter']">Checked Out Visitors</h2>
+
         </div>
 
-        <div className="flex justify-between items-center px-6">
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-600">Show</span>
+        <div className="flex flex-row flex-wrap justify-between gap-4 px-6 pb-3 w-full  ">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-[16px] text-gray-600">Show</span>
+              <div className="relative">
+                <select
+                  className="border border-[#6C757D] rounded-md px-4 py-2 text-[16px] bg-white w-[88px]  appearance-none pr-8 h-[48px]"
+                  value={entriesPerPage}
+                  onChange={handleEntriesChange}
+                >
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+                {/* <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" /> */}
+                <img src="dropdown-checked-out.svg" className="absolute right-2 top-1/2 transform -translate-y-1/2 h-9 w-9 text-gray-400 pointer-events-none" alt="" />
+              </div>
+              <span className="text-[16px] text-gray-600">entries</span>
+            </div>
+          </div>
+
+          <div className="flex flex-row gap-4 items center">
+            <button
+              onClick={handleExportCSV}
+              className="flex items-center gap-2 h-[48px] px-4 pr-6 bg-[#005E0E] text-white rounded-lg hover:bg-[#123107] transition text-sm"
+            >
+              <Upload />
+              Export
+            </button>
+
             <div className="relative">
               <select
-                className="border border-gray-300 rounded-md px-3 py-2 text-sm bg-white min-w-16 appearance-none pr-8"
-                value={entriesPerPage}
-                onChange={handleEntriesChange}
+                className="border border-[#6C757D] rounded-md px-3 py-2 text-[16px] bg-white w-[91px] appearance-none pr-8 h-[48px]"
+                value={visitorTypeFilter}
+                onChange={handleFilterChange}
               >
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
+                <option value="all">All</option>
+                <option value="recurring">Recurring</option>
+                <option value="service">Service</option>
+                <option value="one-time">One-time</option>
               </select>
               <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
             </div>
-            <span className="text-sm text-gray-600">entries</span>
+
+
           </div>
 
-          <div className="relative">
-            <select
-              className="border border-gray-300 rounded-md px-3 py-2 text-sm bg-white min-w-24 appearance-none pr-8"
-              value={visitorTypeFilter}
-              onChange={handleFilterChange}
-            >
-              <option value="all">All</option>
-              <option value="recurring">Recurring</option>
-              <option value="service">Service</option>
-              <option value="one-time">One-time</option>
-            </select>
-            <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-          </div>
         </div>
 
-        <div className="p-4">
+        <div className="flex justify-between items-center px-6">
+
+
+
+        </div>
+
+        <div className="p-4 ">
           <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Photo</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Phone</TableHead>
-                <TableHead>Visitor Type</TableHead>
-                <TableHead>Host/Unit</TableHead>
-                <TableHead>Status</TableHead>
+            <TableHeader >
+              <TableRow >
+                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Visitor Name</TableHead>
+                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Phone No.</TableHead>
+                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Visit Unit</TableHead>
+                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Check-In Time</TableHead>
+                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Check-Out Time</TableHead>
+                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Verified By</TableHead>
+                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Status</TableHead>
               </TableRow>
             </TableHeader>
 
             <TableBody>
               {loading ? (
-                <TableRow>
+                <TableRow >
                   <TableCell colSpan={6}>
                     <div className="text-center text-gray-500 py-10">Loading...</div>
                   </TableCell>
@@ -175,46 +192,37 @@ export default function Visitors() {
                   </TableCell>
                 </TableRow>
               ) : (
-                visitors.map((visitor, index) => (
-                  <TableRow key={index}>
-                    <TableCell>
-                      {visitor.visitor_photo ? (
-                        <img
-                          src={visitor.visitor_photo}
-                          alt={visitor.visitor_name}
-                          className="h-10 w-10 rounded-full object-cover"
-                        />
-                      ) : (
-                        <div className="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center text-xs text-white">
-                          N/A
+                visitors
+
+                  .map((visitor, index) => (
+                    <TableRow key={index} className="even:bg-[#E0DBF4]/5 odd:bg-[#005E0E]/5">
+                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.visitor_name}</TableCell>
+                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.phone_number}</TableCell>
+                      <TableCell className="text-[#495057] text-[13px]  font-['Inter'] p-4">{visitor.unit_number}</TableCell>
+                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.check_in_time}</TableCell>
+                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.check_out_time}</TableCell>
+                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.verifier}</TableCell>
+                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">
+                        <div
+                          className={`flex items-center justify-center px-1 py-0.5 gap-2 w-[90px] h-[20px] rounded text-xs  ${visitor.status === "checked_in"
+                            ? "bg-[rgba(1,210,30,0.2)] text-green-800"
+                            : visitor.status === "checked_out"
+                              ? "bg-[#E0DBF4] text-purple-800"
+                              : "bg-yellow-200 text-yellow-800"
+                            }`}
+                        >
+                          {
+                            visitor.status == "checked_in"
+                              ? "Checked In"
+                              : visitor.status == "checked_out"
+                                ? "Checked Out"
+                                : "Registered"
+                          }
                         </div>
-                      )}
-                    </TableCell>
-                    <TableCell className="font-medium">{visitor.visitor_name}</TableCell>
-                    <TableCell>{visitor.phone_number}</TableCell>
-                    <TableCell>{visitor.visitor_type}</TableCell>
-                    <TableCell>{visitor.host_unit || "N/A"}</TableCell>
-                    <TableCell>
-                      <div
-                        className={`flex items-center justify-center px-1 py-0.5 gap-2 w-[90px] h-[20px] rounded text-xs font-medium ${visitor.status === "checked_in"
-                          ? "bg-[rgba(1,210,30,0.2)] text-green-800"
-                          : visitor.status === "checked_out"
-                            ? "bg-[#E0DBF4] text-purple-800"
-                            : "bg-yellow-200 text-yellow-800"
-                          }`}
-                      >
-                        {
-                          visitor.status == "checked_in"
-                            ? "Checked In"
-                            : visitor.status == "checked_out"
-                              ? "Checked Out"
-                              : "Registered"
-                        }
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
+                      </TableCell>
+                    </TableRow>
+                  )))}
+
             </TableBody>
           </Table>
         </div>

@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../../components/layout/Layout";
-import IncidentTable from "../../components/tables/Incident";
-import { incidenceService } from "../../services/incident";
-
-export default function IncidentReportsPage() {
+import SecurityIncidentTable from "../../components/tables/SecurityIncident";
+import { securityIncidenceService } from "../../services/securityIncidence";
+import SecurityLayout from "../../components/SecurityComponents/SecurityLayout";
+export default function SecurityIncidentPage() {
   const [incidentData, setIncidentData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchIncidents = async () => {
       try {
-        const response = await incidenceService.getAllIncidence();
+        const response = await securityIncidenceService.getAllIncidence();
         
         const incidents = response.data || response;  
         
@@ -26,12 +25,12 @@ export default function IncidentReportsPage() {
   }, []);
 
   return (
-    <Layout>
+    <SecurityLayout>
       {loading ? (
         <div className="text-center py-10 text-gray-500">Loading incidents...</div>
       ) : (
-        <IncidentTable incidentReports={incidentData} />
+        <SecurityIncidentTable incidentReports={incidentData} />
       )}
-    </Layout>
+    </SecurityLayout>
   );
 }
