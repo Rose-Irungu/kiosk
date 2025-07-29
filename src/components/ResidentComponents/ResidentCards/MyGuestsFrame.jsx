@@ -52,14 +52,14 @@ const MyGuestsFrame = () => {
     <div className="bg-[#e6fbe9] rounded-xl px-2 py-3 flex flex-col gap-4 items-center justify-center relative">
       <div className="flex items-center justify-between w-full px-4">
         <div className="flex items-center gap-3">
-          <img src="fluent-people-20-filled0.svg" alt="Guests Icon" className="w-8 h-8" />
+          <img src="fluent-people-20-filled0.svg"  className="w-8 h-8" />
           <h2 className="text-green-900 text-2xl font-semibold">My Guests</h2>
         </div>
         <button
           onClick={() => navigate('/guestform')}
           className="bg-green-600 shadow-md rounded-md flex items-center gap-1 px-3 py-1"
         >
-          <img src="ic-round-plus0.svg" alt="Plus" className="w-6 h-6" />
+          <img src="ic-round-plus0.svg"  className="w-6 h-6" />
           <span className="text-white text-sm font-semibold -ml-1">Invite Guest</span>
         </button>
       </div>

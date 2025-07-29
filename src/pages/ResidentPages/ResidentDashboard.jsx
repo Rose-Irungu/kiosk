@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 // import ResidentLayout from '../../components/ResidentComponents/ResidentLayout';
 // import InviteGuest from '../../components/ResidentComponents/Buttons/InviteGuest';
 import SosButton from '../../components/ResidentComponents/Buttons/SosButton';
