@@ -3,9 +3,10 @@ import React from 'react';
 import InviteGuest from '../../components/ResidentComponents/Buttons/InviteGuest';
 import SosButton from '../../components/ResidentComponents/Buttons/SosButton';
 import SafetyProtocolsButton from '../../components/ResidentComponents/Buttons/SafetyProtocolsButton';
+import PastGuestsButton from '../../components/ResidentComponents/Buttons/PastGuestsButton';
 
 //Service imports
-import {inviteGuest, triggerSOS} from '../../services/residentDashboardServices';
+import {inviteGuest, triggerSOS, clickTest} from '../../services/residentDashboardServices';
 
 function ResidentDashboard() {
   return (
@@ -13,6 +14,7 @@ function ResidentDashboard() {
         <InviteGuest callback={inviteGuest}/>
         <SosButton callback = {triggerSOS}/>
         <SafetyProtocolsButton />
+        <PastGuestsButton label="Today" callback={clickTest}/>
      </div>
   );
 }

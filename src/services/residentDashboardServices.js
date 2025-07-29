@@ -4,3 +4,6 @@ export async function inviteGuest() {
 export async function triggerSOS(){
     console.log("SOS triggered successfully");
 }
+export async function clickTest(){
+    console.log("Button clicked successfully");
+}
