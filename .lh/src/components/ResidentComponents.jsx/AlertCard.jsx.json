@@ -1,0 +1,198 @@
+{
+    "sourceFile": "src/components/ResidentComponents.jsx/AlertCard.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 45,
+            "patches": [
+                {
+                    "date": 1753774709043,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1753774783815,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n- <div className=\"bg-orange-100 border border-orange-200 rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+ <div className=\"bg- border border-orange-200 rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n         <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n         <span className=\"text-orange-800 mr-2\">You have</span>\r\n         <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n         <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n\\ No newline at end of file\n-      </div>\n+      </div>\r\n"
+                },
+                {
+                    "date": 1753774791681,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,6 @@\n+ <div className=\"bg-[#2d2264] border border-orange-200 rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n"
+                },
+                {
+                    "date": 1753774805948,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,6 @@\n+ <div className=\"bg-[#2d2264]  border-orange-200 rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n"
+                },
+                {
+                    "date": 1753774823737,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,7 @@\n+ \r\n+ <div className=\"bg-[#2d2264]  rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n"
+                },
+                {
+                    "date": 1753774830121,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,8 @@\n+ expor\r\n+\r\n+<div className=\"bg-[#2d2264]  rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n"
+                },
+                {
+                    "date": 1753774836654,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,33 +1,8 @@\n- expor\r\n+ export\r\n \r\n <div className=\"bg-[#2d2264]  rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n         <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n         <span className=\"text-orange-800 mr-2\">You have</span>\r\n         <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n         <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n       </div>\r\n- \r\n- <div className=\"bg-[#2d2264]  rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n-        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n-        <span className=\"text-orange-800 mr-2\">You have</span>\r\n-        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n-        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n-      </div>\r\n- <div className=\"bg-[#2d2264]  border-orange-200 rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n-        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n-        <span className=\"text-orange-800 mr-2\">You have</span>\r\n-        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n-        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n-      </div>\r\n- <div className=\"bg-[#2d2264] border border-orange-200 rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n-        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n-        <span className=\"text-orange-800 mr-2\">You have</span>\r\n-        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n-        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n-      </div>\r\n- <div className=\"bg- border border-orange-200 rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n-        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n-        <span className=\"text-orange-800 mr-2\">You have</span>\r\n-        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n-        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n\\ No newline at end of file\n-      </div>\n"
+                },
+                {
+                    "date": 1753774842796,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,9 @@\n+ export default function ResidentEmergencyPage() {\r\n+  \r\n+\r\n+<div className=\"bg-[#2d2264]  rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n"
+                },
+                {
+                    "date": 1753774855175,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,9 @@\n+ export default function ResidentEmergencyPage() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264]  rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n"
+                },
+                {
+                    "date": 1753774863282,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,11 @@\n+ export default function ResidentEmergencyPage() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264]  rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )    \r\n"
+                },
+                {
+                    "date": 1753774877409,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function () {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264]  rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753774883636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264]  rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753774892840,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775004342,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] -[rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775009572,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775016245,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964]rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775022121,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775040701,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[09] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775046817,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text-orange-800 mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775127357,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"text mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775134765,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"font-sans mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775142854,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"font-sans font mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775150659,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"font-sans font[20px] mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775171842,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"font-sans font[20px]fony- mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775178318,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"font-sans font[20px] font-bold mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775213245,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"font-sans font[20px] font-bold mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775219338,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"font-sans font[20px] font-bold mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold text-[] mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775232428,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"font-sans font[20px] font-bold mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775243765,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"font-sans font-[20px] font-bold mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775251040,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">0:00</span>\r\n+        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775269876,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">0:00</span>\r\n+        <span className=\"\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775275217,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">0:00</span>\r\n+        <span className=\"font-\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775286692,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+ export default function AlertCard() {\r\n+  return (   \r\n+\r\n+<div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+        <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n+        <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">0:00</span>\r\n+        <span className=\"font-[20]\">Minutes to Evacuate</span>\r\n+      </div>\r\n+\r\n+  )\r\n+}    \r\n"
+                },
+                {
+                    "date": 1753775304286,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+export default function AlertCard() {\r\n+  return (\r\n+    <div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+      <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n+      <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n+      <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">\r\n+        0:00\r\n+      </span>\r\n+      <span className=\"font-[20px]\">Minutes to Evacuate</span>\r\n+    </div>\r\n+  );\r\n+}\r\n"
+                },
+                {
+                    "date": 1753775452496,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+export default function AlertCard() {\r\n+  return (\r\n+    <div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+      \r\n+      <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n+      <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">\r\n+        0:00\r\n+      </span>\r\n+      <span className=\"font-[20px]\">Minutes to Evacuate</span>\r\n+    </div>\r\n+  );\r\n+}\r\n"
+                },
+                {
+                    "date": 1753775669000,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+export default function AlertCard() {\r\n+  return (\r\n+    <div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+      <\r\n+      <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n+      <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">\r\n+        0:00\r\n+      </span>\r\n+      <span className=\"font-[20px]\">Minutes to Evacuate</span>\r\n+    </div>\r\n+  );\r\n+}\r\n"
+                },
+                {
+                    "date": 1753775674814,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+export default function AlertCard() {\r\n+  return (\r\n+    <div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+      <img src=\"\"\r\n+      <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n+      <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">\r\n+        0:00\r\n+      </span>\r\n+      <span className=\"font-[20px]\">Minutes to Evacuate</span>\r\n+    </div>\r\n+  );\r\n+}\r\n"
+                },
+                {
+                    "date": 1753775683659,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+export default function AlertCard() {\r\n+  return (\r\n+    <div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+      <img src=\"/tabler\"\r\n+      <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n+      <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">\r\n+        0:00\r\n+      </span>\r\n+      <span className=\"font-[20px]\">Minutes to Evacuate</span>\r\n+    </div>\r\n+  );\r\n+}\r\n"
+                },
+                {
+                    "date": 1753775690335,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+export default function AlertCard() {\r\n+  return (\r\n+    <div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+      <img src=\"/tabler-clock-fill\"\r\n+      <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n+      <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">\r\n+        0:00\r\n+      </span>\r\n+      <span className=\"font-[20px]\">Minutes to Evacuate</span>\r\n+    </div>\r\n+  );\r\n+}\r\n"
+                },
+                {
+                    "date": 1753775699553,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+export default function AlertCard() {\r\n+  return (\r\n+    <div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+      <img src=\"/tabler-clock-filled\"\r\n+      <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n+      <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">\r\n+        0:00\r\n+      </span>\r\n+      <span className=\"font-[20px]\">Minutes to Evacuate</span>\r\n+    </div>\r\n+  );\r\n+}\r\n"
+                },
+                {
+                    "date": 1753775706479,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+export default function AlertCard() {\r\n+  return (\r\n+    <div className=\"bg-[#2d2264] w-[964x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+      <img src=\"/tabler-clock-filled0.svg\" className=\"w-6 h-6 text-[#ffe100] mr-3\" alt=\"clock icon\" />\r\n+      <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n+      <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">\r\n+        0:00\r\n+      </span>\r\n+      <span className=\"font-[20px]\">Minutes to Evacuate</span>\r\n+    </div>\r\n+  );\r\n+}\r\n"
+                },
+                {
+                    "date": 1753775731606,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+export default function AlertCard() {\r\n+  return (\r\n+    <div className=\"bg-[#2d2264] w-[x] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+      <img src=\"/tabler-clock-filled0.svg\" className=\"w-6 h-6 text-[#ffe100] mr-3\" alt=\"clock icon\" />\r\n+      <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n+      <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">\r\n+        0:00\r\n+      </span>\r\n+      <span className=\"font-[20px]\">Minutes to Evacuate</span>\r\n+    </div>\r\n+  );\r\n+}\r\n"
+                },
+                {
+                    "date": 1753775741518,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+export default function AlertCard() {\r\n+  return (\r\n+    <div className=\"bg-[#2d2264] w-[800px] h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+      <img src=\"/tabler-clock-filled0.svg\" className=\"w-6 h-6 text-[#ffe100] mr-3\" alt=\"clock icon\" />\r\n+      <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n+      <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">\r\n+        0:00\r\n+      </span>\r\n+      <span className=\"font-[20px]\">Minutes to Evacuate</span>\r\n+    </div>\r\n+  );\r\n+}\r\n"
+                },
+                {
+                    "date": 1753775754369,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+export default function AlertCard() {\r\n+  return (\r\n+    <div className=\"bg-[#2d2264] w-[800px] align h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+      <img src=\"/tabler-clock-filled0.svg\" className=\"w-6 h-6 text-[#ffe100] mr-3\" alt=\"clock icon\" />\r\n+      <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n+      <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">\r\n+        0:00\r\n+      </span>\r\n+      <span className=\"font-[20px]\">Minutes to Evacuate</span>\r\n+    </div>\r\n+  );\r\n+}\r\n"
+                },
+                {
+                    "date": 1753775760921,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export default function AlertCard() {\r\n   return (\r\n-    <div className=\"bg-[#2d2264] w-[800px] align- h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+    <div className=\"bg-[#2d2264] w-[800px] align-center h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n       <img src=\"/tabler-clock-filled0.svg\" className=\"w-6 h-6 text-[#ffe100] mr-3\" alt=\"clock icon\" />\r\n       <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n       <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">\r\n         0:00\r\n"
+                },
+                {
+                    "date": 1753775770284,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export default function AlertCard() {\r\n   return (\r\n-    <div className=\"bg-[#2d2264] w-[800px] align-center h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n+    <div className=\"bg-[#2d2264] w-[800px] justify- h-[209px] rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n       <img src=\"/tabler-clock-filled0.svg\" className=\"w-6 h-6 text-[#ffe100] mr-3\" alt=\"clock icon\" />\r\n       <span className=\"font-sans font-[20px]  mr-2\">You have</span>\r\n       <span className=\"text-2xl font-bold font-sans text-[#ffe100] mx-2\">\r\n         0:00\r\n"
+                }
+            ],
+            "date": 1753774709043,
+            "name": "Commit-0",
+            "content": " <div className=\"bg-orange-100 border border-orange-200 rounded-lg p-4 mb-6 flex items-center justify-center\">\r\n        <Clock className=\"w-6 h-6 text-orange-600 mr-3\" />\r\n        <span className=\"text-orange-800 mr-2\">You have</span>\r\n        <span className=\"text-2xl font-bold text-orange-800 mx-2\">0:00</span>\r\n        <span className=\"text-orange-800\">Minutes to Evacuate</span>\r\n      </div>"
+        }
+    ]
+}

@@ -5,16 +5,16 @@ import { useNavigate } from "react-router-dom";
 
 
 const navItems = [
-  { id: "securitydash", label: "Dashboard", icon: "/material-symbols-dashboard-rounded0.svg", path: "/security/dashboard" },
-  { id: "visitor_registration", label: "Visitor Registration", icon: "/visitor_registration.svg", path: "/visitorregistration" },
-  { id: "checkincheckout", label: "Check In/Out Logs", icon: "/check_in_out.svg", path: "/checkincheckout" },
-  { id: "securityemergencies", label: "Emergencies", icon: "/material-symbols-e-911-emergency-rounded0.svg", path: "/security/emergencypage" },
-  { id: "/security/incident", label: "Incident Reports", icon: "/tabler-message-report-filled0.svg", path: "/security/incident" },
+  { id: "residentdash", label: "Dashboard", icon: "", path: "/home/dashboard" },
+  { id: "visitor_registration", label: "Visitor management", icon: "", path: "/visitorregistration" },
+  { id: "residentemergencies", label: "Emergencies", icon: "", path: "/security/emergencypage" },
+  { id: "/resident/incident", label: "Reports and Incidences", icon: "/", path: "/resident/incident" },
 ];
 
 const secondaryItems = [
-  { id: "security/settings", label: "Settings", icon: "/ic-round-settings0.svg", path: "/security/settings" },
-  { id: "security/help", label: "Help", icon: "/material-symbols-help-outline0.svg", path: "/security/help" },
+  { id: "resident/profile", label: "Profile", icon: "", path: "/resident/profile" },
+   { id: "resident/settings", label: "Settings", icon: "", path: "/resident/settings" },
+  { id: "resident/signout", label: "SignOut", icon: "", path: "/resident/signout" },
 ];
 
 export default function SecuritySidebar({
