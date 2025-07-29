@@ -10,6 +10,10 @@ import MyGuestsFrame from '../../components/ResidentComponents/ResidentCards/MyG
 import { inviteGuest, triggerSOS, clickTest } from '../../services/residentDashboardServices';
 
 function ResidentDashboard() {
+    const [activeCardId, setActiveCardId] = useState(null);
+    const handleCardClick = (id) => {
+        setActiveCardId(id);
+    };
   return (
     <>
       
