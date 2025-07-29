@@ -10,13 +10,13 @@ const navItems = [
   { id: "users", path: "/userspage" },
   { id: "visitor_registration", path: "/visitorregistration" },
   { id: "checkincheckout", path: "/checkincheckout" },
-  { id: "incidents", path: "/security/incident" },
+  { id: "securityincidents", path: "/security/incident" },
   { id: "securityemergencies", path: "/security/emergencypage"}
 ];
 
 const secondaryItems = [
-  { id: "security/settings", path: "/security/settings" },
-  { id: "security/help", path: "/security/help" },
+  { id: "securitysettings", path: "/security/settings" },
+  { id: "securityhelp", path: "/security/help" },
 ];
 
 export default function Layout({ children }) {
