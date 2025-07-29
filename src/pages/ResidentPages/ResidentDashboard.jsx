@@ -5,6 +5,7 @@ import SosButton from '../../components/ResidentComponents/Buttons/SosButton';
 import SafetyProtocolsButton from '../../components/ResidentComponents/Buttons/SafetyProtocolsButton';
 import PastGuestsButton from '../../components/ResidentComponents/Buttons/PastGuestsButton';
 
+
 //Service imports
 import {inviteGuest, triggerSOS, clickTest} from '../../services/residentDashboardServices';
 
