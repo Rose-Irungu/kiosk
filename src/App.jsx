@@ -79,7 +79,7 @@ import ResidentEmergencypage from "./pages/ResidentPages/ResidentEmergencyPage";
 import AlertCard from "./components/ResidentComponents/AlertCard";
 import EmergencyAlert from "./components/ResidentComponents/EmergencyAlert";
 import EmergencyContacts from "./components/ResidentComponents/EmergencyContacts";
-
+import ResidentDashboard from "./pages/ResidentPages/ResidentDashboard";
 
 
 
@@ -234,6 +234,7 @@ const App = () => {
         <Route path="/alert/card" element={<AlertCard />} />
         <Route path="/emergency/card" element={<EmergencyAlert />} />    
         <Route path="/emergency/contacts" element={<EmergencyContacts />} />
+        <Route path="/resident/dashboard" element={<ResidentDashboard/>}/>
       </Routes>
     </Router>
   );
