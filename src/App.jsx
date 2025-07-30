@@ -83,11 +83,14 @@ import EmergencyContacts from "./components/ResidentComponents/EmergencyContacts
 
 
 
+<<<<<<< HEAD
 
 
 
 
 
+=======
+>>>>>>> 73f3b35682910a625405899fc52710ac9a9f0034
 const App = () => {
   const [users, setUsers] = useState([
     {
