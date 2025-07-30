@@ -8,6 +8,7 @@ export default function EmergencyPreparedness() {
       <Head/>
       <div className='flex flex-col lg:w-[728px] lg:h-[175.8] gap-[7px]'>
         <SectionHeading icon="" text = "Stay ready:"/>
+        <div className='flex flex-col w-full h-[137.80] gap-[1.72px]'></div>
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ export default function VisitorDeliveries() {
       <Head/>
       <div className='flex flex-col lg:w-[728px] lg:h-[175.8] gap-[7px]'>
         <SectionHeading icon="" text = "Safety around visitors and deliveries:"/>
+        <div className='flex flex-col w-full h-[137.80] gap-[1.72px]'></div>
       </div>
     </div>
   );
