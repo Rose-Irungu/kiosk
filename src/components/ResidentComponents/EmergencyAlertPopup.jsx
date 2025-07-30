@@ -1,12 +1,14 @@
 import { AlertTriangle, Shield } from "lucide-react";
 
+
 export default function EmergencyAlertCard() {
   return (
-    <div className="relative bg-red-50 rounded-3xl h-30 w-50 shadow-lg overflow-hidden">
+  
+    <div className="relative bg-red-50 rounded-3xl h-80 w-80 shadow-lg overflow-hidden">
    
-      <div className="absolute left-1/2 top-16 transform -translate-x-1/2">
-        <div className="relative  h-30 w-50">
-          <img src="/alert.svg" alt="alert icon" className="object-cover"/>
+      <div className="absolute  transform ">
+        <div className="relative   h-30 w-50">
+          <img src="/alert.svg" alt="alert icon" className="justify-center ml-[60px]"/>
         
         </div>
       </div>
@@ -25,5 +27,6 @@ export default function EmergencyAlertCard() {
         </p>
       </div>
     </div>
+   
   );
 }

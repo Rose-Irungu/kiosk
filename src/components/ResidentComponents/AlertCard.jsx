@@ -1,6 +1,7 @@
 export default function AlertCard() {
   return (
-    <div className=" bg-[#2d2264] rounded-[12px] w-[964px]  p-5 flex flex-col items-center justify-center gap-1">
+    
+    <div className=" bg-[#005e0e] rounded-[12px] w-[964px]  p-5 flex flex-col items-center justify-center gap-1">
       <img
         src="/tabler-clock-filled0.svg"
         alt="clock icon"

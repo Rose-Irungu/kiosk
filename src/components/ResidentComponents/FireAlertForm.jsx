@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Flame } from "lucide-react";
+import ResidentLayout from "./ResidentLayout";
+import { useNavigate } from "react-router-dom";
 
 const FireCheckbox = ({ id, label, isSelected, onToggle }) => {
   return (
+    
     <div className="flex items-center gap-2 mb-2">
       <button
         type="button"
@@ -25,6 +27,7 @@ export default function FireAlertForm() {
   const [location, setLocation] = useState("");
   const [selectedConditions, setSelectedConditions] = useState([]);
   const [selectedDanger, setSelectedDanger] = useState("");
+  const navigate = useNavigate();
 
   const fireConditions = [
     { id: "smoke", label: "Smoke" },
@@ -55,9 +58,11 @@ export default function FireAlertForm() {
       location,
       conditions: selectedConditions,
       anyoneInDanger: selectedDanger
+      
     };
-    console.log("🔥 Fire Alert submitted:", formData);
-
+    navigate("/resident/emergencypage");
+    console.log("Fire Alert submitted:", formData);
+    
 
     setLocation("");
     setSelectedConditions([]);
@@ -65,7 +70,9 @@ export default function FireAlertForm() {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex justify-center items-start pt-6 px-4 overflow-y-auto">
+
+    <ResidentLayout>
+    <div className="bg-opacity-40 z-50 flex justify-center items-start pt-6 px-4 overflow-y-auto">
       <div className="bg-white rounded-3xl w-full max-w-sm shadow-2xl relative overflow-hidden">
        
         <div className="flex justify-center pt-7 pb-4">
@@ -128,6 +135,7 @@ export default function FireAlertForm() {
           </div>
 
           <button
+         
             type="submit"
             className="w-full bg-[#005e0e] text-[#e9e9e9] py-2 px-5 rounded-3xl font-semibold text-xl shadow-lg hover:bg-[#004a0b] transition-colors"
             style={{
@@ -139,5 +147,6 @@ export default function FireAlertForm() {
         </form>
       </div>
     </div>
+    </ResidentLayout>       
   );
 }

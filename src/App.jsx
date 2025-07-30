@@ -82,7 +82,8 @@ import EmergencyContacts from "./components/ResidentComponents/EmergencyContacts
 import ResidentSidebar from "./components/ResidentComponents/ResidentSidebar";
 import ResidentHeader from "./components/ResidentComponents/ResidentHeader";
 import ResidentLayout from "./components/ResidentComponents/ResidentLayout";
-
+import FireAlertForm from "./components/ResidentComponents/FireAlertForm";
+import Security_form from "./components/ResidentComponents/Security_form";
 
 
 
@@ -242,6 +243,8 @@ const App = () => {
         <Route path="/resident/sidebar" element={<ResidentSidebar />} />
         <Route path="/resident/header" element={<ResidentHeader />} />
         <Route path="/resident/layout" element={<ResidentLayout />} />
+        <Route path ="/resident/fire-alert" element={<FireAlertForm />} />
+        <Route path="/resident/security-form" element={<Security_form />} />
       </Routes>
     </Router>
   );
