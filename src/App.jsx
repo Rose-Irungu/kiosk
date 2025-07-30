@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { UserForm } from "./components/forms/form";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
@@ -70,7 +66,9 @@ import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
 import ExpectedVisitors from "./components/tables/ExpectedVisitors";
 import VisitorsExpected from "./pages/SecurityPages/VisitorsExpected";
 import UserProfile from "./components/UserProfile";
-{/* Again, ye who commented my path and removed my import up here, please inform me next time kindly, becca :) */}
+{
+  /* Again, ye who commented my path and removed my import up here, please inform me next time kindly, becca :) */
+}
 import CheckedOutVisitors from "./pages/SecurityPages/CheckedOutVisitors";
 import SecurityHelpPage from "./pages/SecurityPages/Help";
 import SecurityIncidentPage from "./pages/SecurityPages/Incidentpage";
@@ -86,12 +84,6 @@ import ResidentHeader from "./components/ResidentComponents/ResidentHeader";
 import ResidentLayout from "./components/ResidentComponents/ResidentLayout";
 import FireAlertForm from "./components/ResidentComponents/FireAlertForm";
 import Security_form from "./components/ResidentComponents/Security_form";
-
-
-
-
-
-
 
 const App = () => {
   const [users, setUsers] = useState([
@@ -195,9 +187,7 @@ const App = () => {
         <Route path="/incident_report" element={<Incident_Reports />} />
         <Route path="/help" element={<HelpPage />} />
         <Route path="/triggers" element={<Triggers />} />{" "}
-
         <Route path="/triggers/security" element={<TriggersSecurity />} />{" "}
-        
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/layout" element={<Layout />} />
         <Route path="/sidebar" element={<Sidebar />} />
@@ -228,21 +218,39 @@ const App = () => {
         <Route path="/security/card6" element={<Card6 />} />
         <Route path="/security/settings" element={<SecuritySettingPage />} />
         {/* Kindly whoever removed my path, next time inform me */}
-        <Route path="/security/settings"element ={<SecuritySettingPage /> } />
-        <Route path="/security/help"element ={<SecurityHelpPage /> } />
-        <Route path="/security/incident"element ={<SecurityIncidentPage /> } />
-        
-      {/* Kindly whoever removed my path, next time inform me */}
-        <Route path="/visitorregistration" element={<VisitorRegistration />} /> 
+        <Route path="/security/settings" element={<SecuritySettingPage />} />
+        <Route path="/security/help" element={<SecurityHelpPage />} />
+        <Route path="/security/incident" element={<SecurityIncidentPage />} />
+        {/* Kindly whoever removed my path, next time inform me */}
+        <Route path="/visitorregistration" element={<VisitorRegistration />} />
         <Route path="/checkedoutvisitors" element={<CheckedOutVisitors />} />
         <Route path="/visitorregistration" element={<VisitorRegistration />} />
         <Route path="/expectedvisitors" element={<ExpectedVisitors />} />
         <Route path="/visitorsexpected" element={<VisitorsExpected />} />
         <Route path="/userprofile" element={<UserProfile />} />
-        <Route path="/resident/dashboard" element={<ResidentDashboard/>}/>
-        <Route path="/resident/safetyprotocols" element={<SafetyProtocols/>}/>
-        
-
+        <Route path="/resident/dashboard" element={<ResidentDashboard />} />
+        <Route path="/resident/safetyprotocols" element={<SafetyProtocols />} />
+        <Route
+          path="/resident/emergencypage"
+          element={<ResidentEmergencypage />}
+        />
+        <Route path="/resident/alert-card" element={<AlertCard />} />
+        <Route path="/resident/emergency/alert" element={<EmergencyAlert />} />
+        <Route
+          path="/resident/emergency/contacts"
+          element={<EmergencyContacts />}
+        />
+        <Route path="/resident/layout" element={<ResidentLayout />} />
+        <Route path="/resident/header" element={<ResidentHeader />} />
+        <Route path="/resident/sidebar" element={<ResidentSidebar />} />
+        <Route
+          path="/resident/fire-alert"
+          element={<FireAlertForm />}
+        />
+        <Route
+          path="/resident/security-form"
+          element={<Security_form />}
+        />
       </Routes>
     </Router>
   );
