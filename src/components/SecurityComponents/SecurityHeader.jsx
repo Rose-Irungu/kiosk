@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Search, Bell, CircleUser, User, X } from "lucide-react";
+import { Search, X } from "lucide-react";
 
 import React, { useState, useEffect } from "react";
 import { authService } from "../../services/authService";
@@ -10,7 +10,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     const [showEditForm, setShowEditForm] = useState(false);
     const [showChangePasswordForm, setshowChangePasswordForm] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
-    const [passwordChangeStep, setPasswordChangeStep] = useState(0);
+
 
 
 
