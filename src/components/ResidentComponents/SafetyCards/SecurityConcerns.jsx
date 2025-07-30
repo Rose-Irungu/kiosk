@@ -6,7 +6,7 @@ export default function SecurityConcerns() {
     <div className='flex flex-col w-[728px] md:w-full sm:w-full h-[256.8px] gap-[21px]'>
       <Head/>
       <div className='flex flex-col lg:w-[728px] lg:h-[175.8] gap-[7px]'>
-        <SectionHeading icon="" text = ""/>
+        <SectionHeading icon="" text = "What to do when you feel unsafe/see something strange:"/>
       </div>
     </div>
   );
