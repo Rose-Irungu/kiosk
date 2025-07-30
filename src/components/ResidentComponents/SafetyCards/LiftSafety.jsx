@@ -8,7 +8,10 @@ export default function LiftSafety() {
       <Head/>
       <div className='flex flex-col lg:w-[728px] lg:h-[175.8] gap-[7px]'>
         <SectionHeading icon="" text = "In the lift:"/>
-        <div className='flex flex-col w-full h-[137.80] gap-[1.72px]'></div>
+        <div className='flex flex-col w-full h-[137.80] gap-[1.72px]'>
+          <SafetyP icon="" text="Don't jump or play inside."/>
+          <SafetyP icon="" text="Press the red button if you get stuck."/>
+        </div>
       </div>
     </div>
   );
