@@ -7,7 +7,7 @@ export default function SafetyProtocolsHeader() {
     <div className='flex flex-col w-[728px] md:w-full sm:w-full h-[256.8px] gap-[21px]'>
       <Head/>
       <div className='flex flex-col lg:w-[728px] lg:h-[175.8] gap-[7px]'>
-        <SectionHeading text="What to do when there is a fire?"/>
+        <SectionHeading icon="" text="What to do when there is a fire?"/>
       </div>
     </div>
   );
