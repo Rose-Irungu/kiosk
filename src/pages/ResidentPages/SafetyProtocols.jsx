@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProtocolCard from '../../components/ResidentComponents/Buttons/ProtocolCard';
+import FireSafety from '../../components/ResidentComponents/SafetyCards/FireSafety';
+import SecurityConcerns from '../../components/ResidentComponents/SafetyCards/SecurityConcerns';
+import VisitorDeliveries from '../../components/ResidentComponents/SafetyCards/VisitorDeliveries';
+import ElectricityWater from '../../components/ResidentComponents/SafetyCards/ElectricityWater';
+import LiftSafety from '../../components/ResidentComponents/SafetyCards/LiftSafety';
+import EmergencyPreparedness from '../../components/ResidentComponents/SafetyCards/EmergencyPrepearedness';
 
 export default function SafetyProtocols() {
     const navigate = useNavigate();
@@ -10,7 +16,7 @@ export default function SafetyProtocols() {
     };
   return (
     <div className="flex flex-wrap justify-start mb-[12px] space-y-4">
-        <div className='flex flex-row w-full lg:h-[376px] rounded-[12px] p-[20px] gap-[46px] bg-[#FFFFFF]'>
+        <div className='flex lg:flex-row w-full lg:h-[376px] rounded-[12px] p-[20px] gap-[46px] bg-[#FFFFFF] sm:flex-col sm:space-y-4 md:flex-col md:space-y-4'>
             <div className='flex flex-col w-[349px] h-[336px] gap-[12px] bg-[#FFFFFF]'>
                 <ProtocolCard image="/fire.svg" label={"Fire Safety"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card1" activeCardId={activeCardId}/>
                 <ProtocolCard image="/warn.svg" label={"Security Concerns"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card2" activeCardId={activeCardId}/>
@@ -19,8 +25,8 @@ export default function SafetyProtocols() {
                 <ProtocolCard image="/elevator.svg" label={"Lift Safety"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card5" activeCardId={activeCardId}/>
                 <ProtocolCard image="/shield.svg" label={"Emergency Preparedness"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card6" activeCardId={activeCardId}/>
             </div>
-            <div className='flex flex-col w-[728px] h-[256.8px] gap-[21px]'>
-                {activeCardId == 'card1' ? (<p>card 1</p>) : activeCardId == 'card2' ? (<p>card 2</p>) : activeCardId == 'card3' ? <p>card 3</p> : activeCardId == 'card4'? (<p>Card 4</p>) : activeCardId == 'card5' ? (<p>Card 5</p>) : (<p>Card 6</p>)}
+            <div className='flex flex-col w-[728px] md:w-full sm:w-full h-[256.8px] gap-[21px]'>
+                {activeCardId == 'card1' ? (<FireSafety/>) : activeCardId == 'card2' ? (<SecurityConcerns/>) : activeCardId == 'card3' ? <VisitorDeliveries/> : activeCardId == 'card4'? (<ElectricityWater/>) : activeCardId == 'card5' ? (<LiftSafety/>) : (<EmergencyPreparedness/>)}
             </div>
         </div>
         <div className='flex flex-row w-full h-[102px] rounded-[12px] p-[10px] gap-[10px] bg-[#E6FBE9]'></div>
