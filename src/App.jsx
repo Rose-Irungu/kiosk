@@ -85,6 +85,9 @@ import EmergencyContacts from "./components/ResidentComponents/EmergencyContacts
 
 
 
+
+
+
 const App = () => {
   const [users, setUsers] = useState([
     {
@@ -231,11 +234,8 @@ const App = () => {
         <Route path="/expectedvisitors" element={<ExpectedVisitors />} />
         <Route path="/visitorsexpected" element={<VisitorsExpected />} />
         <Route path="/userprofile" element={<UserProfile />} />
-            {/*resident dashboard Routes*/}
-        <Route path="/resident/emergencypage" element={<ResidentEmergencypage />} />   
-        <Route path="/alert/card" element={<AlertCard />} />
-        <Route path="/emergency/card" element={<EmergencyAlert />} />    
-        <Route path="/emergency/contacts" element={<EmergencyContacts />} />
+        
+
       </Routes>
     </Router>
   );
