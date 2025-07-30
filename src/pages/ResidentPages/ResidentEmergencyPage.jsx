@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+
 import AlertCard from "../../components/ResidentComponents/AlertCard";
 import EmergencyAlert from "../../components/ResidentComponents/EmergencyAlert";
 import EmergencyContacts from "../../components/ResidentComponents/EmergencyContacts";
+import EmergencyAlertPopup from "../../components/ResidentComponents/EmergencyAlertPopup";
+import FireAlertForm from "../../components/ResidentComponents/FireAlertForm";
+import Security_form from "../../components/ResidentComponents/Security_form";
 
 export default function EmergencyControlApp() {
+  const [showPopup, setShowPopup] = useState(false);
+  const [activeForm, setActiveForm] = useState(null);
+
+  const handleSOSClick = () => {
+    setShowPopup(true);
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 2000);
+  };
+  const handleFireClick = () => {
+    setActiveForm("fire");
+  };
+
+  const handleSecurityClick = () => {
+    setActiveForm("security");
+  };
+
   return (
     <div className="p-6">
       <div className="flex items-center mb-2 ml-[125px]">
@@ -18,16 +39,33 @@ export default function EmergencyControlApp() {
       </div>
 
       <div className="flex ml-[125px] gap-8 justify-items-center mb-10">
-        <button className="bg-gradient-to-r from-[#F6003B] to-[#550115] text-white p-4 rounded-lg font-bold w-[300px] h-[100px] text-center shadow-lg transform hover:scale-105 transition-transform">
+        <button
+          onClick={handleSOSClick}
+          className="bg-gradient-to-r from-[#F6003B] to-[#550115] text-white p-4 rounded-lg font-bold w-[300px] h-[100px] text-center shadow-lg transform hover:scale-105 transition-transform"
+        >
           S.O.S
         </button>
-        <button className="bg-[#fde8e7] text-[#e61c11] border border-red-300 rounded-[12px] p-6 font-bold text-center shadow-lg hover:shadow-xl w-[300px] h-[100px] transform hover:scale-105 transition-transform">
+
+        <button
+          onClick={handleFireClick}
+          className="bg-[#fde8e7] text-[#e61c11] border border-red-300 rounded-[12px] p-6 font-bold text-center shadow-lg hover:shadow-xl w-[300px] h-[100px] transform hover:scale-105 transition-transform"
+        >
           Fire <br /> Alert
         </button>
-        <button className="bg-[#fde8e7] text-[#e61c11] border border-red-300 rounded-[12px] p-6 font-bold text-center shadow-lg hover:shadow-xl w-[300px] h-[100px] transform hover:scale-105 transition-transform">
+
+        <button
+          onClick={handleSecurityClick}
+          className="bg-[#fde8e7] text-[#e61c11] border border-red-300 rounded-[12px] p-6 font-bold text-center shadow-lg hover:shadow-xl w-[300px] h-[100px] transform hover:scale-105 transition-transform"
+        >
           Security <br /> Concern
         </button>
       </div>
+
+      {/* Popup goes here */}
+      {showPopup && <EmergencyAlertPopup />}
+
+      {activeForm === "fire" && <FireAlertForm />}
+      {activeForm === "security" && <Security_form />}
 
       <div className="flex flex-col items-center  py-6 absolute  left-0 right-0">
         <AlertCard />
