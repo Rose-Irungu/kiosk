@@ -79,18 +79,15 @@ import ResidentEmergencypage from "./pages/ResidentPages/ResidentEmergencyPage";
 import AlertCard from "./components/ResidentComponents/AlertCard";
 import EmergencyAlert from "./components/ResidentComponents/EmergencyAlert";
 import EmergencyContacts from "./components/ResidentComponents/EmergencyContacts";
+import ResidentDashboard from "./pages/ResidentPages/ResidentDashboard";
 
 
 
 
-<<<<<<< HEAD
 
 
 
 
-
-=======
->>>>>>> 73f3b35682910a625405899fc52710ac9a9f0034
 const App = () => {
   const [users, setUsers] = useState([
     {
@@ -237,6 +234,7 @@ const App = () => {
         <Route path="/expectedvisitors" element={<ExpectedVisitors />} />
         <Route path="/visitorsexpected" element={<VisitorsExpected />} />
         <Route path="/userprofile" element={<UserProfile />} />
+        <Route path="/resident/dashboard" element={<ResidentDashboard/>}/>
         
 
       </Routes>
