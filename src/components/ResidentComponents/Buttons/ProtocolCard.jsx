@@ -11,7 +11,7 @@ export default function ProtocolCard({image, label, callback, onCardClick, id, a
           }}>
 
         <div className='flex flex-col justify-center align-items-center w-[24px] h-[24px]'>
-            <img src={image} alt="Protocol image" className='w-[24px] h-[24px] fill-[#002706] object-contain' />
+            <img src={image} alt="Protocol image" className='w-[24px] h-[24px] fill-green-700 object-contain' />
         </div>
         <p className='font-dmsans font-semibold text-[20px] text-[#002706] leading-[100%] tracking-[0]'>{label}</p>
 

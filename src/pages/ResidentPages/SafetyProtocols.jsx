@@ -15,11 +15,13 @@ export default function SafetyProtocols() {
                 <ProtocolCard image="/fire.svg" label={"Fire Safety"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card1" activeCardId={activeCardId}/>
                 <ProtocolCard image="/warn.svg" label={"Security Concerns"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card2" activeCardId={activeCardId}/>
                 <ProtocolCard image="/msee.svg" label={"Visitors and Deliveries"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card3" activeCardId={activeCardId}/>
-                <ProtocolCard image="/nare.svg" label={"Electricty and Water"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card4" activeCardId={activeCardId}/>
+                <ProtocolCard image="/nare.svg" label={"Electricity and Water"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card4" activeCardId={activeCardId}/>
                 <ProtocolCard image="/elevator.svg" label={"Lift Safety"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card5" activeCardId={activeCardId}/>
                 <ProtocolCard image="/shield.svg" label={"Emergency Preparedness"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card6" activeCardId={activeCardId}/>
             </div>
-            <div className='flex flex-col w-[728px] h-[256.8px] gap-[21px]'></div>
+            <div className='flex flex-col w-[728px] h-[256.8px] gap-[21px]'>
+                {activeCardId == 'card1' ? (<p>card 1</p>) : activeCardId == 'card2' ? (<p>card 2</p>) : activeCardId == 'card3' ? <p>card 3</p> : activeCardId == 'card4'? (<p>Card 4</p>) : activeCardId == 'card5' ? (<p>Card 5</p>) : (<p>Card 6</p>)}
+            </div>
         </div>
         <div className='flex flex-row w-full h-[102px] rounded-[12px] p-[10px] gap-[10px] bg-[#E6FBE9]'></div>
         <div className='flex flex-col w-full h-[432px] rounded-[12px] p-[20px] gap-[12px] bg-[#FFFFFF]'></div>

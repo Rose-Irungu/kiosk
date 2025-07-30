@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 //import ResidentLayout from '../../components/ResidentComponents/ResidentLayout';
 //import InviteGuest from '../../components/ResidentComponents/Buttons/InviteGuest';
 import SosButton from '../../components/ResidentComponents/Buttons/SosButton';
@@ -11,6 +12,7 @@ import {/*inviteGuest,*/ triggerSOS, clickTest} from '../../services/residentDas
 
 function ResidentDashboard() {
     const [activeCardId, setActiveCardId] = useState(null);
+    const navigate = useNavigate();
     const handleCardClick = (id) => {
         setActiveCardId(id);
     };
@@ -45,7 +47,7 @@ function ResidentDashboard() {
             </div>
             <div className='flex flex-row justify-between w-full h-[96px] rounded-[12px] py-[12px] px-[14px] space-x-4'>
                 <SosButton callback={triggerSOS}/>
-                <SafetyProtocolsButton callback={clickTest}/>
+                <SafetyProtocolsButton callback={()=>navigate("/resident/safetyprotocols")}/>
             </div>
         </div>
      </div>
