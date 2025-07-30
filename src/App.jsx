@@ -81,7 +81,11 @@ import EmergencyAlert from "./components/ResidentComponents/EmergencyAlert";
 import EmergencyContacts from "./components/ResidentComponents/EmergencyContacts";
 import ResidentDashboard from "./pages/ResidentPages/ResidentDashboard";
 import SafetyProtocols from "./pages/ResidentPages/SafetyProtocols";
-
+import ResidentSidebar from "./components/ResidentComponents/ResidentSidebar";
+import ResidentHeader from "./components/ResidentComponents/ResidentHeader";
+import ResidentLayout from "./components/ResidentComponents/ResidentLayout";
+import FireAlertForm from "./components/ResidentComponents/FireAlertForm";
+import Security_form from "./components/ResidentComponents/Security_form";
 
 
 
