@@ -7,6 +7,7 @@ import VisitorDeliveries from '../../components/ResidentComponents/SafetyCards/V
 import ElectricityWater from '../../components/ResidentComponents/SafetyCards/ElectricityWater';
 import LiftSafety from '../../components/ResidentComponents/SafetyCards/LiftSafety';
 import EmergencyPreparedness from '../../components/ResidentComponents/SafetyCards/EmergencyPrepearedness';
+import SectionHeading from '../../components/ResidentComponents/SafetyCards/SectionHeading';
 
 export default function SafetyProtocols() {
     const navigate = useNavigate();
@@ -30,7 +31,8 @@ export default function SafetyProtocols() {
             </div>
         </div>
         <div className='flex flex-row w-full h-[102px] rounded-[12px] p-[10px] gap-[10px] bg-[#E6FBE9]'></div>
-        <div className='flex flex-col w-full h-[432px] rounded-[12px] p-[20px] gap-[12px] bg-[#FFFFFF]'></div>
+        <div className='flex flex-col w-full h-[432px] rounded-[12px] p-[20px] gap-[12px] bg-[#FFFFFF]'>
+            <SectionHeading icon="" text="Emergency Contacts"/>        </div>
     </div>
   );
 }
