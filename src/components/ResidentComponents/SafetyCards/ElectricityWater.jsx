@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from './Head';
 import SectionHeading from './SectionHeading';
+import SafetyP from './SafetyP';
 
 export default function ElectricityWater() {
   return (
