@@ -3,20 +3,24 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
-                    "date": 1753367326053,
+                    "date": 1753781997730,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
                 },
                 {
-                    "date": 1753367336444,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,14 @@\n-export const getDashboardStatistics = async () => {\r\n-  const res = await api.get(API_ENDPOINTS.DASHBOARD_STATISTICS);\r\n-  return res.data;\r\n-};\r\n+import Layout from \"../../components/layout/Layout\";\r\n+import SystemPreference from \"../../components/SystemPreference\";\r\n+import SessionManagement from \"../../components/SessionManagement\";\r\n+\r\n+export default function Settings() {\r\n+  return (\r\n+    <Layout>\r\n+      <div className=\"flex flex-col items-center gap-6 py-6\">\r\n+        <SystemPreference />\r\n+        <SessionManagement />\r\n+      </div>\r\n+    </Layout>\r\n+  );\r\n+}\r\n"
+                    "date": 1753782004586,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n import SessionManagement from \"../../components/SessionManagement\";\r\n \r\n export default function Settings() {\r\n   return (\r\n-    <S>\r\n+    <SecurityLayout>\r\n       <div className=\"flex flex-col items-center gap-6 py-6\">\r\n         <SystemPreference />\r\n         <SessionManagement />\r\n       </div>\r\n"
+                },
+                {
+                    "date": 1753782011410,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,14 @@\n+import Layout from \"../../components/layout/Layout\";\r\n+import SystemPreference from \"../../components/SystemPreference\";\r\n+import SessionManagement from \"../../components/SessionManagement\";\r\n+\r\n+export default function Settings() {\r\n+  return (\r\n+    <SecurityLayout>\r\n+      <div className=\"flex flex-col items-center gap-6 py-6\">\r\n+        <SystemPreference />\r\n+        <SessionManagement />\r\n+      </div>\r\n+    </SecurityLayout>\r\n+  );\r\n+}\r\n"
                 }
             ],
-            "date": 1753367326053,
+            "date": 1753781997730,
             "name": "Commit-0",
-            "content": "export const getDashboardStatistics = async () => {\r\n  const res = await api.get(API_ENDPOINTS.DASHBOARD_STATISTICS);\r\n  return res.data;\r\n};\r\n"
+            "content": "import Layout from \"../../components/layout/Layout\";\r\nimport SystemPreference from \"../../components/SystemPreference\";\r\nimport SessionManagement from \"../../components/SessionManagement\";\r\n\r\nexport default function Settings() {\r\n  return (\r\n    <L>\r\n      <div className=\"flex flex-col items-center gap-6 py-6\">\r\n        <SystemPreference />\r\n        <SessionManagement />\r\n      </div>\r\n    </L>\r\n  );\r\n}\r\n"
         }
     ]
 }
