@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 
 // import ResidentLayout from '../../components/ResidentComponents/ResidentLayout';
 // import InviteGuest from '../../components/ResidentComponents/Buttons/InviteGuest';
+
+// import ResidentLayout from '../../components/ResidentComponents/ResidentLayout';
+// import InviteGuest from '../../components/ResidentComponents/Buttons/InviteGuest';
 import SosButton from '../../components/ResidentComponents/Buttons/SosButton';
 import SafetyProtocolsButton from '../../components/ResidentComponents/Buttons/SafetyProtocolsButton';
 import PastGuestsButton from '../../components/ResidentComponents/Buttons/PastGuestsButton';
+import MyGuestsFrame from '../../components/ResidentComponents/ResidentCards/MyGuestsFrame';
 import MyGuestsFrame from '../../components/ResidentComponents/ResidentCards/MyGuestsFrame';
 
 // Service imports
@@ -35,6 +39,12 @@ export default function ResidentDashboard() {
                 {activeCardId == 'card1' ? (<p>card 1</p>) : activeCardId == 'card2' ? (<p>card 2</p>) : <p>card 3</p>}
             </div>
         </div>
+
+        <div className="flex flex-col w-full lg:h-[165px] lg:top-[784px] rounded-[12px] py-[10px] px-[20px] bg-[#FDE8E7]">
+          <div className="flex flex-row justify-between w-full h-[32px]">
+            <div className="flex flex-row gap-[12px] w-[262px] h-[32px]">
+              <div className="h-[32px] w-[32px]"></div>
+              <h1 className="font-dmsans font-semibold text-[24px] text-[#610C07]">Emergencies Panel</h1>
 
         <div className="flex flex-col w-full lg:h-[165px] lg:top-[784px] rounded-[12px] py-[10px] px-[20px] bg-[#FDE8E7]">
           <div className="flex flex-row justify-between w-full h-[32px]">
