@@ -4,11 +4,11 @@ import SessionManagement from "../../components/SessionManagement";
 
 export default function Settings() {
   return (
-    <Layout>
+    <SecurityLayout>
       <div className="flex flex-col items-center gap-6 py-6">
         <SystemPreference />
         <SessionManagement />
       </div>
-    </Layout>
+    </SecurityLayout>
   );
 }

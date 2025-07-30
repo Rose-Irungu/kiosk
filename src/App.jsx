@@ -32,6 +32,8 @@ import SecurityLayout from "./components/SecurityComponents/SecurityLayout";
 import ViewCard1 from "./components/SecurityComponents/ViewCard1";
 import ViewCard2 from "./components/SecurityComponents/ViewCard2";
 import ViewCard3 from "./components/SecurityComponents/ViewCard3";
+// import ResidentSidebar from "./components/ResidentComponents/ResidentSidebar";
+
 import Visitors from "./components/tables/Visitors";
 import Emergencies from "./components/tables/Emergencies";
 import Incident from "./components/tables/Incident";
@@ -68,18 +70,17 @@ import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
 import ExpectedVisitors from "./components/tables/ExpectedVisitors";
 import VisitorsExpected from "./pages/SecurityPages/VisitorsExpected";
 import UserProfile from "./components/UserProfile";
-
-
-import ProfileCard from "./components/SecurityComponents/ProfileCard";
-import ProfileCard1 from "./components/SecurityComponents/ProfileCard1";
-import ProfileCard2 from "./components/SecurityComponents/ProfileCard2";
 {/* Again, ye who commented my path and removed my import up here, please inform me next time kindly, becca :) */}
 import CheckedOutVisitors from "./pages/SecurityPages/CheckedOutVisitors";
 import SecurityHelpPage from "./pages/SecurityPages/Help";
 import SecurityIncidentPage from "./pages/SecurityPages/Incidentpage";
 
-//Resident module imports
+import ResidentEmergencypage from "./pages/ResidentPages/ResidentEmergencyPage";
+import AlertCard from "./components/ResidentComponents/AlertCard";
+import EmergencyAlert from "./components/ResidentComponents/EmergencyAlert";
+import EmergencyContacts from "./components/ResidentComponents/EmergencyContacts";
 import ResidentDashboard from "./pages/ResidentPages/ResidentDashboard";
+
 
 
 
@@ -231,9 +232,12 @@ const App = () => {
         <Route path="/expectedvisitors" element={<ExpectedVisitors />} />
         <Route path="/visitorsexpected" element={<VisitorsExpected />} />
         <Route path="/userprofile" element={<UserProfile />} />
-
-        {/*Resident module routes */}
-        <Route path="/resident/dashboard" element={<ResidentDashboard />} />
+            {/*resident dashboard Routes*/}
+        <Route path="/resident/emergencypage" element={<ResidentEmergencypage />} />   
+        <Route path="/alert/card" element={<AlertCard />} />
+        <Route path="/emergency/card" element={<EmergencyAlert />} />    
+        <Route path="/emergency/contacts" element={<EmergencyContacts />} />
+        <Route path= "/resident/dashboard" element={<ResidentDashboard/>}/>
       </Routes>
     </Router>
   );
