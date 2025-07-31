@@ -32,23 +32,41 @@ const chartConfig = {
   },
 };
 
-
 const transformVisitorTrend = (trendData) => {
-  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const labels = { Mon: "M", Tue: "T", Wed: "W", Thu: "T", Fri: "F", Sat: "S", Sun: "S" };
+  const labels = trendData?.labels || [];
+  const datasets = trendData?.datasets || [];
 
-  return days.map((day) => ({
-    day: labels[day],
-    company: trendData?.company_visitor?.[day] || 0,
-    resident: trendData?.visitor?.[day] || 0,
-    service: trendData?.service_provider?.[day] || 0,
-  }));
+  const result = labels.map((label, index) => {
+    const entry = {
+      day: label[0],
+    };
+
+    datasets.forEach((ds) => {
+      if (ds.label === "Visitors") {
+        entry.resident = ds.data[index];
+      } else if (ds.label === "Service Providers") {
+        entry.service = ds.data[index];
+      } else if (ds.label === "Company Visitors") {
+        entry.company = ds.data[index];
+      }
+    });
+
+    return entry;
+  });
+
+  return result;
 };
+
 
 export default function ChartPage() {
   const { stats, loading, error } = useVisitorStats();
   const visitorTrend = stats?.visitor_trend || {};
   const chartData = transformVisitorTrend(visitorTrend);
+  const maxYValue = Math.max(
+    ...chartData.flatMap((item) => [item.company, item.resident, item.service])
+  );
+  const dynamicMax = Math.ceil((maxYValue + 5) / 10) * 10;
+  
 
   return (
     <div className="max-w-3xl mx-auto">
@@ -78,8 +96,8 @@ export default function ChartPage() {
                 axisLine
                 tickLine
                 tick={{ fontSize: 12 }}
-                ticks={[0, 10, 20, 30, 40]}
-                domain={[0, 40]}
+                domain={[0, dynamicMax]}
+                tickFormatter={(value) => (Number.isInteger(value) ? value : "")}
               />
               <Legend content={<ChartLegendContent />} verticalAlign="top" align="center" />
               <Bar dataKey="company" fill={chartConfig.company.color} />
