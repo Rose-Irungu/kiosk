@@ -5,16 +5,15 @@ import { useNavigate } from "react-router-dom";
 
 
 const navItems = [
-  { id: "residentdash", label: "Dashboard", icon: "", path: "/home/dashboard" },
-  { id: "visitor_registration", label: "Visitor management", icon: "", path: "/visitorregistration" },
-  { id: "residentemergencies", label: "Emergencies", icon: "", path: "/security/emergencypage" },
-  { id: "/resident/incident", label: "Reports and Incidences", icon: "/", path: "/resident/incident" },
+  { id: "residentdash", label: "Home", icon: "/material-symbols-dashboard-rounded0.svg", path: "/resident/dashboard" },
+  { id: "visitor_registration", label: "Visitor management", icon: "/visitor_registration.svg", path: "/visitorregistration" },
+  { id: "residentemergencies", label: "Emergencies", icon: "/material-symbols-e-911-emergency-rounded0.svg", path: "/security/emergencypage" },
+  { id: "/resident/incident", label: "Reports and Incidences", icon: "/tabler-message-report-filled0.svg", path: "/resident/incident" },
 ];
 
 const secondaryItems = [
-  { id: "resident/profile", label: "Profile", icon: "", path: "/resident/profile" },
-   { id: "resident/settings", label: "Settings", icon: "", path: "/resident/settings" },
-  { id: "resident/signout", label: "SignOut", icon: "", path: "/resident/signout" },
+   { id: "resident/settings", label: "Settings", icon: "/ic-round-settings0.svg", path: "/resident/settings" },
+  { id: "resident/signout", label: "SignOut", icon: "/arrow.svg", path: "/resident/signout" },
 ];
 
 export default function SecuritySidebar({
@@ -46,7 +45,7 @@ export default function SecuritySidebar({
       <div className={`flex items-center justify-between ${collapsed ? "p-2" : "p-5"}`}>
         <div className="flex-1 flex justify-center">
           <img
-            src="/frame-1020.png"
+            src="/logo1.svg"
             alt="Logo"
             className={`${collapsed ? "h-8" : "h-[60px]"} w-auto`}
             draggable="false"
@@ -62,7 +61,7 @@ export default function SecuritySidebar({
         </button>
       </div>
 
-      {/* Main Navigation */}
+    
       <div className="flex flex-col w-full space-y-3 font-[Roboto] ">
         {navItems.map((item) => (
           <button
@@ -87,7 +86,7 @@ export default function SecuritySidebar({
         ))}
       </div>
 
-      {/* Collapse Toggle */}
+
       <div className="relative">
         <hr className="w-full border-t border-[#939393] my-4" />
         <button
@@ -103,7 +102,6 @@ export default function SecuritySidebar({
         </button>
       </div>
 
-      {/* Secondary Navigation */}
       <div className="flex flex-col w-full space-y-3 mb-4 font-[Roboto]">
         {secondaryItems.map((item) => (
           <button

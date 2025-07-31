@@ -1,0 +1,42 @@
+{
+    "sourceFile": "src/components/ResidentComponents/AlertCard.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1753868877896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1753868883394,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,17 @@\n+export default function AlertCard() {\r\n+  return (\r\n+    <ResidentL\r\n+    <div className=\" bg-[#2d2264] rounded-[12px] w-[964px]  p-5 flex flex-col items-center justify-center gap-1\">\r\n+      <img\r\n+        src=\"/tabler-clock-filled0.svg\"\r\n+        alt=\"clock icon\"\r\n+        className=\"w-8 h-8 mb-1\"\r\n+      />\r\n+      <span className=\"text-white font-medium text-[20px]\">You have</span>\r\n+      <span className=\"text-[#ffe100] font-semibold text-[32px]\">0:00</span>\r\n+      <span className=\"text-white font-medium text-[20px]\">\r\n+        Minutes to Evacuate\r\n+      </span>\r\n+    </div>\r\n+  );\r\n+}\r\n"
+                },
+                {
+                    "date": 1753868892214,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,18 @@\n+\r\n+export default function AlertCard() {\r\n+  return (\r\n+    <ResidentLayout>\r\n+    <div className=\" bg-[#2d2264] rounded-[12px] w-[964px]  p-5 flex flex-col items-center justify-center gap-1\">\r\n+      <img\r\n+        src=\"/tabler-clock-filled0.svg\"\r\n+        alt=\"clock icon\"\r\n+        className=\"w-8 h-8 mb-1\"\r\n+      />\r\n+      <span className=\"text-white font-medium text-[20px]\">You have</span>\r\n+      <span className=\"text-[#ffe100] font-semibold text-[32px]\">0:00</span>\r\n+      <span className=\"text-white font-medium text-[20px]\">\r\n+        Minutes to Evacuate\r\n+      </span>\r\n+    </div>\r\n+  );\r\n+}\r\n"
+                },
+                {
+                    "date": 1753868897565,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,19 @@\n+\r\n+export default function AlertCard() {\r\n+  return (\r\n+    <ResidentLayout>\r\n+    <div className=\" bg-[#2d2264] rounded-[12px] w-[964px]  p-5 flex flex-col items-center justify-center gap-1\">\r\n+      <img\r\n+        src=\"/tabler-clock-filled0.svg\"\r\n+        alt=\"clock icon\"\r\n+        className=\"w-8 h-8 mb-1\"\r\n+      />\r\n+      <span className=\"text-white font-medium text-[20px]\">You have</span>\r\n+      <span className=\"text-[#ffe100] font-semibold text-[32px]\">0:00</span>\r\n+      <span className=\"text-white font-medium text-[20px]\">\r\n+        Minutes to Evacuate\r\n+      </span>\r\n+    </div>\r\n+    \r\n+  );\r\n+}\r\n"
+                },
+                {
+                    "date": 1753868907360,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,19 @@\n+import \r\n+export default function AlertCard() {\r\n+  return (\r\n+    <ResidentLayout>\r\n+    <div className=\" bg-[#2d2264] rounded-[12px] w-[964px]  p-5 flex flex-col items-center justify-center gap-1\">\r\n+      <img\r\n+        src=\"/tabler-clock-filled0.svg\"\r\n+        alt=\"clock icon\"\r\n+        className=\"w-8 h-8 mb-1\"\r\n+      />\r\n+      <span className=\"text-white font-medium text-[20px]\">You have</span>\r\n+      <span className=\"text-[#ffe100] font-semibold text-[32px]\">0:00</span>\r\n+      <span className=\"text-white font-medium text-[20px]\">\r\n+        Minutes to Evacuate\r\n+      </span>\r\n+    </div>\r\n+    </ResidentLayout>\r\n+  );\r\n+}\r\n"
+                },
+                {
+                    "date": 1753868912938,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n import React from \"react\";\r\n+import ResidentLayout from \"../../components/ResidentComponents/ResidentLayout\";    \r\n export default function AlertCard() {\r\n   return (\r\n     <ResidentLayout>\r\n     <div className=\" bg-[#2d2264] rounded-[12px] w-[964px]  p-5 flex flex-col items-center justify-center gap-1\">\r\n"
+                },
+                {
+                    "date": 1753868933619,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,19 @@\n+\r\n+export default function AlertCard() {\r\n+  return (\r\n+    <>\r\n+    <div className=\" bg-[#2d2264] rounded-[12px] w-[964px]  p-5 flex flex-col items-center justify-center gap-1\">\r\n+      <img\r\n+        src=\"/tabler-clock-filled0.svg\"\r\n+        alt=\"clock icon\"\r\n+        className=\"w-8 h-8 mb-1\"\r\n+      />\r\n+      <span className=\"text-white font-medium text-[20px]\">You have</span>\r\n+      <span className=\"text-[#ffe100] font-semibold text-[32px]\">0:00</span>\r\n+      <span className=\"text-white font-medium text-[20px]\">\r\n+        Minutes to Evacuate\r\n+      </span>\r\n+    </div>\r\n+    </\r\n+  );\r\n+}\r\n"
+                }
+            ],
+            "date": 1753868877896,
+            "name": "Commit-0",
+            "content": "export default function AlertCard() {\r\n  return (\r\n    <\r\n    <div className=\" bg-[#2d2264] rounded-[12px] w-[964px]  p-5 flex flex-col items-center justify-center gap-1\">\r\n      <img\r\n        src=\"/tabler-clock-filled0.svg\"\r\n        alt=\"clock icon\"\r\n        className=\"w-8 h-8 mb-1\"\r\n      />\r\n      <span className=\"text-white font-medium text-[20px]\">You have</span>\r\n      <span className=\"text-[#ffe100] font-semibold text-[32px]\">0:00</span>\r\n      <span className=\"text-white font-medium text-[20px]\">\r\n        Minutes to Evacuate\r\n      </span>\r\n    </div>\r\n  );\r\n}\r\n"
+        }
+    ]
+}

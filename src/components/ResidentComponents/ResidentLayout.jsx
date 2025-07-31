@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import SecurityHeader from "./SecurityHeader";
-import SecuritySidebar from "./SecuritySidebar";  
-import Header from "../layout/Header1";
+import ResidentHeader from "./ResidentHeader";
+import ResidentSidebar from "./ResidentSidebar";  
+
 
 
 const navItems = [
-  { id: "securitydash", path: "/security/dashboard" },
+  { id: "residentdash", path: "/resident/dashboard" },
   { id: "users", path: "/userspage" },
   { id: "visitor_registration", path: "/visitorregistration" },
   { id: "checkincheckout", path: "/checkincheckout" },
@@ -38,7 +38,7 @@ export default function Layout({ children }) {
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#F5F4F5]">
-      <SecuritySidebar
+      <ResidentSidebar
         collapsed={collapsed}
         setCollapsed={setCollapsed}
         active={active}
@@ -47,8 +47,8 @@ export default function Layout({ children }) {
       />
 
       <div className="relative flex flex-col flex-1 overflow-hidden">
-        <header className="sticky top-0 z-40 bg-[#EEEAFD]">
-          <SecurityHeader
+        <header className="sticky top-0 z-40 bg-[#f5f4f5]">
+          <ResidentHeader
             setMobileOpen={setMobileOpen}
             profileOpen={profileOpen}
             setProfileOpen={setProfileOpen}
