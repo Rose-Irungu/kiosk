@@ -17,7 +17,7 @@ export default function EmergencyControlApp() {
     setShowPopup(true);
     setTimeout(() => {
       setShowPopup(false);
-    }, 2000);
+    }, 5000);
   };
   const handleFireClick = () => {
     navigate("/resident/fire-alert");
