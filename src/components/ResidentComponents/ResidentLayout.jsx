@@ -6,7 +6,7 @@ import ResidentSidebar from "./ResidentSidebar";
 
 
 const navItems = [
-  { id: "securitydash", path: "/security/dashboard" },
+  { id: "residentdash", path: "/resident/dashboard" },
   { id: "users", path: "/userspage" },
   { id: "visitor_registration", path: "/visitorregistration" },
   { id: "checkincheckout", path: "/checkincheckout" },

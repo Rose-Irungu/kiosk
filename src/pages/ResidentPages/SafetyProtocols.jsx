@@ -10,6 +10,7 @@ import EmergencyPreparedness from '../../components/ResidentComponents/SafetyCar
 import SectionHeading from '../../components/ResidentComponents/SafetyCards/SectionHeading';
 import EmergencyContacts from '../../components/ResidentComponents/SafetyCards/EmergencyContacts';
 import Remember from '../../components/ResidentComponents/SafetyCards/Remember';
+import ResidentLayout from '../../components/ResidentComponents/ResidentLayout';
 
 export default function SafetyProtocols() {
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ export default function SafetyProtocols() {
         setActiveCardId(id);
     };
   return (
+    <ResidentLayout>
     <div className="flex flex-wrap justify-start mb-[12px] space-y-4">
         <div className='flex lg:flex-row w-full lg:h-[376px] rounded-[12px] p-[20px] gap-[46px] bg-[#FFFFFF] sm:flex-col sm:space-y-4 md:flex-col md:space-y-4'>
             <div className='flex flex-col w-[349px] h-[336px] gap-[12px] bg-[#FFFFFF]'>
@@ -42,5 +44,6 @@ export default function SafetyProtocols() {
             <EmergencyContacts icon1="" icon2="" heading="Ambulances" phoneOne="1800-098-765" phoneTwo="1800-123-456" />         
         </div>
     </div>
+    </ResidentLayout>
   );
 }
