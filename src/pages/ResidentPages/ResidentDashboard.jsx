@@ -8,7 +8,8 @@ import PastGuestsButton from '../../components/ResidentComponents/Buttons/PastGu
 import MyGuestsFrame from '../../components/ResidentComponents/ResidentCards/MyGuestsFrame';
 
 //Service imports
-import {/*inviteGuest,*/ triggerSOS, clickTest} from '../../services/residentDashboardServices';
+import {/*inviteGuest,*/ clickTest} from '../../services/residentDashboardServices';
+import { submitEmergency } from '../../scripts/submitEmergency';
 
 function ResidentDashboard() {
     const [activeCardId, setActiveCardId] = useState(null);
@@ -46,7 +47,7 @@ function ResidentDashboard() {
                 </div>
             </div>
             <div className='flex flex-row justify-between w-full h-[96px] rounded-[12px] py-[12px] px-[14px] space-x-4'>
-                <SosButton callback={triggerSOS}/>
+                <SosButton callback={() => submitEmergency()}/>
                 <SafetyProtocolsButton callback={()=>navigate("/resident/safetyprotocols")}/>
             </div>
         </div>
