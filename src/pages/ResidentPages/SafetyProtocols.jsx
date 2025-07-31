@@ -7,6 +7,8 @@ import VisitorDeliveries from '../../components/ResidentComponents/SafetyCards/V
 import ElectricityWater from '../../components/ResidentComponents/SafetyCards/ElectricityWater';
 import LiftSafety from '../../components/ResidentComponents/SafetyCards/LiftSafety';
 import EmergencyPreparedness from '../../components/ResidentComponents/SafetyCards/EmergencyPrepearedness';
+import SectionHeading from '../../components/ResidentComponents/SafetyCards/SectionHeading';
+import EmergencyContacts from '../../components/ResidentComponents/SafetyCards/EmergencyContacts';
 
 export default function SafetyProtocols() {
     const navigate = useNavigate();
@@ -30,7 +32,12 @@ export default function SafetyProtocols() {
             </div>
         </div>
         <div className='flex flex-row w-full h-[102px] rounded-[12px] p-[10px] gap-[10px] bg-[#E6FBE9]'></div>
-        <div className='flex flex-col w-full h-[432px] rounded-[12px] p-[20px] gap-[12px] bg-[#FFFFFF]'></div>
+        <div className='flex flex-col w-full h-[432px] rounded-[12px] p-[20px] gap-[12px] bg-[#FFFFFF]'>
+            <SectionHeading icon="" text="Emergency Contacts"/>
+            <EmergencyContacts icon1="" icon2="" heading="West Brook Security Guards" phoneOne="071245678" phoneTwo="0723456789" />
+            <EmergencyContacts icon1="" icon2="" heading="Nairobi County Fire & Rescue Services" phoneOne="0780000000" phoneTwo="0790000000" /> 
+            <EmergencyContacts icon1="" icon2="" heading="Ambulances" phoneOne="1800-098-765" phoneTwo="1800-123-456" />         
+        </div>
     </div>
   );
 }
