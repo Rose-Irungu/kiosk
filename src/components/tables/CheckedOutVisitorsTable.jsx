@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllVisitors } from "../../services/visitorservice";
+import { getCheckedOut } from "@/services/checkedoutvisitors";
 import {
   Table,
   TableBody,
@@ -27,7 +27,9 @@ export default function Visitors() {
   const fetchVisitors = async () => {
     setLoading(true);
     try {
-      const res = await getAllVisitors();
+
+      const res = await getCheckedOut();
+      console.log(" Full API response:", res);
       if (res.result_code === 0) {
         let allData = res.data;
 
@@ -59,12 +61,13 @@ export default function Visitors() {
   };
 
   const handleExportCSV = () => {
-    const headers = ["Name", "Phone", "Visitor Type", "Host/Unit", "Status"];
+    const headers = ["Name", "Phone", "Visitor Unit", "Check In Time", "Check Out Time", "Verified By", "Status"];
     const rows = filteredAllVisitors.map((v) => [
       v.visitor_name,
       v.phone_number,
-      v.visitor_type,
       v.host_unit || "N/A",
+      v.check_in_time || "--",
+      v.check_out_time || "--",
       v.status,
     ]);
 
@@ -194,15 +197,18 @@ export default function Visitors() {
               ) : (
                 visitors
 
+                  // .filter(visitor => visitor.status === "checked_out")
                   .map((visitor, index) => (
                     <TableRow key={index} className="even:bg-[#E0DBF4]/5 odd:bg-[#005E0E]/5">
-                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.visitor_name}</TableCell>
+                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.full_name}</TableCell>
                       <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.phone_number}</TableCell>
                       <TableCell className="text-[#495057] text-[13px]  font-['Inter'] p-4">{visitor.unit_number}</TableCell>
-                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.check_in_time}</TableCell>
-                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.check_out_time}</TableCell>
+                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.check_in}</TableCell>
+                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.check_out}</TableCell>
                       <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.verifier}</TableCell>
                       <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">
+
+
                         <div
                           className={`flex items-center justify-center px-1 py-0.5 gap-2 w-[90px] h-[20px] rounded text-xs  ${visitor.status === "checked_in"
                             ? "bg-[rgba(1,210,30,0.2)] text-green-800"
@@ -219,6 +225,8 @@ export default function Visitors() {
                                 : "Registered"
                           }
                         </div>
+
+
                       </TableCell>
                     </TableRow>
                   )))}

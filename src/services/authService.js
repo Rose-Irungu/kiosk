@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { API_ENDPOINTS } from "../utils/constants";
 import api from "./api";
 
@@ -28,22 +29,48 @@ export const authService = {
   },
   loginUser: async (credentials) => {
     try {
-      const response = await api.post(API_ENDPOINTS.LOGIN, credentials);
+      const promise = api.post(API_ENDPOINTS.LOGIN, credentials);
+
+      const response = await toast.promise(promise, {
+        loading: "Logging in...",
+        success: "Login successful!",
+        error: (err) =>
+          err?.response?.data?.message || "Login failed. Please try again.",
+      });
 
       return response.data;
     } catch (error) {
       throw (
-        error.response?.data || { message: "Login failed. Please try again." }
+        error?.response?.data || { message: "Login failed. Please try again." }
       );
     }
   },
 
-  logoutUser: () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("userInfo");
-    localStorage.removeItem("userRole");   
-    window.location.href = "/loginform";
+
+  logoutUser: async() => {
+    try {
+      const promise = api.post(API_ENDPOINTS.LOG_OUT, { "action": "logout_current_device"});
+      const res = await toast.promise(promise, {
+        loading: "Logging out...",
+        success: "Logout successful.",
+        error: (err) =>
+          err?.response?.data?.message || "Logout failed. Please try again.",
+      });
+      if (res.status === 200) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("userInfo");
+        localStorage.removeItem("userRole");
+        window.location.href = "/loginform";
+      } else {
+        console.error("Logout failed:", res.data);
+        toast.error("Logout failed. Please try again.");
+      }
+    } catch (error) {
+      toast.error("Logout failed. Please try again.");
+      console.error("Error during logout:", error);
+    }
+    
   },
 
   changePassword: async (formData) => {

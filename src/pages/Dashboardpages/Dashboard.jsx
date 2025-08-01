@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 
 import Layout from "../../components/layout/Layout";
-import Navigation from "../../components/Navigation";
 import Card1 from "../../components/Card1";
 import Card2 from "../../components/Card2";
 import Card3 from "../../components/Card3";
 import Chart from "../../components/Chart";
-import { AlertTriangle } from "lucide-react";
 import DashboardTable from "../../components/tables/DashboardTable";
 import { getDashboardStatistics } from "../../services/dashboardService";
 import useVisitorStats from "../../hooks/useVisitorStats";
@@ -21,7 +19,6 @@ const Dashboard = () => {
     stats: visitorStats,
     loading: visitorLoading,
     error: visitorError,
-    totalVisitors,
   } = useVisitorStats();
 
   const getData = async () => {
@@ -65,7 +62,7 @@ const Dashboard = () => {
       <div className="flex flex-wrap justify-start mb-[12px]">
         <Card1
           cardTitle="Current Visitors"
-          count={visitorLoading ? "..." : stats?.visitors?.total}
+          count={visitorLoading ? "..." : stats?.current_visitors?.count}
           link="View log"
           linkHref="/visitorlogs"
           icon={
@@ -131,7 +128,7 @@ const Dashboard = () => {
             id={latest?.id}
             floor={latest?.triggerer_floor_number}
             unit={latest?.triggerer_unit_number}
-            minute={latest?.minute}
+            minute={latest?.created_at}
             name={latest?.triggered_by}
             status={latest?.emergency_status}
             buttonText="View details"
@@ -157,13 +154,13 @@ const Dashboard = () => {
           <div className="bg-white p-3 rounded-lg shadow h-full">
             <Card3
               companyVisitors={
-                loading ? 0 : stats?.visitor_totals?.company || 0
+                loading ? 0 : stats?.visitor_trend?.totals?.company_visitor || 0
               }
               residentVisitors={
-                loading ? 0 : stats?.visitor_totals?.resident || 0
+                loading ? 0 : stats?.visitor_trend?.totals?.visitor || 0
               }
               serviceProviders={
-                loading ? 0 : stats?.visitor_totals?.service || 0
+                loading ? 0 : stats?.visitor_trend?.totals?.service_provider || 0
               }
               className="h-full"
             />

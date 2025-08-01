@@ -28,6 +28,7 @@ const LoginForm = () => {
         localStorage.setItem("refreshToken", refresh);
         localStorage.setItem("userInfo", JSON.stringify(user));
         localStorage.setItem("userRole", user.role);
+        // toast.success("Login successful!");
 
         switch (user.role) {
           case "admin":
@@ -38,7 +39,7 @@ const LoginForm = () => {
             console.log("Tenant login successful – dashboard not ready.");
             break;
           case "security":
-             navigate("/security/dashboard");
+            navigate("/security/dashboard");
             console.log("Security login successful – dashboard not ready.");
             break;
           default:
@@ -49,6 +50,7 @@ const LoginForm = () => {
       }
     } catch (err) {
       setError(err.message || "Something went wrong.");
+      // toast.error(err.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -121,9 +123,9 @@ const LoginForm = () => {
               </span>
             </div>
 
-            {error && (
+            {/* {error && (
               <p className="text-red-600 text-sm mb-4 text-center">{error}</p>
-            )}
+            )} */}
 
             <div className="mb-4">
               <button

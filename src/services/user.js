@@ -1,5 +1,6 @@
 import api from "./api";
 import { API_ENDPOINTS } from "../utils/constants";
+import toast from "react-hot-toast";
 
 export const userService = {
   getAllUsers: async () => {
@@ -14,11 +15,17 @@ export const userService = {
 
   addUser: async (formData) => {
     try {
-      const response = await api.post(API_ENDPOINTS.ADD_USER, formData, {
+      const promise = api.post(API_ENDPOINTS.ADD_USER, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         }
       });
+      const response = await toast.promise(promise, {
+        loading: "Adding user...",
+        success: "User added successfully!",
+        error: (err) =>
+          err?.response?.data?.message || "Failed to add user. Please try again.",
+      })
       return response.data;
     } catch (error) {
       console.error("Error adding user:", error);
@@ -39,10 +46,16 @@ export const userService = {
   updateUser: async (userId, updatedData) => {
     console.log(updatedData)
     try {
-      const response = await api.put(`${API_ENDPOINTS.UPDATE_USER}${userId}/`, updatedData, {
+      const promise = api.put(`${API_ENDPOINTS.UPDATE_USER}${userId}/`, updatedData, {
         headers: {
-          'Content-Type': 'multipart/form-data', 
+          'Content-Type': 'multipart/form-data',
         }
+      });
+      const response = await toast.promise(promise, {
+        loading: "Updating user...",
+        success: "User updated successfully!",
+        error: (err) =>
+          err?.response?.data?.message || "Failed to update user. Please try again.",
       });
       return response.data;
     } catch (error) {
@@ -50,10 +63,17 @@ export const userService = {
       throw error;
     }
   },
-    toggleUserStatus: async (userId, currentStatus) => {
+
+  toggleUserStatus: async (userId, currentStatus) => {
     try {
-      const response = await api.patch(`${API_ENDPOINTS.UPDATE_USER}${userId}/`, {
+      const promise = api.put(`${API_ENDPOINTS.UPDATE_USER}${userId}/`, {
         is_active: !currentStatus,
+      });
+      const response = await toast.promise(promise, {
+        loading: "Updating user status...",
+        success: "User status updated successfully!",
+        error: (err) =>
+          err?.response?.data?.message || "Failed to update user status. Please try again.",
       });
       return response.data;
     } catch (error) {
@@ -61,36 +81,18 @@ export const userService = {
       throw error;
     }
   },
-  toggleUserStatus: async (userId, userData) => {
-  try {
-    const updatedData = {
-      ...userData,
-      is_active: !userData.is_active,
-    };
-
-    const response = await api.put(`${API_ENDPOINTS.UPDATE_USER}${userId}/`, updatedData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-
-    return response.data;
-  } catch (error) {
-    console.error("Error toggling user status:", error);
-    throw error;
-  }
-},
 
 
-getAllUnits: async () => {
-  try {
-    const response = await api.get(API_ENDPOINTS.GET_UNITS);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching units:", error);
-    throw error;
-  }
-},
+
+  getAllUnits: async () => {
+    try {
+      const response = await api.get(API_ENDPOINTS.GET_UNITS);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching units:", error);
+      throw error;
+    }
+  },
 
 
 };
