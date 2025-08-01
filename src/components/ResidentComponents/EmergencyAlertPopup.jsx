@@ -1,21 +1,30 @@
 import { useState } from "react";
+import { createEmergency } from "../../services/securityDashboardService";
+import { toast } from "react-hot-toast";
 
 export default function EmergencyAlertCard() {
+  const [stats, setStats] = useState([]);
+  const [visible, setVisible] = useState(true);
 
-   const [visible, setVisible] = useState(true);
-
-  const handleYes = () => {
-    console.log("✅ Alert confirmed!");
-    
-    setVisible(false); 
+  const handleYes = async () => {
+      setVisible(false);
+    try {
+      const data = await createEmergency({type}); 
+      setStats(data);
+      console.log("Emergency created:", data);
+       toast.success("Emergency alert sent! ");
+    } catch (error) {
+      console.error("Failed to create emergency:", error);
+        toast.error("Failed to send emergency alert.");
+    } 
   };
 
   const handleNo = () => {
-    console.log("❌ Alert canceled.");
-    setVisible(false); 
+    setVisible(false);
   };
 
   if (!visible) return null;
+
   return (
     <div className="fixed top-[250px] left-1/2 transform -translate-x-1/2 bg-[#fde8e7] rounded-2xl w-[560px] h-auto shadow-lg overflow-hidden z-50 p-6">
       <div className="flex gap-6 items-start">
@@ -27,9 +36,10 @@ export default function EmergencyAlertCard() {
           </p>
 
           <div className="flex gap-4">
-            <button 
-             onClick={handleYes}
-            className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+            <button
+              onClick={handleYes}
+              className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+            >
               <img
                 src="/mdi-tick-circle0.svg"
                 alt="Yes Icon"
@@ -38,9 +48,10 @@ export default function EmergencyAlertCard() {
               <span>Yes</span>
             </button>
 
-            <button 
-             onClick={handleNo}
-            className="flex items-center gap-2 px-4 py-2 border border-red-600 text-red-600 rounded-lg hover:bg-red-200 transition">
+            <button
+              onClick={handleNo}
+              className="flex items-center gap-2 px-4 py-2 border border-red-600 text-red-600 rounded-lg hover:bg-red-200 transition"
+            >
               <img
                 src="/ic-round-cancel0.svg"
                 alt="No Icon"
