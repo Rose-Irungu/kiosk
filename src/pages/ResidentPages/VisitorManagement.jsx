@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import SecurityLayout from '../../components/SecurityComponents/SecurityLayout.jsx'
+import { useNavigate } from "react-router";
+import ResidentLayout from '../../components/ResidentComponents/ResidentLayout.jsx'
 
 const VisitorManagement = () => {
 
     const buttons = [
-        { id: 'btn1', label: 'Expected' }, ,
-        { id: 'btn2', label: 'Pending' },
-        { id: 'btn3', label: 'Onsite' },
+        { id: 'btn1', label: 'Expected (2)' }, ,
+        { id: 'btn2', label: 'Pending (2)' },
+        { id: 'btn3', label: 'Onsite (2)' },
 
     ];
 
@@ -26,6 +27,8 @@ const VisitorManagement = () => {
 
     ];
 
+    const navigate = useNavigate();
+
 
 
     const [active, setActive] = useState(null);
@@ -34,19 +37,27 @@ const VisitorManagement = () => {
 
     const handleClick = (id) => {
         setActive(id);
+        navigate('/resident/guestlist');
 
     };
 
     const changeColor = (id) => {
         setDay(id);
-    }
+        
+    };
+
+    const goList = () => {
+        if (changeColor) {
+           navigate('/resident/guestlist', { viewTransition: true }); 
+        }
+    };
 
 
 
 
     return (
         <>
-            <SecurityLayout >
+            <ResidentLayout >
 
                 {/* Main Container 1 - Guest List */}
                 <div className='flex flex-col items-start gap-4 bg-[#E6FBE9] justify-between rounded-sm mx-auto mb-[32px] p-3 rounded-[12px]  '>
@@ -68,7 +79,7 @@ const VisitorManagement = () => {
                     <div className='rounded-full flex flex-row justify-between gap-2 p-1 bg-[#333333]/10 w-full'>
                         {buttons.map((button) => (
                             <button key={button.id}
-                                className={button.id === active ? ' items-center w-[315px] h-[32px]  justify-center rounded-full bg-[#B0F1B9]' : 'items-center rounded-full w-[315px] h-[32px]  justify-center bg-[#FFFF]'}
+                                className={button.id === active ? ' items-center w-[315px] h-[32px]  justify-center rounded-full bg-[#B0F1B9] text-[14px] font-semibold' : 'items-center rounded-full w-[315px] h-[32px]  justify-center bg-[#FFFF] text-[14px] font-semibold'}
                                 onClick={() => setActive(button.id)}>
                                 {button.label}
                             </button>
@@ -127,8 +138,8 @@ const VisitorManagement = () => {
                     <div className='flex flex-row items-center gap-6 border-[#54E168] border-[2.77974px] rounded-[33.3569px] bg-[#FFFF] py-4 px-4 font-["DM Sans"] w-full  '>
                         {datebuttons.map((datebutton) => (
                             <button key={datebutton.id}
-                                className={datebutton.id === day ? ' text-[24px]  font-semibold bg-[#B0F1B9] flex flex-col justify-center w-[80px] h-[80px] border-[2.77974px] rounded-[22.2379px] border-[#54E168] items-center shadow-[6.04594px_6.04594px_12.0919px_0px_rgba(0,_88,_13,_0.25)]' : 'text-[24px]  bg-[#FFFF] flex flex-col justify-center w-[80px] h-[80px] border-[2.77974px] rounded-[22.2379px] border-[#54E168] items-center shadow-[6.04594px_6.04594px_12.0919px_0px_rgba(0,_88,_13,_0.25)]'}
-                                onClick={() => setDay(datebutton.id)}>
+                                className={datebutton.id === day ? ' text-[24px]  font-semibold bg-[#B0F1B9] flex flex-col justify-center w-[80px] h-[80px] border-[2.77974px] rounded-[22.2379px] border-[#54E168] items-center shadow-[6.04594px_6.04594px_12.0919px_0px_rgba(0,_88,_13,_0.25)] hover:bg-[#B0F1B9]' : 'hover:bg-[#B0F1B9] text-[24px]  bg-[#FFFF] flex flex-col justify-center w-[80px] h-[80px] border-[2.77974px] rounded-[22.2379px] border-[#54E168] items-center shadow-[6.04594px_6.04594px_12.0919px_0px_rgba(0,_88,_13,_0.25)]'}
+                                onClick={goList}>
                                 <p className='text-[#6C50EF]' >{datebutton.day}</p>
                                 <p >{datebutton.daynum}</p>
 
@@ -173,7 +184,7 @@ const VisitorManagement = () => {
 
 
                 </div>
-            </SecurityLayout>
+            </ResidentLayout>
 
 
         </>

@@ -41,56 +41,11 @@ const GuestListTable = () => {
 
                     </div>
 
-                    <div className='flex flex-row w-full h-[64px] bg-[#FFFF] items-center justify-between shadow-[2px_2px_4px_0px_rgba(0,_88,_13,_0.25)] rounded-[8px] gap-2 p-2 mb-2'>
-                        <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                            <img src="/oui-gear2.svg" alt="" />
-                        </div>
+                    
 
-                        <div className='flex  items-start w-full'>
-                            <p className='text-[16px] font-medium text-[#002706] '>Robert Nanjala</p>
+                    
 
-                        </div>
-
-                        <div className='rounded-md bg-[#D1C9FA] flex items-center w-[64px] h-[22px] justify-center '>
-                            <p className='text-sm text-[#2D2264]'>guest</p>
-                        </div>
-
-
-                    </div>
-
-                    <div className='flex flex-row w-full h-[64px] bg-[#FFFF] items-center justify-between shadow-[2px_2px_4px_0px_rgba(0,_88,_13,_0.25)] rounded-[8px] gap-2 p-2 mb-2'>
-                        <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                            <img src="/oui-gear2.svg" alt="" />
-                        </div>
-
-                        <div className='flex  items-start w-full'>
-                            <p className='text-[16px] font-medium text-[#002706] '>Robert Nanjala</p>
-
-                        </div>
-
-                        <div className='rounded-md bg-[#D1C9FA] flex items-center w-[64px] h-[22px] justify-center '>
-                            <p className='text-sm text-[#2D2264]'>guest</p>
-                        </div>
-
-
-                    </div>
-
-                    <div className='flex flex-row w-full h-[64px] bg-[#FFFF] items-center justify-between shadow-[2px_2px_4px_0px_rgba(0,_88,_13,_0.25)] rounded-[8px] gap-2 p-2 mb-2'>
-                        <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                            <img src="/oui-gear2.svg" alt="" />
-                        </div>
-
-                        <div className='flex  items-start w-full'>
-                            <p className='text-[16px] font-medium text-[#002706] '>Robert Nanjala</p>
-
-                        </div>
-
-                        <div className='rounded-md bg-[#D1C9FA] flex items-center w-[64px] h-[22px] justify-center '>
-                            <p className='text-sm text-[#2D2264]'>guest</p>
-                        </div>
-
-
-                    </div>
+                   
 
 
                 </div>

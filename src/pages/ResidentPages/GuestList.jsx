@@ -1,13 +1,13 @@
 import React from 'react'
 import GuestListTable from '../../components/ResidentComponents/GuestListTable'
-import SecurityLayout from '../../components/SecurityComponents/SecurityLayout.jsx'
+import ResidentLayout from '../../components/ResidentComponents/ResidentLayout.jsx'
 
 const GuestList = () => {
     return (
 
-        <SecurityLayout >
+        <ResidentLayout >
             <GuestListTable />
-        </SecurityLayout>
+        </ResidentLayout>
 
     )
 
