@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { API_ENDPOINTS } from "../utils/constants";
 import api from "./api";
 
@@ -38,16 +39,25 @@ export const authService = {
     }
   },
 
-  logoutUser: () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("userInfo");
-    localStorage.removeItem("userRole");
-
-    // localStorage.clear();
-
-    // Redirect to login
-    window.location.href = "/loginform";
+  logoutUser: async() => {
+    try {
+      const res = await api.post(API_ENDPOINTS.LOG_OUT, { "action": "logout_current_device"});
+      if (res.status === 200) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("userInfo");
+        localStorage.removeItem("userRole");
+        toast.success("Logout successful.");
+        window.location.href = "/loginform";
+      } else {
+        console.error("Logout failed:", res.data);
+        toast.error("Logout failed. Please try again.");
+      }
+    } catch (error) {
+      toast.error("Logout failed. Please try again.");
+      console.error("Error during logout:", error);
+    }
+    
   },
 
   changePassword: async (formData) => {
