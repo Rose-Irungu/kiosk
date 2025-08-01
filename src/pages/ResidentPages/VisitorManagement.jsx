@@ -61,7 +61,7 @@ const VisitorManagement = () => {
             <ResidentLayout >
 
                 {/* Main Container 1 - Guest List */}
-                <div className='flex flex-col items-start gap-4 bg-[#E6FBE9] justify-between rounded-sm mx-auto mb-[32px] p-3 rounded-[12px]  '>
+                <div className='flex flex-col items-start gap-4 bg-[#E6FBE9] justify-between rounded-sm mx-auto mb-[32px] p-3 rounded-[12px] '>
                     {/* h1, Icon and Invite Guest Button */}
                     <div className='flex flex-row justify-between items-center w-full'>
                         <div className='flex items-start gap-2 flex-row justify-between'>
@@ -91,7 +91,7 @@ const VisitorManagement = () => {
 
 
                     {/* Guest Details Card */}
-                    <div className='flex flex-col items-center w-full overflow-y-auto'>
+                    <div className='flex flex-col items-start w-full '>
                         <button className='w-[937px] h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4 '>
                             <div className='flex flex-row justify-between gap-4 items-center '>
 
