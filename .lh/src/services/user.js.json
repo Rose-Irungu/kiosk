@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/services/user.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1754033229107,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1754033229107,
+            "name": "Commit-0",
+            "content": "import api from \"./api\";\r\nimport { API_ENDPOINTS } from \"../utils/constants\";\r\n\r\nexport const userService = {\r\n  getAllUsers: async () => {\r\n    try {\r\n      const response = await api.get(API_ENDPOINTS.ALL_USERS);\r\n      return response.data;\r\n    } catch (error) {\r\n      console.error(\"Error fetching users:\", error);\r\n      throw error;\r\n    }\r\n  },\r\n\r\n  addUser: async (formData) => {\r\n    try {\r\n      const response = await api.post(API_ENDPOINTS.ADD_USER, formData, {\r\n        headers: {\r\n          'Content-Type': 'multipart/form-data',\r\n        }\r\n      });\r\n      return response.data;\r\n    } catch (error) {\r\n      console.error(\"Error adding user:\", error);\r\n      throw error;\r\n    }\r\n  },\r\n\r\n  deleteUser: async (userId) => {\r\n    try {\r\n      const response = await api.delete(`${API_ENDPOINTS.DELETE_USER}${userId}/`);\r\n      return response.data;\r\n    } catch (error) {\r\n      console.error(\"Error deleting user:\", error);\r\n      throw error;\r\n    }\r\n  },\r\n\r\n  updateUser: async (userId, updatedData) => {\r\n    console.log(updatedData)\r\n    try {\r\n      const response = await api.put(`${API_ENDPOINTS.UPDATE_USER}${userId}/`, updatedData, {\r\n        headers: {\r\n          'Content-Type': 'multipart/form-data', \r\n        }\r\n      });\r\n      return response.data;\r\n    } catch (error) {\r\n      console.error(\"Error updating user:\", error);\r\n      throw error;\r\n    }\r\n  },\r\n    toggleUserStatus: async (userId, currentStatus) => {\r\n    try {\r\n      const response = await api.patch(`${API_ENDPOINTS.UPDATE_USER}${userId}/`, {\r\n        is_active: !currentStatus,\r\n      });\r\n      return response.data;\r\n    } catch (error) {\r\n      console.error(\"Error toggling user status:\", error);\r\n      throw error;\r\n    }\r\n  },\r\n  toggleUserStatus: async (userId, userData) => {\r\n  try {\r\n    const updatedData = {\r\n      ...userData,\r\n      is_active: !userData.is_active,\r\n    };\r\n\r\n    const response = await api.put(`${API_ENDPOINTS.UPDATE_USER}${userId}/`, updatedData, {\r\n      headers: {\r\n        'Content-Type': 'multipart/form-data',\r\n      },\r\n    });\r\n\r\n    return response.data;\r\n  } catch (error) {\r\n    console.error(\"Error toggling user status:\", error);\r\n    throw error;\r\n  }\r\n},\r\n\r\n\r\ngetAllUnits: async () => {\r\n  try {\r\n    const response = await api.get(API_ENDPOINTS.GET_UNITS);\r\n    return response.data;\r\n  } catch (error) {\r\n    console.error(\"Error fetching units:\", error);\r\n    throw error;\r\n  }\r\n},\r\n\r\n\r\n};\r\n\r\n"
+        }
+    ]
+}

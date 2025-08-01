@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+import { authService } from "../../services/authService";
 
 
 
@@ -26,8 +26,12 @@ export default function SecuritySidebar({
   const navigate = useNavigate();
 
   const handleNavigation = (path) => {
-    setMobileOpen(false);
-    navigate(path);
+    if (path === "/resident/signout") {
+      authService.logoutUser();
+    } else{
+      setMobileOpen(false);
+      navigate(path);
+    }
   };
 
   return (

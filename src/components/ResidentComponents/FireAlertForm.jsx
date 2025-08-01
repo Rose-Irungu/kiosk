@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import ResidentLayout from "./ResidentLayout";
 import { useNavigate } from "react-router-dom";
 import { createEmergency } from "../../services/securityDashboardService";
+
+
 const FireCheckbox = ({ id, label, isSelected, onToggle }) => {
   return (
     <div className="flex items-center gap-2 mb-2">
@@ -29,6 +31,8 @@ export default function FireAlertForm() {
   const [selectedDanger, setSelectedDanger] = useState("");
   const navigate = useNavigate();
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const fireConditions = [
     { id: "smoke", label: "Smoke" },
     { id: "flames", label: "Flames" },
@@ -52,8 +56,9 @@ export default function FireAlertForm() {
     setSelectedDanger(dangerId);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = {
       user_id: user?.id,
       emergency_type: "fire",
@@ -64,8 +69,17 @@ export default function FireAlertForm() {
       triggerer_unit_number: user?.unit_number,
       triggerer_floor_number: user?.floor_number,
     };
-    navigate("/resident/emergencypage");
-    console.log("Fire Alert submitted:", formData);
+
+    try {
+      const response = await createEmergency(formData);
+   
+
+      console.log("Submitted emergency:", response);
+      setTimeout(() => navigate("/resident/emergencypage"), );
+    } catch (err) {
+      
+      console.error(err);
+    }
 
     setLocation("");
     setSelectedConditions([]);
@@ -80,7 +94,7 @@ export default function FireAlertForm() {
             <img src="/fire.svg" alt="fire icon" />
           </div>
 
-          <form className="px-6 pb-8">
+          <form className="px-6 pb-8" onSubmit={handleSubmit}>
             <h2 className="text-green-700 text-center font-semibold text-base pb-6">
               Fire Alert - Quick Form
             </h2>
@@ -134,7 +148,6 @@ export default function FireAlertForm() {
             </div>
 
             <button
-            onSubmit={handleSubmit} 
               type="submit"
               className="w-full bg-[#005e0e] text-[#e9e9e9] py-2 px-5 rounded-3xl font-semibold text-xl shadow-lg hover:bg-[#004a0b] transition-colors"
               style={{

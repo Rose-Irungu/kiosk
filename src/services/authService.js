@@ -42,11 +42,7 @@ export const authService = {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("userInfo");
-    localStorage.removeItem("userRole");
-
-    // localStorage.clear();
-
-    // Redirect to login
+    localStorage.removeItem("userRole");   
     window.location.href = "/loginform";
   },
 

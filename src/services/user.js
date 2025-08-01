@@ -41,7 +41,7 @@ export const userService = {
     try {
       const response = await api.put(`${API_ENDPOINTS.UPDATE_USER}${userId}/`, updatedData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // If you're uploading files like profile_picture
+          'Content-Type': 'multipart/form-data', 
         }
       });
       return response.data;
