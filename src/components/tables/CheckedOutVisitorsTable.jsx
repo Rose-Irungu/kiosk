@@ -51,7 +51,7 @@ export default function Visitors() {
         setTotalEntries(0);
       }
     } catch (error) {
-      console.error("Error fetching visitors:", error);
+      
       setVisitors([]);
       setFilteredAllVisitors([]);
       setTotalEntries(0);
