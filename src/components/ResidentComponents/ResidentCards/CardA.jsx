@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+
 const CardA = ({
   name,
   time,
@@ -7,6 +8,7 @@ const CardA = ({
   purpose,
   status,
   tag,
+  image, // ✅ added image prop
 }) => {
   const [visitorData, setVisitorData] = useState({
     name,
@@ -15,20 +17,21 @@ const CardA = ({
     purpose,
     status,
     tag,
+    image, // ✅ included image in state
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const shouldFetch =
-      !name && !time && !stayTime && !purpose && !status && !tag;
+  // useEffect(() => {
+  //   const shouldFetch =
+  //     !name && !time && !stayTime && !purpose && !status && !tag && !image;
 
-    if (shouldFetch) {
-      fetch('/api/visitor/1') 
-        .then((res) => res.json())
-        .then((data) => setVisitorData(data))
-        .catch((err) => console.error('Error fetching visitor:', err));
-    }
-  }, [name, time, stayTime, purpose, status, tag]);
+  //   if (shouldFetch) {
+  //     fetch('/visits/user-visits/') 
+  //       .then((res) => res.json())
+  //       .then((data) => setVisitorData(data))
+  //       .catch((err) => console.error('Error fetching visitor:', err));
+  //   }
+  // }, [name, time, stayTime, purpose, status, tag]);
 
   const {
     name: n = 'Robert Nanjala',
@@ -37,12 +40,12 @@ const CardA = ({
     purpose: p = 'delivery',
     status: st = 'pending',
     tag: tg = 'guest',
+    image: img = '/ellipse-20.png', // ✅ default image fallback
   } = visitorData;
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
- 
   return (
     <>
       <div
@@ -52,8 +55,8 @@ const CardA = ({
         <div className="flex items-center gap-1.5">
           <img
             className="w-10 h-10 rounded-full object-cover"
-            src="ellipse-20.png"
-            
+            src={img} // ✅ dynamic image here
+            alt={n}
           />
           <div className="flex flex-col gap-0.5 w-[145px]">
             <div className="text-green-900 text-sm font-medium">{n}</div>
@@ -70,7 +73,7 @@ const CardA = ({
           {st === 'pending' ? (
             <div className="bg-white rounded-2xl border border-green-300 p-5 flex flex-col gap-4 w-[292px] shadow-md">
               <div className="flex gap-3 items-start">
-                <img className="w-10 h-10 rounded-full object-cover" src="ellipse-20.png"  />
+                <img className="w-10 h-10 rounded-full object-cover" src={img} alt={n} />
                 <div className="flex flex-col gap-1 w-[217px]">
                   <div className="flex justify-between w-full">
                     <div className="text-neutral-900 text-sm font-medium">{n}</div>
@@ -105,7 +108,7 @@ const CardA = ({
           ) : st === 'onsite' ? (
             <div className="bg-white rounded-2xl border border-green-300 p-5 flex flex-col gap-4 w-[292px] shadow-md">
               <div className="flex gap-3 items-start">
-                <img className="w-10 h-10 rounded-full object-cover" src="ellipse-20.png" alt="Visitor" />
+                <img className="w-10 h-10 rounded-full object-cover" src={img} alt={n} />
                 <div className="flex flex-col gap-1 w-[217px]">
                   <div className="flex justify-between w-full">
                     <div className="text-neutral-900 text-sm font-medium">{n}</div>
