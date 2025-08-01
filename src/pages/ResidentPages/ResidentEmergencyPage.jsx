@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AlertCard from "../../components/ResidentComponents/AlertCard";
 import EmergencyAlert from "../../components/ResidentComponents/EmergencyAlert";
 import EmergencyContacts from "../../components/ResidentComponents/EmergencyContacts";
@@ -8,10 +8,13 @@ import FireAlertForm from "../../components/ResidentComponents/FireAlertForm";
 import Security_form from "../../components/ResidentComponents/Security_form";
 import ResidentLayout from "../../components/ResidentComponents/ResidentLayout";
 
+
 export default function EmergencyControlApp() {
   const [showPopup, setShowPopup] = useState(false);
   const [activeForm, setActiveForm] = useState(null);
-  const navigate = useNavigate()
+  const [stats, setStats] = useState([]);
+  const [visible, setVisible] = useState(true);
+  const navigate = useNavigate();
 
   const handleSOSClick = () => {
     setShowPopup(true);
@@ -19,6 +22,7 @@ export default function EmergencyControlApp() {
       setShowPopup(false);
     }, 5000);
   };
+
   const handleFireClick = () => {
     navigate("/resident/fire-alert");
   };
