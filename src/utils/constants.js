@@ -20,7 +20,7 @@ export const API_ENDPOINTS = {
   // Auth
   LOGIN: '/user/login/',
   CHANGE_PASSWORD: '/user/change_password/',
-  LOG_OUT: '/user/delete/{user_id}/',
+  LOG_OUT: '/user/device-management/',
 
   // Emergencies
   EMERGENCY_LIST: '/incidence-and-emergency/emergency-list/',
