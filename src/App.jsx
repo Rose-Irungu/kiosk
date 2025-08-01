@@ -81,6 +81,7 @@ import EmergencyAlert from "./components/ResidentComponents/EmergencyAlert";
 import EmergencyContacts from "./components/ResidentComponents/EmergencyContacts";
 import ResidentDashboard from "./pages/ResidentPages/ResidentDashboard";
 import SafetyProtocols from "./pages/ResidentPages/SafetyProtocols";
+import VisitorManagement from "./pages/ResidentPages/VisitorManagement";
 
 
 
@@ -237,6 +238,7 @@ const App = () => {
         <Route path="/userprofile" element={<UserProfile />} />
         <Route path="/resident/dashboard" element={<ResidentDashboard/>}/>
         <Route path="/resident/safetyprotocols" element={<SafetyProtocols/>}/>
+        <Route path="/resident/visitormanagement" element={<VisitorManagement/>}/>
         
 
       </Routes>
