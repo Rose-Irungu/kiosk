@@ -82,6 +82,7 @@ import EmergencyContacts from "./components/ResidentComponents/EmergencyContacts
 import ResidentDashboard from "./pages/ResidentPages/ResidentDashboard";
 import SafetyProtocols from "./pages/ResidentPages/SafetyProtocols";
 import VisitorManagement from "./pages/ResidentPages/VisitorManagement";
+import GuestList from "./pages/ResidentPages/GuestList";
 
 
 
@@ -239,6 +240,8 @@ const App = () => {
         <Route path="/resident/dashboard" element={<ResidentDashboard/>}/>
         <Route path="/resident/safetyprotocols" element={<SafetyProtocols/>}/>
         <Route path="/resident/visitormanagement" element={<VisitorManagement/>}/>
+        <Route path="/resident/guestlist" element={<GuestList/>}/>
+        
         
 
       </Routes>
