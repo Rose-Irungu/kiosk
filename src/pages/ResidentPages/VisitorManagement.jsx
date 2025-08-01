@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from "react-router";
 import ResidentLayout from '../../components/ResidentComponents/ResidentLayout.jsx'
 
+
 const VisitorManagement = () => {
 
     const buttons = [
@@ -10,6 +11,8 @@ const VisitorManagement = () => {
         { id: 'btn3', label: 'Onsite (2)' },
 
     ];
+
+
 
     const datebuttons = [
         { id: 'dt1', day: 'sun', daynum: '12' }, ,
@@ -21,10 +24,6 @@ const VisitorManagement = () => {
         { id: 'dt9', day: 'sat', daynum: '20' },
         { id: 'dt10', day: 'sun', daynum: '21' },
         { id: 'dt11', day: 'mon', daynum: '22' },
-        
-        
-
-
     ];
 
     const navigate = useNavigate();
@@ -38,21 +37,23 @@ const VisitorManagement = () => {
     const handleClick = (id) => {
         setActive(id);
         navigate('/resident/guestlist');
-
     };
 
     const changeColor = (id) => {
         setDay(id);
-        
     };
 
     const goList = () => {
         if (changeColor) {
-           navigate('/resident/guestlist', { viewTransition: true }); 
+            navigate('/resident/guestlist', { viewTransition: true });
         }
     };
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const toggleModal = () => {
+        setIsModalOpen(true)
+    }
 
 
     return (
@@ -68,9 +69,9 @@ const VisitorManagement = () => {
                             <h1 className='text-[24px] font-["DM Sans"] text-[#002706] font-semibold'>My Guests</h1>
                         </div>
 
-                        <div className='flex h-[32px]  bg-[#005E0E] rounded-md text-white shadow items-center justify-between p-2 gap-2 text-[14px] font-semibold font-["DM Sans"] hover:bg-red-500 '>
+                        <div className='flex h-[32px]  bg-[#005E0E] rounded-md text-white shadow items-center justify-between p-2 gap-2 text-[14px] font-semibold font-["DM Sans"] hover:bg-green-500 '>
 
-                            <button className='flex items-center justify-between  ' ><img src="/plus-visitors.svg" alt="" />Invite Guest</button>
+                            <button className='flex items-center justify-between ' onClick={() => navigate('/guestform')} ><img src="/plus-visitors.svg" alt="" />Invite Guest</button>
 
                         </div>
 
@@ -91,7 +92,7 @@ const VisitorManagement = () => {
 
                     {/* Guest Details Card */}
                     <div className='flex flex-col items-center w-full overflow-y-auto'>
-                        <div className='w-[937px] h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4 '>
+                        <button className='w-[937px] h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4 '>
                             <div className='flex flex-row justify-between gap-4 items-center '>
 
                                 <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
@@ -111,7 +112,7 @@ const VisitorManagement = () => {
                             </div>
 
 
-                        </div>
+                        </button>
 
 
 
@@ -161,7 +162,9 @@ const VisitorManagement = () => {
 
 
                     <div className='w-[937px] h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4 '>
-                        <div className='flex flex-row justify-between gap-4 items-center '>
+                        <button onClick={() => {
+                            setIsModalOpen(true);
+                        }} className='flex flex-row justify-between gap-4 items-center '>
 
                             <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
                                 <img src="/oui-gear2.svg" alt="" />
@@ -173,7 +176,7 @@ const VisitorManagement = () => {
 
 
                             </div>
-                        </div>
+                        </button>
 
 
 
@@ -186,6 +189,105 @@ const VisitorManagement = () => {
                 </div>
             </ResidentLayout>
 
+            {/* Table/Card Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
+
+                    <div className='flex flex-col items-start gap-4 w-[292px]  border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]'>
+                        {/* Profile pic/Detail/Badge */}
+                        <div className='flex flex-row w-full items-center justify-between gap-2'>
+                            <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
+                                <img src="/oui-gear2.svg" alt="" />
+                            </div>
+
+                            <div className='flex flex-col items-start w-full'>
+                                <p className='text-[14px] font-medium text-[#002706]'>Robert Nanjala</p>
+                                <p className='text-[11px]'>Check in time: 12:42pm</p>
+                                <p className='text-[11px] text-[#6C50EF]'>Stay time: 52 mins</p>
+
+                            </div>
+
+                            <div className='rounded-md bg-[#D1C9FA] flex items-center w-[64px] h-[22px] justify-center '>
+                                <p className='text-[12px] text-[#2D2264]'>guest</p>
+                            </div>
+
+
+                        </div>
+                        {/* Buttons */}
+                        <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
+                            <div className=' flex bg-[#00580D] rounded-[8px] h-[32px]  items-center justify-between p-2 rounded-[8px] hover:bg-green-500'>
+
+                                <button className='flex  text-[12px]  text-white'>
+                                    Remove from Blacklist
+                                </button>
+                            </div>
+
+                            <div className=' flex  rounded-[8px] h-[32px] items-center justify-between p-2 rounded-[8px] hover:bg-gray-500 border border-[#00580D] '>
+                                <button className='flex  text-[12px]  text-[#00580D]'>
+                                    Details
+                                </button>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            )
+            }
+
+            {/* Table/Card Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
+
+                    <div className='flex flex-col items-start gap-4 w-[292px]  border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]'>
+                        {/* Profile pic/Detail/Badge */}
+                        <div className='flex flex-row w-full items-center justify-between gap-2'>
+                            <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
+                                <img src="/oui-gear2.svg" alt="" />
+                            </div>
+
+                            <div className='flex flex-col items-start w-full'>
+                                <p className='text-[14px] font-medium text-[#002706]'>Robert Nanjala</p>
+                                <p className='text-[11px]'>Check in time: 12:42pm</p>
+                                <p className='text-[11px] text-[#6C50EF]'>Stay time: 52 mins</p>
+
+                            </div>
+
+                            <div className='rounded-md bg-[#D1C9FA] flex items-center w-[64px] h-[22px] justify-center '>
+                                <p className='text-[12px] text-[#2D2264]'>guest</p>
+                            </div>
+
+
+                        </div>
+                        {/* Buttons */}
+                        <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
+                            <div className=' flex bg-[#00580D] rounded-[8px] h-[32px]  items-center justify-between p-2 rounded-[8px] hover:bg-green-500'>
+
+                                <button className='flex  text-[12px]  text-white'>
+                                    Remove from Blacklist
+                                </button>
+                            </div>
+
+                            <div className=' flex  rounded-[8px] h-[32px] items-center justify-between p-2 rounded-[8px] hover:bg-gray-500 border border-[#00580D] '>
+                                <button className='flex  text-[12px]  text-[#00580D]'>
+                                    Details
+                                </button>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            )
+            }
 
         </>
 
