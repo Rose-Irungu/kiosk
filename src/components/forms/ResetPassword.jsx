@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { authService } from "../../services/authService";
+import toast from "react-hot-toast";
 
 const ResetPasswordForm = () => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const ResetPasswordForm = () => {
         token,
         new_password: password,
       });
-
+      toast.success("Password reset successful!");
       navigate("/loginform");
     } catch (error) {
       // Extract server-side token validation errors if present
@@ -69,8 +70,10 @@ const ResetPasswordForm = () => {
       ) {
         const tokenErrors = error.response.data.data.token.join(" ");
         setServerError(tokenErrors);
+        toast.error(tokenErrors || "Password reset failed. Please try again.");
       } else {
         setServerError("Password reset failed. Please try again.");
+        toast.error("Password reset failed. Please try again.");
       }
     } finally {
       setIsLoading(false);

@@ -4,6 +4,7 @@ import ProfileMenu from "./ProfileMenu";
 import React, { useState, useEffect } from "react";
 import { authService } from "../../services/authService";
 import { userService } from "../../services/user";
+import toast from "react-hot-toast";
 
 export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
   const [showProfileCard, setShowProfileCard] = useState(false);
@@ -102,10 +103,10 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
       };
       localStorage.setItem("userInfo", JSON.stringify(updatedUserInfo));
 
-      alert("Profile updated successfully!");
+      toast.success("Profile updated successfully!");
       setShowEditForm(false);
     } catch (error) {
-      alert("Failed to update profile. Please try again.");
+      toast.error(error?.response?.data?.message || "Failed to update profile. Please try again.")
     } finally {
       setIsSubmitting(false);
     }
@@ -174,7 +175,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
       });
 
       
-      alert("Password changed successfully!");
+      toast.success("Password changed successfully!");
       setshowChangePasswordForm(false);
       setPasswordForm({
         oldPassword: "",
@@ -183,11 +184,10 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
       });
       setPasswordErrors({});
     } catch (error) {
-      
       if (error.message) {
-        alert(error.message);
+        toast.error(error.message);
       } else {
-        alert("Failed to change password. Please try again.");
+        toast.error("Failed to change password. Please try again.");
       }
     } finally {
       setIsSubmitting(false);
