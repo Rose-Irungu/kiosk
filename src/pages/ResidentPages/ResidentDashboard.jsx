@@ -6,9 +6,11 @@ import SosButton from '../../components/ResidentComponents/Buttons/SosButton';
 import SafetyProtocolsButton from '../../components/ResidentComponents/Buttons/SafetyProtocolsButton';
 import PastGuestsButton from '../../components/ResidentComponents/Buttons/PastGuestsButton';
 import MyGuestsFrame from '../../components/ResidentComponents/ResidentCards/MyGuestsFrame';
+import ResidentLayout from '../../components/ResidentComponents/ResidentLayout';
 
 //Service imports
-import {/*inviteGuest,*/ triggerSOS, clickTest} from '../../services/residentDashboardServices';
+import {/*inviteGuest,*/ clickTest} from '../../services/residentDashboardServices';
+import { submitEmergency } from '../../scripts/submitEmergency';
 
 function ResidentDashboard() {
     const [activeCardId, setActiveCardId] = useState(null);
@@ -17,6 +19,7 @@ function ResidentDashboard() {
         setActiveCardId(id);
     };
   return (
+    <ResidentLayout>
      <div className="flex flex-wrap justify-start mb-[12px] space-y-4">
         <input type="text" className='flex flex-row w-full h-[40px] rounded-[8px] border-[1px] border-[#E6FBE9] gap-[10px] py-[3px] px-[16px] bg-[#FFFFFF] ' style={{marginTop:'16px'}} placeholder={"Search"}/>
         <div className='flex flex-col w-full h-[341px] rounded-[12px] py-[12px] px-[8px] gap-[18px] bg-[#E6FBE9]'>
@@ -46,11 +49,12 @@ function ResidentDashboard() {
                 </div>
             </div>
             <div className='flex flex-row justify-between w-full h-[96px] rounded-[12px] py-[12px] px-[14px] space-x-4'>
-                <SosButton callback={triggerSOS}/>
+                <SosButton callback={() => submitEmergency()}/>
                 <SafetyProtocolsButton callback={()=>navigate("/resident/safetyprotocols")}/>
             </div>
         </div>
      </div>
+     </ResidentLayout>
   );
 }
 
