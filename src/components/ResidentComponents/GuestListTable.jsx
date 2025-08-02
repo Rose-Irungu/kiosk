@@ -11,9 +11,9 @@ const GuestListTable = () => {
                         <h1 className='text-[24px] font-["DM Sans"] text-[#002706] font-semibold'>dd/mm/yy</h1>
                     </div>
 
-                    <div className='flex h-[32px]  bg-[#005E0E] rounded-md text-white shadow-[0px_1px_10px_0px_rgba(0,_0,_0,_1.5)]/50 items-center justify-between p-2 gap-2 text-[14px] font-semibold font-["DM Sans"] hover:bg-red-500 '>
+                    <div className='flex h-[32px]  bg-[#005E0E] rounded-md text-white shadow-[0px_1px_10px_0px_rgba(0,_0,_0,_1.5)]/50 items-center justify-between p-2 gap-2 text-[14px] font-semibold font-["DM Sans"] hover:bg-green-500 '>
 
-                        <button className='flex items-center justify-between  ' ><img src="/plus-visitors.svg" alt="" />Invite Guest</button>
+                        <button className='flex items-center justify-between  ' onClick={() => navigate('/guestform')} ><img src="/plus-visitors.svg" alt="" />Invite Guest</button>
 
                     </div>
 
