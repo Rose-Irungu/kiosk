@@ -20,7 +20,7 @@ export const API_ENDPOINTS = {
   // Auth
   LOGIN: '/user/login/',
   CHANGE_PASSWORD: '/user/change_password/',
-  LOG_OUT: '/user/delete/{user_id}/',
+  LOG_OUT: '/user/device-management/',
 
   // Emergencies
   EMERGENCY_LIST: '/incidence-and-emergency/emergency-list/',
@@ -39,8 +39,9 @@ export const API_ENDPOINTS = {
   CREATE_INCIDENCE: '/incidence-and-emergency/create-incidence/',
   STATISTICS: '/statistics/active-users/count/',
 
-  //Resident dashboard
-  ALL_VISITORS: '/visits/visit-logs/'
+  //Check Out Visitors Table
+  GET_CHECKOUT_VISITORS: '/statistics/security/dashboard/'
+
 }
 
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://292695e84858.ngrok-free.app'

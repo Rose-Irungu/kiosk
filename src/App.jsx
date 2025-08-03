@@ -84,6 +84,8 @@ import ResidentHeader from "./components/ResidentComponents/ResidentHeader";
 import ResidentLayout from "./components/ResidentComponents/ResidentLayout";
 import FireAlertForm from "./components/ResidentComponents/FireAlertForm";
 import Security_form from "./components/ResidentComponents/Security_form";
+import VisitorManagement from "./pages/ResidentPages/VisitorManagement";
+import GuestList from "./pages/ResidentPages/GuestList";
 
 const App = () => {
   const [users, setUsers] = useState([
@@ -251,6 +253,9 @@ const App = () => {
           path="/resident/security-form"
           element={<Security_form />}
         />
+        <Route path="/resident/visitormanagement" element={<VisitorManagement />} />
+        <Route path="/resident/guestlist" element={<GuestList />} />
+
       </Routes>
     </Router>
   );

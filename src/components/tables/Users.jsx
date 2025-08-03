@@ -28,12 +28,8 @@ export default function Users({ users = [], setUsers = () => {} }) {
   });
   const handleToggleStatus = async () => {
   try {
-    console.log("Selected User ID:", selectedUser.id);
-    const updatedUser = await userService.toggleUserStatus(selectedUser.id, selectedUser);
+    const updatedUser = await userService.toggleUserStatus(selectedUser.id, selectedUser.is_active);
     setSelectedUser(updatedUser);
-
-    // Optional: only if fetchUsers is defined
-    // fetchUsers();
   } catch (error) {
     console.error("Failed to toggle user status:", error);
   }
@@ -56,6 +52,7 @@ export default function Users({ users = [], setUsers = () => {} }) {
 
   const handleView = (user) => {
     setSelectedUser(user);
+    console.log("Selected User:", user);
     setShowModal(true);
     setOpenMenuIndex(null);
   };

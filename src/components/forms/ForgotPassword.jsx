@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { authService } from "../../services/authService";
+import toast from "react-hot-toast";
 
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState("");
@@ -16,6 +17,8 @@ const ForgotPasswordForm = () => {
     e.preventDefault();
     try {
       await authService.sent_password_reset({ email });
+      toast.success("Password reset email sent successfully!");
+      setEmail("");
       navigate("/loginform");
     } catch (error) {
       console.log("Error sending reset email:", error);
@@ -23,8 +26,10 @@ const ForgotPasswordForm = () => {
       
       if (error?.response?.status === 404) {
         setErrorMessage("Email not found.");
+        toast.error(errorMessage || "Email not found. Try again.");
       } else {
         setErrorMessage("Email not found. Try again.");
+        toast.error("An error occurred while sending the reset email.");
       }
     }
   };

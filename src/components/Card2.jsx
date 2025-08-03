@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Siren } from "lucide-react";
 import { Link } from "react-router-dom";
 import { updateEmergency } from "../services/adminEmergencyServices";
+import { getRelativeTime } from "../utils/fomatters";
+
 
 /**
  * Card2 – Panic‑button incident card
@@ -59,7 +61,7 @@ export default function Card2({
         </div>
 
         <p className="font-DM Sans text-sm text-slategray font-medium text-[#a3a7aa]" >
-          {minute} minute{minute !== 1 && "s"} ago
+          {getRelativeTime(minute)}
         </p>
 
         <div className="flex gap-2 mt-3">

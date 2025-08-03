@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Zap, AlertTriangle, UserX, Sword } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ResidentLayout from "./ResidentLayout";
+import { createEmergency } from "../../services/securityDashboardService";
+import { toast } from "react-hot-toast";
 
 const ConcernItem = ({ concern, isSelected, onToggle }) => {
   const Icon = concern.icon;
@@ -53,33 +55,46 @@ export default function SecurityReportForm() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = {
+      type: "security", // for backend classification
       concerns: selectedConcerns,
       location,
       notes,
     };
-    console.log("📝 Form submitted:", formData);
-    navigate("/resident/emergencypage");
 
-    setSelectedConcerns([]);
-    setLocation("");
-    setNotes("");
+    try {
+      const response = await createEmergency(formData);
+      console.log("✅ Emergency submitted:", response);
+      toast.success("Security concern reported successfully!");
+      navigate("/resident/emergencypage");
+    } catch (error) {
+      console.error("❌ Submission failed:", error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setSelectedConcerns([]);
+      setLocation("");
+      setNotes("");
+    }
   };
 
   return (
     <ResidentLayout>
-      <div className="bg-opacity-40 z-50 flex justify-center items-start pt-6 px-4 ]">
+      <div className="bg-opacity-40 z-50 flex justify-center items-start pt-6 px-4">
         <form
           onSubmit={handleSubmit}
           className="bg-white p-6 rounded-lg w-full max-w-xl shadow-lg"
         >
-          <img src="/logo copy.svg" className="w-30 h-30  flex items-center ml-[175px] mb-[20px]" />
+          <img
+            src="/logo copy.svg"
+            className="w-30 h-30 flex items-center ml-[175px] mb-[20px]"
+          />
 
           <div className="mb-6">
             <label className="block text-[#002706] font-bold text-2xl mb-5">
-              What’s thesecurity concern you are <br/>reporting?
+              What’s the security concern you are <br /> reporting?
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {concerns.map((concern) => (

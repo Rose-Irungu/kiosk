@@ -128,7 +128,7 @@ const Dashboard = () => {
             id={latest?.id}
             floor={latest?.triggerer_floor_number}
             unit={latest?.triggerer_unit_number}
-            minute={latest?.minute}
+            minute={latest?.created_at}
             name={latest?.triggered_by}
             status={latest?.emergency_status}
             buttonText="View details"
