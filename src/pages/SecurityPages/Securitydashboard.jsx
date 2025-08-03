@@ -50,7 +50,8 @@ export default function SecurityDashboard() {
           cardTitle="Checked In Visitors"
           count={stats?.current_visitors?.count || 0}
           link="View log"
-          linkHref="/incident_report"
+          data={stats?.current_visitors?.data || []}
+          linkHref="/checkedoutvisitors"
           icon={
             <img
               src="/tick.svg"
@@ -65,6 +66,7 @@ export default function SecurityDashboard() {
             stats?.checked_out_visitors?.count || 0
           }
           link="View log"
+          data={stats?.checked_out_visitors?.data || []}
           linkHref="/checkedoutvisitors"
           icon={
             <img

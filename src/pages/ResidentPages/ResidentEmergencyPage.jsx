@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AlertCard from "../../components/ResidentComponents/AlertCard";
 import EmergencyAlert from "../../components/ResidentComponents/EmergencyAlert";
 import EmergencyContacts from "../../components/ResidentComponents/EmergencyContacts";
@@ -8,18 +8,25 @@ import FireAlertForm from "../../components/ResidentComponents/FireAlertForm";
 import Security_form from "../../components/ResidentComponents/Security_form";
 import ResidentLayout from "../../components/ResidentComponents/ResidentLayout";
 
+
 export default function EmergencyControlApp() {
   const [showPopup, setShowPopup] = useState(false);
   const [activeForm, setActiveForm] = useState(null);
-  const navigate = useNavigate()
+  const [emergencyType, setEmergencyType] = useState(null);
+
+  const [visible, setVisible] = useState(true);
+  const navigate = useNavigate();
 
   const handleSOSClick = () => {
     setShowPopup(true);
     setTimeout(() => {
       setShowPopup(false);
+      setEmergencyType(null);
     }, 5000);
   };
+
   const handleFireClick = () => {
+      setEmergencyType(null);
     navigate("/resident/fire-alert");
   };
 
@@ -64,10 +71,10 @@ export default function EmergencyControlApp() {
           </button>
         </div>
 
-        {showPopup && <EmergencyAlertPopup />}
+        {showPopup && <EmergencyAlertPopup  type={emergencyType} />}
 
-        {activeForm === "fire" && <FireAlertForm />}
-        {activeForm === "security" && <Security_form />}
+        {activeForm === "fire" && <FireAlertForm  type={emergencyType} />}
+        {activeForm === "security" && <Security_form type={emergencyType} />}
 
         <div className="flex flex-col items-center py-6">
           <AlertCard />

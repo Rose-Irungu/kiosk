@@ -1,12 +1,12 @@
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+import { authService } from "../../services/authService";
 
 
 
 const navItems = [
   { id: "residentdash", label: "Home", icon: "/material-symbols-dashboard-rounded0.svg", path: "/resident/dashboard" },
-  { id: "visitor_registration", label: "Visitor management", icon: "/visitor_registration.svg", path: "/visitorregistration" },
+  { id: "visitormanagement", label: "Visitor management", icon: "/visitor_registration.svg", path: "/resident/visitormanagement" },
   { id: "residentemergencies", label: "Emergencies", icon: "/material-symbols-e-911-emergency-rounded0.svg", path: "/security/emergencypage" },
   { id: "/resident/incident", label: "Reports and Incidences", icon: "/tabler-message-report-filled0.svg", path: "/resident/incident" },
 ];
@@ -26,8 +26,12 @@ export default function SecuritySidebar({
   const navigate = useNavigate();
 
   const handleNavigation = (path) => {
-    setMobileOpen(false);
-    navigate(path);
+    if (path === "/resident/signout") {
+      authService.logoutUser();
+    } else{
+      setMobileOpen(false);
+      navigate(path);
+    }
   };
 
   return (

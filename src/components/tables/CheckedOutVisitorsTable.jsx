@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import dayjs from 'dayjs';
 import { getCheckedOut } from "@/services/checkedoutvisitors";
 import {
   Table,
@@ -9,8 +10,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Upload, ChevronDown } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 export default function Visitors() {
+  const location = useLocation();
+  let data = location.state?.data;
+  const title = location.state?.cardTitle;
+  console.log(data)
   const [visitors, setVisitors] = useState([]);
   const [filteredAllVisitors, setFilteredAllVisitors] = useState([]); // For export
   const [loading, setLoading] = useState(true);
@@ -28,30 +34,33 @@ export default function Visitors() {
     setLoading(true);
     try {
 
-      const res = await getCheckedOut();
-      console.log(" Full API response:", res);
-      if (res.result_code === 0) {
-        let allData = res.data;
+      // const res = v;
+      // console.log(" Full API response:", res);
+      // if (res.result_code === 0) {
+      //   let allData = res.data;
 
-        if (visitorTypeFilter !== "all") {
-          allData = allData.filter((v) => v.visitor_type === visitorTypeFilter);
-        }
+      if (visitorTypeFilter !== "all") {
+        data = data.filter((v) => v.visitor_type === visitorTypeFilter);
 
-        setFilteredAllVisitors(allData); // Save all filtered data for export
-        setTotalEntries(allData.length);
+
+        setFilteredAllVisitors(data); // Save all filtered data for export
+        setTotalEntries(data.length);
 
         const start = (currentPage - 1) * entriesPerPage;
         const end = start + entriesPerPage;
-        const paginated = allData.slice(start, end);
+        const paginated = data.slice(start, end);
 
         setVisitors(paginated);
       } else {
-        setVisitors([]);
-        setFilteredAllVisitors([]);
-        setTotalEntries(0);
+        setVisitors(data)
       }
+      // } else {
+      //   setVisitors([]);
+      //   setFilteredAllVisitors([]);
+      //   setTotalEntries(0);
+      // }
     } catch (error) {
-      console.error("Error fetching visitors:", error);
+
       setVisitors([]);
       setFilteredAllVisitors([]);
       setTotalEntries(0);
@@ -107,7 +116,7 @@ export default function Visitors() {
     <>
       <div className="w-full max-w-7xl mx-auto bg-white rounded-xl shadow-sm mt-5">
         <div className="flex justify-between items-start p-6 ">
-          <h2 className="text-lg  font-bold font-['Inter']">Checked Out Visitors</h2>
+          <h2 className="text-lg  font-bold font-['Inter']">{title}</h2>
 
         </div>
 
@@ -174,9 +183,13 @@ export default function Visitors() {
                 <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Visitor Name</TableHead>
                 <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Phone No.</TableHead>
                 <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Visit Unit</TableHead>
-                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Check-In Time</TableHead>
-                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Check-Out Time</TableHead>
-                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Verified By</TableHead>
+                
+                {
+                  title !== "Checked In Visitors" 
+                  ?(<TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Check-Out Time</TableHead>)
+                  :(<TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Check-In Time</TableHead>)
+                }
+
                 <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter'] ">Status</TableHead>
               </TableRow>
             </TableHeader>
@@ -195,41 +208,42 @@ export default function Visitors() {
                   </TableCell>
                 </TableRow>
               ) : (
-                visitors
+                visitors.map((visitor, index) => (
+                  <TableRow key={index} className="even:bg-[#E0DBF4]/5 odd:bg-[#005E0E]/5">
+                    <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.full_name}</TableCell>
+                    <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.phone_number}</TableCell>
+                    <TableCell className="text-[#495057] text-[13px]  font-['Inter'] p-4">{visitor.unit_number}</TableCell>
+                    
+                    {
+                      title !== "Checked In Visitors" 
+                      ?(<TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{dayjs(visitor.check_out).format('HH:mm')}</TableCell>)
+                      :(<TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{dayjs(visitor.check_in).format('HH:mm')}</TableCell>)
+                    }
 
-                  // .filter(visitor => visitor.status === "checked_out")
-                  .map((visitor, index) => (
-                    <TableRow key={index} className="even:bg-[#E0DBF4]/5 odd:bg-[#005E0E]/5">
-                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.full_name}</TableCell>
-                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.phone_number}</TableCell>
-                      <TableCell className="text-[#495057] text-[13px]  font-['Inter'] p-4">{visitor.unit_number}</TableCell>
-                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.check_in}</TableCell>
-                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.check_out}</TableCell>
-                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">{visitor.verifier}</TableCell>
-                      <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">
-
-
-                        <div
-                          className={`flex items-center justify-center px-1 py-0.5 gap-2 w-[90px] h-[20px] rounded text-xs  ${visitor.status === "checked_in"
-                            ? "bg-[rgba(1,210,30,0.2)] text-green-800"
-                            : visitor.status === "checked_out"
-                              ? "bg-[#E0DBF4] text-purple-800"
-                              : "bg-yellow-200 text-yellow-800"
-                            }`}
-                        >
-                          {
-                            visitor.status == "checked_in"
-                              ? "Checked In"
-                              : visitor.status == "checked_out"
-                                ? "Checked Out"
-                                : "Registered"
-                          }
-                        </div>
+                    <TableCell className="text-[#495057] text-[13px]   font-['Inter'] p-4">
 
 
-                      </TableCell>
-                    </TableRow>
-                  )))}
+                      <div
+                        className={`flex items-center justify-center px-1 py-0.5 gap-2 w-[90px] h-[20px] rounded text-xs  ${visitor.status === "checked_in"
+                          ? "bg-[rgba(1,210,30,0.2)] text-green-800"
+                          : visitor.status === "checked_out"
+                            ? "bg-[#E0DBF4] text-purple-800"
+                            : "bg-yellow-200 text-yellow-800"
+                          }`}
+                      >
+                        {
+                          visitor.status == "checked_in"
+                            ? "Checked In"
+                            : visitor.status == "checked_out"
+                              ? "Checked Out"
+                              : "Registered"
+                        }
+                      </div>
+
+
+                    </TableCell>
+                  </TableRow>
+                )))}
 
             </TableBody>
           </Table>

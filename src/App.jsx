@@ -11,6 +11,7 @@ import CardA from "./components/ResidentComponents/ResidentCards/CardA";
 import MyGuestsFrame from "./components/ResidentComponents/ResidentCards/MyGuestsFrame";
 import Card4 from "./components/Card4";
 import Card6 from "./components/Card6";
+import { SkeletonCard } from "./components/SkeletonCard";
 import Home from "./pages/Home";
 import VisitorPage from "./pages/VisitorPage";
 import CheckinCheckout from "./pages/SecurityPages/CheckinCheckout";
@@ -65,9 +66,13 @@ import VisitorRegistration from "./pages/SecurityPages/VisitorRegistration";
 import ExpectedVisitors from "./components/tables/ExpectedVisitors";
 import VisitorsExpected from "./pages/SecurityPages/VisitorsExpected";
 import UserProfile from "./components/UserProfile";
+{
+  /* Again, ye who commented my path and removed my import up here, please inform me next time kindly, becca :) */
+}
 import CheckedOutVisitors from "./pages/SecurityPages/CheckedOutVisitors";
 import SecurityHelpPage from "./pages/SecurityPages/Help";
 import SecurityIncidentPage from "./pages/SecurityPages/Incidentpage";
+
 import ResidentEmergencypage from "./pages/ResidentPages/ResidentEmergencyPage";
 import AlertCard from "./components/ResidentComponents/AlertCard";
 import EmergencyAlert from "./components/ResidentComponents/EmergencyAlert";
@@ -79,13 +84,64 @@ import ResidentHeader from "./components/ResidentComponents/ResidentHeader";
 import ResidentLayout from "./components/ResidentComponents/ResidentLayout";
 import FireAlertForm from "./components/ResidentComponents/FireAlertForm";
 import Security_form from "./components/ResidentComponents/Security_form";
-import { Toaster } from "react-hot-toast";
+import VisitorManagement from "./pages/ResidentPages/VisitorManagement";
+import GuestList from "./pages/ResidentPages/GuestList";
 
 const App = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([
+    {
+      name: "Derick Ochieng",
+      phone: "0756755634",
+      role: "Resident",
+      unit: "C-04",
+      status: "Active",
+      photo: "/ellipse-160.png",
+      email: "derick@example.com",
+      id: "12345678",
+    },
+    {
+      name: "Haron Mureithi",
+      phone: "0744678751",
+      role: "Resident",
+      unit: "B-04",
+      status: "Active",
+      photo: "/ellipse-161.png",
+      email: "haron@example.com",
+      id: "87654321",
+    },
+    {
+      name: "Jackson Munene",
+      phone: "0709787856",
+      role: "Security",
+      unit: "--",
+      status: "Frozen",
+      photo: "/ellipse-162.png",
+      email: "jackson@example.com",
+      id: "99887766",
+    },
+    {
+      name: "Lucy Wanja",
+      phone: "0108978651",
+      role: "Security",
+      unit: "--",
+      status: "Frozen",
+      photo: "/ellipse-163.png",
+      email: "lucy@example.com",
+      id: "22334455",
+    },
+    {
+      name: "Mary Adhiambo",
+      phone: "0718674563",
+      role: "Resident",
+      unit: "B-10",
+      status: "Active",
+      photo: "/ellipse-164.png",
+      email: "mary@example.com",
+      id: "55667788",
+    },
+  ]);
 
   return (
-    <>
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -197,29 +253,11 @@ const App = () => {
           path="/resident/security-form"
           element={<Security_form />}
         />
+        <Route path="/resident/visitormanagement" element={<VisitorManagement />} />
+        <Route path="/resident/guestlist" element={<GuestList />} />
+
       </Routes>
     </Router>
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          duration: 4000,
-          style: {
-            background: '#363636',
-            color: '#fff',
-          },
-          success: {
-            style: {
-              background: '#4caf50',
-            },
-          },
-          error: {
-            style: {
-              background: '#f44336',
-            },
-          },
-        }}
-      />
-    </>
   );
 };
 
