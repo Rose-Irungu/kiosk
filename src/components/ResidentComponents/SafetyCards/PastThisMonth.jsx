@@ -1,0 +1,35 @@
+import React, { useState, useEffect } from 'react';
+import filterVisitorsByDate from '../../../scripts/filter';
+import PastGuestCard from './PastGuestCard';
+import NoteP from './NoteP';
+
+export default function PastThisMonth({ allVisitors }) {
+  const [thisMonthVisitors, setThisMonthVisitors] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const visitors = filterVisitorsByDate(allVisitors, 'this_week');
+    setThisMonthVisitors(visitors);
+    setLoading(false);
+  }, [allVisitors]);
+
+  return (
+    <div className="flex flex-row items-center justify-center w-full h-[106px] py-[12px] px-[8px] gap-[10px] overflow-y-scroll">
+      {loading ? (
+        <NoteP text={"Loading..."}/>
+      ) : thisMonthVisitors.length > 0 ? (
+        thisMonthVisitors.map((visitor, index) => (
+          <PastGuestCard
+            key={index}
+            image={visitor.image}
+            name={visitor.name}
+            checkOutTime={visitor.checkOutTime}
+            type={visitor.type}
+          />
+        ))
+      ) : (
+        <NoteP text={"No guests checked out this month."}/>
+      )}
+    </div>
+  );
+}
