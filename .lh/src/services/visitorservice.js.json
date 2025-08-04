@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/services/visitorservice.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1754310744084,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1754310744084,
+            "name": "Commit-0",
+            "content": "import api from './api';\r\nimport { API_ENDPOINTS } from '../utils/constants';\r\nimport toast from 'react-hot-toast';\r\n\r\n\r\nexport const getInvitation = async (token) => {\r\n  const res = await api.get(`${API_ENDPOINTS.GET_VISITOR}?token=${token}`);\r\n  return res.data;\r\n};\r\n\r\nexport const submitInvitation = async (token, formData) => {\r\n  const promise = api.post(`${API_ENDPOINTS.REGISTER_VISITOR}?token=${token}`, formData, {\r\n    headers: {\r\n      'Content-Type': 'multipart/form-data',\r\n    }\r\n  },);\r\n  const res = awaittoast.promise(promise, {\r\n    loading: 'Submitting invitation...',\r\n    success: 'Invitation submitted successfully!',\r\n    error: 'Failed to submit invitation. Please try again.',\r\n  });\r\n  return res.data;\r\n};\r\n\r\nexport const createInvitation = async (formData) => {\r\n  const res = await api.post(API_ENDPOINTS.INVITE_VISITOR, formData);\r\n  return res.data;\r\n};\r\n\r\nexport const getAllVisitors = async () => {\r\n  const res = await api.get(API_ENDPOINTS.GET_ALL_VISITORS);\r\n  return res.data;\r\n}\r\nexport const getMostVisitedUnits = async (filter = \"today\") => {\r\n  const res = await api.get(`${API_ENDPOINTS.MOST_VISITED_UNITS}?filter=${filter}`);\r\n  return res.data.results;\r\n};\r\n\r\nexport const getVisitLogss = async () => {\r\n  try {\r\n    const response = await api.get(API_ENDPOINTS.VISIT_LOGS);\r\n    return response.data;\r\n  } catch (error) {\r\n    console.error(\"Failed to fetch visit logs\", error);\r\n    throw error;\r\n  }\r\n};"
+        }
+    ]
+}

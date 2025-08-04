@@ -265,7 +265,7 @@ export default function GuestCheckInForm() {
                   id="photo-upload"
                   type="file"
                   accept="image/*"
-                  onChange={(e) => handleInputChange('photo', e.target.files[0])}
+                  onChange={(e) => handleInputChange('profile_pic', e.target.files[0])}
                   className="hidden"
 
                 />

@@ -12,18 +12,16 @@ export default function EmergencyControlApp() {
   const [showPopup, setShowPopup] = useState(false);
   const [activeForm, setActiveForm] = useState(null);
   const [emergencyType, setEmergencyType] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(0); 
+  const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {
-    let timer = setInterval(() => {
-      setTimeLeft((timeLeft) => {
-        if (timeLeft === 0) {
-          clearInterval(timer);
-          return 0;
-        } else return timeLeft - 1;
-      });
+    if (timeLeft <= 0) return;
+
+    const timeout = setTimeout(() => {
+      setTimeLeft((prev) => prev - 1);
     }, 1000);
- 
+
+    return () => clearTimeout(timeout);
   }, [timeLeft]);
   const navigate = useNavigate();
 
@@ -82,13 +80,15 @@ export default function EmergencyControlApp() {
           </button>
         </div>
 
-        {showPopup && <EmergencyAlertPopup type={emergencyType} time={setTimeLeft}/>}
+        {showPopup && (
+          <EmergencyAlertPopup type={emergencyType} time={setTimeLeft} />
+        )}
 
         {activeForm === "fire" && <FireAlertForm type={emergencyType} />}
         {activeForm === "security" && <Security_form type={emergencyType} />}
 
         <div className="flex flex-col items-center py-6">
-          <AlertCard time={timeLeft}/>
+          <AlertCard time={timeLeft} />
         </div>
         <div className="flex flex-col items-center py-6">
           <EmergencyAlert />

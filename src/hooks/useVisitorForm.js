@@ -21,7 +21,7 @@ export const useVisitorForm = () => {
     unit_number: "",
     plate_number: "",
     visitor_type: "visitor",
-    photo: null,
+    profile_pic: null,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -95,7 +95,7 @@ export const useVisitorForm = () => {
     setError("");
 
     //
-    if (isVisitorMode && !formData.photo) {
+    if (isVisitorMode && !formData.profile_pic) {
       setError("Please upload a photo before submitting the form.");
       setLoading(false);
       return;

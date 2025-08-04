@@ -14,7 +14,7 @@ export const submitInvitation = async (token, formData) => {
       'Content-Type': 'multipart/form-data',
     }
   },);
-  const res = toast.promise(promise, {
+  const res = await toast.promise(promise, {
     loading: 'Submitting invitation...',
     success: 'Invitation submitted successfully!',
     error: 'Failed to submit invitation. Please try again.',
