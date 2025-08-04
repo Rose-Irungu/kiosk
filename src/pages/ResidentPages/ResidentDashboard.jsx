@@ -24,6 +24,7 @@ function ResidentDashboard() {
     const navigate = useNavigate();
     useEffect(() =>{
         const allVisitors = getAllVisitors();
+        console.log(allVisitors);
         setVisitors(allVisitors);
         setLoading(false);
     }, []);
