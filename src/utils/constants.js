@@ -32,6 +32,7 @@ export const API_ENDPOINTS = {
   // security registering visitor
   SECURITY_REGISTER_VISITOR: '/visitors/security-check-in/',
   VISIT_LOGS: '/visits/visit-logs/',
+  VISITS_USER: '/visits/visits-user/',
 
 
   //Security dashboard 
@@ -40,7 +41,10 @@ export const API_ENDPOINTS = {
   STATISTICS: '/statistics/active-users/count/',
 
   //Check Out Visitors Table
-  GET_CHECKOUT_VISITORS: '/statistics/security/dashboard/'
+  GET_CHECKOUT_VISITORS: '/statistics/security/dashboard/',
+
+  //Resident dashboard
+  ALL_VISITORS: 'visits/visit-logs/'
 
 }
 

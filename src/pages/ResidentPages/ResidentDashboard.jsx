@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 //import ResidentLayout from '../../components/ResidentComponents/ResidentLayout';
 //import InviteGuest from '../../components/ResidentComponents/Buttons/InviteGuest';
@@ -7,17 +7,39 @@ import SafetyProtocolsButton from '../../components/ResidentComponents/Buttons/S
 import PastGuestsButton from '../../components/ResidentComponents/Buttons/PastGuestsButton';
 import MyGuestsFrame from '../../components/ResidentComponents/ResidentCards/MyGuestsFrame';
 import ResidentLayout from '../../components/ResidentComponents/ResidentLayout';
+import PastToday from '../../components/ResidentComponents/SafetyCards/PastToday';
+import PastThisWeek from '../../components/ResidentComponents/SafetyCards/PastThisWeek';
+import PastThisMonth from '../../components/ResidentComponents/SafetyCards/PastThisMonth';
+import NoteP from '../../components/ResidentComponents/SafetyCards/NoteP';
 
 //Service imports
-import {/*inviteGuest,*/ clickTest} from '../../services/residentDashboardServices';
+import {clickTest} from '../../services/residentDashboardServices';
 import { submitEmergency } from '../../scripts/submitEmergency';
+import { getAllVisitors } from '../../services/residentDashboardServices';
 
 function ResidentDashboard() {
+
     const [activeCardId, setActiveCardId] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [visitors, setVisitors] = useState([]);
     const navigate = useNavigate();
+
+    useEffect(() =>{
+
+        const getVisitors = async () =>{
+            const allVisitors = await getAllVisitors();
+            setVisitors(allVisitors);
+            console.log("All visitors:", allVisitors);
+            return allVisitors;
+        };
+        getVisitors();
+        setLoading(false);
+    }, []);
+
     const handleCardClick = (id) => {
         setActiveCardId(id);
     };
+
   return (
     <ResidentLayout>
      <div className="flex flex-wrap justify-start mb-[12px] space-y-4">
@@ -38,7 +60,7 @@ function ResidentDashboard() {
                 <PastGuestsButton label={"This Month"} callback={() => clickTest} onCardClick={handleCardClick} id = "card3" activeCardId={activeCardId}/>
             </div>
             <div className='flex flex-row w-full h-[106px] py-[12px] px-[8px] gap-[10px]'>
-                {activeCardId == 'card1' ? (<p>card 1</p>) : activeCardId == 'card2' ? (<p>card 2</p>) : <p>card 3</p>}
+                {loading? (<NoteP text={"Loading..."}/>) : (activeCardId == 'card1' ? (<PastToday allVisitors={visitors}/>) : activeCardId == 'card2' ? (<PastThisWeek allVisitors={visitors}/>) : <PastThisMonth allVisitors={visitors}/>)}
             </div>
         </div>
         <div className='flex flex-col w-full lg:h-[165px] lg:top-[784px] rounded-[12px] py-[10px] px-[20px] bg-[#FDE8E7]'>
