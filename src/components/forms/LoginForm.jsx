@@ -36,11 +36,11 @@ const LoginForm = () => {
             break;
           case "tenant":
               navigate("/resident/dashboard");
-            console.log("Tenant login successful – dashboard not ready.");
+            console.log("Tenant login successful");
             break;
           case "security":
             navigate("/security/dashboard");
-            console.log("Security login successful – dashboard not ready.");
+            console.log("Security login successful");
             break;
           default:
             throw new Error("Unknown role. Contact support.");
