@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function SectionHeading({icon, text}) {
+export default function SectionHeading3({icon, text}) {
   return (
     <div className='flex flex-row justify-center w-full h-[32px] gap-[4px]'>
       <div className='w-[32px] h-[32px]'>

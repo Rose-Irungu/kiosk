@@ -39,7 +39,7 @@ export default function SafetyProtocols() {
         </div>
         <div className='flex flex-col w-full h-[432px] rounded-[12px] p-[20px] gap-[12px] bg-[#FFFFFF]'>
             <SectionHeading icon="" text="Emergency Contacts"/>
-            <EmergencyContacts icon1="/shieldcheck.svg" icon2="" heading="West Brook Security Guards" phoneOne="071245678" phoneTwo="0723456789" />
+            <EmergencyContacts icon1="/shieldcheck.svg" icon2="" heading="West Brook Security Guards" phoneOne="0712345678" phoneTwo="0723456789" />
             <EmergencyContacts icon1="" icon2="" heading="Nairobi County Fire & Rescue Services" phoneOne="0780000000" phoneTwo="0790000000" /> 
             <EmergencyContacts icon1="" icon2="" heading="Ambulances" phoneOne="1800-098-765" phoneTwo="1800-123-456" />         
         </div>
