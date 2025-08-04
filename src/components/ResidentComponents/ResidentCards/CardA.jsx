@@ -1,46 +1,37 @@
 import React, { useState, useEffect } from 'react';
+import { getRelativeTime } from '../../../utils/fomatters';
 
 
 const CardA = ({
-  name,
-  time,
+  visitor_name,
+  check_in,
   stayTime,
   purpose,
   status,
   tag,
-  image, // ✅ added image prop
+  image, 
 }) => {
   const [visitorData, setVisitorData] = useState({
-    name,
-    time,
+    visitor_name,
+    check_in,
     stayTime,
     purpose,
     status,
     tag,
-    image, // ✅ included image in state
+    image, 
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // useEffect(() => {
-  //   const shouldFetch =
-  //     !name && !time && !stayTime && !purpose && !status && !tag && !image;
-
-  //   if (shouldFetch) {
-  //     fetch('/visits/user-visits/') 
-  //       .then((res) => res.json())
-  //       .then((data) => setVisitorData(data))
-  //       .catch((err) => console.error('Error fetching visitor:', err));
-  //   }
-  // }, [name, time, stayTime, purpose, status, tag]);
+  
 
   const {
-    name: n = 'Robert Nanjala',
-    time: t = '12:42 pm',
+    name: n = visitor_name,
+    time: t = getRelativeTime(check_in),
     stayTime: s = '52 mins',
     purpose: p = 'delivery',
     status: st = 'pending',
     tag: tg = 'guest',
-    image: img = '/ellipse-20.png', // ✅ default image fallback
+    image: img = '/ellipse-20.png', 
   } = visitorData;
 
   const openModal = () => setIsModalOpen(true);
@@ -55,12 +46,19 @@ const CardA = ({
         <div className="flex items-center gap-1.5">
           <img
             className="w-10 h-10 rounded-full object-cover"
-            src={img} // ✅ dynamic image here
+            src={img} 
             alt={n}
           />
           <div className="flex flex-col gap-0.5 w-[145px]">
             <div className="text-green-900 text-sm font-medium">{n}</div>
-            <div className="text-gray-500 text-xs font-medium">Check in time: {t}</div>
+            {
+              status === 'checked_in' ? (
+                <div className="text-gray-500 text-xs font-medium">Check in time: {t}</div>
+              ) : (
+                <div className="text-gray-500 text-xs font-medium">Today</div>
+              )
+            }
+            
           </div>
         </div>
         <div className="bg-green-100 rounded-xl px-2.5 py-0.5 flex items-center justify-center">
