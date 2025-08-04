@@ -1,5 +1,6 @@
 import api from './api';
 import { API_ENDPOINTS } from '../utils/constants';
+import toast from 'react-hot-toast';
 
 
 export const getInvitation = async (token) => {
@@ -8,13 +9,16 @@ export const getInvitation = async (token) => {
 };
 
 export const submitInvitation = async (token, formData) => {
-  console.log(`-------------------- ${API_ENDPOINTS.REGISTER_VISITOR}?token=${token}`);
-  
-  const res = await api.post(`${API_ENDPOINTS.REGISTER_VISITOR}?token=${token}`, formData,{
-      headers: {
-          'Content-Type': 'multipart/form-data',
-      }
+  const promise = api.post(`${API_ENDPOINTS.REGISTER_VISITOR}?token=${token}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    }
   },);
+  const res = toast.promise(promise, {
+    loading: 'Submitting invitation...',
+    success: 'Invitation submitted successfully!',
+    error: 'Failed to submit invitation. Please try again.',
+  });
   return res.data;
 };
 
@@ -29,13 +33,13 @@ export const getAllVisitors = async () => {
 }
 export const getMostVisitedUnits = async (filter = "today") => {
   const res = await api.get(`${API_ENDPOINTS.MOST_VISITED_UNITS}?filter=${filter}`);
-  return res.data.results; 
+  return res.data.results;
 };
 
 export const getVisitLogss = async () => {
   try {
-    const response = await api.get(API_ENDPOINTS.VISIT_LOGS); // or "/api/visits/visit-logs/"
-    return response.data; // Assuming response is directly the array
+    const response = await api.get(API_ENDPOINTS.VISIT_LOGS);
+    return response.data;
   } catch (error) {
     console.error("Failed to fetch visit logs", error);
     throw error;
