@@ -8,11 +8,11 @@ export default function EmergencyPreparedness() {
     <div className='flex flex-col w-[728px] md:w-full sm:w-full h-[256.8px] gap-[21px]'>
       <Head/>
       <div className='flex flex-col lg:w-[728px] lg:h-[175.8] gap-[7px]'>
-        <SectionHeading icon="" text = "Stay ready:"/>
+        <SectionHeading icon="/ngao.svg" text = "Stay ready:"/>
         <div className='flex flex-col w-full h-[137.80] gap-[1.72px]'>
-          <SafetyP icon="" text="Know where the exits and stairs are."/>
-          <SafetyP icon="" text="Keep a small emergency bag ready(Water, ID, Keys)."/>
-          <SafetyP icon="" text="Save emregency numbers in your phone."/>
+          <SafetyP icon="/tick.svg" text="Know where the exits and stairs are."/>
+          <SafetyP icon="/tick.svg" text="Keep a small emergency bag ready(Water, ID, Keys)."/>
+          <SafetyP icon="/tick.svg" text="Save emregency numbers in your phone."/>
         </div>
       </div>
     </div>

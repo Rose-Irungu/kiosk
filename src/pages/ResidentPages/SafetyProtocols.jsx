@@ -23,12 +23,12 @@ export default function SafetyProtocols() {
     <div className="flex flex-wrap justify-start mb-[12px] space-y-4">
         <div className='flex lg:flex-row w-full lg:h-[376px] rounded-[12px] p-[20px] gap-[46px] bg-[#FFFFFF] sm:flex-col sm:space-y-4 md:flex-col md:space-y-4'>
             <div className='flex flex-col w-[349px] h-[336px] gap-[12px] bg-[#FFFFFF]'>
-                <ProtocolCard image="/fire.svg" label={"Fire Safety"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card1" activeCardId={activeCardId}/>
-                <ProtocolCard image="/warn.svg" label={"Security Concerns"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card2" activeCardId={activeCardId}/>
+                <ProtocolCard image="/mwaki.svg" label={"Fire Safety"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card1" activeCardId={activeCardId}/>
+                <ProtocolCard image="/triangle.svg" label={"Security Concerns"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card2" activeCardId={activeCardId}/>
                 <ProtocolCard image="/msee.svg" label={"Visitors and Deliveries"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card3" activeCardId={activeCardId}/>
                 <ProtocolCard image="/nare.svg" label={"Electricity and Water"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card4" activeCardId={activeCardId}/>
-                <ProtocolCard image="/elevator.svg" label={"Lift Safety"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card5" activeCardId={activeCardId}/>
-                <ProtocolCard image="/shield.svg" label={"Emergency Preparedness"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card6" activeCardId={activeCardId}/>
+                <ProtocolCard image="/lifup.svg" label={"Lift Safety"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card5" activeCardId={activeCardId}/>
+                <ProtocolCard image="/ngao.svg" label={"Emergency Preparedness"} callback={()=>navigate("")} onCardClick={handleCardClick} id="card6" activeCardId={activeCardId}/>
             </div>
             <div className='flex flex-col w-[728px] md:w-full sm:w-full h-[256.8px] gap-[21px]'>
                 {activeCardId == 'card1' ? (<FireSafety/>) : activeCardId == 'card2' ? (<SecurityConcerns/>) : activeCardId == 'card3' ? <VisitorDeliveries/> : activeCardId == 'card4'? (<ElectricityWater/>) : activeCardId == 'card5' ? (<LiftSafety/>) : (<EmergencyPreparedness/>)}
