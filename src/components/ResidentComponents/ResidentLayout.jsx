@@ -11,7 +11,7 @@ const navItems = [
   { id: "visitormanagement", path: "/resident/visitormanagement" },
   { id: "checkincheckout", path: "/checkincheckout" },
   { id: "incidents", path: "/security/incident" },
-  { id: "securityemergencies", path: "/security/emergencypage"}
+  { id: "residentemergencies", path: "/resident/visitormanagement"}
 ];
 
 const secondaryItems = [

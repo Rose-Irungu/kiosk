@@ -8,7 +8,7 @@ export default function EmergencyCard({
   notes = [],
 }) {
   return (
-    <div className="bg-red-50 border border-red-200 rounded-[12px] p-6 mb-6 relative w-[964px] flex flex-col gap-[10px] text-[#610c07] font-sans">
+    <div className="bg-red-50 border border-red-200 rounded-[12px] p-6 mb-6 relative w-[calc(100vw-2rem)] sm:w-auto sm:max-w-[964px] md:w-[964px] flex flex-col gap-[10px] text-[#610c07] font-sans">
       <div className="flex items-center mb-[20px]">
         <img src={icon} alt="emergency icon" className="w-8 h-8" />
         <h2 className="text-[#610c07] font-semibold text-2xl">{title}</h2>

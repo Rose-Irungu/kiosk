@@ -60,6 +60,7 @@ export default function Visitors() {
       //   setTotalEntries(0);
       // }
     } catch (error) {
+      
 
       setVisitors([]);
       setFilteredAllVisitors([]);
