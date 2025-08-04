@@ -8,7 +8,7 @@ export default function PastThisMonth({ allVisitors }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const visitors = filterVisitorsByDate(allVisitors, 'this_week');
+    const visitors = filterVisitorsByDate(allVisitors, 'this_month');
     setThisMonthVisitors(visitors);
     setLoading(false);
   }, [allVisitors]);
