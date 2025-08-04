@@ -18,8 +18,10 @@ export function EmergencyTable({
   error = null,
   timeFilter = "Today",
   onTimeFilterChange,
-  highlightConditions = []
+  highlightConditions = [],
+  
 }) {
+  const user = JSON.parse(localStorage.getItem("userInfo"));
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const toggleDropdown = (index) => {
@@ -115,7 +117,9 @@ export function EmergencyTable({
             <TableHead className="font-medium text-muted-foreground">Type</TableHead>
             <TableHead className="font-medium text-muted-foreground">Time</TableHead>
             <TableHead className="font-medium text-muted-foreground">Status</TableHead>
+            { user?.role === "admin" && (
             <TableHead className="font-medium text-muted-foreground">Action</TableHead>
+            ) }
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -146,6 +150,7 @@ export function EmergencyTable({
                     {event.status}
                   </span>
                 </TableCell>
+                {user?.role === "admin" && (
                 <TableCell className="relative dropdown-parent">
                   <MoreHorizontal
                     className="cursor-pointer text-muted-foreground"
@@ -169,7 +174,9 @@ export function EmergencyTable({
                     </div>
                   )}
                 </TableCell>
+                 )}
               </TableRow>
+
             ))
           )}
         </TableBody>

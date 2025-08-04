@@ -6,10 +6,9 @@ import sphere from "../../assets/sphere-green-glossy0.png";
 import Header from "../../components/Header";
 
 function GuestRegSuccessPage() {
-  const navigate = useNavigate(); // Hook for programmatic navigation
-
+  const navigate = useNavigate(); 
   const handleClose = () => {
-    navigate('/'); // Redirects to the Home page
+    navigate('/resident/dashboard'); 
   };
 
   return (

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createEmergency } from "../../services/securityDashboardService";
 import { toast } from "react-hot-toast";
 
-export default function EmergencyAlertCard() {
+export default function EmergencyAlertCard({type}) {
   const [stats, setStats] = useState([]);
   const [visible, setVisible] = useState(true);
 
