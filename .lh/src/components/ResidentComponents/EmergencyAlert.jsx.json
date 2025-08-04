@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/components/ResidentComponents/EmergencyAlert.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1754289291949,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1754289327083,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   instructions = [],\r\n   notes = [],\r\n }) {\r\n   return (\r\n-    <div className=\"bg-red-50 border border-red-200 rounded-[12px] p-6 mb-6 relative w-screen max-w-none sm:w-auto sm:max-w-[964px] md:w-[964px] flex flex-col gap-[10px] text-[#610c07] font-sans -mx-4 sm:mx-0\">\r\n+    <div className=\"bg-red-50 border border-red-200 rounded-[12px] p-6 mb-6 relative w-screen max-w-none sm:w-auto sm:max-w-[904px] md:w-[964px] flex flex-col gap-[10px] text-[#610c07] font-sans -mx-4 sm:mx-0\">\r\n       <div className=\"flex items-center mb-[20px]\">\r\n         <img src={icon} alt=\"emergency icon\" className=\"w-8 h-8\" />\r\n         <h2 className=\"text-[#610c07] font-semibold text-2xl\">{title}</h2>\r\n       </div>\r\n"
+                },
+                {
+                    "date": 1754289337983,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,36 @@\n+export default function EmergencyCard({\r\n+  icon = \"/emg1.svg\",\r\n+  title = \"Emergency Alert\",\r\n+  headline,\r\n+  timeAgo,\r\n+  instructionsTitle,\r\n+  instructions = [],\r\n+  notes = [],\r\n+}) {\r\n+  return (\r\n+    <div className=\"bg-red-50 border border-red-200 rounded-[12px] p-6 mb-6 relative w-[964px] flex flex-col gap-[10px] text-[#610c07] font-sans\">\r\n+      <div className=\"flex items-center mb-[20px]\">\r\n+        <img src={icon} alt=\"emergency icon\" className=\"w-8 h-8\" />\r\n+        <h2 className=\"text-[#610c07] font-semibold text-2xl\">{title}</h2>\r\n+      </div>\r\n+\r\n+      {headline && <p className=\"text-[20px] font-medium\">{headline}</p>}\r\n+      {timeAgo && <p className=\"text-[16px]\">{timeAgo}</p>}\r\n+\r\n+      {instructionsTitle && (\r\n+        <p className=\"text-[20px] font-semibold\">{instructionsTitle}</p>\r\n+      )}\r\n+\r\n+      <ul className=\"text-[20px] list-decimal pl-5 space-y-1\">\r\n+        {instructions.map((step, idx) => (\r\n+          <li key={`instruction-${idx}`}>{step}</li>\r\n+        ))}\r\n+        {notes.map((note, idx) => (\r\n+          <li key={`note-${idx}`} className=\"text-[#610c07]\">\r\n+            <span className=\"font-bold\">Note:</span> {note}\r\n+          </li>\r\n+        ))}\r\n+      </ul>\r\n+    </div>\r\n+  );\r\n+}\r\n"
+                }
+            ],
+            "date": 1754289291949,
+            "name": "Commit-0",
+            "content": "export default function EmergencyCard({\r\n  icon = \"/emg1.svg\",\r\n  title = \"Emergency Alert\",\r\n  headline,\r\n  timeAgo,\r\n  instructionsTitle,\r\n  instructions = [],\r\n  notes = [],\r\n}) {\r\n  return (\r\n  <div className=\"bg-red-50 border border-red-200 rounded-[12px] p-6 mb-6 relative w-screen max-w-none sm:w-auto sm:max-w-[964px] md:w-[964px] flex flex-col gap-[10px] text-[#610c07] font-sans -mx-4 sm:mx-0\">\r\n      <div className=\"flex items-center mb-[20px]\">\r\n        <img src={icon} alt=\"emergency icon\" className=\"w-8 h-8\" />\r\n        <h2 className=\"text-[#610c07] font-semibold text-2xl\">{title}</h2>\r\n      </div>\r\n\r\n      {headline && <p className=\"text-[20px] font-medium\">{headline}</p>}\r\n      {timeAgo && <p className=\"text-[16px]\">{timeAgo}</p>}\r\n\r\n      {instructionsTitle && (\r\n        <p className=\"text-[20px] font-semibold\">{instructionsTitle}</p>\r\n      )}\r\n\r\n      <ul className=\"text-[20px] list-decimal pl-5 space-y-1\">\r\n        {instructions.map((step, idx) => (\r\n          <li key={`instruction-${idx}`}>{step}</li>\r\n        ))}\r\n        {notes.map((note, idx) => (\r\n          <li key={`note-${idx}`} className=\"text-[#610c07]\">\r\n            <span className=\"font-bold\">Note:</span> {note}\r\n          </li>\r\n        ))}\r\n      </ul>\r\n    </div>\r\n  );\r\n}\r\n"
+        }
+    ]
+}

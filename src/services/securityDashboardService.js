@@ -4,13 +4,7 @@ import { API_ENDPOINTS } from "../utils/constants";
 export const createEmergency = async (emergencyData) => {
     try{
         const url = API_ENDPOINTS.CREATE_EMERGENCY;
-        const token = localStorage.getItem("token");
-        const response = await api.post(url, emergencyData, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        });
+        const response = await api.post(url, emergencyData);
         const result = response.data;
         if(result.result_code === 0){
             return result.data;
