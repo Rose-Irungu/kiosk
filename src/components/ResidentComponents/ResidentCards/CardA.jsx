@@ -28,10 +28,12 @@ const CardA = ({
     time: t = getRelativeTime(visitorData.check_in),
     stayTime: s = visitorData.stayTime || '52 mins',
     purpose: p = visitorData.purpose || 'delivery',
-    status: st = visitorData.status?.toLowerCase() || 'pending',
+    status: st = (visitorData.status || 'pending').toLowerCase(),
+
     tag: tg = visitorData.tag || 'guest',
     image: img = visitorData.image || '/ellipse-20.png',
   } = visitorData;
+console.log('Status:', st);
 
   const openModal = () => {
     if (st !== 'expected') {
@@ -119,7 +121,7 @@ const CardA = ({
                 </button>
               </div>
             </div>
-          ) : st === 'onsite' ? (
+          ) : st === 'checked_in' ? (
             
             <div className="bg-white rounded-2xl border border-green-300 p-5 flex flex-col gap-4 w-[292px] shadow-md">
               <div className="flex gap-3 items-start">
