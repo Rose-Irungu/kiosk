@@ -43,7 +43,7 @@ function Card6() {
           />
           <span>Trigger Emergency</span>
         </button>
-        <Link to="/triggers/security" className="flex-1 min-w-0">
+        <Link to="/triggers/security" className="flex-1 min-w-0" >
           <button className="flex items-center justify-center border border-[#005E0E] w-full h-[56px] rounded-[4px] px-6 text-center">
             <span className="font-inter text-[14px] leading-5 tracking-[0.01em] text-[#005E0E]">
               OPEN ROLL CALL

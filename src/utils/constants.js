@@ -28,6 +28,8 @@ export const API_ENDPOINTS = {
 
   //Incidence Management
   INCIDENCE_LIST: '/incidence-and-emergency/incidence-list/',
+  RESIDENT_LIST: '/user/logs/',
+  TAKE_EMERGENCY_ROLL_CALL: '/incidence-and-emergency/take-emergency-rollcall/',
   SECURITY_INCIDENCE: '/incidence-and-emergency/view-my-incidence/',
   // security registering visitor
   SECURITY_REGISTER_VISITOR: '/visitors/security-check-in/',

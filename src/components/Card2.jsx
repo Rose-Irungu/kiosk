@@ -65,7 +65,7 @@ export default function Card2({
         </p>
 
         <div className="flex gap-2 mt-3">
-          <Link to="/triggers">
+          <Link to="/triggers" state={{id, floor, unit}}>
             <button className="bg-[#005E0E] text-white text-sm font-inter font-normal px-3 py-1 border rounded hover:bg-[#002A05]">
               Open Roll Call
             </button>
