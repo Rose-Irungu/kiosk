@@ -13,24 +13,33 @@ import PastThisMonth from '../../components/ResidentComponents/SafetyCards/PastT
 import NoteP from '../../components/ResidentComponents/SafetyCards/NoteP';
 
 //Service imports
-import {/*inviteGuest,*/ clickTest} from '../../services/residentDashboardServices';
+import {clickTest} from '../../services/residentDashboardServices';
 import { submitEmergency } from '../../scripts/submitEmergency';
 import { getAllVisitors } from '../../services/residentDashboardServices';
 
 function ResidentDashboard() {
+
     const [activeCardId, setActiveCardId] = useState(null);
     const [loading, setLoading] = useState(true);
     const [visitors, setVisitors] = useState([]);
     const navigate = useNavigate();
+
     useEffect(() =>{
-        const allVisitors = getAllVisitors();
-        console.log(allVisitors);
-        setVisitors(allVisitors);
+
+        const getVisitors = async () =>{
+            const allVisitors = await getAllVisitors();
+            setVisitors(allVisitors);
+            console.log("All visitors:", allVisitors);
+            return allVisitors;
+        };
+        getVisitors();
         setLoading(false);
     }, []);
+
     const handleCardClick = (id) => {
         setActiveCardId(id);
     };
+
   return (
     <ResidentLayout>
      <div className="flex flex-wrap justify-start mb-[12px] space-y-4">

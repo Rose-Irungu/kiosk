@@ -1,41 +1,55 @@
- //Filters visitors based on created_at and a given time range
- 
- //{Object} data - The entire JSON response object
- //{String} filter - "today" | "this_week" | "this_month"
- //{Array} Filtered visitor list
- 
-export default function filterVisitorsByDate(data, filter) {
-  if (!data?.visitors?.data) return [];
+export default function filterVisitorsByDate(jsonObject, filterCriteria) {
+  const data = jsonObject.data || [];
 
   const now = new Date();
+  const currentDate = now.toISOString().split('T')[0]; // "YYYY-MM-DD"
 
-  // Normalize to start of day
-  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const getStartOfWeek = (date) => {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+    return new Date(d.setDate(diff)).toISOString().split('T')[0];
+  };
 
-  let cutoffDate;
+  const getStartOfMonth = (date) => {
+    const d = new Date(date);
+    return new Date(d.getFullYear(), d.getMonth(), 1).toISOString().split('T')[0];
+  };
 
-  switch (filter) {
-    case "today":
-      cutoffDate = startOfToday;
+  const weekStart = getStartOfWeek(now);
+  const monthStart = getStartOfMonth(now);
+
+  // Filter out only checked-out visitors first
+  const checkedOutVisitors = data.filter(item => item.check_out);
+
+  let filteredVisitors = [];
+
+  switch (filterCriteria.toLowerCase()) {
+    case 'today':
+      filteredVisitors = checkedOutVisitors.filter(item => {
+        const checkOutDate = new Date(item.check_out).toISOString().split('T')[0];
+        return checkOutDate === currentDate;
+      });
       break;
 
-    case "this_week":
-      // 7 days ago from now
-      cutoffDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    case 'this_week':
+      filteredVisitors = checkedOutVisitors.filter(item => {
+        const checkOutDate = new Date(item.check_out).toISOString().split('T')[0];
+        return checkOutDate >= weekStart && checkOutDate <= currentDate;
+      });
       break;
 
-    case "this_month":
-      // 30 days ago from now
-      cutoffDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+    case 'this_month':
+      filteredVisitors = checkedOutVisitors.filter(item => {
+        const checkOutDate = new Date(item.check_out).toISOString().split('T')[0];
+        return checkOutDate >= monthStart && checkOutDate <= currentDate;
+      });
       break;
 
     default:
-      console.warn("Invalid filter option. Use 'today', 'this_week' or 'this_month'.");
-      return [];
+      console.warn(`Invalid filter criteria: "${filterCriteria}". Returning all checked-out users.`);
+      filteredVisitors = checkedOutVisitors;
   }
 
-  return data.visitors.data.filter(visitor => {
-    const createdAt = new Date(visitor.created_at);
-    return createdAt >= cutoffDate;
-  });
+  return filteredVisitors;
 }

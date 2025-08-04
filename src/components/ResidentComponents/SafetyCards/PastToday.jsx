@@ -8,8 +8,13 @@ export default function PastToday({ allVisitors }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const visitors = filterVisitorsByDate(allVisitors, 'today');
-    setTodayVisitors(visitors);
+    const getTodayVisitors = async () => {
+        const visitors = await filterVisitorsByDate(allVisitors, 'today');
+        console.log("Today's Visitors:",visitors);
+        setTodayVisitors(visitors);
+        return visitors;
+    };
+    getTodayVisitors();
     setLoading(false);
   }, [allVisitors]);
 
@@ -22,9 +27,9 @@ export default function PastToday({ allVisitors }) {
           <PastGuestCard
             key={index}
             image={visitor.image}
-            name={visitor.name}
-            checkOutTime={visitor.checkOutTime}
-            type={visitor.type}
+            name={visitor.visitor_name}
+            checkOutTime={visitor.check_out}
+            type={visitor.visitor_type}
           />
         ))
       ) : (

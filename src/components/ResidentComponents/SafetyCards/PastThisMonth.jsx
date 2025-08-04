@@ -8,8 +8,14 @@ export default function PastThisMonth({ allVisitors }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const visitors = filterVisitorsByDate(allVisitors, 'this_month');
-    setThisMonthVisitors(visitors);
+    const getThisMonthVisitors = async () =>{
+      const visitors = await filterVisitorsByDate(allVisitors, 'this_month');
+      console.log("This month Visitors:",visitors);
+      setThisMonthVisitors(visitors);
+      return visitors;
+    };
+    
+    getThisMonthVisitors();
     setLoading(false);
   }, [allVisitors]);
 
@@ -22,9 +28,9 @@ export default function PastThisMonth({ allVisitors }) {
           <PastGuestCard
             key={index}
             image={visitor.image}
-            name={visitor.name}
-            checkOutTime={visitor.checkOutTime}
-            type={visitor.type}
+            name={visitor.visitor_name}
+            checkOutTime={visitor.check_out}
+            type={visitor.visitor_type}
           />
         ))
       ) : (
