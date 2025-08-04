@@ -4,7 +4,8 @@ import { API_ENDPOINTS } from "../utils/constants";
 export async function getAllVisitors(){
     try{
         const response = await api.get(API_ENDPOINTS.ALL_VISITORS);
-        const result = response.data; 
+        const result = await response.data; 
+        console.log("Result:", result);
 
         if (result.result_code === 0){
             return result;

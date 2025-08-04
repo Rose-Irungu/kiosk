@@ -43,7 +43,10 @@ export const API_ENDPOINTS = {
   STATISTICS: '/statistics/active-users/count/',
 
   //Check Out Visitors Table
-  GET_CHECKOUT_VISITORS: '/statistics/security/dashboard/'
+  GET_CHECKOUT_VISITORS: '/statistics/security/dashboard/',
+
+  //Resident dashboard
+  ALL_VISITORS: '/visits/visits-user/'
 
 }
 

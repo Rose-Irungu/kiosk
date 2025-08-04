@@ -40,7 +40,8 @@ const CardA = ({
   return (
     <>
       <div
-        className="bg-white rounded-lg p-3 flex items-center justify-between h-16 shadow-md cursor-pointer"
+        className="bg-white rounded-lg p-3 px-2 md:p-4 md:px-6 flex items-center justify-between w-full h-16 md:h-20 shadow-md cursor-pointer"
+
         onClick={openModal}
       >
         <div className="flex items-center gap-1.5">
