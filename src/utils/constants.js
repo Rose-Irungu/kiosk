@@ -46,7 +46,10 @@ export const API_ENDPOINTS = {
   GET_CHECKOUT_VISITORS: '/statistics/security/dashboard/',
 
   //Resident dashboard
-  ALL_VISITORS: '/visits/visits-user/'
+  ALL_VISITORS: '/visits/visits-user/',
+
+ // Resident Blacklisted peeps
+  BLACKLIST_PEEPS: '/visitors/all-blacklisted/'
 
 }
 
