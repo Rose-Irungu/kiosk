@@ -50,8 +50,15 @@ function ResidentDashboard() {
         <div className='flex flex-col w-full lg:h-[222px] top-[521px] rounded-[12px] py-[8px] px-[12px] bg-[#F0EEFD] gap-[10px]'>
             <div className='flex flex-row justify-between w-full h-[32px]'>
                 <div className='flex flex-row w-[182px] h-[32px]'>
-                    <div className='h-[32px] w-[32px]'></div>
-                    <h1 className='font-dmsans font-semibold text-[24px] text-[#002706]'>Past Guests</h1>
+                    <div className='h-[32px] w-[32px]'>
+                        <img
+                            src="/past_guests.svg"
+                            className="w-full h-full text-red-500 mr-3"
+                        />
+                    </div>
+                    <div className='w-[138px] h-[31px]'>
+                        <h1 className='font-dmsans font-semibold text-[24px] text-[#002706]'>Past Guests</h1>
+                    </div>
                 </div>
             </div>
             <div className='flex flex-row justify-between w-full h-[40px] rounded-[24px] py-[4px] px-[8px] gap-[10px]'>
@@ -65,9 +72,17 @@ function ResidentDashboard() {
         </div>
         <div className='flex flex-col w-full lg:h-[165px] lg:top-[784px] rounded-[12px] py-[10px] px-[20px] bg-[#FDE8E7]'>
             <div className='flex flex-row justify-between w-full h-[32px]'>
-                <div className='flex flex-row gap-[12px] w-[262px] h-[32px]'>
-                    <div className='h-[32px] w-[32px]'></div>
-                    <h1 className='font-dmsans font-semibold text-[24px] text-[#610C07]'>Emergencies Panel</h1>
+                <div className='flex flex-row justify-center gap-[12px] w-[262px] h-[32px]'>
+                    <div className='h-[32px] w-[32px]'>
+                        <img
+                            src="/emg.svg"
+                            className="w-full h-full text-red-500 mr-3"
+                            alt="emergency icon"
+                        />
+                    </div>
+                    <div className='w-[218px] h-[31px]'>
+                        <h1 className='font-dmsans font-semibold text-[24px] text-[#610C07]'>Emergencies Panel</h1>
+                    </div>
                 </div>
             </div>
             <div className='flex flex-row justify-between w-full h-[96px] rounded-[12px] py-[12px] px-[14px] space-x-4'>

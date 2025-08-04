@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function PastGuestCard({image, name, checkOutTime, type}) {
   return (
-    <div className='flex flex-row justify-between items-center w-full h-64px rounded-[8px justify-between] p-[12px] bg-[#FFFFFF]'>
+    <div className='flex flex-row justify-between items-center w-full h-64px rounded-[8px] p-[12px] bg-[#FFFFFF]'>
         <div className='flex flex-row w-[216px] h-[40px] gap-[6px]'>
           <img src={image} className='w-10 h-10 rounded-full object-cover' />
           <div className='flex flex-col w-[170px] h-[36px] gap-[2px]'>

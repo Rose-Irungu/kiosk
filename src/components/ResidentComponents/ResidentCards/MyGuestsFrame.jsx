@@ -32,7 +32,7 @@ const MyGuestsFrame = () => {
   const filteredGuests = guestList.filter((guest) => guest.status === activeTab);
 
   return (
-    <div className="bg-[#e6fbe9] rounded-xl px-2 py-3 flex flex-col gap-4 items-center justify-center relative">
+    <div className="bg-[#e6fbe9] rounded-xl px-2 py-3 flex flex-col gap-4 items-center  justify-center relative">
       <div className="flex items-center justify-between w-full px-4">
         <div className="flex items-center gap-3">
           <img src="/fluent-people-20-filled0.svg" className="w-8 h-8" />

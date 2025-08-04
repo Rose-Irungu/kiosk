@@ -27,7 +27,7 @@ export default function PastToday({ allVisitors }) {
           <PastGuestCard
             key={index}
             image={visitor.image}
-            name={visitor.full_name}
+            name={visitor.visitor_name}
             checkOutTime={visitor.check_out}
             type={visitor.visitor_type}
           />
