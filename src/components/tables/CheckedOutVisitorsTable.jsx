@@ -18,7 +18,7 @@ export default function Visitors() {
   const title = location.state?.cardTitle;
   console.log(data)
   const [visitors, setVisitors] = useState([]);
-  const [filteredAllVisitors, setFilteredAllVisitors] = useState([]); // For export
+  const [filteredAllVisitors, setFilteredAllVisitors] = useState([]); 
   const [loading, setLoading] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -71,7 +71,7 @@ export default function Visitors() {
   };
 
   const handleExportCSV = () => {
-    const headers = ["Name", "Phone", "Visitor Unit", "Check In Time", "Check Out Time", "Verified By", "Status"];
+    const headers = ["Name", "Phone", "Visitor Unit", "Check In Time", "Check Out Time",  "Status"];
     const rows = filteredAllVisitors.map((v) => [
       v.visitor_name,
       v.phone_number,
