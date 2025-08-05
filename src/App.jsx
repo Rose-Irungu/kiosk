@@ -86,6 +86,7 @@ import Security_form from "./components/ResidentComponents/Security_form";
 import VisitorManagement from "./pages/ResidentPages/VisitorManagement";
 import GuestList from "./pages/ResidentPages/GuestList";
 import { Toaster } from "react-hot-toast";
+import FacilityProfilePage from "./pages/Dashboardpages/FacilityProfilePage";
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -148,6 +149,7 @@ const App = () => {
         <Route path="/visitorlogs" element={<VisitorLogs />} />
         <Route path="/chart2" element={<Chart2 />} />{" "}
         <Route path="/settings" element={<Settings />} />
+        <Route path="/facilityprofile" element={<FacilityProfilePage />} />
         {/*security dashboard Routes*/}
         <Route path="/securitylayout" element={<SecurityLayout />} />
         <Route path="/securitysidebar" element={<SecuritySidebar />} />

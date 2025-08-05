@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/components/BasicInfoCard.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1754373377806,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1754373377806,
+            "name": "Commit-0",
+            "content": "import React from \"react\";\r\n\r\nexport default function BasicInfoCard() {\r\n  return (\r\n    <div className=\"bg-[#f5f4f5] rounded-lg border border-gray-400/50 p-8 shadow-md w-full flex flex-col gap-8\">\r\n      <h2 className=\"text-[#495057] text-xl font-bold\">Basic Information</h2>\r\n      <div className=\"flex flex-row gap-6 w-full\">\r\n        <div className=\"flex flex-col gap-2 flex-1\">\r\n          <label className=\"text-sm text-[#495057]\">Facility Name*</label>\r\n          <div className=\"bg-white rounded-md px-3 py-2 h-12 flex items-center\">\r\n            <span className=\"text-[#495057] text-base\">West Brook</span>\r\n          </div>\r\n        </div>\r\n\r\n        <div className=\"flex flex-col gap-2 flex-1\">\r\n          <label className=\"text-sm text-[#495057]\">Facility Type*</label>\r\n          <div className=\"bg-white rounded-md px-3 h-12 flex items-center justify-between\">\r\n            <span className=\"text-[#495057] text-sm\">Office</span>\r\n            <img src=\"formkit-down0.svg\" alt=\"dropdown icon\" className=\"w-6 h-[10.5px]\" />\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n"
+        }
+    ]
+}
