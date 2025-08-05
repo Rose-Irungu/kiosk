@@ -77,6 +77,7 @@ import AlertCard from "./components/ResidentComponents/AlertCard";
 import EmergencyAlert from "./components/ResidentComponents/EmergencyAlert";
 import EmergencyContacts from "./components/ResidentComponents/EmergencyContacts";
 import ResidentDashboard from "./pages/ResidentPages/ResidentDashboard";
+import ResidentSettings from "./pages/ResidentPages/ResidentSettings";
 import SafetyProtocols from "./pages/ResidentPages/SafetyProtocols";
 import ResidentSidebar from "./components/ResidentComponents/ResidentSidebar";
 import ResidentHeader from "./components/ResidentComponents/ResidentHeader";
@@ -188,6 +189,7 @@ const App = () => {
         <Route path="/visitorsexpected" element={<VisitorsExpected />} />
         <Route path="/userprofile" element={<UserProfile />} />
         <Route path="/resident/dashboard" element={<ResidentDashboard />} />
+        <Route path="/resident/settings" element={<ResidentSettings />} />
         <Route path="/resident/safetyprotocols" element={<SafetyProtocols />} />
         <Route
           path="/resident/emergencypage"
