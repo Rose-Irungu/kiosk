@@ -51,7 +51,7 @@ export const API_ENDPOINTS = {
   ALL_VISITORS: '/visits/visits-user/',
 
  // Resident Blacklisted peeps
-  BLACKLIST_PEEPS: '/visitors/all-blacklisted/'
+  BLACKLIST_PEEPS: '/visitors/all-blacklisted/',
   Resident_Incidence: '/incidence-and-emergency/view-my-incidence/',
 
 }
