@@ -11,8 +11,8 @@ export const getInvitation = async (token) => {
 export const submitInvitation = async (token, formData) => {
   const promise = api.post(`${API_ENDPOINTS.REGISTER_VISITOR}?token=${token}`, formData, {
     headers: {
-      'Content-Type': 'multipart/form-data',
-    }
+      "Content-Type": "multipart/form-data",
+    },
   },);
   const res = await toast.promise(promise, {
     loading: 'Submitting invitation...',
