@@ -21,7 +21,7 @@ export const useVisitorForm = () => {
     unit_number: "",
     plate_number: "",
     visitor_type: "visitor",
-    photo: null,
+    // profile_pic: null,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -83,43 +83,59 @@ export const useVisitorForm = () => {
   };
 
   const handleInputChange = (field, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    if (field === "profile_pic" && value instanceof File) {
+      setFormData((prev) => ({
+        ...prev,
+        [field]: value,
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [field]: value,
+      }));
+    }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
 
-    //
-    if (isVisitorMode && !formData.photo) {
-      setError("Please upload a photo before submitting the form.");
-      setLoading(false);
-      return;
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setError("");
 
-    try {
-      if (isVisitorMode && token) {
-        await submitInvitation(token, formData);
-        navigate("/");
-      } else {
-        await createInvitation(formData);
-        if (isResidentMode) {
-          navigate("/guestregsuccess");
-        } else {
-          alert("Visitor registered successfully!");
-        }
+  // if (isVisitorMode && !formData.profile_pic) {
+  //   setError("Please upload a photo before submitting the form.");
+  //   setLoading(false);
+  //   return;
+  // }
+
+  try {
+    const data = new FormData();
+
+    for (const key in formData) {
+      if (formData[key]) {
+        data.append(key, formData[key]);
       }
-    } catch (err) {
-      setError("Failed to submit form");
-      console.error("Error submitting form:", err);
-    } finally {
-      setLoading(false);
     }
-  };
+
+    if (isVisitorMode && token) {
+      console.log("Submitting visitor form with data:", formData);
+      await submitInvitation(token, data);
+      navigate("/");
+    } else {
+      await createInvitation(data);
+      if (isResidentMode) {
+        navigate("/guestregsuccess");
+      } else {
+        alert("Visitor registered successfully!");
+      }
+    }
+  } catch (err) {
+    setError("Failed to submit form");
+    console.error("Error submitting form:", err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return {
     formData,

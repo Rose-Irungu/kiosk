@@ -8,7 +8,9 @@ export default function AlertCard({time}) {
         className="w-8 h-8 mb-1"
       />
       <span className="text-white font-medium text-[20px]">You have</span>
-      <span className="text-[#ffe100] font-semibold text-[32px]">{time}</span>
+      { time > 0 && (
+        <span className="text-[#ffe100] font-semibold text-[32px]">{time}</span>
+      )}
       <span className="text-white font-medium text-[20px]">
         Minutes to Evacuate
       </span>

@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { createEmergency } from "../../services/securityDashboardService";
 import { toast } from "react-hot-toast";
+import AlertCard from "./AlertCard";
 
-export default function EmergencyAlertCard({type}) {
+export default function EmergencyAlertCard({ time }) {
   const [stats, setStats] = useState([]);
   const [visible, setVisible] = useState(true);
+  
 
   const handleYes = async () => {
       setVisible(false);
     try {
-      const data = await createEmergency({type}); 
+      const data = await createEmergency({"emergency_type": 'sos'}); 
       setStats(data);
+      time(30)
       console.log("Emergency created:", data);
        toast.success("Emergency alert sent! ");
     } catch (error) {
