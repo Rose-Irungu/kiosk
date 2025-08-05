@@ -14,21 +14,16 @@ const VisitorManagement = ({ datedata = [] }) => {
         { id: 'btn3', label: 'Onsite (2)' },
 
     ];
-    const datebuttons = [
-        { id: 'dt1', day: 'sun', daynum: '12' }, ,
-        { id: 'dt2', day: 'mon', daynum: '13' },
-        { id: 'dt3', day: 'tue', daynum: '14' },
-        { id: 'dt4', day: 'wed', daynum: '15' },
-        { id: 'dt7', day: 'thurs', daynum: '18' },
-        { id: 'dt8', day: 'fri', daynum: '19' },
-        { id: 'dt9', day: 'sat', daynum: '20' },
-        { id: 'dt10', day: 'sun', daynum: '21' },
-        { id: 'dt11', day: 'mon', daynum: '22' },
-    ];
+    const [day, setDay] = useState(new Date().toDateString());
+    const [datebuttons, setDateButtons] = useState([]);
+
+    useEffect(() => {
+        setDateButtons(generateDateButtons());
+    }, []);
 
     const navigate = useNavigate();
-    const [active, setActive] = useState(null);
-    const [day, setDay] = useState(null);
+    const [active, setActive] = useState('btn1');
+
 
     // const handleClick = (id) => {
     //     setActive(id);
@@ -39,10 +34,11 @@ const VisitorManagement = ({ datedata = [] }) => {
         setDay(id);
     };
 
-    const goList = () => {
-        if (changeColor) {
-            navigate('/resident/guestlist', { state: datedata });
-        }
+    const goList = (e) => {
+        const selectedDate = e.currentTarget.getAttribute('data-id');
+        setDay(selectedDate);
+        navigate('/resident/guestlist', { state: datedata });
+
     };
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -80,6 +76,28 @@ const VisitorManagement = ({ datedata = [] }) => {
         setBold(id);
 
     };
+
+    // Real Time Calendar------------------------------------------------------
+    const generateDateButtons = () => {
+        const today = new Date();
+        const dates = [];
+
+        for (let i = -4; i <= 4; i++) {
+            const date = new Date(today);
+            date.setDate(today.getDate() + i);
+
+            dates.push({
+                id: date.toDateString(), // unique ID
+                day: date.toLocaleDateString('en-US', { weekday: 'short' }), // Mon, Tue, etc
+                daynum: date.getDate(), // 1–31
+                isToday: i === 0,
+            });
+        }
+
+        return dates;
+    };
+
+    // ---------------------------------------------------------------------
 
     // Guest List------------------------------------------------
 
@@ -334,45 +352,50 @@ const VisitorManagement = ({ datedata = [] }) => {
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm" >
 
-                    <div className='flex flex-col items-start gap-4 w-[292px]  border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]' >
-                        {/* Profile pic/Detail/Badge */}
-                        <div className='flex flex-row w-full items-center justify-between gap-2'>
-                            <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                                <img src="/oui-gear2.svg" alt="" />
+                    {blacklists.map((blacklist) => (
+                        <div className='flex flex-col items-start gap-4 w-[292px]  border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]' >
+                            {/* Profile pic/Detail/Badge */}
+                            <div className='flex flex-row w-full items-center justify-between gap-2'>
+                                <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
+                                    <img src="/oui-gear2.svg" alt="" />
+                                </div>
+
+                                <div className='flex flex-col items-start w-full'>
+                                    <p className='text-[14px] font-medium text-[#002706]'>Robert Nanjala</p>
+                                    <p className='text-[11px]'>Check in time: 12:42pm</p>
+                                    <p className='text-[11px] text-[#6C50EF]'>Stay time: 52 mins</p>
+
+                                </div>
+
+                                <div className='rounded-md bg-[#D1C9FA] flex items-center w-[64px] h-[22px] justify-center '>
+                                    <p className='text-[12px] text-[#2D2264]'>guest</p>
+                                </div>
+
+
                             </div>
+                            {/* Buttons */}
+                            <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
+                                <div className=' flex bg-[#00580D] rounded-[8px] h-[32px]  items-center justify-between p-2 rounded-[8px] hover:bg-green-500'>
 
-                            <div className='flex flex-col items-start w-full'>
-                                <p className='text-[14px] font-medium text-[#002706]'>Robert Nanjala</p>
-                                <p className='text-[11px]'>Check in time: 12:42pm</p>
-                                <p className='text-[11px] text-[#6C50EF]'>Stay time: 52 mins</p>
+                                    <button className='flex  text-[12px]  text-white'>
+                                        Remove from blacklist
+                                    </button>
+                                </div>
+
+                                <div className=' flex  rounded-[8px] h-[32px] items-center justify-between p-2 rounded-[8px] hover:bg-gray-500 border border-[#00580D] '>
+                                    <button className='flex  text-[12px]  text-[#00580D]'>
+                                        Details
+                                    </button>
+                                </div>
+
 
                             </div>
-
-                            <div className='rounded-md bg-[#D1C9FA] flex items-center w-[64px] h-[22px] justify-center '>
-                                <p className='text-[12px] text-[#2D2264]'>guest</p>
-                            </div>
-
 
                         </div>
-                        {/* Buttons */}
-                        <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
-                            <div className=' flex bg-[#00580D] rounded-[8px] h-[32px]  items-center justify-between p-2 rounded-[8px] hover:bg-green-500'>
 
-                                <button className='flex  text-[12px]  text-white'>
-                                    Remove from blacklist
-                                </button>
-                            </div>
-
-                            <div className=' flex  rounded-[8px] h-[32px] items-center justify-between p-2 rounded-[8px] hover:bg-gray-500 border border-[#00580D] '>
-                                <button className='flex  text-[12px]  text-[#00580D]'>
-                                    Details
-                                </button>
-                            </div>
+                    ))}
 
 
-                        </div>
-
-                    </div>
                 </div>
 
 
