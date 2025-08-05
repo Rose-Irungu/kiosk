@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import ResidentLayout from '../../components/ResidentComponents/ResidentLayout.jsx'
 import { User } from 'lucide-react';
 import { getAllBlackListed } from '../../services/blacklistedpeeps';
+import { getAllVisitors } from '../../services/residentDashboardServices';
 
 
 
@@ -82,19 +83,32 @@ const VisitorManagement = ({ datedata = [] }) => {
 
     // Guest List------------------------------------------------
 
-    const [visitors, setVisitors] = useState([]);
+    const [guestlists, setGuestLists] = useState([]);
+    const fetchGuestList = async () => {
+        // setLoading(true);
+        try {
+            const res = await getAllVisitors();
+            if (res.result_code === 0) {
+                let allData = res.data;
+                console.log("Fetched Guests:", allData);
+                setGuestLists(allData);
+            } else {
+                setGuestLists([]);
+            }
+        } catch (error) {
+            console.error("Error fetching Guests:", error);
+            setGuestLists([]);
+        } finally {
+            // setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        fetch('https://guestapi.zynamis.co.ke/api/visitors/all-visitors')
-            .then((res) => res.json())
-            .then((data) => {
-                console.log("Fetched visitors:", data);
-                setVisitors(data.data);
-            })
-            .catch((err) => console.error("Error fetching visitors:", err));
+        fetchGuestList();
     }, []);
 
     // -------------------------------------------------------------------------------
+
     // Restricted List------------------------------------------------
 
     const [blacklists, setBlackLists] = useState([]);
@@ -163,23 +177,23 @@ const VisitorManagement = ({ datedata = [] }) => {
 
                     {/* Guest Details Card */}
                     <div className='flex flex-col items-start w-full overflow-y-scroll h-[221px] '>
-                        {visitors.map((visitor, index) => (
+                        {guestlists.map((guestlist, index) => (
                             <button
-                                key={visitor.id}
+                                key={guestlist.id}
                                 className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm flex flex-row items-center justify-between font-["DM Sans"] p-4'
                             >
                                 <div className='flex flex-row justify-between gap-4 items-center '>
                                     <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                                        <img src={visitor.visitor_photo} alt="" className="w-10 h-10 rounded-full object-cover" />
+                                        <img src={guestlist.visitor_photo} alt="" className="w-10 h-10 rounded-full object-cover" />
                                     </div>
                                     <div className='flex flex-col items-start w-full'>
-                                        <p className='text-sm font-medium text-[#002706] '>{visitor.visitor_name}</p>
-                                        <p className='text-[12px] text-[#333333]'>{visitor.visit_date}</p>
+                                        <p className='text-sm font-medium text-[#002706] '>{guestlist.visitor_name}</p>
+                                        <p className='text-[12px] text-[#333333]'>{guestlist.visit_date}</p>
                                     </div>
                                 </div>
 
-                                <div className='rounded-md bg-[#B0F1B9] flex items-center w-[64px] h-[22px] justify-center '>
-                                    <p className='text-sm text-[#002706]'>{visitor.visitor_type}</p>
+                                <div className='rounded-md bg-[#B0F1B9] flex items-center p-2 h-[22px] justify-center '>
+                                    <p className='text-sm text-[#002706]'>{guestlist.visitor_type}</p>
                                 </div>
                             </button>
                         ))}
