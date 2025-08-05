@@ -191,6 +191,7 @@ const App = () => {
         <Route path="/resident/dashboard" element={<ResidentDashboard />} />
         <Route path="/resident/settings" element={<ResidentSettings />} />
         <Route path="/resident/safetyprotocols" element={<SafetyProtocols />} />
+        
         <Route
           path="/resident/emergencypage"
           element={<ResidentEmergencypage />}
