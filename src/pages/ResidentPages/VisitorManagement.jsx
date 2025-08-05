@@ -3,17 +3,14 @@ import { useNavigate } from "react-router";
 import ResidentLayout from '../../components/ResidentComponents/ResidentLayout.jsx'
 import { User } from 'lucide-react';
 import { getAllBlackListed } from '../../services/blacklistedpeeps';
-import { getAllVisitors } from '../../services/residentDashboardServices';
+
+import { visitsuser } from "../../services/visitsuser";
+import { removeFromBlacklist } from '../../services/blacklistedpeeps';
+
 
 
 
 const VisitorManagement = ({ datedata = [] }) => {
-    const buttons = [
-        { id: 'btn1', label: 'Expected (2)' }, ,
-        { id: 'btn2', label: 'Pending (2)' },
-        { id: 'btn3', label: 'Onsite (2)' },
-
-    ];
     const [day, setDay] = useState(new Date().toDateString());
     const [datebuttons, setDateButtons] = useState([]);
 
@@ -24,26 +21,37 @@ const VisitorManagement = ({ datedata = [] }) => {
     const navigate = useNavigate();
     const [active, setActive] = useState('btn1');
 
-
-    // const handleClick = (id) => {
-    //     setActive(id);
-    //     navigate('/resident/guestlist', { state: datedata });
-    // };
-
-    const changeColor = (id) => {
-        setDay(id);
+    const goList = (dateObj) => {
+        const selectedDateStr = `${dateObj.year}-${String(dateObj.month).padStart(2, '0')}-${String(dateObj.daynum).padStart(2, '0')}`;
+        const filteredGuests = guestlists.filter(guest => guest.visit_date === selectedDateStr);
+        navigate('/resident/guestlist', {
+            state: {
+                selectedDate: selectedDateStr,
+                guests: filteredGuests,
+                day: dateObj.day,
+                daynum: dateObj.daynum,
+                month: dateObj.month,
+                year: dateObj.year
+            }
+        });
     };
 
-    const goList = (e) => {
-        const selectedDate = e.currentTarget.getAttribute('data-id');
-        setDay(selectedDate);
-        navigate('/resident/guestlist', { state: datedata });
+    const [selectedGuest, setSelectedGuest] = useState(null);
 
-    };
+    const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const openModal = () => setIsModalOpen(true);
+    const openModal = (guest) => {
+        setSelectedGuest(guest);
+        setIsModalOpen(true);
+    };
+
+    const handleGuestModal = (guest) => {
+        setSelectedGuest(guest);
+        setIsGuestModalOpen(true);
+    };
+
     const closeModal = () => setIsModalOpen(false);
 
     const toggleModal = () => {
@@ -51,31 +59,31 @@ const VisitorManagement = ({ datedata = [] }) => {
     };
 
     useEffect(() => {
-        if (isModalOpen) {
+        if (isModalOpen || isGuestModalOpen) {
             document.addEventListener('mousedown', handleClickOutside);
         }
 
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [isModalOpen]);
+    }, [isModalOpen, isGuestModalOpen]);
 
-    const modalRef = useRef(null);
+
+    const restrictedModalRef = useRef(null);
+    const guestModalRef = useRef(null);
+
 
 
     const handleClickOutside = (event) => {
-        if (modalRef.current && !modalRef.current.contains(event.target)) {
+        if (isModalOpen && restrictedModalRef.current && !restrictedModalRef.current.contains(event.target)) {
             setIsModalOpen(false);
+        }
+
+        if (isGuestModalOpen && guestModalRef.current && !guestModalRef.current.contains(event.target)) {
+            setIsGuestModalOpen(false);
         }
     };
 
-
-    const [nowToday, setNowToday] = useState(null);
-
-    const todayIsDay = (id) => {
-        setBold(id);
-
-    };
 
     // Real Time Calendar------------------------------------------------------
     const generateDateButtons = () => {
@@ -87,9 +95,11 @@ const VisitorManagement = ({ datedata = [] }) => {
             date.setDate(today.getDate() + i);
 
             dates.push({
-                id: date.toDateString(), // unique ID
-                day: date.toLocaleDateString('en-US', { weekday: 'short' }), // Mon, Tue, etc
-                daynum: date.getDate(), // 1–31
+                id: date.toDateString(),
+                day: date.toLocaleDateString('en-US', { weekday: 'short' }),
+                daynum: date.getDate(),
+                month: date.getMonth() + 1,
+                year: date.getFullYear(),
                 isToday: i === 0,
             });
         }
@@ -102,10 +112,22 @@ const VisitorManagement = ({ datedata = [] }) => {
     // Guest List------------------------------------------------
 
     const [guestlists, setGuestLists] = useState([]);
+    const statusCounts = {
+        approved: guestlists.filter(guest => guest.status === "approved").length,
+        pending: guestlists.filter(guest => guest.status === "pending").length,
+        checked_in: guestlists.filter(guest => guest.status === "checked_in").length,
+    };
+    const buttons = [
+        { id: 'btn1', label: `Expected (${statusCounts.approved})` },
+        { id: 'btn2', label: `Pending (${statusCounts.pending})` },
+        { id: 'btn3', label: `Onsite (${statusCounts.checked_in})` },
+
+    ];
+    const [filteredGuests, setFilteredGuests] = useState([]);
     const fetchGuestList = async () => {
         // setLoading(true);
         try {
-            const res = await getAllVisitors();
+            const res = await visitsuser();
             if (res.result_code === 0) {
                 let allData = res.data;
                 console.log("Fetched Guests:", allData);
@@ -120,7 +142,22 @@ const VisitorManagement = ({ datedata = [] }) => {
             // setLoading(false);
         }
     };
+    useEffect(() => {
+        console.log("Filtering for:", active);
+        console.log("Full guest list:", guestlists);
 
+        if (guestlists.length) {
+            const statusMap = {
+                btn1: "approved",
+                btn2: "pending",
+                btn3: "checked_in"
+            };
+            const filtered = guestlists.filter(
+                (guest) => guest.status === statusMap[active]
+            );
+            setFilteredGuests(filtered);
+        }
+    }, [active, guestlists]);
     useEffect(() => {
         fetchGuestList();
     }, []);
@@ -155,10 +192,7 @@ const VisitorManagement = ({ datedata = [] }) => {
 
     // -------------------------------------------------------------------------------
 
-
     return (
-
-
         <>
 
             <ResidentLayout >
@@ -195,18 +229,19 @@ const VisitorManagement = ({ datedata = [] }) => {
 
                     {/* Guest Details Card */}
                     <div className='flex flex-col items-start w-full overflow-y-scroll h-[221px] '>
-                        {guestlists.map((guestlist, index) => (
+                        {filteredGuests.map((guestlist, index) => (
                             <button
+                                onClick={() => handleGuestModal(guestlist)}
                                 key={guestlist.id}
                                 className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm flex flex-row items-center justify-between font-["DM Sans"] p-4'
                             >
                                 <div className='flex flex-row justify-between gap-4 items-center '>
                                     <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                                        <img src={guestlist.visitor_photo} alt="" className="w-10 h-10 rounded-full object-cover" />
+                                        <img src={guestlist.image || "/boy-avatar.svg" } alt="" className="w-10 h-10 rounded-full object-cover" />
                                     </div>
                                     <div className='flex flex-col items-start w-full'>
                                         <p className='text-sm font-medium text-[#002706] '>{guestlist.visitor_name}</p>
-                                        <p className='text-[12px] text-[#333333]'>{guestlist.visit_date}</p>
+                                        <p className='text-[12px] text-[#333333]'>{guestlist.check_in}</p>
                                     </div>
                                 </div>
 
@@ -215,18 +250,7 @@ const VisitorManagement = ({ datedata = [] }) => {
                                 </div>
                             </button>
                         ))}
-
-
-
-
-
-
-
                     </div>
-
-
-
-
                 </div>
 
 
@@ -235,15 +259,14 @@ const VisitorManagement = ({ datedata = [] }) => {
                 <div className='bg-[#B0F1B9]/50 flex flex-col gap-2 font-["DM Sans"] p-3 w-full mb-[32px] rounded-[12px]'>
 
                     <h1 className='text-[24px] font-semibold pb-4 '>See guests by date</h1>
-
-
-
-
                     <div className='flex flex-row items-center gap-6 border-[#54E168] border-[2.77974px] rounded-[33.3569px] bg-[#FFFF] py-4 px-4 font-["DM Sans"] w-full overflow-x-auto '>
                         {datebuttons.map((datebutton) => (
                             <button key={datebutton.id}
                                 className={datebutton.id === day ? ' text-[24px]  font-semibold bg-[#B0F1B9] flex flex-col justify-center w-[80px] h-[80px] border-[2.77974px] rounded-[22.2379px] border-[#54E168] items-center shadow-[6.04594px_6.04594px_12.0919px_0px_rgba(0,_88,_13,_0.25)] hover:bg-[#B0F1B9]' : 'hover:bg-[#B0F1B9] text-[24px]  bg-[#FFFF] flex flex-col justify-center w-[80px] h-[80px] border-[2.77974px] rounded-[22.2379px] border-[#54E168] items-center shadow-[6.04594px_6.04594px_12.0919px_0px_rgba(0,_88,_13,_0.25)]'}
-                                onClick={goList}>
+                                onClick={() => {
+                                    goList(datebutton)
+                                    // console.log(datebutton)
+                                }}>
                                 <p className='text-[#6C50EF]' >{datebutton.day}</p>
                                 <p >{datebutton.daynum}</p>
 
@@ -263,15 +286,13 @@ const VisitorManagement = ({ datedata = [] }) => {
                         <h1 className='text-[24px] font-["DM Sans"] text-[#002706] font-semibold'>Restricted Guests</h1>
                     </div>
 
+                    {blacklists.map((blacklist) => (
+                        <div onClick={() => openModal(blacklist)} className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4  '>
 
-                    <div className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4  '>
-                        {blacklists.map((blacklist) => (
-                            <button onClick={() => {
-                                setIsModalOpen(true);
-                            }} className='flex flex-row justify-between gap-4 items-center '>
+                            <button onClick={() => openModal(blacklist)} className='flex flex-row justify-between gap-4 items-center '>
 
                                 <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                                    <img src={blacklist.image} className="w-10 h-10 rounded-full object-cover" alt="" />
+                                    <img src={blacklist.image || "/boy-avatar.svg"} className="w-10 h-10 rounded-full object-cover" alt="" />
                                 </div>
 
                                 <div className='flex flex-col items-start w-full'>
@@ -281,13 +302,14 @@ const VisitorManagement = ({ datedata = [] }) => {
 
                                 </div>
                             </button>
-                        ))}
 
 
 
 
 
-                    </div>
+
+                        </div>
+                    ))}
 
 
 
@@ -295,42 +317,88 @@ const VisitorManagement = ({ datedata = [] }) => {
                 </div>
             </ResidentLayout>
 
-            {/* Table/Card Modal */}
-            {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm" ref={modalRef}>
+            {/* Table/Card Modal for Restricted */}
+            {isModalOpen && selectedGuest && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
 
-                    <div className='flex flex-col items-start gap-4 w-[292px]  border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]'>
+                    <div className='flex flex-col items-start gap-4 w-[292px]  border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]' ref={restrictedModalRef}>
                         {/* Profile pic/Detail/Badge */}
                         <div className='flex flex-row w-full items-center justify-between gap-2'>
                             <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                                <img src="/oui-gear2.svg" alt="" />
+                                <img src={selectedGuest.image || "/boy-avatar.svg"} alt="" className="w-10 h-10 rounded-full object-cover" />
                             </div>
 
                             <div className='flex flex-col items-start w-full'>
-                                <p className='text-[14px] font-medium text-[#002706]'>Robert Nanjala</p>
-                                <p className='text-[11px]'>Check in time: 12:42pm</p>
-                                <p className='text-[11px] text-[#6C50EF]'>Stay time: 52 mins</p>
+                                <p className='text-[14px] font-medium text-[#002706]'>{selectedGuest.full_name}</p>
+                                <p className='text-[11px]'>{selectedGuest.check_in}</p>
+                                <p className='text-[11px] text-[#6C50EF]'> {selectedGuest.reason}</p>
 
                             </div>
 
-                            <div className='rounded-md bg-[#D1C9FA] flex items-center w-[64px] h-[22px] justify-center '>
-                                <p className='text-[12px] text-[#2D2264]'>guest</p>
+                            <div className='rounded-md bg-[#EB4941] flex items-center w-[64px] h-[22px] justify-center '>
+                                <p className='text-[12px] text-[#2D2264] text-white'>restricted</p>
                             </div>
 
 
                         </div>
                         {/* Buttons */}
                         <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
-                            <div className=' flex bg-[#00580D] rounded-[8px] h-[32px]  items-center justify-between p-2 rounded-[8px] hover:bg-green-500'>
+                            <div className=' flex bg-[#00580D] rounded-[8px] h-[32px] w-full items-center justify-center p-2 rounded-[8px] hover:bg-green-500'>
 
-                                <button className='flex  text-[12px]  text-white'>
+                                <button className='flex items-center text-[12px]  text-white'>
                                     Remove from Blacklist
                                 </button>
                             </div>
 
-                            <div className=' flex  rounded-[8px] h-[32px] items-center justify-between p-2 rounded-[8px] hover:bg-gray-500 border border-[#00580D] '>
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            )
+            }
+
+            {/* Table/Card Modal for Guest */}
+            {isGuestModalOpen && selectedGuest && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
+
+                    <div className='flex flex-col items-start gap-4 w-[292px]  border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]' ref={guestModalRef}>
+                        {/* Profile pic/Detail/Badge */}
+                        <div className='flex flex-row w-full items-center justify-between gap-2'>
+                            <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
+                                <img src={selectedGuest.image || "/boy-avatar.svg"} alt="" className="w-10 h-10 rounded-full object-cover" />
+                            </div>
+
+                            <div className='flex flex-col items-start w-full'>
+                                <p className='text-[14px] font-medium text-[#002706]'>{selectedGuest.visitor_name}</p>
+                                <p className='text-[11px]'>Arrival Time: {selectedGuest.visit_date}</p>
+
+
+                            </div>
+
+                            <div className='rounded-md bg-[#D1C9FA] flex items-center w-[64px] h-[22px] justify-center '>
+                                <p className='text-[12px] text-[#2D2264] '>guest</p>
+                            </div>
+
+
+                        </div>
+                        {/* Buttons */}
+                        <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
+                            <div className=' flex bg-[#00580D] rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 rounded-[8px] hover:bg-green-500'>
+
+                                <button className='flex items-center  text-[12px]  text-white'>
+                                    Approve
+                                </button>
+                            </div>
+
+                            <div className=' flex  rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 rounded-[8px] hover:bg-gray-500 border border-[#00580D] '>
                                 <button className='flex  text-[12px]  text-[#00580D]'>
-                                    Details
+                                    Decline
                                 </button>
                             </div>
 
@@ -346,62 +414,9 @@ const VisitorManagement = ({ datedata = [] }) => {
             }
 
 
-            {/* Theres a glitch here idk why hehe so let it stay like that */}
-
-            {/* Table/Card Modal for guest */}
-            {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm" >
-
-                    {blacklists.map((blacklist) => (
-                        <div className='flex flex-col items-start gap-4 w-[292px]  border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]' >
-                            {/* Profile pic/Detail/Badge */}
-                            <div className='flex flex-row w-full items-center justify-between gap-2'>
-                                <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                                    <img src="/oui-gear2.svg" alt="" />
-                                </div>
-
-                                <div className='flex flex-col items-start w-full'>
-                                    <p className='text-[14px] font-medium text-[#002706]'>Robert Nanjala</p>
-                                    <p className='text-[11px]'>Check in time: 12:42pm</p>
-                                    <p className='text-[11px] text-[#6C50EF]'>Stay time: 52 mins</p>
-
-                                </div>
-
-                                <div className='rounded-md bg-[#D1C9FA] flex items-center w-[64px] h-[22px] justify-center '>
-                                    <p className='text-[12px] text-[#2D2264]'>guest</p>
-                                </div>
-
-
-                            </div>
-                            {/* Buttons */}
-                            <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
-                                <div className=' flex bg-[#00580D] rounded-[8px] h-[32px]  items-center justify-between p-2 rounded-[8px] hover:bg-green-500'>
-
-                                    <button className='flex  text-[12px]  text-white'>
-                                        Remove from blacklist
-                                    </button>
-                                </div>
-
-                                <div className=' flex  rounded-[8px] h-[32px] items-center justify-between p-2 rounded-[8px] hover:bg-gray-500 border border-[#00580D] '>
-                                    <button className='flex  text-[12px]  text-[#00580D]'>
-                                        Details
-                                    </button>
-                                </div>
-
-
-                            </div>
-
-                        </div>
-
-                    ))}
-
-
-                </div>
 
 
 
-            )
-            }
 
         </>
 
