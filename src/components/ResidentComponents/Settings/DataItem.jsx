@@ -8,7 +8,7 @@ export default function DataItem({icon, icon2, text, callback}) {
             <div className='w-[24px] h-[24px] rounded-[20px]'>
                 <img src={icon} className='w-full h-full object-cover' />
             </div>
-            <p className='font-dmsans font-medium text-[16px] text-[#002706] leading-[100%] tracking-[0]'>{text}</p>
+            <p className='font-dmsans font-medium text-[16px] text-[#002706] mt-[8px] leading-[100%] tracking-[0]'>{text}</p>
         </div>
         <div className='w-[24px] h-[24px]'>
             <img src={icon2} className='w-full h-full object-cover'
