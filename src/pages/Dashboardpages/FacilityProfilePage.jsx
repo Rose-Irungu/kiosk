@@ -1,8 +1,19 @@
 // FacilityProfile.jsx
 import React from "react";
 import Layout from "../../components/layout/Layout";
+import { useState } from "react";
+import FloorManagement from "../../components/FloorManagement";
 
 export default function FacilityProfile() {
+  const [facilityName, setFacilityName] = useState("");
+  const handleSave = () => {
+    if (facilityName.trim() === "") {
+      alert("Please enter a facility name.");
+      return;
+    }
+    console.log("Facility saved:", facilityName);
+    alert(`Facility "${facilityName}" saved successfully!`);
+  };
   return (
     <Layout>
       <div className="bg-white rounded-2xl p-12 flex flex-col gap-8 items-start">
@@ -17,8 +28,20 @@ export default function FacilityProfile() {
               <div className="flex flex-col gap-2 flex-1">
                 <label className="text-sm text-[#495057]">Facility Name*</label>
                 <div className="bg-white rounded-md px-3 py-2 h-12 flex items-center">
-                  <span className="text-[#495057] text-base">West Brook</span>
+                  <input
+                    type="text"
+                    placeholder="name of your facility"
+                    className="text-[#495057] w-full outline-none"
+                    value={facilityName}
+                    onChange={(e) => setFacilityName(e.target.value)}
+                  />
                 </div>
+                <button
+                  onClick={handleSave}
+                  className="bg-[#005e0e] hover:bg-[#023609] text-white  text-sm font-medium px-6 py-3 mt-[40px] rounded-md w-full ml-[120px] "
+                >
+                  SAVE
+                </button>
               </div>
 
               <div className="flex flex-col gap-2 flex-1">
@@ -44,23 +67,7 @@ export default function FacilityProfile() {
           </div>
         </div>
 
-        <div className="rounded-lg p-8 shadow-md w-full flex flex-col gap-8">
-          <div className="flex items-center justify-between w-full">
-            <h2 className="text-[#495057] text-xl font-bold">
-              Floor and Units
-            </h2>
-            <button className="bg-[#005e0e] hover:bg-[#023609] text-white text-sm font-medium px-6 py-3 rounded-md shadow flex items-center gap-2">
-              <img src="tabler-plus0.svg" className="w-6 h-6" alt="add" />
-              Add Floor
-            </button>
-          </div>
-          <div className="bg-[#f5f4f5] border border-dashed border-black rounded-lg p-4 h-[123px] flex flex-col items-center justify-center w-full gap-4">
-            <img src="group0.svg" className="w-8 h-8" alt="building icon" />
-            <p className="text-sm text-black/30 font-medium">
-              No floors added yet. Click ‘add floor’ to get started.
-            </p>
-          </div>
-        </div>
+        <FloorManagement />
 
         <div className="rounded-lg p-8 shadow-md w-full flex flex-col gap-8">
           <h2 className="text-[#495057] text-xl font-bold">
