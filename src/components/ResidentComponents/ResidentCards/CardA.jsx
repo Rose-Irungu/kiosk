@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { getRelativeTime } from '../../../utils/fomatters';
+import { approveVisit, cancelVisit, blacklistVisitor } from '../../../services/visitsuser';
 
 const CardA = ({
+  visit_id,
+  visitor_id,
   visitor_name,
   check_in,
   stayTime,
-  purpose,
+  // purpose,
   status,
   tag,
   image,
@@ -15,9 +18,11 @@ const CardA = ({
 
   const visitorData = {
     visitor_name,
+    visitor_id,
     check_in,
     stayTime,
-    purpose,
+    visit_id,
+    // purpose,
     status,
     tag,
     image,
@@ -27,11 +32,12 @@ const CardA = ({
     name: n = visitorData.visitor_name,
     time: t = getRelativeTime(visitorData.check_in),
     stayTime: s = visitorData.stayTime || '52 mins',
-    purpose: p = visitorData.purpose || 'delivery',
+    // purpose: p = visitorData.purpose || 'delivery',
     status: st = (visitorData.status || 'pending').toLowerCase(),
 
     tag: tg = visitorData.tag || 'guest',
     image: img = visitorData.image || '/ellipse-20.png',
+    // visit_id: visit_id,
   } = visitorData;
 console.log('Status:', st);
 
@@ -46,11 +52,43 @@ console.log('Status:', st);
     setShowDetailsView(false);
   };
 
+  const handleApprove = async () => {
+    try {
+      await approveVisit(visit_id)
+      closeModal();
+    } catch (error) {
+      
+    }
+
+  }
+  const handleCancel = async () => {
+    try {
+      await cancelVisit(visit_id)
+      closeModal();
+    } catch (error) {
+      
+    }
+
+  }
+  const handleAddToBlacklist = async () => {
+    try {
+      await blacklistVisitor({
+        visitor_id
+      })
+      closeModal();
+    } catch (error) {
+      
+    }
+
+  }
+
+
+
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block w-full  md:w-auto">
      
       <div
-        className="bg-white rounded-lg p-7 px-7 md:p-4 md:px-6 flex items-center justify-between  h-8 md:h-15 shadow-md cursor-pointer"
+        className="bg-white rounded-lg p-7 px-7 md:p-4 md:px-6 flex items-center w-full justify-between  h-auto md:h-15 md:w-auto shadow-md cursor-pointer"
         onClick={openModal}
       >
         <div className="flex items-center gap-1.5">
@@ -65,7 +103,7 @@ console.log('Status:', st);
           </div>
         </div>
         <div className="bg-green-100 rounded-xl px-2.5 py-0.5 flex items-center justify-center">
-          <div className="text-green-900 text-xs font-normal">{p}</div>
+          <div className="text-green-900 text-xs font-normal">{tg}</div>
         </div>
       </div>
 
@@ -77,7 +115,7 @@ console.log('Status:', st);
               <h2 className="text-lg font-semibold text-green-900 mb-4">Visitor Details</h2>
               <p className="text-sm text-gray-700 mb-2"><strong>Name:</strong> {n}</p>
               <p className="text-sm text-gray-700 mb-2"><strong>Check-in Time:</strong> {t}</p>
-              <p className="text-sm text-gray-700 mb-4"><strong>Purpose:</strong> {p}</p>
+              <p className="text-sm text-gray-700 mb-4"><strong>tag</strong> {tg}</p>
               <button
                 onClick={closeModal}
                 className="mt-2 bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800"
@@ -97,24 +135,18 @@ console.log('Status:', st);
                       {tg}
                     </div>
                   </div>
-                  <div className="text-gray-600 text-[10px] font-medium">Arrival time: {t}</div>
+                  <div className="text-gray-600 text-[10px] font-medium">Today</div>
                 </div>
               </div>
               <div className="flex justify-between w-[258px]">
                 <button
-                  onClick={() => {
-                    console.log('Approved');
-                    closeModal();
-                  }}
+                  onClick={handleApprove}
                   className="bg-green-900 text-white text-sm font-medium px-4 py-2 rounded w-[110px]"
                 >
                   Approve
                 </button>
                 <button
-                  onClick={() => {
-                    console.log('Declined');
-                    closeModal();
-                  }}
+                  onClick={handleCancel}
                   className="border border-green-900 text-green-900 text-sm font-medium px-4 py-2 rounded w-[110px]"
                 >
                   Decline
@@ -148,10 +180,7 @@ console.log('Status:', st);
                   Visitor Details
                 </button>
                 <button
-                  onClick={() => {
-                    console.log('Blacklisted');
-                    closeModal();
-                  }}
+                  onClick={handleAddToBlacklist}
                   className="bg-green-900 text-white text-sm font-medium px-4 py-2 rounded w-[110px]"
                 >
                   Add to Blacklist

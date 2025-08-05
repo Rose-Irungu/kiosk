@@ -35,6 +35,9 @@ export const API_ENDPOINTS = {
   SECURITY_REGISTER_VISITOR: '/visitors/security-check-in/',
   VISIT_LOGS: '/visits/visit-logs/',
   VISITS_USER: '/visits/visits-user/',
+  APPROVE_VISITOR: '/visitors/approve-visitor/',
+  BLACKLIST_VISITOR: '/visitors/blacklist/',
+  UN_BLACKLIST_VISITOR: '/visitors/unblacklist/',
 
 
   //Security dashboard 

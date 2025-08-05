@@ -32,7 +32,8 @@ const MyGuestsFrame = () => {
   const filteredGuests = guestList.filter((guest) => guest.status === activeTab);
 
   return (
-    <div className="bg-[#e6fbe9] rounded-xl px-2 py-3 flex flex-col gap-4 items-center  justify-center relative">
+<div className="bg-[#e6fbe9] rounded-xl px-2 py-3 flex flex-col gap-4 items-center justify-start overflow-y-auto relative max-h-[90vh]">
+
       <div className="flex items-center justify-between w-full px-4">
         <div className="flex items-center gap-3">
           <img src="/fluent-people-20-filled0.svg" className="w-8 h-8" />
@@ -47,14 +48,14 @@ const MyGuestsFrame = () => {
         </button>
       </div>
 
-      <div className="flex flex-col gap-4 items-center w-full px-4">
+      <div className="flex flex-col gap-4 items-center w-full  px-4">
         <div className="bg-[rgba(51,51,51,0.1)] bg-opacity-80 rounded-full px-2 py-1 flex gap-4 w-full">
           {Object.entries({ 'Pending': 'pending', 'Expected': 'approved', 'On-Site': 'checked_in' }).map(
             ([label, value]) => (
               <div
                 key={value}
                 onClick={() => setActiveTab(value)}
-                className={`rounded-full w-[315px] h-8 flex items-center justify-center text-sm font-semibold cursor-pointer ${activeTab === value ? 'bg-[#b0f1b9]' : 'bg-white'
+                className={`rounded-full w-[315px] h-8  flex items-center justify-center text-sm font-semibold cursor-pointer ${activeTab === value ? 'bg-[#b0f1b9]' : 'bg-white'
                   }`}
               >
                 {label} ({guestList.filter((g) => g.status === value).length})
