@@ -20,7 +20,7 @@ export default function PastThisMonth({ allVisitors }) {
   }, [allVisitors]);
 
   return (
-    <div className="flex flex-row items-center justify-center w-full h-[106px] py-[12px] px-[8px] gap-[10px] overflow-y-scroll">
+    <div className="flex flex-col items-center justify-center w-full h-[106px] py-[12px] px-[8px] gap-[10px] overflow-y-scroll">
       {loading ? (
         <NoteP text={"Loading..."}/>
       ) : thisMonthVisitors.length > 0 ? (
