@@ -87,9 +87,9 @@ export default function EmergencyControlApp() {
         {activeForm === "fire" && <FireAlertForm type={emergencyType} />}
         {activeForm === "security" && <Security_form type={emergencyType} />}
 
-        <div className="flex flex-col items-center py-6">
+        {/* <div className="flex flex-col items-center py-6">
           <AlertCard time={timeLeft} />
-        </div>
+        </div> */}
         <div className="flex flex-col items-center py-6">
           <EmergencyAlert />
         </div>
