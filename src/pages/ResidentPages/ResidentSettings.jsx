@@ -6,6 +6,7 @@ import PersonalInformation from '../../components/ResidentComponents/Settings/Pe
 import Cars from '../../components/ResidentComponents/Settings/Cars';
 import HouseholdInformation from '../../components/ResidentComponents/Settings/HouseholdInformation';
 import NotificationSettings from '../../components/ResidentComponents/Settings/NotificationSettings';
+import DataStorageSettings from '../../components/ResidentComponents/Settings/DataStorageSettings';
 
 export default function ResidentSettings() {
   return (
@@ -18,6 +19,7 @@ export default function ResidentSettings() {
           <HouseholdInformation />
           <Header icon="/gear.svg" text={"My Settings"}/>
           <NotificationSettings/>
+          <DataStorageSettings />
         </div>
     </ResidentLayout>
   );
