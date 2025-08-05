@@ -1,11 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router";
-import ResidentLayout from '../../components/ResidentComponents/ResidentLayout.jsx'
-import { User } from 'lucide-react';
+import ResidentLayout from '../../components/ResidentComponents/ResidentLayout.jsx';
 import { getAllBlackListed } from '../../services/blacklistedpeeps';
-
-import { visitsuser } from "../../services/visitsuser";
-import { removeFromBlacklist } from '../../services/blacklistedpeeps';
+import { unBlacklistVisitor, visitsuser, approveVisit, cancelVisit } from "../../services/visitsuser";
 
 
 
@@ -20,6 +17,8 @@ const VisitorManagement = ({ datedata = [] }) => {
 
     const navigate = useNavigate();
     const [active, setActive] = useState('btn1');
+
+
 
     const goList = (dateObj) => {
         const selectedDateStr = `${dateObj.year}-${String(dateObj.month).padStart(2, '0')}-${String(dateObj.daynum).padStart(2, '0')}`;
@@ -195,27 +194,45 @@ const VisitorManagement = ({ datedata = [] }) => {
     // Remove from Blacklist------------------------------------------------
     const handleRemoveFromBlacklist = async () => {
         try {
-            const res = await removeFromBlacklist(selectedGuest.visitor_id); 
-            if (res.result_code === 0) {
-                
-                setBlackLists(prev => prev.filter(guest => guest.id !== selectedGuest.id));
-                setIsModalOpen(false);
-                alert("Guest removed from blacklist successfully.");
-            } else {
-                alert("Failed to remove guest from blacklist.");
-            }
+            const res = await unBlacklistVisitor({ visitor_id: selectedGuest.visitor_id });
+            setBlackLists(prev =>
+                prev.filter(guest => guest.visitor_id !== selectedGuest.visitor_id)
+            );
+            setIsModalOpen(false)
         } catch (error) {
             console.error("Error removing guest from blacklist:", error);
-            alert("An error occurred while removing the guest.");
+            // toast.error("An error occurred while removing the guest.");
         }
     };
-// ----------------------------------------------------------------------
+    // ----------------------------------------------------------------------
+
+    // Approve & Decline ----------------------------------------------------
+    const handleApprove = async () => {
+        try {
+            await approveVisit(visit_id)
+            setIsGuestModalOpen(false);
+        } catch (error) {
+
+        }
+
+    }
+    const handleCancel = async () => {
+        try {
+            await cancelVisit(visit_id)
+            setIsGuestModalOpen(false);
+        } catch (error) {
+
+        }
+
+    }
+
+    //   ----------------------------------------------------------------------------------
+
+
 
     return (
         <>
-
             <ResidentLayout >
-
                 {/* Main Container 1 - Guest List */}
                 <div className='flex flex-col items-start gap-4 bg-[#E6FBE9] justify-between rounded-sm mx-auto mb-[32px] p-3 rounded-[12px] '>
                     {/* h1, Icon and Invite Guest Button */}
@@ -248,55 +265,61 @@ const VisitorManagement = ({ datedata = [] }) => {
 
                     {/* Guest Details Card */}
                     <div className='flex flex-col items-start w-full overflow-y-scroll h-[221px] '>
-                        {filteredGuests.map((guestlist, index) => (
-                            <button
-                                onClick={() => handleGuestModal(guestlist)}
-                                key={guestlist.id}
-                                className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm flex flex-row items-center justify-between font-["DM Sans"] p-4'
-                            >
-                                <div className='flex flex-row justify-between gap-4 items-center '>
-                                    <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                                        <img src={guestlist.image || "/boy-avatar.svg"} alt="" className="w-10 h-10 rounded-full object-cover" />
+                        {filteredGuests.length > 0 ? (
+                            filteredGuests.map((guestlist, index) => (
+                                <button
+                                    onClick={() => handleGuestModal(guestlist)}
+                                    key={guestlist.id}
+                                    className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm flex flex-row items-center justify-between font-["DM Sans"] p-4'
+                                >
+                                    <div className='flex flex-row justify-between gap-4 items-center '>
+                                        <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
+                                            <img src={guestlist.image || "/boy-avatar.svg"} alt="" className="w-10 h-10 rounded-full object-cover" />
+                                        </div>
+                                        <div className='flex flex-col items-start w-full'>
+                                            <p className='text-sm font-medium text-[#002706] '>{guestlist.visitor_name}</p>
+                                            <p className='text-[12px] text-[#333333]'>{guestlist.check_in}</p>
+                                        </div>
                                     </div>
-                                    <div className='flex flex-col items-start w-full'>
-                                        <p className='text-sm font-medium text-[#002706] '>{guestlist.visitor_name}</p>
-                                        <p className='text-[12px] text-[#333333]'>{guestlist.check_in}</p>
-                                    </div>
-                                </div>
 
-                                <div className='rounded-md bg-[#B0F1B9] flex items-center p-2 h-[22px] justify-center '>
-                                    <p className='text-sm text-[#002706]'>{guestlist.visitor_type}</p>
-                                </div>
-                            </button>
-                        ))}
+                                    <div className='rounded-md bg-[#B0F1B9] flex items-center p-2 h-[22px] justify-center '>
+                                        <p className='text-sm text-[#002706]'>{guestlist.visitor_type}</p>
+                                    </div>
+                                </button>
+                            )
+                            )) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                                <p className="text-[#495057] text-sm font-medium">No guest here :(</p>
+                            </div>)}
                     </div>
                 </div>
-
-
 
                 {/* Main Container 2 - Callendar */}
-                <div className='bg-[#B0F1B9]/50 flex flex-col gap-2 font-["DM Sans"] p-3 w-full mb-[32px] rounded-[12px]'>
+                <div className='bg-[#B0F1B9]/50 flex flex-col gap-2 font-["DM Sans"] p-3 w-full mb-[32px] rounded-[12px] '>
 
                     <h1 className='text-[24px] font-semibold pb-4 '>See guests by date</h1>
-                    <div className='flex flex-row items-center gap-6 border-[#54E168] border-[2.77974px] rounded-[33.3569px] bg-[#FFFF] py-4 px-4 font-["DM Sans"] w-full overflow-x-auto '>
-                        {datebuttons.map((datebutton) => (
-                            <button key={datebutton.id}
-                                className={datebutton.id === day ? ' text-[24px]  font-semibold bg-[#B0F1B9] flex flex-col justify-center w-[80px] h-[80px] border-[2.77974px] rounded-[22.2379px] border-[#54E168] items-center shadow-[6.04594px_6.04594px_12.0919px_0px_rgba(0,_88,_13,_0.25)] hover:bg-[#B0F1B9]' : 'hover:bg-[#B0F1B9] text-[24px]  bg-[#FFFF] flex flex-col justify-center w-[80px] h-[80px] border-[2.77974px] rounded-[22.2379px] border-[#54E168] items-center shadow-[6.04594px_6.04594px_12.0919px_0px_rgba(0,_88,_13,_0.25)]'}
-                                onClick={() => {
-                                    goList(datebutton)
-                                    // console.log(datebutton)
-                                }}>
-                                <p className='text-[#6C50EF]' >{datebutton.day}</p>
-                                <p >{datebutton.daynum}</p>
+                    <div className="w-full overflow-x-auto scrollbar-hide ">
 
-                            </button>
-                        ))}
+                        <div className='inline-flex w-max items-center gap-6 border-[#54E168] border-[2.77974px] rounded-[33.3569px] bg-[#FFFF] py-4 px-4 font-["DM Sans"] w-full  '>
+                            {datebuttons.map((datebutton) => (
+                                <button key={datebutton.id}
+                                    className={datebutton.id === day ? ' text-[24px]  font-semibold bg-[#B0F1B9] flex flex-col justify-center w-[80px] h-[80px] border-[2.77974px] rounded-[22.2379px] border-[#54E168] items-center shadow-[6.04594px_6.04594px_12.0919px_0px_rgba(0,_88,_13,_0.25)] hover:bg-[#B0F1B9]' : 'hover:bg-[#B0F1B9] text-[24px]  bg-[#FFFF] flex flex-col justify-center w-[80px] h-[80px] border-[2.77974px] rounded-[22.2379px] border-[#54E168] items-center shadow-[6.04594px_6.04594px_12.0919px_0px_rgba(0,_88,_13,_0.25)]'}
+                                    onClick={() => {
+                                        goList(datebutton)
+                                        // console.log(datebutton)
+                                    }}>
+                                    <p className='text-[#6C50EF]' >{datebutton.day}</p>
+                                    <p >{datebutton.daynum}</p>
+
+                                </button>
+                            ))}
+                        </div>
                     </div>
 
 
 
-                </div>
 
+                </div>
 
                 {/* Main Conatiner 3 - Restricted Guests Table */}
                 <div className='flex flex-col gap-2  bg-[#F0EEFD] mb-[32px] p-3 rounded-[12px] overflow-y-auto '>
@@ -305,7 +328,15 @@ const VisitorManagement = ({ datedata = [] }) => {
                         <h1 className='text-[24px] font-["DM Sans"] text-[#002706] font-semibold'>Restricted Guests</h1>
                     </div>
 
+
+                    {/* {filteredGuests.length > 0 ? (
+                            filteredGuests.map((guestlist, index) => ( */}
+
+                            {/* {blacklists.length > 0 ? (
+                            blacklist.map((guestlist, index) => ( */}
+
                     {blacklists.map((blacklist) => (
+
                         <div onClick={() => openModal(blacklist)} className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4  '>
 
                             <button onClick={() => openModal(blacklist)} className='flex flex-row justify-between gap-4 items-center '>
@@ -321,6 +352,7 @@ const VisitorManagement = ({ datedata = [] }) => {
 
                                 </div>
                             </button>
+                            
 
 
 
@@ -340,7 +372,7 @@ const VisitorManagement = ({ datedata = [] }) => {
             {isModalOpen && selectedGuest && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
 
-                    <div className='flex flex-col items-start gap-4 w-[292px]  border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]'  ref={restrictedModalRef}>
+                    <div className='flex flex-col items-start gap-4 w-[292px]  border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]' ref={restrictedModalRef}>
                         {/* Profile pic/Detail/Badge */}
                         <div className='flex flex-row w-full items-center justify-between gap-2'>
                             <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
@@ -410,13 +442,13 @@ const VisitorManagement = ({ datedata = [] }) => {
                         <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
                             <div className=' flex bg-[#00580D] rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 rounded-[8px] hover:bg-green-500'>
 
-                                <button className='flex items-center  text-[12px]  text-white'>
+                                <button onClick={handleApprove} className='flex items-center  text-[12px]  text-white'>
                                     Approve
                                 </button>
                             </div>
 
                             <div className=' flex  rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 rounded-[8px] hover:bg-gray-500 border border-[#00580D] '>
-                                <button className='flex  text-[12px]  text-[#00580D]'>
+                                <button onClick={handleCancel} className='flex  text-[12px]  text-[#00580D]'>
                                     Decline
                                 </button>
                             </div>
@@ -431,19 +463,7 @@ const VisitorManagement = ({ datedata = [] }) => {
 
             )
             }
-
-
-
-
-
-
         </>
-
-
-
-
-
-
     )
 }
 
