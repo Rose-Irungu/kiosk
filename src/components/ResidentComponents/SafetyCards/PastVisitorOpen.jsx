@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default function PastVisitorOpen({name, time, type, callback}) {
+export default function PastVisitorOpen({name, time, type, callback, }) {
   return (
-    <div className = 'flex flex-row items-center justify-center w-full h-[106px] rounded-[12px] justify-between p-[10px] bg-[#FFFFFF]'>
+    <div className = 'flex flex-row items-center w-full h-[106px] rounded-[12px] justify-between p-[10px] bg-[#FFFFFF]'>
         <div className = 'flex flex-row w-full h-[40px] justify-between px-[10px]'>
             <div className = 'w-[40px] h-[40px]'></div>
             <div className = 'flex flex-col w-[145px] h-[36px] gap-[2px]'>

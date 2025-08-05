@@ -52,7 +52,7 @@ function ResidentDashboard() {
                 <div className='flex flex-row w-[182px] h-[32px]'>
                     <div className='h-[32px] w-[32px]'>
                         <img
-                            src="/past_guests.svg"
+                            src="/mgeni.svg"
                             className="w-full h-full text-red-500 mr-3"
                         />
                     </div>

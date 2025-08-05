@@ -1,6 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react';
+import PastVisitorOpen from './PastVisitorOpen';
 
 export default function PastGuestCard({image, name, checkOutTime, type}) {
+
+  const [showModal, setShowModal] = useState(false);
+  const toggleModal = () => {
+     setShowModal(!showModal); // Toggles the modal
+  };
+
   return (
     <div className='flex flex-row justify-between items-center w-full h-64px rounded-[8px] p-[12px] bg-[#FFFFFF]'>
         <div className='flex flex-row w-[216px] h-[40px] gap-[6px]'>
@@ -14,7 +21,11 @@ export default function PastGuestCard({image, name, checkOutTime, type}) {
             </div>
           </div>
         </div>
-        <button className='w-[64px] h-[24px] rounded-[50px] px-[10px] gap-[10px] bg-[#D1C9FA] text-[#2D2264]'>{type}</button>
+        <button className='w-[64px] h-[24px] rounded-[50px] px-[10px] gap-[10px] bg-[#D1C9FA] text-[#2D2264]'
+                onClick={()=>toggleModal()}>
+          {type}
+        </button>
+        {showModal && <PastVisitorOpen isOpen={showModal} onClose={toggleModal} />}
     </div>
   );
 }
