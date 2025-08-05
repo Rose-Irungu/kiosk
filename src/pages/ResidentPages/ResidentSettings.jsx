@@ -5,6 +5,7 @@ import Header from '../../components/ResidentComponents/Settings/Header';
 import PersonalInformation from '../../components/ResidentComponents/Settings/PersonalInformation';
 import Cars from '../../components/ResidentComponents/Settings/Cars';
 import HouseholdInformation from '../../components/ResidentComponents/Settings/HouseholdInformation';
+import NotificationSettings from '../../components/ResidentComponents/Settings/NotificationSettings';
 
 export default function ResidentSettings() {
   return (
@@ -16,6 +17,7 @@ export default function ResidentSettings() {
           <Cars />
           <HouseholdInformation />
           <Header icon="/gear.svg" text={"My Settings"}/>
+          <NotificationSettings/>
         </div>
     </ResidentLayout>
   );
