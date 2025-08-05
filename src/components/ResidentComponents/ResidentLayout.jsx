@@ -15,7 +15,7 @@ const navItems = [
 ];
 
 const secondaryItems = [
-  { id: "security/settings", path: "/security/settings" },
+  { id: "resident/settings", path: "/resident/settings" },
   { id: "security/help", path: "/security/help" },
 ];
 
