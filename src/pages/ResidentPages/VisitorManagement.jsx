@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from "react-router";
 import ResidentLayout from '../../components/ResidentComponents/ResidentLayout.jsx'
+import { User } from 'lucide-react';
+import { getAllBlackListed } from '../../services/blacklistedpeeps';
+import { getAllVisitors } from '../../services/residentDashboardServices';
 
 
-const VisitorManagement = () => {
 
+const VisitorManagement = ({ datedata = [] }) => {
     const buttons = [
         { id: 'btn1', label: 'Expected (2)' }, ,
         { id: 'btn2', label: 'Pending (2)' },
         { id: 'btn3', label: 'Onsite (2)' },
 
     ];
-
-
-
     const datebuttons = [
         { id: 'dt1', day: 'sun', daynum: '12' }, ,
         { id: 'dt2', day: 'mon', daynum: '13' },
@@ -27,17 +27,13 @@ const VisitorManagement = () => {
     ];
 
     const navigate = useNavigate();
-
-
-
     const [active, setActive] = useState(null);
-
     const [day, setDay] = useState(null);
 
-    const handleClick = (id) => {
-        setActive(id);
-        navigate('/resident/guestlist');
-    };
+    // const handleClick = (id) => {
+    //     setActive(id);
+    //     navigate('/resident/guestlist', { state: datedata });
+    // };
 
     const changeColor = (id) => {
         setDay(id);
@@ -45,19 +41,108 @@ const VisitorManagement = () => {
 
     const goList = () => {
         if (changeColor) {
-            navigate('/resident/guestlist', { viewTransition: true });
+            navigate('/resident/guestlist', { state: datedata });
         }
     };
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
     const toggleModal = () => {
-        setIsModalOpen(true)
-    }
+        setIsModalOpen(!isModalOpen);
+    };
+
+    useEffect(() => {
+        if (isModalOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isModalOpen]);
+
+    const modalRef = useRef(null);
+
+
+    const handleClickOutside = (event) => {
+        if (modalRef.current && !modalRef.current.contains(event.target)) {
+            setIsModalOpen(false);
+        }
+    };
+
+
+    const [nowToday, setNowToday] = useState(null);
+
+    const todayIsDay = (id) => {
+        setBold(id);
+
+    };
+
+    // Guest List------------------------------------------------
+
+    const [guestlists, setGuestLists] = useState([]);
+    const fetchGuestList = async () => {
+        // setLoading(true);
+        try {
+            const res = await getAllVisitors();
+            if (res.result_code === 0) {
+                let allData = res.data;
+                console.log("Fetched Guests:", allData);
+                setGuestLists(allData);
+            } else {
+                setGuestLists([]);
+            }
+        } catch (error) {
+            console.error("Error fetching Guests:", error);
+            setGuestLists([]);
+        } finally {
+            // setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchGuestList();
+    }, []);
+
+    // -------------------------------------------------------------------------------
+
+    // Restricted List------------------------------------------------
+
+    const [blacklists, setBlackLists] = useState([]);
+    const fetchBlackListed = async () => {
+        // setLoading(true);
+        try {
+            const res = await getAllBlackListed();
+            if (res.result_code === 0) {
+                let allData = res.data;
+                console.log("Fetched Blacklisted visitors:", allData);
+                setBlackLists(allData);
+            } else {
+                setBlackLists([]);
+            }
+        } catch (error) {
+            console.error("Error fetching blacklisted visitors:", error);
+            setBlackLists([]);
+        } finally {
+            // setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchBlackListed();
+    }, []);
+
+    // -------------------------------------------------------------------------------
 
 
     return (
+
+
         <>
+
             <ResidentLayout >
 
                 {/* Main Container 1 - Guest List */}
@@ -91,28 +176,28 @@ const VisitorManagement = () => {
 
 
                     {/* Guest Details Card */}
-                    <div className='flex flex-col items-start w-full '>
-                        <button className='w-[937px] h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4 '>
-                            <div className='flex flex-row justify-between gap-4 items-center '>
-
-                                <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                                    <img src="/oui-gear2.svg" alt="" />
+                    <div className='flex flex-col items-start w-full overflow-y-scroll h-[221px] '>
+                        {guestlists.map((guestlist, index) => (
+                            <button
+                                key={guestlist.id}
+                                className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm flex flex-row items-center justify-between font-["DM Sans"] p-4'
+                            >
+                                <div className='flex flex-row justify-between gap-4 items-center '>
+                                    <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
+                                        <img src={guestlist.visitor_photo} alt="" className="w-10 h-10 rounded-full object-cover" />
+                                    </div>
+                                    <div className='flex flex-col items-start w-full'>
+                                        <p className='text-sm font-medium text-[#002706] '>{guestlist.visitor_name}</p>
+                                        <p className='text-[12px] text-[#333333]'>{guestlist.visit_date}</p>
+                                    </div>
                                 </div>
 
-                                <div className='flex flex-col items-start w-full'>
-                                    <p className='text-sm font-medium text-[#002706] '>Robert Nanjala</p>
-                                    <p className='text-[12px] text-[#333333]'>Check In Time: 12PM</p>
-
-
+                                <div className='rounded-md bg-[#B0F1B9] flex items-center p-2 h-[22px] justify-center '>
+                                    <p className='text-sm text-[#002706]'>{guestlist.visitor_type}</p>
                                 </div>
-                            </div>
+                            </button>
+                        ))}
 
-                            <div className='rounded-md bg-[#B0F1B9] flex items-center w-[64px] h-[22px] justify-center '>
-                                <p className='text-sm text-[#002706]'>guest</p>
-                            </div>
-
-
-                        </button>
 
 
 
@@ -136,7 +221,7 @@ const VisitorManagement = () => {
 
 
 
-                    <div className='flex flex-row items-center gap-6 border-[#54E168] border-[2.77974px] rounded-[33.3569px] bg-[#FFFF] py-4 px-4 font-["DM Sans"] w-full  '>
+                    <div className='flex flex-row items-center gap-6 border-[#54E168] border-[2.77974px] rounded-[33.3569px] bg-[#FFFF] py-4 px-4 font-["DM Sans"] w-full overflow-x-auto '>
                         {datebuttons.map((datebutton) => (
                             <button key={datebutton.id}
                                 className={datebutton.id === day ? ' text-[24px]  font-semibold bg-[#B0F1B9] flex flex-col justify-center w-[80px] h-[80px] border-[2.77974px] rounded-[22.2379px] border-[#54E168] items-center shadow-[6.04594px_6.04594px_12.0919px_0px_rgba(0,_88,_13,_0.25)] hover:bg-[#B0F1B9]' : 'hover:bg-[#B0F1B9] text-[24px]  bg-[#FFFF] flex flex-col justify-center w-[80px] h-[80px] border-[2.77974px] rounded-[22.2379px] border-[#54E168] items-center shadow-[6.04594px_6.04594px_12.0919px_0px_rgba(0,_88,_13,_0.25)]'}
@@ -154,29 +239,32 @@ const VisitorManagement = () => {
 
 
                 {/* Main Conatiner 3 - Restricted Guests Table */}
-                <div className='flex flex-col gap-2  bg-[#F0EEFD] mb-[32px] p-3 rounded-[12px]'>
+                <div className='flex flex-col gap-2  bg-[#F0EEFD] mb-[32px] p-3 rounded-[12px] '>
                     <div className='flex items-start gap-2 flex-row justify-start pb-4'>
                         <img src="/restricted-button.svg" alt="" />
                         <h1 className='text-[24px] font-["DM Sans"] text-[#002706] font-semibold'>Restricted Guests</h1>
                     </div>
 
 
-                    <div className='w-[937px] h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4 '>
-                        <button onClick={() => {
-                            setIsModalOpen(true);
-                        }} className='flex flex-row justify-between gap-4 items-center '>
+                    <div className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4  '>
+                        {blacklists.map((blacklist) => (
+                            <button onClick={() => {
+                                setIsModalOpen(true);
+                            }} className='flex flex-row justify-between gap-4 items-center '>
 
-                            <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                                <img src="/oui-gear2.svg" alt="" />
-                            </div>
+                                <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
+                                    <img src={blacklist.image} className="w-10 h-10 rounded-full object-cover" alt="" />
+                                </div>
 
-                            <div className='flex flex-col items-start w-full'>
-                                <p className='text-sm font-medium text-[#002706] '>Robert Nanjala</p>
-                                <p className='text-[12px] text-[#333333]'>Check In Time: 12PM</p>
+                                <div className='flex flex-col items-start w-full'>
+                                    <p className='text-sm font-medium text-[#002706] '>{blacklist.full_name}</p>
+                                    <p className='text-[12px] text-[#333333]'>{blacklist.reason}</p>
 
 
-                            </div>
-                        </button>
+                                </div>
+                            </button>
+                        ))}
+
 
 
 
@@ -191,7 +279,7 @@ const VisitorManagement = () => {
 
             {/* Table/Card Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm" ref={modalRef}>
 
                     <div className='flex flex-col items-start gap-4 w-[292px]  border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]'>
                         {/* Profile pic/Detail/Badge */}
@@ -239,11 +327,14 @@ const VisitorManagement = () => {
             )
             }
 
-            {/* Table/Card Modal */}
-            {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
 
-                    <div className='flex flex-col items-start gap-4 w-[292px]  border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]'>
+            {/* Theres a glitch here idk why hehe so let it stay like that */}
+
+            {/* Table/Card Modal for guest */}
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm" >
+
+                    <div className='flex flex-col items-start gap-4 w-[292px]  border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]' >
                         {/* Profile pic/Detail/Badge */}
                         <div className='flex flex-row w-full items-center justify-between gap-2'>
                             <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
@@ -268,7 +359,7 @@ const VisitorManagement = () => {
                             <div className=' flex bg-[#00580D] rounded-[8px] h-[32px]  items-center justify-between p-2 rounded-[8px] hover:bg-green-500'>
 
                                 <button className='flex  text-[12px]  text-white'>
-                                    Remove from Blacklist
+                                    Remove from blacklist
                                 </button>
                             </div>
 

@@ -56,7 +56,7 @@ export function EmergencyTable() {
   return (
     <Layout>
     <div className="w-full max-w-6xl mx-auto bg-white p-6 rounded-xl shadow-sm mt-10">
-      {/* Header */}
+  
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg sm:text-xl font-semibold text-gray-800">
           EMERGENCY:{" "}
@@ -71,7 +71,7 @@ export function EmergencyTable() {
         </div>
       </div>
 
-      {/* Table */}
+      
       <Table>
         <TableCaption className="sr-only">Emergency check-ins</TableCaption>
         <TableHeader>
