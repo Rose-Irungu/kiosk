@@ -1,3 +1,5 @@
+import ResidentDashboard from "../pages/ResidentPages/ResidentDashboard"
+
 export const API_ENDPOINTS = {
   VISITOR_CHECKIN: '/visits/checkin/',
   VISITOR_CHECKOUT: '/visits/checkout/',
@@ -40,7 +42,9 @@ export const API_ENDPOINTS = {
   STATISTICS: '/statistics/active-users/count/',
 
   //Check Out Visitors Table
-  GET_CHECKOUT_VISITORS: '/statistics/security/dashboard/'
+  GET_CHECKOUT_VISITORS: '/statistics/security/dashboard/',
+
+  Resident_Incidence: '/incidence-and-emergency/view-my-incidence/',
 
 }
 

@@ -86,6 +86,9 @@ import Security_form from "./components/ResidentComponents/Security_form";
 import VisitorManagement from "./pages/ResidentPages/VisitorManagement";
 import GuestList from "./pages/ResidentPages/GuestList";
 import { Toaster } from "react-hot-toast";
+import ReportIncidentPage from "./pages/ResidentPages/ReportPage";
+import ReportIncidentCard from "./components/ReportIncidentCard";
+import PastReportsPage from "./pages/ResidentPages/PastReports";
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -93,6 +96,9 @@ const App = () => {
   return (
     <><Router>
       <Routes>
+        
+        <Route path="/past" element={<PastReportsPage />} />
+        <Route path="/report" element={<ReportIncidentCard />} />
         <Route path="/" element={<Home />} />
         <Route path="/navigation" element={<Navigation />} />
         <Route path="/card1" element={<Card1 />} />
@@ -204,7 +210,9 @@ const App = () => {
         />
         <Route path="/resident/visitormanagement" element={<VisitorManagement />} />
         <Route path="/resident/guestlist" element={<GuestList />} />
-
+        <Route path="/resident/incident" element={<ReportIncidentPage />} />
+        <Route path="/past" element={<PastReportsPage />} />
+        <Route path="/report" element={<ReportIncidentCard />} />
       </Routes>
     </Router>
       <Toaster
