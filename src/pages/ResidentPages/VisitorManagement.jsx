@@ -192,6 +192,25 @@ const VisitorManagement = ({ datedata = [] }) => {
 
     // -------------------------------------------------------------------------------
 
+    // Remove from Blacklist------------------------------------------------
+    const handleRemoveFromBlacklist = async () => {
+        try {
+            const res = await removeFromBlacklist(selectedGuest.visitor_id); 
+            if (res.result_code === 0) {
+                
+                setBlackLists(prev => prev.filter(guest => guest.id !== selectedGuest.id));
+                setIsModalOpen(false);
+                alert("Guest removed from blacklist successfully.");
+            } else {
+                alert("Failed to remove guest from blacklist.");
+            }
+        } catch (error) {
+            console.error("Error removing guest from blacklist:", error);
+            alert("An error occurred while removing the guest.");
+        }
+    };
+// ----------------------------------------------------------------------
+
     return (
         <>
 
@@ -237,7 +256,7 @@ const VisitorManagement = ({ datedata = [] }) => {
                             >
                                 <div className='flex flex-row justify-between gap-4 items-center '>
                                     <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                                        <img src={guestlist.image || "/boy-avatar.svg" } alt="" className="w-10 h-10 rounded-full object-cover" />
+                                        <img src={guestlist.image || "/boy-avatar.svg"} alt="" className="w-10 h-10 rounded-full object-cover" />
                                     </div>
                                     <div className='flex flex-col items-start w-full'>
                                         <p className='text-sm font-medium text-[#002706] '>{guestlist.visitor_name}</p>
@@ -280,7 +299,7 @@ const VisitorManagement = ({ datedata = [] }) => {
 
 
                 {/* Main Conatiner 3 - Restricted Guests Table */}
-                <div className='flex flex-col gap-2  bg-[#F0EEFD] mb-[32px] p-3 rounded-[12px] '>
+                <div className='flex flex-col gap-2  bg-[#F0EEFD] mb-[32px] p-3 rounded-[12px] overflow-y-auto '>
                     <div className='flex items-start gap-2 flex-row justify-start pb-4'>
                         <img src="/restricted-button.svg" alt="" />
                         <h1 className='text-[24px] font-["DM Sans"] text-[#002706] font-semibold'>Restricted Guests</h1>
@@ -321,7 +340,7 @@ const VisitorManagement = ({ datedata = [] }) => {
             {isModalOpen && selectedGuest && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
 
-                    <div className='flex flex-col items-start gap-4 w-[292px]  border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]' ref={restrictedModalRef}>
+                    <div className='flex flex-col items-start gap-4 w-[292px]  border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]'  ref={restrictedModalRef}>
                         {/* Profile pic/Detail/Badge */}
                         <div className='flex flex-row w-full items-center justify-between gap-2'>
                             <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
@@ -345,7 +364,7 @@ const VisitorManagement = ({ datedata = [] }) => {
                         <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
                             <div className=' flex bg-[#00580D] rounded-[8px] h-[32px] w-full items-center justify-center p-2 rounded-[8px] hover:bg-green-500'>
 
-                                <button className='flex items-center text-[12px]  text-white'>
+                                <button onClick={handleRemoveFromBlacklist} className='flex items-center text-[12px]  text-white'>
                                     Remove from Blacklist
                                 </button>
                             </div>
