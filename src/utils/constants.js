@@ -1,3 +1,5 @@
+import ResidentDashboard from "../pages/ResidentPages/ResidentDashboard"
+
 export const API_ENDPOINTS = {
   VISITOR_CHECKIN: '/visits/checkin/',
   VISITOR_CHECKOUT: '/visits/checkout/',
@@ -49,7 +51,8 @@ export const API_ENDPOINTS = {
   ALL_VISITORS: '/visits/visits-user/',
 
  // Resident Blacklisted peeps
-  BLACKLIST_PEEPS: '/visitors/all-blacklisted/'
+  BLACKLIST_PEEPS: '/visitors/all-blacklisted/',
+  Resident_Incidence: '/incidence-and-emergency/view-my-incidence/',
 
 }
 
