@@ -10,6 +10,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
   const [showProfileCard, setShowProfileCard] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showChangePasswordForm, setshowChangePasswordForm] = useState(false);
+   const [showNotification, setShowNotification] = useState(false);
 
   const [userData, setUserData] = useState({
     id: '',
@@ -21,7 +22,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     fullName: ''
   });
 
-  
+
   const [editFormData, setEditFormData] = useState({
     first_name: "",
     last_name: "",
@@ -30,7 +31,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     residence: "",
   });
 
-  
+
   const [passwordForm, setPasswordForm] = useState({
     oldPassword: "",
     newPassword: "",
@@ -39,7 +40,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
   const [passwordErrors, setPasswordErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  
+
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {
@@ -62,7 +63,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     }
   }, []);
 
-  
+
   const handleEditFormChange = (field, value) => {
     setEditFormData((prev) => ({
       ...prev,
@@ -70,17 +71,18 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     }));
   };
 
-  
+
   const handleEditFormSubmit = async (e) => {
     e.preventDefault();
+    
     setIsSubmitting(true);
 
     try {
-      
+
       const response = await userService.updateUser(userData.id, editFormData);
 
 
-      
+
       const updatedUserData = {
         ...userData,
         ...editFormData,
@@ -89,7 +91,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
       setUserData(updatedUserData);
 
-      
+
       const currentUserInfo = JSON.parse(
         localStorage.getItem("userInfo") || "{}"
       );
@@ -116,13 +118,13 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     authService.logoutUser();
   };
 
-  
+
   const handlePasswordChange = (field, value) => {
     setPasswordForm((prev) => ({
       ...prev,
       [field]: value,
     }));
-    
+
     if (passwordErrors[field]) {
       setPasswordErrors((prev) => ({
         ...prev,
@@ -131,7 +133,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     }
   };
 
-  
+
   const validatePasswordForm = () => {
     const errors = {};
 
@@ -154,11 +156,11 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     return errors;
   };
 
-  
+
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
 
-    
+
     const errors = validatePasswordForm();
     if (Object.keys(errors).length > 0) {
       setPasswordErrors(errors);
@@ -168,13 +170,13 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
     setIsSubmitting(true);
 
     try {
-      
+
       const response = await authService.changePassword({
         old_password: passwordForm.oldPassword,
         new_password: passwordForm.newPassword,
       });
 
-      
+
       toast.success("Password changed successfully!");
       setshowChangePasswordForm(false);
       setPasswordForm({
@@ -236,19 +238,24 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
           <p className="text-sm">EN</p>
 
           <div className="relative flex items-center justify-center">
-            <button className="text-gray-600 hover:text-gray-800 relative">
-              <Bell className="w-6 h-6" />
+            <button
+              className="text-gray-600 hover:text-gray-800 relative"
+              onClick={() => setShowNotification(!showNotification)}
+            >
+              <img src="/bell.svg" alt="" />
               <span
-                className="absolute"
+                className="absolute  -top-3 -right-3 text-white text-[7px]  "
                 style={{
                   width: "10px",
                   height: "10px",
                   backgroundColor: "#005E0E",
                   borderRadius: "50%",
-                  top: "-1px",
-                  right: "2px",
+                  top: "0px",
+                  right: "-1px",
                 }}
-              ></span>
+              >
+                3
+              </span>
             </button>
           </div>
 
@@ -257,7 +264,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
               onClick={() => setProfileOpen(!profileOpen)}
               className="flex items-center gap-2 focus:outline-none"
             >
-              <CircleUser className="h-6 w-6 text-gray-700" />
+              <img src="/profile-user.svg" alt="" />
               <span className="hidden sm:inline text-sm font-medium text-gray-700">
                 {userData.first_name || "User"}
               </span>
@@ -267,7 +274,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
             {profileOpen && (
               <div className="absolute right-0 mt-2 w-[195px] bg-white shadow-[0px_1px_20px_rgba(0,0,0,0.25)] rounded-lg flex flex-col p-2 z-50">
                 <div className="flex items-center gap-2 w-full p-2 border-b border-gray-200">
-                  <CircleUser className="h-10 w-10 text-gray-600" />
+                  <img src="/iconamoon_profile-circle-light.svg" alt="" />
                   <div className="flex flex-col">
                     <span className="font-medium text-gray-800">
                       {userData.fullName}
@@ -281,7 +288,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                   }}
                   className="flex items-center w-full h-10 p-2 gap-2 rounded hover:bg-gray-100 transition"
                 >
-                  <User className="h-6 w-6 text-gray-400" />
+                  <img src="/Group.svg" alt="" />
                   <span className="text-sm text-[#495057]">View Profile</span>
                 </button>
                 <button className="flex items-center w-full h-10 p-2 gap-2 rounded hover:bg-gray-100 transition" onClick={handleLogout}>
@@ -477,11 +484,10 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-[351px] h-[48px] mt-auto w-full ${
-                  isSubmitting
+                className={`w-[351px] h-[48px] mt-auto w-full ${isSubmitting
                     ? "bg-gray-400"
                     : "bg-[#005E0E] hover:bg-green-700"
-                } text-white py-2 rounded-md transition`}
+                  } text-white py-2 rounded-md transition`}
               >
                 {isSubmitting ? "UPDATING..." : "UPDATE PROFILE"}
               </button>
@@ -528,11 +534,10 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                   onChange={(e) =>
                     handlePasswordChange("oldPassword", e.target.value)
                   }
-                  className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${
-                    passwordErrors.oldPassword
+                  className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${passwordErrors.oldPassword
                       ? "border-red-500"
                       : "border-[#005E0E]/50"
-                  } rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
+                    } rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
                 />
                 {passwordErrors.oldPassword && (
                   <p className="text-red-500 text-xs mt-1">
@@ -551,11 +556,10 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                   onChange={(e) =>
                     handlePasswordChange("newPassword", e.target.value)
                   }
-                  className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${
-                    passwordErrors.newPassword
+                  className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${passwordErrors.newPassword
                       ? "border-red-500"
                       : "border-[#005E0E]/50"
-                  } rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
+                    } rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
                 />
                 {passwordErrors.newPassword && (
                   <p className="text-red-500 text-xs mt-1">
@@ -574,11 +578,10 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                   onChange={(e) =>
                     handlePasswordChange("confirmPassword", e.target.value)
                   }
-                  className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${
-                    passwordErrors.confirmPassword
+                  className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${passwordErrors.confirmPassword
                       ? "border-red-500"
                       : "border-[#005E0E]/50"
-                  } rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
+                    } rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
                 />
                 {passwordErrors.confirmPassword && (
                   <p className="text-red-500 text-xs mt-1">
@@ -590,15 +593,70 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-[351px] h-[48px] mt-auto w-full ${
-                  isSubmitting
+                className={`w-[351px] h-[48px] mt-auto w-full ${isSubmitting
                     ? "bg-gray-400"
                     : "bg-[#005E0E] hover:bg-green-700"
-                } text-white py-2 rounded-md transition`}
+                  } text-white py-2 rounded-md transition`}
               >
                 {isSubmitting ? "CHANGING PASSWORD..." : "CHANGE PASSWORD"}
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+
+      {showNotification && (
+        <div className="absolute top-full right-[69px] mt-2 z-50 w-full max-w-[417px] flex flex-col items-start bg-white shadow-[0px_1px_20px_rgba(0,0,0,0.25)] rounded-2xl overflow-hidden">
+          {/* Header */}
+          <div className="flex flex-col items-start justify-between p-4 bg-[#005E0E] rounded-t-2xl w-full font-['Inter']">
+            <p className="font-bold text-white text-xl">Notifications</p>
+            <p className="text-white text-xs">1 Unread</p>
+          </div>
+
+          {/* Body: Scrollable only if needed */}
+          <div className="w-full max-h-[60vh] overflow-y-auto">
+            {/* Notification Row */}
+            <div className="flex flex-row items-start p-4 gap-2 w-full bg-[#F5F4F5] border-b border-[#005E0E]/50 hover:bg-[#F5F4F5]">
+              <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
+                <img src="/oui-gear0.svg" alt="" />
+              </div>
+
+              <div className="flex flex-col items-start gap-2 font-['Inter'] w-full text-[#495057]">
+                <p className="font-bold text-sm">Emergency triggered</p>
+                <p className=" text-sm">
+                  Panic Button activated by Gate 1 Officer
+                </p>
+                <p className=" text-xs">30 min ago</p>
+              </div>
+            </div>
+
+            <div className="flex flex-row items-start p-4 gap-2 w-full bg-[#F5F4F5] border-b border-[#005E0E]/50">
+              {/* Icon */}
+              <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
+                <img src="/oui-gear1.svg" alt="" />
+              </div>
+
+              <div className="flex flex-col items-start gap-2 font-['Inter'] w-full text-[#495057]">
+                <p className="font-bold text-sm">Visitor Approved</p>
+                <p className=" text-sm">Alison was approved by Resident B23 </p>
+                <p className=" text-xs">1 hour ago</p>
+              </div>
+            </div>
+
+            <div className="flex flex-row items-start p-4 gap-2 w-full bg-[#F5F4F5] border-b border-[#005E0E]/50">
+              <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
+                <img src="/oui-gear2.svg" alt="" />
+              </div>
+
+              <div className="flex flex-col items-start gap-2 font-['Inter'] w-full text-[#495057]">
+                <p className="font-bold text-sm">System Update</p>
+                <p className=" text-sm">
+                  New Features are now available on your dashboard{" "}
+                </p>
+                <p className=" text-xs">1 day ago</p>
+              </div>
+            </div>
           </div>
         </div>
       )}

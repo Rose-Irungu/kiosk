@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 //import ResidentLayout from '../../components/ResidentComponents/ResidentLayout';
 //import InviteGuest from '../../components/ResidentComponents/Buttons/InviteGuest';
 import SosButton from '../../components/ResidentComponents/Buttons/SosButton';
@@ -23,6 +24,10 @@ function ResidentDashboard() {
     const [loading, setLoading] = useState(true);
     const [visitors, setVisitors] = useState([]);
     const navigate = useNavigate();
+
+    const notify = () =>{
+        toast.success("S.O.S triggered successfully");
+    };
 
     useEffect(() =>{
 
@@ -86,7 +91,10 @@ function ResidentDashboard() {
                 </div>
             </div>
             <div className='flex flex-row justify-between w-full h-[96px] rounded-[12px] py-[12px] px-[14px] space-x-4'>
-                <SosButton callback={() => submitEmergency()}/>
+                <SosButton callback={() => {
+                           submitEmergency();
+                           notify();
+                    }}/>
                 <SafetyProtocolsButton callback={()=>navigate("/resident/safetyprotocols")}/>
             </div>
         </div>

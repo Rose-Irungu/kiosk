@@ -17,6 +17,7 @@ const VisitorManagement = ({ datedata = [] }) => {
 
     const navigate = useNavigate();
     const [active, setActive] = useState('btn1');
+    
 
 
 
@@ -124,7 +125,7 @@ const VisitorManagement = ({ datedata = [] }) => {
     ];
     const [filteredGuests, setFilteredGuests] = useState([]);
     const fetchGuestList = async () => {
-        // setLoading(true);
+        setLoading(true);
         try {
             const res = await visitsuser();
             if (res.result_code === 0) {
@@ -289,7 +290,7 @@ const VisitorManagement = ({ datedata = [] }) => {
                             )
                             )) : (
                             <div className="w-full h-full flex items-center justify-center">
-                                <p className="text-[#495057] text-sm font-medium">No guest here :(</p>
+                                <p className="text-[#495057] text-base ">No guests here :(</p>
                             </div>)}
                     </div>
                 </div>
@@ -322,7 +323,7 @@ const VisitorManagement = ({ datedata = [] }) => {
                 </div>
 
                 {/* Main Conatiner 3 - Restricted Guests Table */}
-                <div className='flex flex-col gap-2  bg-[#F0EEFD] mb-[32px] p-3 rounded-[12px] overflow-y-auto h-[227px] '>
+                <div className='flex flex-col gap-2  bg-[#F0EEFD] mb-[32px] p-3 rounded-[12px] overflow-y-auto  '>
                     <div className='flex items-start gap-2 flex-row justify-start pb-4'>
                         <img src="/restricted-button.svg" alt="" />
                         <h1 className='text-[24px] font-["DM Sans"] text-[#002706] font-semibold'>Restricted Guests</h1>
@@ -332,39 +333,45 @@ const VisitorManagement = ({ datedata = [] }) => {
                     {/* {filteredGuests.length > 0 ? (
                             filteredGuests.map((guestlist, index) => ( */}
 
-                            {/* {blacklists.length > 0 ? (
+                    {/* {blacklists.length > 0 ? (
                             blacklist.map((guestlist, index) => ( */}
 
-                    {blacklists.length > 0 ? (
+                    <div className='h-[227px] overflow-y-scroll'>
+                        {blacklists.length > 0 ? (
                             blacklist.map((blacklist) => (
 
-                        <div onClick={() => openModal(blacklist)} className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4  '>
+                                <div onClick={() => openModal(blacklist)} className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4  '>
 
-                            <button onClick={() => openModal(blacklist)} className='flex flex-row justify-between gap-4 items-center '>
+                                    <button onClick={() => openModal(blacklist)} className='flex flex-row justify-between gap-4 items-center '>
 
-                                <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                                    <img src={blacklist.image || "/boy-avatar.svg"} className="w-10 h-10 rounded-full object-cover" alt="" />
+                                        <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
+                                            <img src={blacklist.image || "/boy-avatar.svg"} className="w-10 h-10 rounded-full object-cover" alt="" />
+                                        </div>
+
+                                        <div className='flex flex-col items-start w-full'>
+                                            <p className='text-sm font-medium text-[#002706] '>{blacklist.full_name}</p>
+                                            <p className='text-[12px] text-[#333333]'>{blacklist.reason}</p>
+
+
+                                        </div>
+                                    </button>
+
+
+
+
+
+
+
                                 </div>
-
-                                <div className='flex flex-col items-start w-full'>
-                                    <p className='text-sm font-medium text-[#002706] '>{blacklist.full_name}</p>
-                                    <p className='text-[12px] text-[#333333]'>{blacklist.reason}</p>
-
-
-                                </div>
-                            </button>
-                            
-
-
-
-
-
-
-                        </div>
-                    ))) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                                <p className="text-[#495057] text-sm font-medium">No guest here :(</p>
+                            ))) : (
+                            <div className=" flex h-full w-full items-center justify-center">
+                                <p className="text-[#495057] text-base ">No guests here :(</p>
                             </div>)}
+
+
+                    </div>
+
+
 
 
 
