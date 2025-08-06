@@ -8,12 +8,23 @@ const FloorRoomManager = () => {
   const [selectedFloorId, setSelectedFloorId] = useState(null);
   const [floorName, setFloorName] = useState("");
   const [roomName, setRoomName] = useState("");
-  useEffect(() => {
-    const savedData = localStorage.getItem("buildingData");
-    if (savedData) {
-      setFloors(JSON.parse(savedData));
+
+ useEffect(() => {
+  const savedData = localStorage.getItem("buildingData");
+  try {
+    const parsedData = JSON.parse(savedData);
+    if (Array.isArray(parsedData)) {
+      setFloors(parsedData);
+    } else {
+      console.warn("Invalid buildingData format. Expected an array.");
+      setFloors([]);
     }
-  }, []);
+  } catch (error) {
+    console.error("Error parsing buildingData:", error);
+    setFloors([]);
+  }
+}, []);
+
 
   const addFloor = () => {
     if (floorName.trim()) {

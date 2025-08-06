@@ -6,14 +6,24 @@ import FloorManagement from "../../components/FloorManagement";
 
 export default function FacilityProfile() {
   const [facilityName, setFacilityName] = useState("");
+  // useEffect(() => {
+  //   const savedData = localStorage.getItem("buildingData");
+  //   if (savedData) {
+  //     setFacilityName(JSON.parse(savedData));
+  //   }
+  // }, []);
+
   const handleSave = () => {
-    if (facilityName.trim() === "") {
+    localStorage.setItem("buildingData", JSON.stringify(facilityName));
+    if (!facilityName) {
       alert("Please enter a facility name.");
       return;
+    
     }
     console.log("Facility saved:", facilityName);
     alert(`Facility "${facilityName}" saved successfully!`);
   };
+  
   return (
     <Layout>
       <div className="bg-white rounded-2xl p-12 flex flex-col gap-8 items-start">
@@ -37,6 +47,7 @@ export default function FacilityProfile() {
                   />
                 </div>
                 <button
+                
                   onClick={handleSave}
                   className="bg-[#005e0e] hover:bg-[#023609] text-white  text-sm font-medium px-6 py-3 mt-[40px] rounded-md w-full ml-[120px] "
                 >
