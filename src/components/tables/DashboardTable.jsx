@@ -46,10 +46,10 @@ export function DashboardTable() {
                 Visit
               </TableHead>
               <TableHead className="font-medium text-muted-foreground">
-                Last Visit
+                Last Visitor
               </TableHead>
               <TableHead className="font-medium text-muted-foreground">
-                Last Visitor
+                Last Visit
               </TableHead>
             </TableRow>
           </TableHeader>

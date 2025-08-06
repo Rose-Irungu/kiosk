@@ -1,5 +1,3 @@
-import ResidentDashboard from "../pages/ResidentPages/ResidentDashboard"
-
 export const API_ENDPOINTS = {
   VISITOR_CHECKIN: '/visits/checkin/',
   VISITOR_CHECKOUT: '/visits/checkout/',
