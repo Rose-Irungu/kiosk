@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { User } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom';
 const GuestListTable = () => {
     const location = useLocation();
     const { day, daynum, month, year, fullDate, guests } = location.state || {};
+    const [isLoading, Loading] = useState(true);
     // const location = useLocation();
     // let data = location.state?.datedata;
     // console.log(datedata)
@@ -84,8 +85,8 @@ const GuestListTable = () => {
                             </div>
                         ))
                     ) : (
-                       <div className="w-full  flex items-center justify-center mx-auto">
-                                <p className="text-[#495057] text-sm font-medium">No guests here :(</p>
+                       <div className="w-full  h-[300px] flex items-center justify-center mx-auto">
+                                <p className="text-[#495057] text-base ">No guests here :(</p>
                             </div>
                     )}
                 </div>
