@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { getRelativeTime } from '../../../utils/fomatters';
 import { approveVisit, cancelVisit, blacklistVisitor } from '../../../services/visitsuser';
+
 
 const CardA = ({
   visit_id,
@@ -17,6 +18,26 @@ const CardA = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showDetailsView, setShowDetailsView] = useState(false);
+  const modalRef = useRef(null); // ✅ moved inside the component
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        closeModal();
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isModalOpen]);
+
+ 
+ 
 
   const visitorData = {
     visitor_name,
@@ -102,7 +123,11 @@ const handleCancel = async () => {
       </div>
 
       {isModalOpen && (
-        <div className="absolute top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2">
+       <div
+  className="absolute top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2"
+  ref={modalRef}
+>
+
           {showDetailsView ? (
             
             <div className="bg-white rounded-lg p-6 w-96 shadow-xl">
