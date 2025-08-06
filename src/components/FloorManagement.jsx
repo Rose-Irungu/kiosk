@@ -9,22 +9,41 @@ const FloorRoomManager = () => {
   const [floorName, setFloorName] = useState("");
   const [roomName, setRoomName] = useState("");
 
- useEffect(() => {
-  const savedData = localStorage.getItem("buildingData");
-  try {
-    const parsedData = JSON.parse(savedData);
-    if (Array.isArray(parsedData)) {
-      setFloors(parsedData);
-    } else {
-      console.warn("Invalid buildingData format. Expected an array.");
-      setFloors([]);
-    }
-  } catch (error) {
-    console.error("Error parsing buildingData:", error);
-    setFloors([]);
-  }
-}, []);
 
+  useEffect(() => {
+    const savedFacilityData = localStorage.getItem("facilityData");
+    if (savedFacilityData) {
+      try {
+        const parsedData = JSON.parse(savedFacilityData);
+        if (parsedData.floors && Array.isArray(parsedData.floors)) {
+          setFloors(parsedData.floors);
+        }
+      } catch (error) {
+        console.error("Error parsing facility data:", error);
+        setFloors([]);
+      }
+    }
+  }, []);
+
+  // Save floors data to localStorage whenever floors change
+  const saveFloorsData = (updatedFloors) => {
+    const existingFacilityData = localStorage.getItem("facilityData");
+    let facilityData = {};
+    
+    if (existingFacilityData) {
+      try {
+        facilityData = JSON.parse(existingFacilityData);
+      } catch (error) {
+        console.error("Error parsing existing facility data:", error);
+      }
+    }
+
+    // Update the floors data within the facility data
+    facilityData.floors = updatedFloors;
+    facilityData.lastUpdated = new Date().toISOString();
+
+    localStorage.setItem("facilityData", JSON.stringify(facilityData));
+  };
 
   const addFloor = () => {
     if (floorName.trim()) {
@@ -33,13 +52,16 @@ const FloorRoomManager = () => {
         name: floorName.trim(),
         rooms: [],
       };
-      setFloors([...floors, newFloor]);
+      const updatedFloors = [...floors, newFloor];
+      setFloors(updatedFloors);
+      saveFloorsData(updatedFloors);
       setFloorName("");
       setShowFloorModal(false);
     }
   };
+
   const handleSave = () => {
-    localStorage.setItem("buildingData", JSON.stringify(floors));
+    saveFloorsData(floors);
     alert("Floors and rooms saved successfully!");
   };
 
@@ -49,13 +71,13 @@ const FloorRoomManager = () => {
         id: Date.now(),
         name: roomName.trim(),
       };
-      setFloors(
-        floors.map((floor) =>
-          floor.id === selectedFloorId
-            ? { ...floor, rooms: [...floor.rooms, newRoom] }
-            : floor
-        )
+      const updatedFloors = floors.map((floor) =>
+        floor.id === selectedFloorId
+          ? { ...floor, rooms: [...floor.rooms, newRoom] }
+          : floor
       );
+      setFloors(updatedFloors);
+      saveFloorsData(updatedFloors);
       setRoomName("");
       setShowRoomModal(false);
       setSelectedFloorId(null);
@@ -63,23 +85,25 @@ const FloorRoomManager = () => {
   };
 
   const deleteFloor = (floorId) => {
-    const confirmDelete = window.confirm("Delete this floor?");
+    const confirmDelete = window.confirm("Delete this floor and all its rooms?");
     if (confirmDelete) {
-      setFloors(floors.filter((floor) => floor.id !== floorId));
+      const updatedFloors = floors.filter((floor) => floor.id !== floorId);
+      setFloors(updatedFloors);
+      saveFloorsData(updatedFloors);
     }
   };
 
   const deleteRoom = (floorId, roomId) => {
-    setFloors(
-      floors.map((floor) =>
-        floor.id === floorId
-          ? {
-              ...floor,
-              rooms: floor.rooms.filter((room) => room.id !== roomId),
-            }
-          : floor
-      )
+    const updatedFloors = floors.map((floor) =>
+      floor.id === floorId
+        ? {
+            ...floor,
+            rooms: floor.rooms.filter((room) => room.id !== roomId),
+          }
+        : floor
     );
+    setFloors(updatedFloors);
+    saveFloorsData(updatedFloors);
   };
 
   const openRoomModal = (floorId) => {
@@ -130,20 +154,22 @@ const FloorRoomManager = () => {
                     <Home size={20} className="text-[#495057]" />
                     {floor.name}
                   </h2>
-                  <button
-                    onClick={() => openRoomModal(floor.id)}
-                    className="bg-[#005e0e] hover:bg-[#023609] text-white px-3 py-2 rounded-md flex items-center gap-1 transition-colors duration-200 text-sm"
-                  >
-                    <Plus size={16} />
-                    Add Room
-                  </button>
-                  <button
-                    onClick={() => deleteFloor(floor.id)}
-                    className="text-red-500 hover:text-red-700"
-                    title="Delete Floor"
-                  >
-                    <Trash2 size={20} />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => openRoomModal(floor.id)}
+                      className="bg-[#005e0e] hover:bg-[#023609] text-white px-3 py-2 rounded-md flex items-center gap-1 transition-colors duration-200 text-sm"
+                    >
+                      <Plus size={16} />
+                      Add Room
+                    </button>
+                    <button
+                      onClick={() => deleteFloor(floor.id)}
+                      className="text-red-500 hover:text-red-700 p-1"
+                      title="Delete Floor"
+                    >
+                      <Trash2 size={20} />
+                    </button>
+                  </div>
                 </div>
 
                 <div className="space-y-2">
@@ -163,11 +189,18 @@ const FloorRoomManager = () => {
                       {floor.rooms.map((room) => (
                         <div
                           key={room.id}
-                          className="bg-gray-50 px-3 py-2 rounded-lg"
+                          className="bg-gray-50 px-3 py-2 rounded-lg flex justify-between items-center"
                         >
                           <span className="text-gray-700 text-sm">
                             {room.name}
                           </span>
+                          <button
+                            onClick={() => deleteRoom(floor.id, room.id)}
+                            className="text-red-500 hover:text-red-700 p-1"
+                            title="Delete Room"
+                          >
+                            <Trash2 size={14} />
+                          </button>
                         </div>
                       ))}
                     </div>
@@ -252,8 +285,8 @@ const FloorRoomManager = () => {
                     type="text"
                     value={roomName}
                     onChange={(e) => setRoomName(e.target.value)}
-                    placeholder="Enter room name (e.g., Living Room, Bedroom)"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all"
+                    placeholder="Enter room name (e.g., Conference Room, Office 101)"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#005e0e] focus:border-transparent outline-none transition-all"
                     onKeyPress={(e) => e.key === "Enter" && addRoom()}
                   />
                 </div>
@@ -268,7 +301,7 @@ const FloorRoomManager = () => {
                   <button
                     onClick={addRoom}
                     disabled={!roomName.trim()}
-                    className="flex-1 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                    className="flex-1 px-4 py-3 bg-[#005e0e] text-white rounded-lg hover:bg-[#023609] disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                   >
                     Add Room
                   </button>
@@ -278,11 +311,12 @@ const FloorRoomManager = () => {
           </div>
         )}
       </div>
+      
       <button
         onClick={handleSave}
         className="bg-[#005e0e] hover:bg-[#023609] text-white text-sm font-medium px-6 py-3 mt-[40px] rounded-md w-full"
       >
-        SAVE
+        SAVE FLOORS & ROOMS
       </button>
     </div>
   );
