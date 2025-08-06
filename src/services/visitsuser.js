@@ -61,7 +61,7 @@ export const blacklistVisitor = async(payload) => {
 
 export const unBlacklistVisitor = async(payload) => {
   try {
-    const promise = api.delete(API_ENDPOINTS.UN_BLACKLIST_VISITOR, payload)
+    const promise = api.post(API_ENDPOINTS.UN_BLACKLIST_VISITOR, payload)
     const res = await toast.promise(promise, {
       loading: "Un-blacklisting....",
       success: "Done",
