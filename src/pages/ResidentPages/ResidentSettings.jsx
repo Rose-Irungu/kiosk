@@ -26,7 +26,7 @@ export default function ResidentSettings() {
           <HouseholdInformation />
           <Header icon="/gear.svg" text={"My Settings"}/>
           <NotificationSettings/>
-          <DataStorageSettings callback1={()=>clearCache(navigate, "/loginform")}/>
+          <DataStorageSettings callback1={()=>clearCache(navigate, "/loginform")} callback2={()=>navigate("/resident/loggeddevices")}/>
         </div>
     </ResidentLayout>
   );
