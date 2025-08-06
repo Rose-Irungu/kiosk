@@ -95,7 +95,7 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
     }
   }, [editMode, editUser, form]);
 
-  // Fetch unit list from API
+ 
   useEffect(() => {
     const fetchUnits = async () => {
       try {
@@ -153,7 +153,7 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
 
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                {/* Role */}
+               
                 <FormField
                   control={form.control}
                   name="role"
@@ -177,7 +177,7 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
                   )}
                 />
 
-                {/* Name + Email */}
+               
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {[["firstName", "First Name"], ["lastName", "Last Name"], ["email", "Email"]].map(
                     ([name, label]) => (
@@ -203,7 +203,6 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
                   )}
                 </div>
 
-                {/* Phone, ID, Unit */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   <FormField
                     control={form.control}
@@ -267,7 +266,7 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
                   />
                 </div>
 
-                {/* Password + Confirm */}
+                
                 {!editMode && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {[
@@ -297,7 +296,6 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
                   </div>
                 )}
 
-                {/* Photo Upload */}
                 <FormField
                   control={form.control}
                   name="photo"

@@ -12,6 +12,8 @@ const CardA = ({
   status,
   tag,
   image,
+  onApproveVisit,
+  onCancelVisit,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showDetailsView, setShowDetailsView] = useState(false);
@@ -53,23 +55,15 @@ console.log('Status:', st);
   };
 
   const handleApprove = async () => {
-    try {
-      await approveVisit(visit_id)
-      closeModal();
-    } catch (error) {
-      
-    }
+  await onApproveVisit(visit_id);
+  closeModal();
+};
 
-  }
-  const handleCancel = async () => {
-    try {
-      await cancelVisit(visit_id)
-      closeModal();
-    } catch (error) {
-      
-    }
+const handleCancel = async () => {
+  await onCancelVisit(visit_id);
+  closeModal();
+};
 
-  }
   const handleAddToBlacklist = async () => {
     try {
       await blacklistVisitor({
