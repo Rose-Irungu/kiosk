@@ -37,8 +37,7 @@ export const authService = {
         error: (err) =>
           err?.response?.data?.message || "Login failed. Please try again.",
       });
-console.log("Login response:", response.data);
-return
+
       return response.data;
     } catch (error) {
       throw (
