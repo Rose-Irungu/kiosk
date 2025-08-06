@@ -10,7 +10,7 @@ export default function PersonalInformation({phone, email}) {
             <div className='flex flex-col w-full h-[84px] py-[4px] gap-[4px]'>
                 <SubHeader icon="/nefo2.svg" text={"Phone"}/>
                 <input type="text" 
-                       placeholder={phone || 712345678}
+                       placeholder={phone || "0712345678"}
                        className='w-full h-[46px] rounded-[12px] border-[1px] p-[10px] gap-[10px] border-[#00000080]'
                 />
             </div>

@@ -1,4 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+//Components
 import ResidentLayout from '../../components/ResidentComponents/ResidentLayout';
 import User from '../../components/ResidentComponents/Settings/User';
 import Header from '../../components/ResidentComponents/Settings/Header';
@@ -8,7 +11,11 @@ import HouseholdInformation from '../../components/ResidentComponents/Settings/H
 import NotificationSettings from '../../components/ResidentComponents/Settings/NotificationSettings';
 import DataStorageSettings from '../../components/ResidentComponents/Settings/DataStorageSettings';
 
+//Scripts
+import clearCache from '../../scripts/clearCache';
+
 export default function ResidentSettings() {
+  const navigate = useNavigate();
   return (
     <ResidentLayout>
         <div className="flex flex-wrap flex-col justify-start mb-[12px] space-y-4">
@@ -19,7 +26,7 @@ export default function ResidentSettings() {
           <HouseholdInformation />
           <Header icon="/gear.svg" text={"My Settings"}/>
           <NotificationSettings/>
-          <DataStorageSettings />
+          <DataStorageSettings callback1={()=>clearCache(navigate, "/loginform")}/>
         </div>
     </ResidentLayout>
   );
