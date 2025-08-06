@@ -36,9 +36,9 @@ export default function ResidentSettings() {
             <>
               <User image={user.profile_picture} name={`${user.first_name} ${user.last_name}`} unit={user.unit}/>
               <Header icon="/msee.svg" text={"My Profile"}/>
-              <PersonalInformation />
+              <PersonalInformation phone={user.phone_number} email={user.email}/>
               <Cars />
-              <HouseholdInformation />
+              <HouseholdInformation occupants={user.number_of_residents}/>
               <Header icon="/gear.svg" text={"My Settings"}/>
               <NotificationSettings/>
               <DataStorageSettings callback1={()=>clearCache(navigate, "/loginform")} callback2={()=>navigate("/resident/loggeddevices")}/>
