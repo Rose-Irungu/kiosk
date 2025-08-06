@@ -338,7 +338,7 @@ const VisitorManagement = ({ datedata = [] }) => {
 
                     <div className='h-[227px] overflow-y-scroll'>
                         {blacklists.length > 0 ? (
-                            blacklist.map((blacklist) => (
+                            blacklists.map((blacklist) => (
                     {blacklists.length > 0 ? (
                             blacklists.map((blacklist) => (
 
