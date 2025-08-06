@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { visitsuser } from "../../../services/visitsuser";
+import { visitsuser, approveVisit, cancelVisit,  } from "../../../services/visitsuser";
 
 import CardA from './CardA';
 
@@ -29,10 +29,35 @@ const MyGuestsFrame = () => {
     fetchGuests();
   }, []);
 
+  const handleApproveVisit = async (visitId) => {
+    try {
+      await approveVisit(visitId);
+      // ✅ Refresh guest list
+      setGuestList((prev) =>
+        prev.map((g) => g.visit_id === visitId ? { ...g, status: 'approved' } : g)
+      );
+    } catch (error) {
+      console.error('Approve failed', error);
+    }
+  };
+
+  const handleCancelVisit = async (visitId) => {
+    try {
+      await cancelVisit(visitId);
+      // ✅ Refresh guest list
+      setGuestList((prev) =>
+        prev.map((g) => g.visit_id === visitId ? { ...g, status: 'cancelled' } : g)
+      );
+    } catch (error) {
+      console.error('Cancel failed', error);
+    }
+  };
+
+
   const filteredGuests = guestList.filter((guest) => guest.status === activeTab);
 
   return (
-<div className="bg-[#e6fbe9] rounded-xl px-2 py-3 flex flex-col gap-4 items-center justify-start overflow-y-auto relative max-h-[90vh]">
+    <div className="bg-[#e6fbe9] rounded-xl px-2 py-3 flex flex-col gap-4 items-center justify-start overflow-y-auto relative max-h-[90vh]">
 
       <div className="flex items-center justify-between w-full px-4">
         <div className="flex items-center gap-3">
@@ -74,7 +99,11 @@ const MyGuestsFrame = () => {
             )}
             {!loading &&
               !error &&
-              filteredGuests.map((guest, index) => <CardA key={index} {...guest} />)}
+              filteredGuests.map((guest, index) => <CardA key={index}
+                {...guest}
+                onApproveVisit={handleApproveVisit}
+                onCancelVisit={handleCancelVisit} />)
+            }
           </div>
         </div>
       </div>
