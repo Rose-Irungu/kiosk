@@ -338,7 +338,7 @@ const VisitorManagement = ({ datedata = [] }) => {
 
                     <div className='h-[227px] overflow-y-scroll'>
                         {blacklists.length > 0 ? (
-                            blacklist.map((blacklist) => (
+                            blacklists.map((blacklist) => (
 
                                 <div onClick={() => openModal(blacklist)} className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4  '>
 
