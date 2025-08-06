@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1754485304890,
@@ -16,6 +16,10 @@
                 {
                     "date": 1754487608780,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -337,9 +337,9 @@\n                             blacklist.map((guestlist, index) => ( */}\r\n \r\n                     <div className='h-[227px] overflow-y-scroll'>\r\n                         {blacklists.length > 0 ? (\r\n-                            blacklist.map((blacklist) => (\r\n+                            blacklists.map((blacklist) => (\r\n                     {blacklists.length > 0 ? (\r\n                             blacklists.map((blacklist) => (\r\n \r\n                                 <div onClick={() => openModal(blacklist)} className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-[\"DM Sans\"] p-4  '>\r\n"
+                },
+                {
+                    "date": 1754487751738,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -338,10 +338,9 @@\n \r\n                     <div className='h-[227px] overflow-y-scroll'>\r\n                         {blacklists.length > 0 ? (\r\n                             blacklists.map((blacklist) => (\r\n-                    {blacklists.length > 0 ? (\r\n-                            blacklists.map((blacklist) => (\r\n+                  \r\n \r\n                                 <div onClick={() => openModal(blacklist)} className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-[\"DM Sans\"] p-4  '>\r\n \r\n                                     <button onClick={() => openModal(blacklist)} className='flex flex-row justify-between gap-4 items-center '>\r\n"
                 }
             ],
             "date": 1754485304890,
