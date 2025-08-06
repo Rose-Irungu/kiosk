@@ -84,7 +84,9 @@ const GuestListTable = () => {
                             </div>
                         ))
                     ) : (
-                        <p className='mx-auto'>No guests found for this date.</p>
+                       <div className="w-full  flex items-center justify-center mx-auto">
+                                <p className="text-[#495057] text-sm font-medium">No guests here :(</p>
+                            </div>
                     )}
                 </div>
 

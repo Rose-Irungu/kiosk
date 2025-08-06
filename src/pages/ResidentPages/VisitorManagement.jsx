@@ -322,7 +322,7 @@ const VisitorManagement = ({ datedata = [] }) => {
                 </div>
 
                 {/* Main Conatiner 3 - Restricted Guests Table */}
-                <div className='flex flex-col gap-2  bg-[#F0EEFD] mb-[32px] p-3 rounded-[12px] overflow-y-auto '>
+                <div className='flex flex-col gap-2  bg-[#F0EEFD] mb-[32px] p-3 rounded-[12px] overflow-y-auto h-[227px] '>
                     <div className='flex items-start gap-2 flex-row justify-start pb-4'>
                         <img src="/restricted-button.svg" alt="" />
                         <h1 className='text-[24px] font-["DM Sans"] text-[#002706] font-semibold'>Restricted Guests</h1>
@@ -335,7 +335,8 @@ const VisitorManagement = ({ datedata = [] }) => {
                             {/* {blacklists.length > 0 ? (
                             blacklist.map((guestlist, index) => ( */}
 
-                    {blacklists.map((blacklist) => (
+                    {blacklists.length > 0 ? (
+                            blacklist.map((blacklist) => (
 
                         <div onClick={() => openModal(blacklist)} className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4  '>
 
@@ -360,7 +361,10 @@ const VisitorManagement = ({ datedata = [] }) => {
 
 
                         </div>
-                    ))}
+                    ))) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                                <p className="text-[#495057] text-sm font-medium">No guest here :(</p>
+                            </div>)}
 
 
 
