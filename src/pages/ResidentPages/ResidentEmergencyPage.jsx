@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AlertCard from "../../components/ResidentComponents/AlertCard";
 import EmergencyAlert from "../../components/ResidentComponents/EmergencyAlert";
 import EmergencyContacts from "../../components/ResidentComponents/EmergencyContacts";
@@ -7,17 +7,12 @@ import EmergencyAlertPopup from "../../components/ResidentComponents/EmergencyAl
 import FireAlertForm from "../../components/ResidentComponents/FireAlertForm";
 import Security_form from "../../components/ResidentComponents/Security_form";
 import ResidentLayout from "../../components/ResidentComponents/ResidentLayout";
-import { getRelativeTime } from "../../utils/fomatters";
 
 export default function EmergencyControlApp() {
   const [showPopup, setShowPopup] = useState(false);
   const [activeForm, setActiveForm] = useState(null);
   const [emergencyType, setEmergencyType] = useState(null);
   const [timeLeft, setTimeLeft] = useState(0);
-
-  const location = useLocation()
-  const {safety_instruction, e_location, e_time} = location.state;
-  console.log("Safety Instructions:", safety_instruction);
 
   useEffect(() => {
     if (timeLeft <= 0) return;
@@ -96,15 +91,7 @@ export default function EmergencyControlApp() {
           <AlertCard time={timeLeft} />
         </div> */}
         <div className="flex flex-col items-center py-6">
-          <EmergencyAlert 
-          timeAgo={getRelativeTime(e_time)}
-          location={e_location}
-          instructions= {
-            (safety_instruction || "")
-            .split(",")
-            .map(item => item.trim())
-            .filter(item => item.length > 0)
-          }/>
+          <EmergencyAlert/>
         </div>
         <div className="flex flex-col items-center py-6">
           <EmergencyContacts />

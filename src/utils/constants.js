@@ -42,6 +42,7 @@ export const API_ENDPOINTS = {
 
   //Security dashboard 
   CREATE_EMERGENCY: '/incidence-and-emergency/create-emergency/',
+  GET_LATEST_EMERGENCY: '/incidence-and-emergency/latest-emergency/',
   CREATE_INCIDENCE: '/incidence-and-emergency/create-incidence/',
   STATISTICS: '/statistics/active-users/count/',
 
