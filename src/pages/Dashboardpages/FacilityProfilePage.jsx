@@ -1,33 +1,112 @@
-// FacilityProfile.jsx
 import React from "react";
 import Layout from "../../components/layout/Layout";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import FloorManagement from "../../components/FloorManagement";
+import { updateFacility, getFacilityInfo } from "../../services/facility";
 
 export default function FacilityProfile() {
   const [facilityName, setFacilityName] = useState("");
-  // useEffect(() => {
-  //   const savedData = localStorage.getItem("buildingData");
-  //   if (savedData) {
-  //     setFacilityName(JSON.parse(savedData));
-  //   }
-  // }, []);
+  const [facilityType, setFacilityType] = useState("office");
+  const [safetyInstructions, setSafetyInstructions] = useState("");
+  const [floors, setFloors] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
 
-  const handleSave = () => {
-    localStorage.setItem("buildingData", JSON.stringify(facilityName));
-    if (!facilityName) {
-      alert("Please enter a facility name.");
+  const user = JSON.parse(localStorage.getItem("userInfo")) || {};
+  const facilityId = user.facility || null;
+
+  useEffect(() => {
+    const fetchFacilityData = async () => {
+      try {
+        const response = await getFacilityInfo();
+        if (response && response.data) {
+          const { facility_name, facility_type, safety_instruction } =
+            response.data;
+          setFacilityName(facility_name || "");
+          setFacilityType(facility_type || "office");
+          setSafetyInstructions(safety_instruction || "");
+          setFloors(response.data.floors || []);
+        }
+      } catch (error) {
+        console.error("Error fetching facility data:", error);
+        setError("Failed to load facility data. Please try again.");
+      }
+    };
+    fetchFacilityData();
+  });
+
+  const handleSave = async () => {
+    // Validation
+    if (!facilityName.trim()) {
+      setError("Facility name is required");
       return;
-    
     }
-    console.log("Facility saved:", facilityName);
-    alert(`Facility "${facilityName}" saved successfully!`);
+
+    const safetyInstructionValue =
+      safetyInstructions.trim() || "No specific safety instructions provided";
+
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      const newFacility = {
+        facility_name: facilityName.trim(),
+        facility_type: facilityType.toLowerCase(),
+        safety_instruction: safetyInstructionValue,
+      };
+
+      const res = await updateFacility(facilityId, newFacility);
+      setSuccess("Facility updated successfully!");
+
+      setFacilityName("");
+      setFacilityType("office");
+      setSafetyInstructions("");
+    } catch (error) {
+      console.error("Error adding facility:", error);
+
+      if (error.response && error.response.data) {
+        const errorData = error.response.data;
+        let errorMessages = [];
+
+        Object.keys(errorData).forEach((field) => {
+          if (Array.isArray(errorData[field])) {
+            errorMessages.push(`${field}: ${errorData[field].join(", ")}`);
+          } else {
+            errorMessages.push(`${field}: ${errorData[field]}`);
+          }
+        });
+
+        setError(errorMessages.join(" | "));
+      } else if (error.request) {
+        setError("Network error: Unable to reach the server");
+      } else {
+        setError(`Error: ${error.message}`);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
-  
+
   return (
     <Layout>
       <div className="bg-white rounded-2xl p-12 flex flex-col gap-8 items-start">
         <h1 className="text-black text-2xl font-bold">Facility Profile</h1>
+
+        {error && (
+          <div className="w-full p-4 bg-red-100 border border-red-400 text-red-700 rounded-md">
+            {error}
+          </div>
+        )}
+
+        {success && (
+          <div className="w-full p-4 bg-green-100 border border-green-400 text-green-700 rounded-md">
+            {success}
+          </div>
+        )}
 
         <div className="bg-[#f5f4f5] rounded-lg border border-gray-400/50 p-8 shadow-md w-full flex flex-col gap-8">
           <h2 className="text-[#495057] text-xl font-bold">
@@ -44,28 +123,24 @@ export default function FacilityProfile() {
                     className="text-[#495057] w-full outline-none"
                     value={facilityName}
                     onChange={(e) => setFacilityName(e.target.value)}
+                    disabled={loading}
                   />
                 </div>
-                <button
-                
-                  onClick={handleSave}
-                  className="bg-[#005e0e] hover:bg-[#023609] text-white  text-sm font-medium px-6 py-3 mt-[40px] rounded-md w-full ml-[120px] "
-                >
-                  SAVE
-                </button>
               </div>
 
               <div className="flex flex-col gap-2 flex-1">
                 <label className="text-sm text-[#495057]">Facility Type*</label>
                 <div className="relative">
                   <select
-                    defaultValue="Office"
+                    value={facilityType}
+                    onChange={(e) => setFacilityType(e.target.value)}
                     className="appearance-none w-full h-12 bg-white border border-gray-300 text-[#495057] text-sm px-4 pr-10 rounded-md focus:outline-none focus:ring-2 focus:ring-[#005e0e] focus:border-transparent"
+                    disabled={loading}
                   >
-                    <option value="Office">Office</option>
-                    <option value="School">School</option>
-                    <option value="Resident">Resident</option>
-                    <option value="Hospital">Hospital</option>
+                    <option value="office">Office</option>
+                    <option value="school">School</option>
+                    <option value="resident">Resident</option>
+                    <option value="hospital">Hospital</option>
                   </select>
                   <img
                     src="formkit-down0.svg"
@@ -78,22 +153,32 @@ export default function FacilityProfile() {
           </div>
         </div>
 
-        <FloorManagement />
+        <FloorManagement floors={floors} setFloors={setFloors} />
 
         <div className="rounded-lg p-8 shadow-md w-full flex flex-col gap-8">
           <h2 className="text-[#495057] text-xl font-bold">
             Safety Instructions
           </h2>
-          <div className="bg-[#f5f4f5] border border-[#495057]/50 rounded-lg p-4 h-[123px] w-full">
-            <p className="text-sm text-black/30 font-medium">
-              Add safety instructions...
-            </p>
-          </div>
+          <textarea
+            placeholder="Add safety instructions..."
+            value={safetyInstructions}
+            onChange={(e) => setSafetyInstructions(e.target.value)}
+            className="bg-[#f5f4f5] border border-[#495057]/50 rounded-lg p-4 h-[123px] w-full resize-none focus:outline-none focus:ring-2 focus:ring-[#005e0e] focus:border-transparent"
+            disabled={loading}
+          />
         </div>
 
         <div className="shadow w-full flex justify-start">
-          <button className="bg-[#005e0e] hover:bg-[#023609] text-white text-sm font-medium px-6 py-3 rounded-md w-full">
-            SAVE FACILITY PROFILE
+          <button
+            onClick={handleSave}
+            disabled={loading}
+            className={`text-white text-sm font-medium px-6 py-3 rounded-md w-full ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-[#005e0e] hover:bg-[#023609]"
+            }`}
+          >
+            {loading ? "SAVING..." : "SAVE FACILITY PROFILE"}
           </button>
         </div>
       </div>
