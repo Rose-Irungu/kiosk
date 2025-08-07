@@ -2,17 +2,41 @@ import React from "react";
 import Layout from "../../components/layout/Layout";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { addFacility } from "../../services/facility";
 import FloorManagement from "../../components/FloorManagement";
+import { updateFacility, getFacilityInfo } from "../../services/facility";
 
 export default function FacilityProfile() {
   const [facilityName, setFacilityName] = useState("");
   const [facilityType, setFacilityType] = useState("office");
   const [safetyInstructions, setSafetyInstructions] = useState("");
+  const [floors, setFloors] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
+
+  const user = JSON.parse(localStorage.getItem("userInfo")) || {};
+  const facilityId = user.facility || null;
+
+  useEffect(() => {
+    const fetchFacilityData = async () => {
+      try {
+        const response = await getFacilityInfo();
+        if (response && response.data) {
+          const { facility_name, facility_type, safety_instruction } =
+            response.data;
+          setFacilityName(facility_name || "");
+          setFacilityType(facility_type || "office");
+          setSafetyInstructions(safety_instruction || "");
+          setFloors(response.data.floors || []);
+        }
+      } catch (error) {
+        console.error("Error fetching facility data:", error);
+        setError("Failed to load facility data. Please try again.");
+      }
+    };
+    fetchFacilityData();
+  });
 
   const handleSave = async () => {
     // Validation
@@ -21,55 +45,45 @@ export default function FacilityProfile() {
       return;
     }
 
-    // Ensure safety instructions is not empty (API requires a string)
-    const safetyInstructionValue = safetyInstructions.trim() || "No specific safety instructions provided";
+    const safetyInstructionValue =
+      safetyInstructions.trim() || "No specific safety instructions provided";
 
     setLoading(true);
     setError("");
     setSuccess("");
-    
+
     try {
       const newFacility = {
         facility_name: facilityName.trim(),
-        facility_type: facilityType.toLowerCase(), // Ensure lowercase
+        facility_type: facilityType.toLowerCase(),
         safety_instruction: safetyInstructionValue,
       };
 
-      console.log("Sending facility data:", newFacility); // Debug log
-      const response = await addFacility(newFacility);
-      console.log("API Response:", response); // Debug log
-      
-      setSuccess("Facility added successfully!");
-      
-      // Reset form
+      const res = await updateFacility(facilityId, newFacility);
+      setSuccess("Facility updated successfully!");
+
       setFacilityName("");
       setFacilityType("office");
       setSafetyInstructions("");
-      
     } catch (error) {
       console.error("Error adding facility:", error);
-      
-      // More detailed error handling
+
       if (error.response && error.response.data) {
-        // Server responded with validation errors
         const errorData = error.response.data;
         let errorMessages = [];
-        
-        // Handle field-specific errors
-        Object.keys(errorData).forEach(field => {
+
+        Object.keys(errorData).forEach((field) => {
           if (Array.isArray(errorData[field])) {
-            errorMessages.push(`${field}: ${errorData[field].join(', ')}`);
+            errorMessages.push(`${field}: ${errorData[field].join(", ")}`);
           } else {
             errorMessages.push(`${field}: ${errorData[field]}`);
           }
         });
-        
-        setError(errorMessages.join(' | '));
+
+        setError(errorMessages.join(" | "));
       } else if (error.request) {
-        // Network error
         setError("Network error: Unable to reach the server");
       } else {
-        // Other error
         setError(`Error: ${error.message}`);
       }
     } finally {
@@ -82,14 +96,12 @@ export default function FacilityProfile() {
       <div className="bg-white rounded-2xl p-12 flex flex-col gap-8 items-start">
         <h1 className="text-black text-2xl font-bold">Facility Profile</h1>
 
-        {/* Error Message */}
         {error && (
           <div className="w-full p-4 bg-red-100 border border-red-400 text-red-700 rounded-md">
             {error}
           </div>
         )}
 
-        {/* Success Message */}
         {success && (
           <div className="w-full p-4 bg-green-100 border border-green-400 text-green-700 rounded-md">
             {success}
@@ -114,7 +126,6 @@ export default function FacilityProfile() {
                     disabled={loading}
                   />
                 </div>
-                {/* Removed the misplaced SAVE button from here */}
               </div>
 
               <div className="flex flex-col gap-2 flex-1">
@@ -126,10 +137,10 @@ export default function FacilityProfile() {
                     className="appearance-none w-full h-12 bg-white border border-gray-300 text-[#495057] text-sm px-4 pr-10 rounded-md focus:outline-none focus:ring-2 focus:ring-[#005e0e] focus:border-transparent"
                     disabled={loading}
                   >
-                    <option value="Office">Office</option>
-                    <option value="School">School</option>
-                    <option value="Resident">Resident</option>
-                    <option value="Hospital">Hospital</option>
+                    <option value="office">Office</option>
+                    <option value="school">School</option>
+                    <option value="resident">Resident</option>
+                    <option value="hospital">Hospital</option>
                   </select>
                   <img
                     src="formkit-down0.svg"
@@ -142,7 +153,7 @@ export default function FacilityProfile() {
           </div>
         </div>
 
-        <FloorManagement />
+        <FloorManagement floors={floors} setFloors={setFloors} />
 
         <div className="rounded-lg p-8 shadow-md w-full flex flex-col gap-8">
           <h2 className="text-[#495057] text-xl font-bold">
@@ -162,9 +173,9 @@ export default function FacilityProfile() {
             onClick={handleSave}
             disabled={loading}
             className={`text-white text-sm font-medium px-6 py-3 rounded-md w-full ${
-              loading 
-                ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-[#005e0e] hover:bg-[#023609]'
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-[#005e0e] hover:bg-[#023609]"
             }`}
           >
             {loading ? "SAVING..." : "SAVE FACILITY PROFILE"}

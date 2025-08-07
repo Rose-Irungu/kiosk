@@ -3,7 +3,6 @@ import ResidentLayout from "./ResidentLayout";
 import { useNavigate } from "react-router-dom";
 import { createEmergency } from "../../services/securityDashboardService";
 
-
 const FireCheckbox = ({ id, label, isSelected, onToggle }) => {
   return (
     <div className="flex items-center gap-2 mb-2">
@@ -72,12 +71,20 @@ export default function FireAlertForm() {
 
     try {
       const response = await createEmergency(formData);
-   
 
       console.log("Submitted emergency:", response);
-      setTimeout(() => navigate("/resident/emergencypage"), );
+      const safety_instructions =
+        response.emergency_safety_instruction ||
+        "No specific safety instructions provided";
+      console.log("Safety Instructions:", safety_instructions);
+      navigate("/resident/emergencypage", {
+        state: {
+          safety_instruction: safety_instructions,
+          e_location: response.emergency_location,
+          e_time: response.created_at,
+        },
+      });
     } catch (err) {
-      
       console.error(err);
     }
 

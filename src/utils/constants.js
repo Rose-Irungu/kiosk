@@ -57,6 +57,7 @@ export const API_ENDPOINTS = {
 
   // Facility Management
   FACILITY_NAME: '/user/facility/',
+  FACILITY_PROFILE: '/user/facility-profile/',
   FLOOR: '/visitors/floors/',
   ROOM: '/visitors/units/',
 

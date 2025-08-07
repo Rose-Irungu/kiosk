@@ -7,8 +7,8 @@ import {
   deleteRoom,
 } from "../services/facility";
 
-const FloorRoomManager = () => {
-  const [floors, setFloors] = useState([]);
+// Fix 1: Destructure props properly
+const FloorRoomManager = ({ floors, setFloors }) => {
   const [showFloorModal, setShowFloorModal] = useState(false);
   const [showRoomModal, setShowRoomModal] = useState(false);
   const [selectedFloorId, setSelectedFloorId] = useState(null);
@@ -32,7 +32,7 @@ const FloorRoomManager = () => {
         setFloors([]);
       }
     }
-  }, []);
+  }, [setFloors]);
 
   // Save floors data to localStorage whenever floors change
   const saveFloorsData = (updatedFloors) => {
@@ -64,7 +64,7 @@ const FloorRoomManager = () => {
       console.log("Floor added successfully:", res.data);
       const newFloor = {
         id: res.data.data.id,
-        name: res.data.data.floor_name,
+        floor_name: res.data.data.floor_name,
         rooms: [],
       };
       const updatedFloors = [...floors, newFloor];
@@ -86,7 +86,7 @@ const FloorRoomManager = () => {
       console.log("Room added successfully:", res.data);
       const newRoom = {
         id: res.data.id,
-        name: res.data.unit_name,
+        unit_name: res.data.unit_name,
       };
       const updatedFloors = floors.map((floor) =>
         floor.id === selectedFloorId
@@ -157,6 +157,20 @@ const FloorRoomManager = () => {
     setSelectedFloorId(null);
   };
 
+  // Fix 2: Add safety check for floors array
+  if (!floors || !Array.isArray(floors)) {
+    return (
+      <div className="min-h-screen bg-gray-100 rounded-md p-6 w-full">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center py-16">
+            <Home size={64} className="mx-auto text-gray-400 mb-4" />
+            <p className="text-gray-500 text-lg">Loading floors...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 rounded-md p-6 w-full">
       <div className="max-w-6xl mx-auto">
@@ -190,7 +204,7 @@ const FloorRoomManager = () => {
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
                     <Home size={20} className="text-[#495057]" />
-                    {floor.name}
+                    {floor.floor_name}
                   </h2>
                   <div className="flex items-center gap-2">
                     <button
@@ -214,23 +228,23 @@ const FloorRoomManager = () => {
                   <div className="flex items-center gap-2 text-gray-600 mb-3">
                     <Users size={16} />
                     <span className="text-sm font-medium">
-                      Rooms ({floor.rooms.length})
+                      Rooms ({floor.units.length})
                     </span>
                   </div>
 
-                  {floor.rooms.length === 0 ? (
+                  {floor.units.length === 0 ? (
                     <p className="text-gray-400 text-sm italic">
-                      No rooms added yet
+                      No units added yet
                     </p>
                   ) : (
                     <div className="space-y-2 max-h-40 overflow-y-auto">
-                      {floor.rooms.map((room) => (
+                      {floor.units.map((room) => (
                         <div
                           key={room.id}
                           className="bg-gray-50 px-3 py-2 rounded-lg flex justify-between items-center"
                         >
                           <span className="text-gray-700 text-sm">
-                            {room.name}
+                            {room.unit_name}
                           </span>
                           <button
                             onClick={() => handleDeleteRoom(floor.id, room.id)}
@@ -275,7 +289,7 @@ const FloorRoomManager = () => {
                     onChange={(e) => setFloorName(e.target.value)}
                     placeholder="Enter floor name (e.g., Ground Floor, First Floor)"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#005e0e] focus:border-transparent outline-none transition-all"
-                    onKeyPress={(e) => e.key === "Enter" && addFloor()}
+                    onKeyPress={(e) => e.key === "Enter" && handleSaveFloor()}
                   />
                 </div>
 
@@ -325,7 +339,7 @@ const FloorRoomManager = () => {
                     onChange={(e) => setRoomName(e.target.value)}
                     placeholder="Enter room name (e.g., Conference Room, Office 101)"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#005e0e] focus:border-transparent outline-none transition-all"
-                    onKeyPress={(e) => e.key === "Enter" && addRoom()}
+                    onKeyPress={(e) => e.key === "Enter" && handleSaveRoom()}
                   />
                 </div>
 
@@ -349,13 +363,6 @@ const FloorRoomManager = () => {
           </div>
         )}
       </div>
-
-      <button
-        // onClick={{}}
-        className="bg-[#005e0e] hover:bg-[#023609] text-white text-sm font-medium px-6 py-3 mt-[40px] rounded-md w-full"
-      >
-        SAVE FLOORS & ROOMS
-      </button>
     </div>
   );
 };
