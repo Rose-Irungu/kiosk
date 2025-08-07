@@ -2,17 +2,17 @@ import React from 'react';
 import Location from './Location';
 import Time from './Time';
 
-export default function OtherDevice({os, place, time, browser, callback}) {
+export default function OtherDevice({os, place, time, browser/*, callback*/}) {
   return (
     <div className='flex flex-col w-full rounded-[12px] py-[10px] px-[20px] gap-[10px] bg-[#FFFFFF]'>
         <div className='w-full h-[26px] gap-[22px]'>
             <div className='flex flex-row justify-between w-[full] h-[26px] gap-[20px] text-center items-center'>
                 <h1 className='font-dmsans font-bold text-[18px] text-[#000000] leading-[100%] tracking-[0]'>{os}</h1>
-                <button className='w-[126px] h-[31px] rounded-[5px] border-[1px] border-[#005E0E] py-[5px] px-[10px] font-dmsans font-medium text-[16px] text-[#005E0E] leading-[100%] tracking-[0]'
+                {/* <button className='w-[126px] h-[31px] rounded-[5px] border-[1px] border-[#005E0E] py-[5px] px-[10px] font-dmsans font-medium text-[16px] text-[#005E0E] leading-[100%] tracking-[0]'
                         onClick={()=>callback()}
                 >
                     Sign Out
-                </button>
+                </button> */}
             </div>
         </div>
         <div className='flex flex-row w-[256px] h-[20px] gap-[40px]'>
