@@ -14,22 +14,19 @@ const ViewCard2 = ({ visitor }) => {
       <div className="flex flex-col gap-4 w-full">
         <div className="flex justify-between border-b border-green-900/10 h-10 items-center">
           <span className="text-sm text-muted-foreground">Full Name</span>
-          <span className="text-sm text-muted-foreground">{visitor?.name || "John Smith"}</span>
+          <span className="text-sm text-muted-foreground">{visitor?.full_name || "No Name"}</span>
         </div>
 
         <div className="flex justify-between border-b border-green-900/10 h-10 items-center">
           <span className="text-sm text-muted-foreground">Phone Number</span>
-          <span className="text-sm text-muted-foreground">{visitor?.phone || "0712234455"}</span>
+          <span className="text-sm text-muted-foreground">{visitor?.phone_number || "N/A"}</span>
         </div>
 
-        <div className="flex justify-between border-b border-green-900/10 h-10 items-center">
-          <span className="text-sm text-muted-foreground">Car Number Plate</span>
-          <span className="text-sm text-muted-foreground">{visitor?.car_plate || "KDQ 079A"}</span>
-        </div>
+        {/* Removed Car Number Plate section */}
 
         <div className="flex justify-between border-b border-green-900/10 h-10 items-center">
           <span className="text-sm text-muted-foreground">Visitor Type</span>
-          <span className="text-sm text-muted-foreground">{visitor?.type || "New"}</span>
+          <span className="text-sm text-muted-foreground">{visitor?.visitor_type || "Unknown"}</span>
         </div>
       </div>
     </div>

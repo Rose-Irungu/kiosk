@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useExpectedVisitors } from "../../hooks/useExpectedVisitors";
+import { useNavigate } from "react-router-dom";
+
 import {
   Table,
   TableBody,
@@ -17,15 +19,7 @@ export default function ExpectedVisitors() {
   const [visitorTypeFilter, setVisitorTypeFilter] = useState("all");
   const [openDropdown, setOpenDropdown] = useState(null);
 
-  const toggleDropdown = (index) => {
-    setOpenDropdown(openDropdown === index ? null : index);
-  };
-
-  const handleAction = (action, e, index) => {
-    e.stopPropagation();
-    console.log(`Action "${action}" on visitor index ${index}`);
-    setOpenDropdown(null);
-  };
+  const navigate = useNavigate();
 
   
   const filteredVisitors =
@@ -40,6 +34,19 @@ export default function ExpectedVisitors() {
     startIndex,
     startIndex + entriesPerPage
   );
+
+  const handleAction = (action, e, index) => {
+    e.stopPropagation();
+    const visitor = currentVisitors[index];
+    console.log(`Action "${action}" on visitor:`, visitor);
+    setOpenDropdown(null);
+
+    if (action === "View" && visitor) {
+      
+      navigate("/view", { state: { visitor } });
+    }
+  };
+
 
   const handleExportCSV = () => {
     const headers = ["Name", "Phone", "Visitor Type", "Host/Unit", "Visit Date"];
@@ -67,8 +74,8 @@ export default function ExpectedVisitors() {
 
   return (
     <>
-      <div className="w-full max-w-7xl mx-auto bg-white rounded-xl shadow-sm mt-5">
-        <div className="flex justify-between items-center p-6 mb-4 border-b border-[rgba(0,0,0,0.3)]">
+      <div className="w-full max-w-7xl mx-auto bg-white  rounded-xl shadow-sm mt-5">
+        <div className="flex justify-between items-center overflow-y-auto p-6 mb-4 border-b border-[rgba(0,0,0,0.3)]">
           <h2 className="text-2xl font-semibold">Expected Visitors</h2>
           <button
             onClick={handleExportCSV}

@@ -29,6 +29,7 @@ import {
 
 import uploadIcon from "@/assets/group01.svg";
 
+// Label with required asterisk
 const RequiredLabel = ({ children }) => (
   <FormLabel className="font-medium">
     {children}
@@ -36,6 +37,7 @@ const RequiredLabel = ({ children }) => (
   </FormLabel>
 );
 
+// Zod schema
 const formSchema = z
   .object({
     role: z.string({ required_error: "Please select a role." }),
@@ -54,13 +56,18 @@ const formSchema = z
     message: "Passwords do not match",
   });
 
-export function UserForm({ title = "User Registration", submitLabel = "Submit", setUsers }) {
+export function UserForm({
+  title = "User Registration",
+  submitLabel = "Submit",
+  setUsers,
+}) {
   const navigate = useNavigate();
   const location = useLocation();
   const editUser = location.state?.user;
   const editMode = location.state?.editMode;
 
   const [units, setUnits] = useState([]);
+  const [showValidationError, setShowValidationError] = useState(false); // ⚠️ Added
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -95,7 +102,6 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
     }
   }, [editMode, editUser, form]);
 
- 
   useEffect(() => {
     const fetchUnits = async () => {
       try {
@@ -108,7 +114,18 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
     fetchUnits();
   }, []);
 
+  // Optional auto-dismiss
+  useEffect(() => {
+    if (showValidationError) {
+      const timer = setTimeout(() => {
+        setShowValidationError(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showValidationError]);
+
   const onSubmit = async (values) => {
+    setShowValidationError(false);
     try {
       const formData = new FormData();
       formData.append("first_name", values.firstName);
@@ -152,8 +169,20 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
             </h2>
 
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-               
+              <form
+                onSubmit={form.handleSubmit(onSubmit, () => {
+                  setShowValidationError(true); // 🧨 Trigger popup on validation failure
+                })}
+                className="space-y-6"
+              >
+                {/* 🔴 Popup Error Message */}
+                {showValidationError && (
+                  <div className="bg-red-100 text-red-800 border border-red-400 px-4 py-3 rounded-md text-sm">
+                    Please fix the errors in the form before submitting.
+                  </div>
+                )}
+
+                {/* Role Field */}
                 <FormField
                   control={form.control}
                   name="role"
@@ -177,33 +206,37 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
                   )}
                 />
 
-               
+                {/* Name & Email Fields */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {[["firstName", "First Name"], ["lastName", "Last Name"], ["email", "Email"]].map(
-                    ([name, label]) => (
-                      <FormField
-                        key={name}
-                        control={form.control}
-                        name={name}
-                        render={({ field }) => (
-                          <FormItem>
-                            <RequiredLabel>{label}</RequiredLabel>
-                            <FormControl>
-                              <Input
-                                className="bg-[#f4eaff] placeholder-gray-600"
-                                placeholder={`Enter ${label}`}
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    )
-                  )}
+                  {[
+                    ["firstName", "First Name"],
+                    ["lastName", "Last Name"],
+                    ["email", "Email"],
+                  ].map(([name, label]) => (
+                    <FormField
+                      key={name}
+                      control={form.control}
+                      name={name}
+                      render={({ field }) => (
+                        <FormItem>
+                          <RequiredLabel>{label}</RequiredLabel>
+                          <FormControl>
+                            <Input
+                              className="bg-[#f4eaff] placeholder-gray-600"
+                              placeholder={`Enter ${label}`}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ))}
                 </div>
 
+                {/* Phone, ID, Unit Fields */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {/* Phone */}
                   <FormField
                     control={form.control}
                     name="phone"
@@ -221,7 +254,7 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
                       </FormItem>
                     )}
                   />
-
+                  {/* ID */}
                   <FormField
                     control={form.control}
                     name="idNo"
@@ -239,7 +272,7 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
                       </FormItem>
                     )}
                   />
-
+                  {/* Unit */}
                   <FormField
                     control={form.control}
                     name="unit"
@@ -266,7 +299,7 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
                   />
                 </div>
 
-                
+                {/* Password Fields (Only on Add) */}
                 {!editMode && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {[
@@ -296,6 +329,7 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
                   </div>
                 )}
 
+                {/* File Upload */}
                 <FormField
                   control={form.control}
                   name="photo"
@@ -345,6 +379,7 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
                   }}
                 />
 
+                {/* Submit */}
                 <Button
                   type="submit"
                   className="w-full bg-[#005E0E] hover:bg-gradient-to-r hover:from-indigo-500 hover:to-violet-600 text-white font-semibold py-2 rounded-md shadow-md transition-all duration-300"
@@ -359,5 +394,6 @@ export function UserForm({ title = "User Registration", submitLabel = "Submit", 
     </div>
   );
 }
+
 export default UserForm;
 export const UserFormSchema = formSchema;
