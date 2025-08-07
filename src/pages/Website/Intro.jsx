@@ -171,9 +171,9 @@ const Home = () => {
               <img className="absolute inset-0 w-full h-full object-cover" src="/another-man-tablet.png" alt="" />
 
               {/* Top-Left Text */}
-              <div className="absolute top-4 left-4 z-10 text-white font-semibold text-lg ">
+              <div className="absolute top-4 left-4 z-10 text-white font-semibold p-4 py-6">
                 <p className='font-bold text-[28px]'>Relax</p>
-                <p className='font-semibold text-[18px]'>We've got your gate covered</p>
+                <p className='font-semibold text-[18px]'>We've got the <br /> gate covered.</p>
               </div>
             </div>
 
@@ -351,9 +351,9 @@ const Home = () => {
 
           </div>
         </div>
-
-
       </section>
+
+      
     </>
 
   )
