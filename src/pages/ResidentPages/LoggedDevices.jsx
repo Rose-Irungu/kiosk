@@ -39,7 +39,7 @@ export default function LoggedDevices() {
     fetchData();
   },[]);
 
-  console.log("Logged devices:", loggedDevices)
+  console.log("Logged devices:", loggedDevices);
 
   
   return (
