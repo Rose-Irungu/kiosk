@@ -375,8 +375,7 @@ const Home = () => {
                     <img src="/ticky.svg" alt="" />
                   </div >
 
-                  <p className='text-[18px] text-[#000000]'>Email + SMS notifications
-                    (fair use policy)</p>
+                  <p className='text-[18px] text-[#000000]'>99.9% uptime SLA</p>
                 </div>
 
                 <div className='flex flex-row items-center gap-2 justify-between'>
@@ -384,7 +383,15 @@ const Home = () => {
                     <img src="/ticky.svg" alt="" />
                   </div >
 
-                  <p className='text-[18px] text-[#000000]'> Ongoing updates & support</p>
+                  <p className='text-[18px] text-[#000000]'> Phone & priority email support</p>
+                </div>
+
+                <div className='flex flex-row items-center gap-2 justify-between'>
+                  <div className="justify-center items-center flex">
+                    <img src="/ticky.svg" alt="" />
+                  </div >
+
+                  <p className='text-[18px] text-[#000000]'> Onboarding & training for staff</p>
                 </div>
               </div>
 
