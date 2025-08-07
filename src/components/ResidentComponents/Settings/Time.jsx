@@ -3,9 +3,9 @@ import TimeIcon from './TimeIcon';
 
 export default function Time({time}) {
   return (
-    <div className='flex flex-row w-[112px] h-[20px] gap-[4px]'>
+    <div className='flex flex-row w-[122px] h-[20px] gap-[4px]'>
         <TimeIcon/>
-        <div className='w-[80px] h-[16px] text-center'>
+        <div className='h-[16px] text-center'>
             <p className='font-dmsans font-medium text-[12px] mt-[4px] text-[#666666] leading-[100%] tracking-[0]'>
                 {time}
             </p>

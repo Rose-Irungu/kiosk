@@ -15,7 +15,7 @@ export default function OtherDevice({os, place, time, browser/*, callback*/}) {
                 </button> */}
             </div>
         </div>
-        <div className='flex flex-row w-[256px] h-[20px] gap-[40px]'>
+        <div className='flex flex-row w-[280px] h-[20px] gap-[40px]'>
             <Location place={place}/>
             <Time time={time}/>
         </div>

@@ -80,6 +80,24 @@ export const userService = {
       console.error("Error toggling user status:", error);
       throw error;
     }
+    
+  },
+
+  addCars: async (payload) => {
+    try {
+      const promise = api.post(API_ENDPOINTS.ADD_CARS, payload);
+      const response = await toast.promise(promise, {
+        loading: "Updating user cars...",
+        success: "User cars updated successfully!",
+        error: (err) =>
+          err?.response?.data?.message || "Failed to update user cars. Please try again.",
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error updating user cars:", error);
+      throw error;
+    }
+
   },
 
 

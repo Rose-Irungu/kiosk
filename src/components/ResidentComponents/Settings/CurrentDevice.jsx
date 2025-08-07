@@ -15,7 +15,7 @@ export default function CurrentDevice({os, place, time, browser}) {
                 </div>
             </div>
         </div>
-        <div className='flex flex-row w-[256px] h-[20px] gap-[40px]'>
+        <div className='flex flex-row w-[280px] h-[20px] gap-[40px]'>
             <Location place={place}/>
             <Time time={time}/>
         </div>

@@ -1,0 +1,34 @@
+{
+    "sourceFile": "src/components/ResidentComponents/Settings/SubmitButton.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1754577381292,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1754577531704,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,12 @@\n import React from \"react\";\r\n-export default function SubmitButton(callback) {\r\n+export default function SubmitButton({ callback }) {\r\n   return (\r\n     <button\r\n-      className=\"ml-[20px]w-[70px] h-[20px] bg-[#00D21E] text-white text-base text-center font-dmsans font-medium leading-[100%] tracking-[0]\"\r\n-      onClick={() => callback()}\r\n+      className=\"ml-[20px] w-[70px] h-[30px] bg-[#00D21E] hover:bg-[#00b51a] transition-colors text-white text-sm font-medium rounded-md\"\r\n+      onClick={callback}\r\n     >\r\n-      {\" \"}\r\n       Submit\r\n     </button>\r\n   );\r\n }\r\n+\r\n"
+                },
+                {
+                    "date": 1754579883761,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import React from \"react\";\r\n export default function SubmitButton({ callback }) {\r\n   return (\r\n     <button\r\n-      className=\"ml-[20px] w-[70px] h-[30px] bg-[#00D21E] hover:bg-[#00b51a] transition-colors text-white text-sm font-medium rounded-md\"\r\n+      className=\"w-[70px] h-[30px] bg-[#00D21E] hover:bg-[#00b51a] transition-colors text-white text-sm font-medium rounded-md\"\r\n       onClick={callback}\r\n     >\r\n       Submit\r\n     </button>\r\n"
+                },
+                {
+                    "date": 1754579896919,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import React from \"react\";\r\n export default function SubmitButton({ callback }) {\r\n   return (\r\n     <button\r\n-      className=\"w-[70px] h-[30px] bg-[#00D21E] hover:bg-[#00b51a] transition-colors text-white text-sm font-medium rounded-md\"\r\n+      className=\"ml-[20px] w-[70px] h-[30px] bg-[#00D21E] hover:bg-[#00b51a] transition-colors text-white text-sm font-medium rounded-md\"\r\n       onClick={callback}\r\n     >\r\n       Submit\r\n     </button>\r\n"
+                },
+                {
+                    "date": 1754580081551,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,10 @@\n+export default function SubmitButton({ callback }) {\r\n+  return (\r\n+    <button\r\n+      className=\"h-8 px-4 bg-[#00D21E] hover:bg-[#00b51a] transition-colors text-white text-sm font-medium rounded-md flex items-center justify-center leading-none\"\r\n+      onClick={callback}\r\n+    >\r\n+      Submit\r\n+    </button>\r\n+  );\r\n+}\r\n"
+                }
+            ],
+            "date": 1754577381292,
+            "name": "Commit-0",
+            "content": "import React from \"react\";\r\nexport default function SubmitButton(callback) {\r\n  return (\r\n    <button\r\n      className=\"ml-[20px]w-[70px] h-[20px] bg-[#00D21E] text-white text-base text-center font-dmsans font-medium leading-[100%] tracking-[0]\"\r\n      onClick={() => callback()}\r\n    >\r\n      {\" \"}\r\n      Submit\r\n    </button>\r\n  );\r\n}\r\n"
+        }
+    ]
+}
