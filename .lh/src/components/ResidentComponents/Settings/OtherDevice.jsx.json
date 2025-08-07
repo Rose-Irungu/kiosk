@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/components/ResidentComponents/Settings/OtherDevice.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1754580513408,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1754580513408,
+            "name": "Commit-0",
+            "content": "import React from 'react';\r\nimport Location from './Location';\r\nimport Time from './Time';\r\n\r\nexport default function OtherDevice({os, place, time, browser, callback}) {\r\n  return (\r\n    <div className='flex flex-col w-full rounded-[12px] py-[10px] px-[20px] gap-[10px] bg-[#FFFFFF]'>\r\n        <div className='w-full h-[26px] gap-[22px]'>\r\n            <div className='flex flex-row justify-between w-[full] h-[26px] gap-[20px] text-center items-center'>\r\n                <h1 className='font-dmsans font-bold text-[18px] text-[#000000] leading-[100%] tracking-[0]'>{os}</h1>\r\n                <button className='w-[126px] h-[31px] rounded-[5px] border-[1px] border-[#005E0E] py-[5px] px-[10px] font-dmsans font-medium text-[16px] text-[#005E0E] leading-[100%] tracking-[0]'\r\n                        onClick={()=>callback()}\r\n                >\r\n                    Sign Out\r\n                </button>\r\n            </div>\r\n        </div>\r\n        <div className='flex flex-row w-[2px] h-[20px] gap-[40px]'>\r\n            <Location place={place}/>\r\n            <Time time={time}/>\r\n        </div>\r\n        <div className='w-full h-[0px] border-[1px] border-[#999999]'></div>\r\n        <div className='flex flex-row w-[76px] h-[24px] gap-[14px]'>\r\n            <div className='flex flex-col w-[24px] h-[24px] justify-center items-center'>\r\n                <img src=\"/dot.svg\" className='w-[7.599999904632568px] h-[7.599999904632568px] top-[8.2px] left-[8.2px]' />\r\n            </div>\r\n            <div className='w-[38px] h-[18px] text-center'>\r\n                <p className='font-dmsans font-medium text-[14px] text-[#666666] mt-[4px] leading-[100%] tracking-[0]'>{browser}</p>\r\n            </div>\r\n        </div>\r\n    </div>\r\n  );\r\n}"
+        }
+    ]
+}

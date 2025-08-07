@@ -18,12 +18,17 @@ import clearCache from '../../scripts/clearCache';
 export default function ResidentSettings() {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
+  const [plates, setPlates] = useState()
   const navigate = useNavigate();
 
   useEffect(()=>{
     const getUser = async() =>{
       const thisUser = await JSON.parse(localStorage.getItem("userInfo"));
-      console.log(thisUser);
+      const plateStr = (thisUser.cars || [])
+        .map(car => car.plate_number)
+        .join(", ");
+
+      setPlates(plateStr);
       setUser(thisUser);
     };
     getUser();
@@ -37,7 +42,7 @@ export default function ResidentSettings() {
               <User image={user.profile_picture} name={`${user.first_name} ${user.last_name}`} unit={user.unit}/>
               <Header icon="/msee.svg" text={"My Profile"}/>
               <PersonalInformation phone={user.phone_number} email={user.email}/>
-              <Cars />
+              <Cars plate={plates}/>
               <HouseholdInformation occupants={user.number_of_residents}/>
               <Header icon="/gear.svg" text={"My Settings"}/>
               <NotificationSettings/>

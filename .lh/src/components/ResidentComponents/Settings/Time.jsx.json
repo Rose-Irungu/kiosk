@@ -1,0 +1,30 @@
+{
+    "sourceFile": "src/components/ResidentComponents/Settings/Time.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1754580648336,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1754580666733,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,15 @@\n+import React from 'react';\r\n+import TimeIcon from './TimeIcon';\r\n+\r\n+export default function Time({time}) {\r\n+  return (\r\n+    <div className='flex flex-row w-[1px] h-[20px] gap-[4px]'>\r\n+        <TimeIcon/>\r\n+        <div className='w-[80px] h-[16px] text-center'>\r\n+            <p className='font-dmsans font-medium text-[12px] mt-[4px] text-[#666666] leading-[100%] tracking-[0]'>\r\n+                {time}\r\n+            </p>\r\n+        </div>\r\n+    </div>\r\n+  )\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754580696588,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,29 +2,14 @@\n import TimeIcon from './TimeIcon';\r\n \r\n export default function Time({time}) {\r\n   return (\r\n-    <div className='flex flex-row w-[1px] h-[20px] gap-[4px]'>\r\n+    <div className='flex flex-row w-[120px] h-[20px] gap-[4px]'>\r\n         <TimeIcon/>\r\n         <div className='w-[80px] h-[16px] text-center'>\r\n             <p className='font-dmsans font-medium text-[12px] mt-[4px] text-[#666666] leading-[100%] tracking-[0]'>\r\n                 {time}\r\n             </p>\r\n         </div>\r\n     </div>\r\n   )\r\n-}\n-import React from 'react';\r\n-import TimeIcon from './TimeIcon';\r\n-\r\n-export default function Time({time}) {\r\n-  return (\r\n-    <div className='flex flex-row w-[1px] h-[20px] gap-[4px]'>\r\n-        <TimeIcon/>\r\n-        <div className='w-[80px] h-[16px] text-center'>\r\n-            <p className='font-dmsans font-medium text-[12px] mt-[4px] text-[#666666] leading-[100%] tracking-[0]'>\r\n-                {time}\r\n-            </p>\r\n-        </div>\r\n-    </div>\r\n-  )\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754580706590,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,15 @@\n+import React from 'react';\r\n+import TimeIcon from './TimeIcon';\r\n+\r\n+export default function Time({time}) {\r\n+  return (\r\n+    <div className='flex flex-row w-[120px] h-[20px] gap-[4px]'>\r\n+        <TimeIcon/>\r\n+        <div className='h-[16px] text-center'>\r\n+            <p className='font-dmsans font-medium text-[12px] mt-[4px] text-[#666666] leading-[100%] tracking-[0]'>\r\n+                {time}\r\n+            </p>\r\n+        </div>\r\n+    </div>\r\n+  )\r\n+}\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1754580648336,
+            "name": "Commit-0",
+            "content": "import React from 'react';\r\nimport TimeIcon from './TimeIcon';\r\n\r\nexport default function Time({time}) {\r\n  return (\r\n    <div className='flex flex-row w-[1px] h-[20px] gap-[4px]'>\r\n        <TimeIcon/>\r\n        <div className='w-[80px] h-[16px] text-center'>\r\n            <p className='font-dmsans font-medium text-[12px] mt-[4px] text-[#666666] leading-[100%] tracking-[0]'>\r\n                {time}\r\n            </p>\r\n        </div>\r\n    </div>\r\n  )\r\n}"
+        }
+    ]
+}
