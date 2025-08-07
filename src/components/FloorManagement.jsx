@@ -1,85 +1,147 @@
 import React, { useState, useEffect } from "react";
 import { X, Plus, Home, Users, Trash2 } from "lucide-react";
+import {
+  addFloor,
+  addRoom,
+  deleteFloor,
+  deleteRoom,
+} from "../services/facility";
 
-const FloorRoomManager = () => {
-  const [floors, setFloors] = useState([]);
+// Fix 1: Destructure props properly
+const FloorRoomManager = ({ floors, setFloors }) => {
   const [showFloorModal, setShowFloorModal] = useState(false);
   const [showRoomModal, setShowRoomModal] = useState(false);
   const [selectedFloorId, setSelectedFloorId] = useState(null);
   const [floorName, setFloorName] = useState("");
   const [roomName, setRoomName] = useState("");
 
- useEffect(() => {
-  const savedData = localStorage.getItem("buildingData");
-  try {
-    const parsedData = JSON.parse(savedData);
-    if (Array.isArray(parsedData)) {
-      setFloors(parsedData);
-    } else {
-      console.warn("Invalid buildingData format. Expected an array.");
-      setFloors([]);
+  // get saved user data from localStorage on component mount
+  const user = JSON.parse(localStorage.getItem("userInfo")) || {};
+  const facilityId = user.facility || null;
+
+  useEffect(() => {
+    const savedFacilityData = localStorage.getItem("facilityData");
+    if (savedFacilityData) {
+      try {
+        const parsedData = JSON.parse(savedFacilityData);
+        if (parsedData.floors && Array.isArray(parsedData.floors)) {
+          setFloors(parsedData.floors);
+        }
+      } catch (error) {
+        console.error("Error parsing facility data:", error);
+        setFloors([]);
+      }
     }
-  } catch (error) {
-    console.error("Error parsing buildingData:", error);
-    setFloors([]);
-  }
-}, []);
+  }, [setFloors]);
 
+  // Save floors data to localStorage whenever floors change
+  const saveFloorsData = (updatedFloors) => {
+    const existingFacilityData = localStorage.getItem("facilityData");
+    let facilityData = {};
 
-  const addFloor = () => {
-    if (floorName.trim()) {
+    if (existingFacilityData) {
+      try {
+        facilityData = JSON.parse(existingFacilityData);
+      } catch (error) {
+        console.error("Error parsing existing facility data:", error);
+      }
+    }
+
+    // Update the floors data within the facility data
+    facilityData.floors = updatedFloors;
+    facilityData.lastUpdated = new Date().toISOString();
+
+    localStorage.setItem("facilityData", JSON.stringify(facilityData));
+  };
+
+  const handleSaveFloor = async () => {
+    const res = await addFloor({
+      facility: facilityId,
+      floor_name: floorName.trim(),
+    });
+
+    if (res.status === 201) {
+      console.log("Floor added successfully:", res.data);
       const newFloor = {
-        id: Date.now(),
-        name: floorName.trim(),
+        id: res.data.data.id,
+        floor_name: res.data.data.floor_name,
         rooms: [],
       };
-      setFloors([...floors, newFloor]);
+      const updatedFloors = [...floors, newFloor];
+      setFloors(updatedFloors);
+      saveFloorsData(updatedFloors);
       setFloorName("");
       setShowFloorModal(false);
+    } else {
+      console.error("Failed to add floor:", res);
     }
   };
-  const handleSave = () => {
-    localStorage.setItem("buildingData", JSON.stringify(floors));
-    alert("Floors and rooms saved successfully!");
-  };
 
-  const addRoom = () => {
-    if (roomName.trim() && selectedFloorId) {
+  const handleSaveRoom = async () => {
+    const res = await addRoom({
+      floor: selectedFloorId,
+      unit_name: roomName.trim(),
+    });
+    if (res.status === 201) {
+      console.log("Room added successfully:", res.data);
       const newRoom = {
-        id: Date.now(),
-        name: roomName.trim(),
+        id: res.data.id,
+        unit_name: res.data.unit_name,
       };
-      setFloors(
-        floors.map((floor) =>
-          floor.id === selectedFloorId
-            ? { ...floor, rooms: [...floor.rooms, newRoom] }
-            : floor
-        )
+      const updatedFloors = floors.map((floor) =>
+        floor.id === selectedFloorId
+          ? { ...floor, rooms: [...floor.rooms, newRoom] }
+          : floor
       );
+      setFloors(updatedFloors);
+      saveFloorsData(updatedFloors);
       setRoomName("");
       setShowRoomModal(false);
       setSelectedFloorId(null);
+      closeModals();
+    } else {
+      console.error("Failed to add room:", res);
     }
   };
 
-  const deleteFloor = (floorId) => {
-    const confirmDelete = window.confirm("Delete this floor?");
+  const handleDeleteFloor = async (floorId) => {
+    const confirmDelete = window.confirm(
+      "Delete this floor and all its rooms?"
+    );
     if (confirmDelete) {
-      setFloors(floors.filter((floor) => floor.id !== floorId));
+      const res = await deleteFloor(floorId);
+      if (res.status === 204) {
+        const updatedFloors = floors.filter((floor) => floor.id !== floorId);
+        setFloors(updatedFloors);
+        saveFloorsData(updatedFloors);
+        console.log("Floor deleted successfully:", res.data);
+      } else {
+        console.error("Failed to delete floor:", res);
+        return;
+      }
     }
   };
 
-  const deleteRoom = (floorId, roomId) => {
-    setFloors(
-      floors.map((floor) =>
+  const handleDeleteRoom = async (floorId, roomId) => {
+    const confirmDelete = window.confirm("Delete this room?");
+    if (!confirmDelete) return;
+    const res = await deleteRoom(roomId);
+    if (res.status === 204) {
+      const updatedFloors = floors.map((floor) =>
         floor.id === floorId
           ? {
               ...floor,
               rooms: floor.rooms.filter((room) => room.id !== roomId),
             }
           : floor
-      )
-    );
+      );
+      setFloors(updatedFloors);
+      saveFloorsData(updatedFloors);
+      console.log("Room deleted successfully:", res.data);
+    } else {
+      console.error("Failed to delete room:", res);
+      return;
+    }
   };
 
   const openRoomModal = (floorId) => {
@@ -94,6 +156,20 @@ const FloorRoomManager = () => {
     setRoomName("");
     setSelectedFloorId(null);
   };
+
+  // Fix 2: Add safety check for floors array
+  if (!floors || !Array.isArray(floors)) {
+    return (
+      <div className="min-h-screen bg-gray-100 rounded-md p-6 w-full">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center py-16">
+            <Home size={64} className="mx-auto text-gray-400 mb-4" />
+            <p className="text-gray-500 text-lg">Loading floors...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 rounded-md p-6 w-full">
@@ -128,46 +204,55 @@ const FloorRoomManager = () => {
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
                     <Home size={20} className="text-[#495057]" />
-                    {floor.name}
+                    {floor.floor_name}
                   </h2>
-                  <button
-                    onClick={() => openRoomModal(floor.id)}
-                    className="bg-[#005e0e] hover:bg-[#023609] text-white px-3 py-2 rounded-md flex items-center gap-1 transition-colors duration-200 text-sm"
-                  >
-                    <Plus size={16} />
-                    Add Room
-                  </button>
-                  <button
-                    onClick={() => deleteFloor(floor.id)}
-                    className="text-red-500 hover:text-red-700"
-                    title="Delete Floor"
-                  >
-                    <Trash2 size={20} />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => openRoomModal(floor.id)}
+                      className="bg-[#005e0e] hover:bg-[#023609] text-white px-3 py-2 rounded-md flex items-center gap-1 transition-colors duration-200 text-sm"
+                    >
+                      <Plus size={16} />
+                      Add Room
+                    </button>
+                    <button
+                      onClick={() => handleDeleteFloor(floor.id)}
+                      className="text-red-500 hover:text-red-700 p-1"
+                      title="Delete Floor"
+                    >
+                      <Trash2 size={20} />
+                    </button>
+                  </div>
                 </div>
 
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-gray-600 mb-3">
                     <Users size={16} />
                     <span className="text-sm font-medium">
-                      Rooms ({floor.rooms.length})
+                      Rooms ({floor.units.length})
                     </span>
                   </div>
 
-                  {floor.rooms.length === 0 ? (
+                  {floor.units.length === 0 ? (
                     <p className="text-gray-400 text-sm italic">
-                      No rooms added yet
+                      No units added yet
                     </p>
                   ) : (
                     <div className="space-y-2 max-h-40 overflow-y-auto">
-                      {floor.rooms.map((room) => (
+                      {floor.units.map((room) => (
                         <div
                           key={room.id}
-                          className="bg-gray-50 px-3 py-2 rounded-lg"
+                          className="bg-gray-50 px-3 py-2 rounded-lg flex justify-between items-center"
                         >
                           <span className="text-gray-700 text-sm">
-                            {room.name}
+                            {room.unit_name}
                           </span>
+                          <button
+                            onClick={() => handleDeleteRoom(floor.id, room.id)}
+                            className="text-red-500 hover:text-red-700 p-1"
+                            title="Delete Room"
+                          >
+                            <Trash2 size={14} />
+                          </button>
                         </div>
                       ))}
                     </div>
@@ -204,7 +289,7 @@ const FloorRoomManager = () => {
                     onChange={(e) => setFloorName(e.target.value)}
                     placeholder="Enter floor name (e.g., Ground Floor, First Floor)"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#005e0e] focus:border-transparent outline-none transition-all"
-                    onKeyPress={(e) => e.key === "Enter" && addFloor()}
+                    onKeyPress={(e) => e.key === "Enter" && handleSaveFloor()}
                   />
                 </div>
 
@@ -216,7 +301,7 @@ const FloorRoomManager = () => {
                     Cancel
                   </button>
                   <button
-                    onClick={addFloor}
+                    onClick={handleSaveFloor}
                     disabled={!floorName.trim()}
                     className="flex-1 px-4 py-3 bg-[#005e0e] text-white rounded-lg hover:bg-[#023609] disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                   >
@@ -252,9 +337,9 @@ const FloorRoomManager = () => {
                     type="text"
                     value={roomName}
                     onChange={(e) => setRoomName(e.target.value)}
-                    placeholder="Enter room name (e.g., Living Room, Bedroom)"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all"
-                    onKeyPress={(e) => e.key === "Enter" && addRoom()}
+                    placeholder="Enter room name (e.g., Conference Room, Office 101)"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#005e0e] focus:border-transparent outline-none transition-all"
+                    onKeyPress={(e) => e.key === "Enter" && handleSaveRoom()}
                   />
                 </div>
 
@@ -266,9 +351,9 @@ const FloorRoomManager = () => {
                     Cancel
                   </button>
                   <button
-                    onClick={addRoom}
+                    onClick={handleSaveRoom}
                     disabled={!roomName.trim()}
-                    className="flex-1 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                    className="flex-1 px-4 py-3 bg-[#005e0e] text-white rounded-lg hover:bg-[#023609] disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                   >
                     Add Room
                   </button>
@@ -278,12 +363,6 @@ const FloorRoomManager = () => {
           </div>
         )}
       </div>
-      <button
-        onClick={handleSave}
-        className="bg-[#005e0e] hover:bg-[#023609] text-white text-sm font-medium px-6 py-3 mt-[40px] rounded-md w-full"
-      >
-        SAVE
-      </button>
     </div>
   );
 };
