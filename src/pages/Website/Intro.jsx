@@ -160,11 +160,30 @@ const Home = () => {
 
         <p className='text-center text-[#000000] text-[18px] mt-[11px]'>Simple, transparent pricing for visitor gate. No hidden charges. One plan. Full access</p>
         {/* Overall Container holding packages */}
-        <div className='flex flex-row justify-between gap-4 '>
+        <div className='flex flex-row justify-between gap-4 pt-10 items-stretch  '>
 
           {/* packages */}
           <div className='flex flex-row items-center justify-between'>
-            <div className='bg-[#FFFF] shadow-[0px_1px_10px_0px_rgba(45,_34,_100,_0.15)] rounded-[24px] flex flex-col items-center p-12'>
+            <div className='relative h-full w-[410px] shadow-[0px_1px_10px_0px_rgba(45,_34,_100,_0.15)] rounded-[24px] overflow-hidden' style={{
+              background: `linear-gradient(90deg, rgba(45, 34, 100, 1) 0%, rgba(80, 60, 177, 1) 50%, rgba(0, 210, 30, 1) 100%)`,
+            }}>
+              {/* Background Image */}
+              <img className="absolute inset-0 w-full h-full object-cover" src="/another-man-tablet.png" alt="" />
+
+              {/* Top-Left Text */}
+              <div className="absolute top-4 left-4 z-10 text-white font-semibold text-lg ">
+                <p className='font-bold text-[28px]'>Relax</p>
+                <p className='font-semibold text-[18px]'>We've got your gate covered</p>
+              </div>
+            </div>
+
+
+
+
+          </div>
+          {/* packages */}
+          <div className='flex flex-row items-center justify-between'>
+            <div className='h-full w-full bg-[#FFFF] shadow-[0px_1px_10px_0px_rgba(45,_34,_100,_0.15)] rounded-[24px] flex flex-col items-center p-12'>
               <h1 className='text-[#2D2264] text-[28px] font-bold'>Standard</h1>
               <p className='text-[#666666] text-[14px] '>No credit card required. Cancel anytime.</p>
 
@@ -246,89 +265,7 @@ const Home = () => {
           </div>
           {/* packages */}
           <div className='flex flex-row items-center justify-between'>
-            <div className='bg-[#FFFF] shadow-[0px_1px_10px_0px_rgba(45,_34,_100,_0.15)] rounded-[24px] flex flex-col items-center p-12'>
-              <h1 className='text-[#2D2264] text-[28px] font-bold'>Standard</h1>
-              <p className='text-[#666666] text-[14px] '>No credit card required. Cancel anytime.</p>
-
-              <p className='text-[#333333] text-[18px] mt-[24px] '>KES 4500 per month/per location.
-                or Or KES 49,000 / Year (Save 10%)</p>
-              {/* List */}
-              <div className='flex flex-col items-start justify-center gap-4 mt-[48px]'>
-
-
-
-                <div className='flex flex-row items-center gap-2 justify-between'>
-                  <div className="justify-center items-center flex">
-                    <img src="/ticky.svg" alt="" />
-                  </div >
-
-                  <p className='text-[18px] text-[#000000]'>Unlimited visitor check-ins</p>
-                </div>
-
-                <div className='flex flex-row items-center gap-2 justify-between'>
-                  <div className="justify-center items-center flex">
-                    <img src="/ticky.svg" alt="" />
-                  </div >
-
-                  <p className='text-[18px] text-[#000000]'>Unlimited visitor check-ins</p>
-                </div>
-
-                <div className='flex flex-row items-center gap-2 justify-between'>
-                  <div className="justify-center items-center flex">
-                    <img src="/ticky.svg" alt="" />
-                  </div >
-
-                  <p className='text-[18px] text-[#000000]'>Guard, Resident and Super Admin
-                    dashboards</p>
-                </div>
-
-                <div className='flex flex-row items-center gap-2 justify-between'>
-                  <div className="justify-center items-center flex">
-                    <img src="/ticky.svg" alt="" />
-                  </div >
-
-                  <p className='text-[18px] text-[#000000]'>Emergency alert tools</p>
-                </div>
-
-                <div className='flex flex-row items-center gap-2 justify-between'>
-                  <div className="justify-center items-center flex">
-                    <img src="/ticky.svg" alt="" />
-                  </div >
-
-                  <p className='text-[18px] text-[#000000]'>Email + SMS notifications
-                    (fair use policy)</p>
-                </div>
-
-                <div className='flex flex-row items-center gap-2 justify-between'>
-                  <div className="justify-center items-center flex">
-                    <img src="/ticky.svg" alt="" />
-                  </div >
-
-                  <p className='text-[18px] text-[#000000]'> Ongoing updates & support</p>
-                </div>
-              </div>
-
-              <div className='bg-[#2D2264] rounded-[12px] h-[46px] w-[303px] p-4 flex items-center justify-center mt-[32px]'>
-                <button className='flex items-center text-white text-[20px]'>
-                  Start Free Trial
-                </button>
-
-              </div>
-
-
-
-            </div>
-            <div className='bg-[#FFFF] shadow-[0px_1px_10px_0px_rgba(45,_34,_100,_0.15)] rounded-[24px]'>
-
-            </div>
-            <div className='bg-[#FFFF] shadow-[0px_1px_10px_0px_rgba(45,_34,_100,_0.15)] rounded-[24px]'>
-
-            </div>
-
-          </div>
-          {/* packages */}
-          <div className='flex flex-row items-center justify-between'>
-            <div className='bg-[#FFFF] shadow-[0px_1px_10px_0px_rgba(45,_34,_100,_0.15)] rounded-[24px] flex flex-col items-center p-12'>
+            <div className='bg-[#FFFF] shadow-[0px_1px_10px_0px_rgba(45,_34,_100,_0.15)] rounded-[24px] flex flex-col items-center p-12 h-full w-full'>
               <h1 className='text-[#2D2264] text-[28px] font-bold'>Enterprise</h1>
               <p className='text-[#666666] text-[14px] '>Custom solutions for 5+ locations.</p>
 

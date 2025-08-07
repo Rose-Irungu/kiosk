@@ -125,7 +125,7 @@ const VisitorManagement = ({ datedata = [] }) => {
     ];
     const [filteredGuests, setFilteredGuests] = useState([]);
     const fetchGuestList = async () => {
-        setLoading(true);
+        // setLoading(true);
         try {
             const res = await visitsuser();
             if (res.result_code === 0) {
