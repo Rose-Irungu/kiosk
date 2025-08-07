@@ -502,7 +502,7 @@ const Home = () => {
       <section className='flex flex-col items-center '
       style={{
                         // background: `linear-gradient(to right top, rgba(3, 10, 27, 1), rgba(3, 10, 27, 0.06)), url(${slides[current].poster_path || slides[current].backdrop_path})`,
-                        background: `linear-gradient(90deg,rgba(45, 34, 100, 1) 0%, rgba(80, 60, 177, 1) 50%, rgba(0, 210, 30, 1) 100%), url(/)`,
+                         background: `linear-gradient(90deg, rgba(45, 34, 100, 1) 0%, rgba(80, 60, 177, 1) 50%, rgba(0, 210, 30, 1) 100%), url('https://images.unsplash.com/photo-1469022563428-aa04fef9f5a2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXBhcnRtZW50c3xlbnwwfHwwfHx8MA%3D%3D')`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         opacity: 1,
