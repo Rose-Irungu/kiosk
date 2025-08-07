@@ -1,8 +1,14 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { useState } from "react";
+import { Link } from 'react-router-dom';
+import { ChevronDown, ChevronUp } from "lucide-react";
+import AccordionItem from '../../components/AccordionItem';
+
+
 
 
 const Home = () => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
 
@@ -353,7 +359,165 @@ const Home = () => {
         </div>
       </section>
 
-      
+      {/* Reviews */}
+      <section className='flex flex-col items-center bg-[#2D2264] gap-6 p-6'>
+        <h1 className='text-[44px] font-bold text-white mt-[72px]'>What Our Clients Say</h1>
+        <p className='text-[18px] text-white mt-[18px] mb-[55px]'>Trusted by the people who use it daily.</p>
+        {/* Overall Container holding reviews */}
+        <div className='flex flex-row justify-between gap-10 items-stretch'>
+          {/* Review Boxes */}
+          <div className='flex flex-col items-center bg-[#FFFFFF]  rounded-tr-lg rounded-bl-lg '>
+            <div className='justify-center flex items-center px-16 pt-16 pb-10 relative w-full h-full'>
+              <img
+                src="./quote.svg"
+                alt="quote"
+                className="absolute top-[3px] left-[10px] w-[75px] h-[85.48px] mix-blend-normal"
+              />
+
+              <img
+                src="./quote.svg"
+                alt="quote"
+                className="absolute top-[190.52px] right-[10px] w-[75px] h-[85.48px] mix-blend-normal"
+              />
+              <p className='italic font-light text-[18px]'>As a security officer, having the ability to verify visitors and activate emergency protocols from one dashboard has made my job much easier and safer.</p>
+            </div>
+
+            {/* Lower part of review box */}
+            <div className='border-t-1 flex flex-row justify-between items-center w-full px-4 py-2 ' style={{ borderColor: "rgba(45, 34, 100, 0.5)" }}>
+              <div className='flex items-center rounded-full bg-[#00234] w-16 h-16'>
+                <img src="/boy-avatar.svg" className='object-cover w-full h-full' alt="" />
+
+              </div>
+
+              <div className='flex flex-col items-end  '>
+                <p className='font-extrabold text-[18px] text-[#333333]'>DANILE GALLAGHER</p>
+                <p className='font-semibold text-[18px] text-[#333333]/50 italic'>Head of Security Officer</p>
+                <p className='font-extrabold text-[16px] text-[#2D2264]/50'>TechPoint Offices</p>
+
+              </div>
+
+
+            </div>
+
+          </div>
+          {/* Review Boxes */}
+          <div className='flex flex-col items-center bg-[#FFFFFF]  rounded-tr-lg rounded-bl-lg '>
+            <div className='justify-center flex items-center px-16 pt-16 pb-10 relative w-full h-full'>
+              <img
+                src="./quote.svg"
+                alt="quote"
+                className="absolute top-[3px] left-[10px] w-[75px] h-[85.48px] mix-blend-normal"
+              />
+
+              <img
+                src="./quote.svg"
+                alt="quote"
+                className="absolute top-[190.52px] right-[10px] w-[75px] h-[85.48px] mix-blend-normal"
+              />
+              <p className='italic font-light text-[18px]'>We’ve reduced entry bottlenecks by 60% since switching to VisitorGate. It's intuitive, multilingual, and works flawlessly across devices.</p>
+            </div>
+
+            {/* Lower part of review box */}
+            <div className='border-t-1 flex flex-row justify-between items-center w-full px-4 py-2 ' style={{ borderColor: "rgba(45, 34, 100, 0.5)" }}>
+              <div className='flex items-center rounded-full bg-[#00234] w-16 h-16'>
+                <img src="/boy-avatar.svg" className='object-cover w-full h-full' alt="" />
+
+              </div>
+
+              <div className='flex flex-col items-end  '>
+                <p className='font-extrabold text-[18px] text-[#333333]'>FAITH K</p>
+                <p className='font-semibold text-[18px] text-[#333333]/50 italic'>Facility Administrator</p>
+                <p className='font-extrabold text-[16px] text-[#2D2264]/50'>The Local Data Company</p>
+
+              </div>
+
+
+            </div>
+
+          </div>
+          {/* Review Boxes */}
+          <div className='flex flex-col items-center bg-[#FFFFFF]  rounded-tr-lg rounded-bl-lg '>
+            <div className='justify-center flex items-center px-16 pt-16 pb-10 relative w-[420px] h-full'>
+              <img
+                src="./quote.svg"
+                alt="quote"
+                className="absolute top-[3px] left-[10px] w-[75px] h-[85.48px] mix-blend-normal"
+              />
+
+              <img
+                src="./quote.svg"
+                alt="quote"
+                className="absolute top-[190.52px] right-[10px] w-[75px] h-[85.48px] mix-blend-normal"
+              />
+              <p className='italic font-light text-[18px]'>VisitorGate has completely transformed how we manage access at our apartment complex. The check-in process is now faster and more secure, and residents love the real-time alerts.</p>
+            </div>
+
+            {/* Lower part of review box */}
+            <div className='border-t-1 flex flex-row justify-between items-center w-full px-4 py-2 ' style={{ borderColor: "rgba(45, 34, 100, 0.5)" }}>
+              <div className='flex items-center rounded-full bg-[#00234] w-16 h-16'>
+                <img src="/boy-avatar.svg" className='object-cover w-full h-full' alt="" />
+
+              </div>
+
+              <div className='flex flex-col items-end  '>
+                <p className='font-extrabold text-[18px] text-[#333333]'>MARK COLGAN</p>
+                <p className='font-semibold text-[18px] text-[#333333]/50 italic'>Property Manager</p>
+                <p className='font-extrabold text-[16px] text-[#2D2264]/50'>GreenPark Apartments</p>
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      {/* FAQs */}
+      <section className='flex flex-col items-center p-4 '>
+        <h1 className='text-[36px] text-[#2D2264] font-bold mt-16'>FAQ's</h1>
+
+
+        <AccordionItem question="1. Can I use the system on both desktop and mobile devices?"
+          answer="yeah i mean sure" />
+
+          <AccordionItem question="2. How do visitors check in using the system?"
+          answer="yeah i mean sure" />
+
+          <AccordionItem question="3. Is VisitorGate secure for managing sensitive visitor data?"
+          answer="yeah i mean sure" />
+
+          <AccordionItem question="4. Is there a free trial available?"
+          answer="yeah i mean sure" />
+
+          
+
+
+
+      </section>
+
+      {/* Contact Us */}
+      <section className='flex flex-col items-center '
+      style={{
+                        // background: `linear-gradient(to right top, rgba(3, 10, 27, 1), rgba(3, 10, 27, 0.06)), url(${slides[current].poster_path || slides[current].backdrop_path})`,
+                        background: `linear-gradient(90deg,rgba(45, 34, 100, 1) 0%, rgba(80, 60, 177, 1) 50%, rgba(0, 210, 30, 1) 100%), url(/)`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        opacity: 1,
+                    }}>
+        <div className='flex items-center justify-center flex-col  gap-1'>
+          <h3 className=' text-[44px] font-bold text-white'>Contact Us</h3>
+          <p className=' text-[18px]  text-white'></p>
+
+        </div>
+
+
+
+      </section>
+
+
     </>
 
   )
