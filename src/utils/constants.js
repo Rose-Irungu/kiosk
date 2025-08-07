@@ -59,7 +59,12 @@ export const API_ENDPOINTS = {
   LOGGED_DEVICES: '/user/device-management/',
 
   //blacklist guest
-  BLACKLIST_GUEST: '/visitors/blacklist/'
+  BLACKLIST_GUEST: '/visitors/blacklist/',
+  // Facility Management
+  FACILITY_NAME: '/user/facility/',
+  FACILITY_PROFILE: '/user/facility-profile/',
+  FLOOR: '/visitors/floors/',
+  ROOM: '/visitors/units/',
 
 }
 
