@@ -43,7 +43,7 @@ export default function ResidentSettings() {
               <Header icon="/msee.svg" text={"My Profile"}/>
               <PersonalInformation phone={user.phone_number} email={user.email}/>
               <Cars plate={plates}/>
-              <HouseholdInformation occupants={user.number_of_residents}/>
+            <HouseholdInformation occupants={user.number_of_residents} id={user.id} />
               <Header icon="/gear.svg" text={"My Settings"}/>
               <NotificationSettings/>
               <DataStorageSettings callback1={()=>clearCache(navigate, "/loginform")} callback2={()=>navigate("/resident/loggeddevices")}/>
