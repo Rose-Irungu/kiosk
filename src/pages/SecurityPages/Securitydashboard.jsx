@@ -70,9 +70,9 @@ export default function SecurityDashboard() {
           linkHref="/checkedoutvisitors"
           icon={
             <img
-              src="/checkout.svg"
+              src="/zidi.svg"
               alt="Emergency Icon"
-              className="w-6 h-6 object-contain"
+              className="w-full h-full object-contain"
             />
           }
         />

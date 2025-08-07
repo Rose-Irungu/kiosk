@@ -2,7 +2,9 @@
 import React, { useState } from 'react';
 import PastVisitorOpen from './PastVisitorOpen';
 
-export default function PastGuestCard({ image, name, checkOutTime, type }) {
+import blacklistVisitor from '../../../services/blacklistVisitor';
+
+export default function PastGuestCard({ image, name, checkOutTime, type, id }) {
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => {
@@ -38,6 +40,7 @@ export default function PastGuestCard({ image, name, checkOutTime, type }) {
           time={checkOutTime}
           type={type}
           onClose={toggleModal}
+          callback={()=>blacklistVisitor(id)}
         />
       )}
     </div>

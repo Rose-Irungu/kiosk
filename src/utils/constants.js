@@ -55,6 +55,12 @@ export const API_ENDPOINTS = {
   BLACKLIST_PEEPS: '/visitors/all-blacklisted/',
   Resident_Incidence: '/incidence-and-emergency/view-my-incidence/',
 
+  //User logged devices
+  LOGGED_DEVICES: '/user/device-management/',
+
+  //blacklist guest
+  BLACKLIST_GUEST: '/visitors/blacklist/'
+
 }
 
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://292695e84858.ngrok-free.app'
