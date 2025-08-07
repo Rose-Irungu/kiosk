@@ -18,13 +18,21 @@ export default function ViewCard3({ visitor }) {
         {/* Visit Unit */}
         <div className="flex justify-between items-center border-b border-primary/10 h-10">
           <p className="text-sm text-muted-foreground">Visit Unit</p>
-          <p className="text-sm text-muted-foreground">{visitor.unit || "B-09"}</p>
+          <p className="text-sm text-muted-foreground">{visitor.unit_number || "N/A"}</p>
         </div>
 
         {/* Visit Date */}
         <div className="flex justify-between items-center border-b border-primary/10 h-10">
           <p className="text-sm text-muted-foreground">Visit Date</p>
-          <p className="text-sm text-muted-foreground">{visitor.visit_date || "July 19, 2025"}</p>
+          <p className="text-sm text-muted-foreground">
+            {visitor.visit_date
+              ? new Date(visitor.visit_date).toLocaleDateString(undefined, {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })
+              : "N/A"}
+          </p>
         </div>
       </CardContent>
     </Card>
