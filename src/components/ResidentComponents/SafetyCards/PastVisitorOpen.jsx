@@ -1,11 +1,10 @@
 import React from 'react';
 
-export default function PastVisitorOpen({ name, time, type, onClose }) {
+export default function PastVisitorOpen({ name, time, type, onClose, callback }) {
   return (
-    <div className="fixed top-0 left-0 w-full h-full z-50 flex items-center justify-center bg-transparent">
+    <div className="fixed top-0 left-0 w-[500px] h-full z-50 flex items-center justify-center bg-transparent">
       <div className="relative flex flex-col w-[370px] h-[106px] rounded-[12px] p-[10px] bg-[#FFFFFF] shadow-md border border-gray-200">
 
-        {/* ❌ Close button top-right */}
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-[18px] font-bold text-gray-500 hover:text-red-500"
@@ -26,7 +25,6 @@ export default function PastVisitorOpen({ name, time, type, onClose }) {
           </div>
           <button
             className="w-[51px] h-[22px] rounded-[12px] py-[3px] px-[10px] bg-[#B0F1B9]"
-            onClick={onClose}
           >
             {type}
           </button>
@@ -36,7 +34,9 @@ export default function PastVisitorOpen({ name, time, type, onClose }) {
           <div className="text-center w-[138px] h-[39px] rounded-[8px] border border-[#00580D] py-[8px] px-[10px]">
             Visitor Details
           </div>
-          <div className="w-[152px] h-[39px] rounded-[8px] py-[8px] px-[10px] bg-[#00580D] font-dmsans font-medium text-[18px] text-white">
+          <div className="w-[152px] h-[39px] rounded-[8px] py-[8px] px-[10px] bg-[#00580D] font-dmsans font-medium text-[18px] text-white"
+               onClick={()=>callback()}
+          >
             Add to Blacklist
           </div>
         </div>

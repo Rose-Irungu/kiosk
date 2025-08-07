@@ -37,7 +37,7 @@ function Card6() {
           disabled={emergencyTriggered}
         >
           <img
-            src="/911.svg"
+            src="/white_siren.svg"
             alt="Emergency Icon"
             className="w-6 h-6 object-contain"
           />

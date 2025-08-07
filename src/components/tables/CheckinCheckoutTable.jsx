@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Upload, ChevronDown } from "lucide-react";
-import { getVisitLogs } from "@/services/checkincheckout"; 
+import { getVisitLogs } from "@/services/checkincheckout";
 
 export default function CheckinCheckoutTable() {
   const [visitors, setVisitors] = useState([]);
@@ -28,32 +28,43 @@ export default function CheckinCheckoutTable() {
   }, [currentPage, entriesPerPage, visitorTypeFilter]);
 
   const fetchVisitors = async () => {
-  setLoading(true);
-  try {
-    const data = await getVisitLogs(); 
-    let allData = data;
+    setLoading(true);
+    try {
+      const response = await getVisitLogs();
+      console.log("Raw API data:", response);
 
-    if (visitorTypeFilter !== "all") {
-      allData = allData.filter(
-        (v) => v.visitor_type.toLowerCase() === visitorTypeFilter.toLowerCase()
-      );
+      const allData = Array.isArray(response.data) ? response.data : [];
+
+      if (visitorTypeFilter !== "all") {
+        const filtered = allData.filter(
+          (v) => v.visitor_type?.toLowerCase() === visitorTypeFilter.toLowerCase()
+        );
+        setFilteredAllVisitors(filtered);
+        setTotalEntries(filtered.length);
+
+        const start = (currentPage - 1) * entriesPerPage;
+        const paginated = filtered.slice(start, start + entriesPerPage);
+        setVisitors(paginated);
+      } else {
+        setFilteredAllVisitors(allData);
+        setTotalEntries(allData.length);
+
+        const start = (currentPage - 1) * entriesPerPage;
+        const paginated = allData.slice(start, start + entriesPerPage);
+        setVisitors(paginated);
+      }
+
+    } catch (error) {
+      console.error("Error fetching visitors:", error);
+      setVisitors([]);
+      setFilteredAllVisitors([]);
+      setTotalEntries(0);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    setFilteredAllVisitors(allData);
-    setTotalEntries(allData.length);
 
-    const start = (currentPage - 1) * entriesPerPage;
-    const paginated = allData.slice(start, start + entriesPerPage);
-    setVisitors(paginated);
-  } catch (error) {
-    console.error("Error fetching visitors:", error);
-    setVisitors([]);
-    setFilteredAllVisitors([]);
-    setTotalEntries(0);
-  } finally {
-    setLoading(false);
-  }
-};
 
   const handleExportCSV = () => {
     const headers = [
@@ -205,19 +216,18 @@ export default function CheckinCheckoutTable() {
                     </TableCell>
                     <TableCell className="px-4 py-4">
                       <div
-                        className={`mx-auto w-fit px-2 py-1 rounded text-xs font-semibold ${
-                          visitor.status === "checked_in"
+                        className={`mx-auto w-fit px-2 py-1 rounded text-xs font-semibold ${visitor.status === "checked_in"
                             ? "bg-[rgba(1,210,30,0.2)] text-[#017B25]"
                             : visitor.status === "checked_out"
-                            ? "bg-[#E0DBF4] text-[#4B3BAE]"
-                            : "bg-yellow-100 text-yellow-800"
-                        }`}
+                              ? "bg-[#E0DBF4] text-[#4B3BAE]"
+                              : "bg-yellow-100 text-yellow-800"
+                          }`}
                       >
                         {visitor.status === "checked_in"
                           ? "Checked-In"
                           : visitor.status === "checked_out"
-                          ? "Checked-Out"
-                          : visitor.status}
+                            ? "Checked-Out"
+                            : visitor.status}
                       </div>
                     </TableCell>
                   </TableRow>

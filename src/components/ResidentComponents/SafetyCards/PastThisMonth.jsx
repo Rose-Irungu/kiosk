@@ -31,6 +31,7 @@ export default function PastThisMonth({ allVisitors }) {
             name={visitor.visitor_name}
             checkOutTime={visitor.check_out}
             type={visitor.visitor_type}
+            id={visitor.visitor_id}
           />
         ))
       ) : (

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Card4 from "../../components/Card4";
+import Card7 from "../../components/Card7";
 import EmergencyStatsChart from "../../components/Chart2";
 import EmergencyTable from "../../components/tables/Emergencies";
 import SecurityLayout from "../../components/SecurityComponents/SecurityLayout";
@@ -82,7 +82,7 @@ export default function Emergencypage() {
           {/* Card4 - The Live Emergency Feed */}
           <div className="w-full md:w-1/2">
             {latest ? (
-              <Card4
+              <Card7
                 id={latest?.id}
                 floor={latest?.triggerer_floor_number}
                 unit={latest?.triggerer_unit_number}
