@@ -55,6 +55,11 @@ export const API_ENDPOINTS = {
   BLACKLIST_PEEPS: '/visitors/all-blacklisted/',
   Resident_Incidence: '/incidence-and-emergency/view-my-incidence/',
 
+  // Facility Management
+  FACILITY_NAME: '/user/facility/',
+  FLOOR: '/visitors/floors/',
+  ROOM: '/visitors/units/',
+
 }
 
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://292695e84858.ngrok-free.app'

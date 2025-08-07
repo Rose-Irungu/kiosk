@@ -1,72 +1,100 @@
-
 import React from "react";
 import Layout from "../../components/layout/Layout";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { addFacility } from "../../services/facility";
 import FloorManagement from "../../components/FloorManagement";
 
 export default function FacilityProfile() {
   const [facilityName, setFacilityName] = useState("");
-  const [facilityType, setFacilityType] = useState("Office");
+  const [facilityType, setFacilityType] = useState("office");
   const [safetyInstructions, setSafetyInstructions] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
- 
-  useEffect(() => {
-    const savedFacilityData = localStorage.getItem("facilityData");
-    if (savedFacilityData) {
-      try {
-        const parsedData = JSON.parse(savedFacilityData);
-        setFacilityName(parsedData.facilityName || "");
-        setFacilityType(parsedData.facilityType || "Office");
-        setSafetyInstructions(parsedData.safetyInstructions || "");
-      } catch (error) {
-        console.error("Error loading saved data:", error);
+
+  const handleSave = async () => {
+    // Validation
+    if (!facilityName.trim()) {
+      setError("Facility name is required");
+      return;
+    }
+
+    // Ensure safety instructions is not empty (API requires a string)
+    const safetyInstructionValue = safetyInstructions.trim() || "No specific safety instructions provided";
+
+    setLoading(true);
+    setError("");
+    setSuccess("");
+    
+    try {
+      const newFacility = {
+        facility_name: facilityName.trim(),
+        facility_type: facilityType.toLowerCase(), // Ensure lowercase
+        safety_instruction: safetyInstructionValue,
+      };
+
+      console.log("Sending facility data:", newFacility); // Debug log
+      const response = await addFacility(newFacility);
+      console.log("API Response:", response); // Debug log
+      
+      setSuccess("Facility added successfully!");
+      
+      // Reset form
+      setFacilityName("");
+      setFacilityType("office");
+      setSafetyInstructions("");
+      
+    } catch (error) {
+      console.error("Error adding facility:", error);
+      
+      // More detailed error handling
+      if (error.response && error.response.data) {
+        // Server responded with validation errors
+        const errorData = error.response.data;
+        let errorMessages = [];
+        
+        // Handle field-specific errors
+        Object.keys(errorData).forEach(field => {
+          if (Array.isArray(errorData[field])) {
+            errorMessages.push(`${field}: ${errorData[field].join(', ')}`);
+          } else {
+            errorMessages.push(`${field}: ${errorData[field]}`);
+          }
+        });
+        
+        setError(errorMessages.join(' | '));
+      } else if (error.request) {
+        // Network error
+        setError("Network error: Unable to reach the server");
+      } else {
+        // Other error
+        setError(`Error: ${error.message}`);
       }
+    } finally {
+      setLoading(false);
     }
-  }, []);
-
-  const handleSave = () => {
-    if (!facilityName.trim()) {
-      alert("Please enter a facility name.");
-      return;
-    }
-
-    const facilityData = {
-      facilityName: facilityName.trim(),
-      facilityType,
-      safetyInstructions,
-      lastUpdated: new Date().toISOString()
-    };
-
-    localStorage.setItem("facilityData", JSON.stringify(facilityData));
-    console.log("Facility saved:", facilityData);
-    alert(`Facility "${facilityName}" saved successfully!`);
-  };
-
-  const saveData = () => {
-    if (!facilityName.trim()) {
-      alert("Please enter a facility name before saving the profile.");
-      return;
-    }
-
-    const facilityData = {
-      facilityName: facilityName.trim(),
-      facilityType,
-      safetyInstructions,
-      lastUpdated: new Date().toISOString()
-    };
-
-    localStorage.setItem("facilityData", JSON.stringify(facilityData));
-    console.log("Facility profile saved:", facilityData);
-    alert("Facility profile saved successfully!");
-
-     navigate("/settings");
   };
 
   return (
     <Layout>
       <div className="bg-white rounded-2xl p-12 flex flex-col gap-8 items-start">
         <h1 className="text-black text-2xl font-bold">Facility Profile</h1>
+
+        {/* Error Message */}
+        {error && (
+          <div className="w-full p-4 bg-red-100 border border-red-400 text-red-700 rounded-md">
+            {error}
+          </div>
+        )}
+
+        {/* Success Message */}
+        {success && (
+          <div className="w-full p-4 bg-green-100 border border-green-400 text-green-700 rounded-md">
+            {success}
+          </div>
+        )}
 
         <div className="bg-[#f5f4f5] rounded-lg border border-gray-400/50 p-8 shadow-md w-full flex flex-col gap-8">
           <h2 className="text-[#495057] text-xl font-bold">
@@ -83,14 +111,10 @@ export default function FacilityProfile() {
                     className="text-[#495057] w-full outline-none"
                     value={facilityName}
                     onChange={(e) => setFacilityName(e.target.value)}
+                    disabled={loading}
                   />
                 </div>
-                <button
-                  onClick={handleSave}
-                  className="bg-[#005e0e] hover:bg-[#023609] text-white text-sm font-medium px-6 py-3 mt-[40px] rounded-md w-full ml-[120px]"
-                >
-                  SAVE
-                </button>
+                {/* Removed the misplaced SAVE button from here */}
               </div>
 
               <div className="flex flex-col gap-2 flex-1">
@@ -100,6 +124,7 @@ export default function FacilityProfile() {
                     value={facilityType}
                     onChange={(e) => setFacilityType(e.target.value)}
                     className="appearance-none w-full h-12 bg-white border border-gray-300 text-[#495057] text-sm px-4 pr-10 rounded-md focus:outline-none focus:ring-2 focus:ring-[#005e0e] focus:border-transparent"
+                    disabled={loading}
                   >
                     <option value="Office">Office</option>
                     <option value="School">School</option>
@@ -128,16 +153,21 @@ export default function FacilityProfile() {
             value={safetyInstructions}
             onChange={(e) => setSafetyInstructions(e.target.value)}
             className="bg-[#f5f4f5] border border-[#495057]/50 rounded-lg p-4 h-[123px] w-full resize-none focus:outline-none focus:ring-2 focus:ring-[#005e0e] focus:border-transparent"
+            disabled={loading}
           />
         </div>
 
         <div className="shadow w-full flex justify-start">
-          <button 
-            onClick={saveData}
-         
-            className="bg-[#005e0e] hover:bg-[#023609] text-white text-sm font-medium px-6 py-3 rounded-md w-full"
+          <button
+            onClick={handleSave}
+            disabled={loading}
+            className={`text-white text-sm font-medium px-6 py-3 rounded-md w-full ${
+              loading 
+                ? 'bg-gray-400 cursor-not-allowed' 
+                : 'bg-[#005e0e] hover:bg-[#023609]'
+            }`}
           >
-            SAVE FACILITY PROFILE
+            {loading ? "SAVING..." : "SAVE FACILITY PROFILE"}
           </button>
         </div>
       </div>

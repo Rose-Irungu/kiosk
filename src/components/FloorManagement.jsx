@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { X, Plus, Home, Users, Trash2 } from "lucide-react";
+import {
+  addFloor,
+  addRoom,
+  deleteFloor,
+  deleteRoom,
+} from "../services/facility";
 
 const FloorRoomManager = () => {
   const [floors, setFloors] = useState([]);
@@ -9,6 +15,9 @@ const FloorRoomManager = () => {
   const [floorName, setFloorName] = useState("");
   const [roomName, setRoomName] = useState("");
 
+  // get saved user data from localStorage on component mount
+  const user = JSON.parse(localStorage.getItem("userInfo")) || {};
+  const facilityId = user.facility || null;
 
   useEffect(() => {
     const savedFacilityData = localStorage.getItem("facilityData");
@@ -29,7 +38,7 @@ const FloorRoomManager = () => {
   const saveFloorsData = (updatedFloors) => {
     const existingFacilityData = localStorage.getItem("facilityData");
     let facilityData = {};
-    
+
     if (existingFacilityData) {
       try {
         facilityData = JSON.parse(existingFacilityData);
@@ -45,11 +54,17 @@ const FloorRoomManager = () => {
     localStorage.setItem("facilityData", JSON.stringify(facilityData));
   };
 
-  const addFloor = () => {
-    if (floorName.trim()) {
+  const handleSaveFloor = async () => {
+    const res = await addFloor({
+      facility: facilityId,
+      floor_name: floorName.trim(),
+    });
+
+    if (res.status === 201) {
+      console.log("Floor added successfully:", res.data);
       const newFloor = {
-        id: Date.now(),
-        name: floorName.trim(),
+        id: res.data.data.id,
+        name: res.data.data.floor_name,
         rooms: [],
       };
       const updatedFloors = [...floors, newFloor];
@@ -57,19 +72,21 @@ const FloorRoomManager = () => {
       saveFloorsData(updatedFloors);
       setFloorName("");
       setShowFloorModal(false);
+    } else {
+      console.error("Failed to add floor:", res);
     }
   };
 
-  const handleSave = () => {
-    saveFloorsData(floors);
-    alert("Floors and rooms saved successfully!");
-  };
-
-  const addRoom = () => {
-    if (roomName.trim() && selectedFloorId) {
+  const handleSaveRoom = async () => {
+    const res = await addRoom({
+      floor: selectedFloorId,
+      unit_name: roomName.trim(),
+    });
+    if (res.status === 201) {
+      console.log("Room added successfully:", res.data);
       const newRoom = {
-        id: Date.now(),
-        name: roomName.trim(),
+        id: res.data.id,
+        name: res.data.unit_name,
       };
       const updatedFloors = floors.map((floor) =>
         floor.id === selectedFloorId
@@ -81,29 +98,50 @@ const FloorRoomManager = () => {
       setRoomName("");
       setShowRoomModal(false);
       setSelectedFloorId(null);
+      closeModals();
+    } else {
+      console.error("Failed to add room:", res);
     }
   };
 
-  const deleteFloor = (floorId) => {
-    const confirmDelete = window.confirm("Delete this floor and all its rooms?");
+  const handleDeleteFloor = async (floorId) => {
+    const confirmDelete = window.confirm(
+      "Delete this floor and all its rooms?"
+    );
     if (confirmDelete) {
-      const updatedFloors = floors.filter((floor) => floor.id !== floorId);
+      const res = await deleteFloor(floorId);
+      if (res.status === 204) {
+        const updatedFloors = floors.filter((floor) => floor.id !== floorId);
+        setFloors(updatedFloors);
+        saveFloorsData(updatedFloors);
+        console.log("Floor deleted successfully:", res.data);
+      } else {
+        console.error("Failed to delete floor:", res);
+        return;
+      }
+    }
+  };
+
+  const handleDeleteRoom = async (floorId, roomId) => {
+    const confirmDelete = window.confirm("Delete this room?");
+    if (!confirmDelete) return;
+    const res = await deleteRoom(roomId);
+    if (res.status === 204) {
+      const updatedFloors = floors.map((floor) =>
+        floor.id === floorId
+          ? {
+              ...floor,
+              rooms: floor.rooms.filter((room) => room.id !== roomId),
+            }
+          : floor
+      );
       setFloors(updatedFloors);
       saveFloorsData(updatedFloors);
+      console.log("Room deleted successfully:", res.data);
+    } else {
+      console.error("Failed to delete room:", res);
+      return;
     }
-  };
-
-  const deleteRoom = (floorId, roomId) => {
-    const updatedFloors = floors.map((floor) =>
-      floor.id === floorId
-        ? {
-            ...floor,
-            rooms: floor.rooms.filter((room) => room.id !== roomId),
-          }
-        : floor
-    );
-    setFloors(updatedFloors);
-    saveFloorsData(updatedFloors);
   };
 
   const openRoomModal = (floorId) => {
@@ -163,7 +201,7 @@ const FloorRoomManager = () => {
                       Add Room
                     </button>
                     <button
-                      onClick={() => deleteFloor(floor.id)}
+                      onClick={() => handleDeleteFloor(floor.id)}
                       className="text-red-500 hover:text-red-700 p-1"
                       title="Delete Floor"
                     >
@@ -195,7 +233,7 @@ const FloorRoomManager = () => {
                             {room.name}
                           </span>
                           <button
-                            onClick={() => deleteRoom(floor.id, room.id)}
+                            onClick={() => handleDeleteRoom(floor.id, room.id)}
                             className="text-red-500 hover:text-red-700 p-1"
                             title="Delete Room"
                           >
@@ -249,7 +287,7 @@ const FloorRoomManager = () => {
                     Cancel
                   </button>
                   <button
-                    onClick={addFloor}
+                    onClick={handleSaveFloor}
                     disabled={!floorName.trim()}
                     className="flex-1 px-4 py-3 bg-[#005e0e] text-white rounded-lg hover:bg-[#023609] disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                   >
@@ -299,7 +337,7 @@ const FloorRoomManager = () => {
                     Cancel
                   </button>
                   <button
-                    onClick={addRoom}
+                    onClick={handleSaveRoom}
                     disabled={!roomName.trim()}
                     className="flex-1 px-4 py-3 bg-[#005e0e] text-white rounded-lg hover:bg-[#023609] disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                   >
@@ -311,9 +349,9 @@ const FloorRoomManager = () => {
           </div>
         )}
       </div>
-      
+
       <button
-        onClick={handleSave}
+        // onClick={{}}
         className="bg-[#005e0e] hover:bg-[#023609] text-white text-sm font-medium px-6 py-3 mt-[40px] rounded-md w-full"
       >
         SAVE FLOORS & ROOMS
