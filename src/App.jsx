@@ -92,6 +92,7 @@ import FacilityProfilePage from "./pages/Dashboardpages/FacilityProfilePage";
 import ReportIncidentPage from "./pages/ResidentPages/ReportPage";
 import ReportIncidentCard from "./components/ReportIncidentCard";
 import PastReportsPage from "./pages/ResidentPages/PastReports";
+import Intro from "./pages/Website/Intro";
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -99,7 +100,7 @@ const App = () => {
   return (
     <><Router>
       <Routes>
-        
+
         <Route path="/past" element={<PastReportsPage />} />
         <Route path="/report" element={<ReportIncidentCard />} />
         <Route path="/" element={<Home />} />
@@ -220,6 +221,8 @@ const App = () => {
         <Route path="/resident/incident" element={<ReportIncidentPage />} />
         <Route path="/past" element={<PastReportsPage />} />
         <Route path="/report" element={<ReportIncidentCard />} />
+        {/* Website */}
+        <Route path="/intro" element={<Intro />} />
       </Routes>
     </Router>
       <Toaster
