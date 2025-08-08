@@ -1,0 +1,30 @@
+{
+    "sourceFile": "src/components/Header.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1754652971324,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1754652998023,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n-import React, { useState, useEffect } from 'react';\r\n+import React, { useState, useEffect } from \"react\";\r\n \r\n const Header = () => {\r\n   const [currentTime, setCurrentTime] = useState(new Date());\r\n-  \r\n \r\n   useEffect(() => {\r\n     const timer = setInterval(() => {\r\n       setCurrentTime(new Date());\r\n@@ -11,45 +10,35 @@\n \r\n     return () => clearInterval(timer);\r\n   }, []);\r\n \r\n-  const currentDate = currentTime.toLocaleDateString('en-US', {\r\n-    weekday: 'long',\r\n-    day: 'numeric',\r\n-    month: 'long',\r\n-    year: 'numeric'\r\n+  const currentDate = currentTime.toLocaleDateString(\"en-US\", {\r\n+    weekday: \"long\",\r\n+    day: \"numeric\",\r\n+    month: \"long\",\r\n+    year: \"numeric\",\r\n   });\r\n \r\n-  const timeString = currentTime.toLocaleTimeString('en-US', {\r\n-    hour: '2-digit',\r\n-    minute: '2-digit',\r\n-    hour12: true\r\n+  const timeString = currentTime.toLocaleTimeString(\"en-US\", {\r\n+    hour: \"2-digit\",\r\n+    minute: \"2-digit\",\r\n+    hour12: true,\r\n   });\r\n \r\n- \r\n-\r\n   return (\r\n     <header className=\"flex justify-between items-center px-6 py-4 bg-[#00580d] relative z-50\">\r\n-     \r\n       <div className=\" text-white px-5 text-sm  text-[20px] \">\r\n         {currentDate}\r\n       </div>\r\n-      \r\n-     \r\n+\r\n       <div className=\"text-white  text-[24px]  uppercase text-center mr-45 flex-1 mx-5\">\r\n         VISITOR GATE\r\n       </div>\r\n-      \r\n-      \r\n+\r\n       <div className=\"flex items-center gap-5 text-[20px]\">\r\n-        \r\n\\ No newline at end of file\n-        <div className=\"text-white text-lg   min-w-fit\">\r\n-          {timeString}\r\n-        </div>\r\n-        \r\n-       \r\n+        <div className=\"text-white text-lg   min-w-fit\">{timeString}</div>\r\n       </div>\r\n     </header>\r\n   );\r\n };\r\n \r\n-export default Header;\n+export default Header;\r\n"
+                },
+                {
+                    "date": 1754653178157,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     hour12: true,\r\n   });\r\n \r\n   return (\r\n-    <header className=\"flex justify-between items-center px-6 py-4 bg-[#00580d] relative z-50\">\r\n+    <header className=\"flex justify-between  w-items-center px-6 py-4 bg-[#00580d] relative z-50\">\r\n       <div className=\" text-white px-5 text-sm  text-[20px] \">\r\n         {currentDate}\r\n       </div>\r\n \r\n"
+                },
+                {
+                    "date": 1754653189651,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     hour12: true,\r\n   });\r\n \r\n   return (\r\n-    <header className=\"flex justify-between  w-1/3 items-center px-6 py-4 bg-[#00580d] relative z-50\">\r\n+    <header className=\"flex justify-between  w-1/3items-center px-6 py-4 bg-[#00580d] relative z-50\">\r\n       <div className=\" text-white px-5 text-sm  text-[20px] \">\r\n         {currentDate}\r\n       </div>\r\n \r\n"
+                }
+            ],
+            "date": 1754652971324,
+            "name": "Commit-0",
+            "content": "import React, { useState, useEffect } from 'react';\r\n\r\nconst Header = () => {\r\n  const [currentTime, setCurrentTime] = useState(new Date());\r\n  \r\n\r\n  useEffect(() => {\r\n    const timer = setInterval(() => {\r\n      setCurrentTime(new Date());\r\n    }, 1000);\r\n\r\n    return () => clearInterval(timer);\r\n  }, []);\r\n\r\n  const currentDate = currentTime.toLocaleDateString('en-US', {\r\n    weekday: 'long',\r\n    day: 'numeric',\r\n    month: 'long',\r\n    year: 'numeric'\r\n  });\r\n\r\n  const timeString = currentTime.toLocaleTimeString('en-US', {\r\n    hour: '2-digit',\r\n    minute: '2-digit',\r\n    hour12: true\r\n  });\r\n\r\n \r\n\r\n  return (\r\n    <header className=\"flex justify-between items-center px-6 py-4 bg-[#00580d] relative z-50\">\r\n     \r\n      <div className=\" text-white px-5 text-sm  text-[20px] \">\r\n        {currentDate}\r\n      </div>\r\n      \r\n     \r\n      <div className=\"text-white  text-[24px]  uppercase text-center mr-45 flex-1 mx-5\">\r\n        VISITOR GATE\r\n      </div>\r\n      \r\n      \r\n      <div className=\"flex items-center gap-5 text-[20px]\">\r\n        \r\n        <div className=\"text-white text-lg   min-w-fit\">\r\n          {timeString}\r\n        </div>\r\n        \r\n       \r\n      </div>\r\n    </header>\r\n  );\r\n};\r\n\r\nexport default Header;"
+        }
+    ]
+}
