@@ -7,9 +7,10 @@ export default function Header({ icon, text }) {
         <img src={icon} className='w-full h-full object-contain' />
       </div>
       <div className='w-full h-[31px] mt-[1px]'>
-        <h1 className='font-dmsans font-semibold text-[24px] mt-[7px] text-[#000000] leading-[100%] tracking-[0]'>{text}</h1>
+        <h1 className='font-dmsans font-semibold text-[16px] sm:text-[24px] mt-[7px] text-[#000000] leading-[100%] tracking-[0]'>
+          {text}
+        </h1>
       </div>
     </div>
   );
 }
-

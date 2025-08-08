@@ -36,8 +36,8 @@ const CardA = ({
     };
   }, [isModalOpen]);
 
- 
- 
+
+
 
   const visitorData = {
     visitor_name,
@@ -62,7 +62,7 @@ const CardA = ({
     image: img = visitorData.image || '/ellipse-20.png',
     // visit_id: visit_id,
   } = visitorData;
-console.log('Status:', st);
+  console.log('Status:', st);
 
   const openModal = () => {
     if (st !== 'expected') {
@@ -76,14 +76,14 @@ console.log('Status:', st);
   };
 
   const handleApprove = async () => {
-  await onApproveVisit(visit_id);
-  closeModal();
-};
+    await onApproveVisit(visit_id);
+    closeModal();
+  };
 
-const handleCancel = async () => {
-  await onCancelVisit(visit_id);
-  closeModal();
-};
+  const handleCancel = async () => {
+    await onCancelVisit(visit_id);
+    closeModal();
+  };
 
   const handleAddToBlacklist = async () => {
     try {
@@ -92,7 +92,7 @@ const handleCancel = async () => {
       })
       closeModal();
     } catch (error) {
-      
+
     }
 
   }
@@ -100,8 +100,9 @@ const handleCancel = async () => {
 
 
   return (
+    <>
     <div className="relative inline-block w-full  md:w-auto">
-     
+
       <div
         className="bg-white rounded-lg p-7 px-7 md:p-4 md:px-6 flex items-center w-full justify-between  h-auto md:h-15 md:w-auto shadow-md cursor-pointer"
         onClick={openModal}
@@ -122,14 +123,15 @@ const handleCancel = async () => {
         </div>
       </div>
 
-      {isModalOpen && (
-       <div
-  className="absolute top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2"
-  ref={modalRef}
->
+      
+    </div>{isModalOpen && (
+        <div
+          className="absolute top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2"
+          ref={modalRef}
+        >
 
           {showDetailsView ? (
-            
+
             <div className="bg-white rounded-lg p-6 w-96 shadow-xl">
               <h2 className="text-lg font-semibold text-green-900 mb-4">Visitor Details</h2>
               <p className="text-sm text-gray-700 mb-2"><strong>Name:</strong> {n}</p>
@@ -143,7 +145,7 @@ const handleCancel = async () => {
               </button>
             </div>
           ) : st === 'pending' ? (
-           
+
             <div className="bg-white rounded-2xl border border-green-300 p-5 flex flex-col gap-4 w-[292px] shadow-md">
               <div className="flex gap-3 items-start">
                 <img className="w-10 h-10 rounded-full object-cover" src={img} alt={n} />
@@ -173,7 +175,7 @@ const handleCancel = async () => {
               </div>
             </div>
           ) : st === 'checked_in' ? (
-            
+
             <div className="bg-white rounded-2xl border border-green-300 p-5 flex flex-col gap-4 w-[292px] shadow-md">
               <div className="flex gap-3 items-start">
                 <img className="w-10 h-10 rounded-full object-cover" src={img} alt={n} />
@@ -209,7 +211,7 @@ const handleCancel = async () => {
           ) : null}
         </div>
       )}
-    </div>
+      </>
   );
 };
 
