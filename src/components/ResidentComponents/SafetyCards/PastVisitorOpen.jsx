@@ -5,7 +5,7 @@ export default function PastVisitorOpen({ name, time, type, onClose, callback })
     try {
       const result = await callback();
       if (result?.status === true) {
-        onClose();
+        setTimeout(onClose(), 7000);
       }
     } catch (error) {
       console.error("Blacklist failed:", error);
