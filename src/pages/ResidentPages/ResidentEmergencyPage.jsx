@@ -91,7 +91,7 @@ export default function EmergencyControlApp() {
           <AlertCard time={timeLeft} />
         </div> */}
         <div className="flex flex-col items-center py-6">
-          <EmergencyAlert />
+          <EmergencyAlert/>
         </div>
         <div className="flex flex-col items-center py-6">
           <EmergencyContacts />

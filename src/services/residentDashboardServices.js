@@ -17,9 +17,6 @@ export async function getAllVisitors(){
     }
 }
 
-export async function inviteGuest() {
-    console.log("Guest invited successfully");
-};
 export async function clickTest(){
     console.log("Button clicked successfully");
 }

@@ -1,9 +1,10 @@
-import React from 'react'
-
-export default function SetP({text}) {
+export default function SetP({ text, callback }) {
   return (
-    <div className='w-[38px] h-[26px]'>
-        <p className='font-dmsans font-medium text-[20px] text-[#00D21E] leading-[100%] tracking-[0]'>{text}</p>
+    <div
+      onClick={callback}
+      className="h-8 px-2 text-[#00D21E] text-sm font-medium cursor-pointer flex items-center justify-center font-dmsans leading-none"
+    >
+      {text}
     </div>
-  )
+  );
 }

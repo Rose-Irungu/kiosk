@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Upload, ChevronDown } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import SecurityLayout from '../../components/SecurityComponents/SecurityLayout.jsx';
 import { securityRegistervisitor } from '../../services/securityVisitorRegister.js';
+import { userService } from "../../services/user";
+import { useLocation } from 'react-router-dom';
+
+
+
 
 export default function VisitorRegistration() {
   const [formData, setFormData] = useState({
@@ -16,9 +21,28 @@ export default function VisitorRegistration() {
     photo: null
   });
 
+  useEffect(() => {
+    const fetchUnits = async () => {
+      try {
+        const data = await userService.getAllUnits();
+        setUnits(data);
+      } catch (error) {
+        console.error('Error loading units:', error);
+      }
+    };
+
+    fetchUnits();
+  }, []);
+
+
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const [houseNumbers, setHouseNumbers] = useState([]);
+  const [units, setUnits] = useState([]);
+
+  const location = useLocation();
+  const editUser = location.state?.editUser;
 
 
   const validate = () => {
@@ -159,14 +183,27 @@ export default function VisitorRegistration() {
           <div className="flex flex-col md:flex-row gap-6 w-full mt-4">
             <div className="flex flex-col gap-2 w-full md:w-1/2">
               <label className="text-sm text-[#495057]">House Number</label>
-              <input
-                type="text"
-                name='unit_number'
+              <div className='relative'>
+
+                <select
+                name="unit_number"
+
                 value={formData.unit_number}
                 onChange={handleChange}
-                className="h-12 px-4 rounded-lg bg-[#F4F4F4] w-full focus:outline-none focus:ring-2 focus:ring-green-600"
-                placeholder='e.g B-05A'
-              />
+                className="appearance-none h-12 px-4 rounded-lg bg-[#F4F4F4] w-full focus:outline-none focus:ring-2 focus:ring-green-600"
+
+              >
+                <option value="">Select Unit Number</option>
+                {units.map((unit) => (
+                  <option key={unit.id} value={unit.unit_name}>
+                    {unit.unit_name}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#495057] pointer-events-none w-4 h-4" />
+              </div>
+              
+
             </div>
 
             <div className="flex flex-col gap-2 w-full md:w-1/2">

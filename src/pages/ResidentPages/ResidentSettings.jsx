@@ -18,13 +18,18 @@ import clearCache from '../../scripts/clearCache';
 export default function ResidentSettings() {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
+  const [plates, setPlates] = useState()
   const navigate = useNavigate();
 
   useEffect(()=>{
     const getUser = async() =>{
       const thisUser = await JSON.parse(localStorage.getItem("userInfo"));
-      console.log(thisUser);
+      const plateStr = (thisUser.cars || [])
+        .map(car => car.plate_number)
+        .join(", ");
+      setPlates(plateStr);
       setUser(thisUser);
+      console.log("Hew is the user", thisUser)
     };
     getUser();
     setLoading(false);
@@ -34,11 +39,11 @@ export default function ResidentSettings() {
         <div className="flex flex-wrap flex-col justify-start mb-[12px] space-y-4">
           {loading? (<NoteP text="Loading"/>): (
             <>
-              <User image={user.profile_picture} name={`${user.first_name} ${user.last_name}`} unit={user.unit}/>
+              <User image={user.profile_picture} name={`${user.first_name} ${user.last_name}`} unit={user.unit} id={user.id}/>
               <Header icon="/msee.svg" text={"My Profile"}/>
               <PersonalInformation phone={user.phone_number} email={user.email}/>
-              <Cars />
-              <HouseholdInformation occupants={user.number_of_residents}/>
+              <Cars plate={plates}/>
+            <HouseholdInformation occupants={user.number_of_residents} id={user.id} />
               <Header icon="/gear.svg" text={"My Settings"}/>
               <NotificationSettings/>
               <DataStorageSettings callback1={()=>clearCache(navigate, "/loginform")} callback2={()=>navigate("/resident/loggeddevices")}/>

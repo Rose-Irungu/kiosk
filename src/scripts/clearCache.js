@@ -17,13 +17,13 @@ export default async function clearCache(navigate, route) {
     console.log(' Cache and cookies cleared');
     // Optional: Notify server to kill session/token
     // await fetch('/api/logout', { method: 'POST' });
-    toast.success(' Cache and cookies cleared');
+    toast.success(' Cache and cookies cleared successfully');
 
   } catch (error) {
     console.error(`Cache clear failed: ${error}`);
   } finally {
     setTimeout(() => {
       navigate(route);
-    }, 4000);
+    }, 3500);
   }
 }

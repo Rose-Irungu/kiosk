@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/components/ResidentComponents/Settings/CurrentDevice.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1754580487462,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1754580548685,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,33 @@\n+import React from 'react';\r\n+import Location from './Location';\r\n+import Time from './Time';\r\n+\r\n+export default function CurrentDevice({os, place, time, browser}) {\r\n+  return (\r\n+    <div className='flex flex-col w-full rounded-[12px] py-[10px] px-[20px] gap-[10px] bg-[#FFFFFF]'>\r\n+        <div className='w-full h-[26px] gap-[22px]'>\r\n+            <div className='flex flex-row w-[238px] h-[26px] gap-[20px] text-center items-center'>\r\n+                <h1 className='font-dmsans font-bold text-[18px] text-[#000000] leading-[100%] tracking-[0]'>{os}</h1>\r\n+                <div className='flex flex-row items-center justify-center w-[106px] h-[26px] rounded-[5px] py-[5px] px-[10px] gap-[10px] bg-[#E6FBE9] text-center'>\r\n+                    <p className='font-dmsans font-medium text-[12px] leading-[100%] tracking-[0]'>\r\n+                        Current Device\r\n+                    </p>\r\n+                </div>\r\n+            </div>\r\n+        </div>\r\n+        <div className='flex flex-row w-[px] h-[20px] gap-[40px]'>\r\n+            <Location place={place}/>\r\n+            <Time time={time}/>\r\n+        </div>\r\n+        <div className='w-full h-[0px] border-[1px] border-[#999999]'></div>\r\n+        <div className='flex flex-row w-[76px] h-[24px] gap-[14px]'>\r\n+            <div className='flex flex-col w-[24px] h-[24px] justify-center items-center'>\r\n+                <img src=\"/dot.svg\" className='w-[7.599999904632568px] h-[7.599999904632568px] top-[8.2px] left-[8.2px]' />\r\n+            </div>\r\n+            <div className='w-[38px] h-[18px] text-center'>\r\n+                <p className='font-dmsans font-medium text-[14px] text-[#666666] mt-[4px] leading-[100%] tracking-[0]'>{browser}</p>\r\n+            </div>\r\n+        </div>\r\n+    </div>\r\n+  );\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754580631623,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n                     </p>\r\n                 </div>\r\n             </div>\r\n         </div>\r\n-        <div className='flex flex-row w-[300px] h-[20px] gap-[40px]'>\r\n+        <div className='flex flex-row w-[280px] h-[20px] gap-[40px]'>\r\n             <Location place={place}/>\r\n             <Time time={time}/>\r\n         </div>\r\n         <div className='w-full h-[0px] border-[1px] border-[#999999]'></div>\r\n"
+                }
+            ],
+            "date": 1754580487462,
+            "name": "Commit-0",
+            "content": "import React from 'react';\r\nimport Location from './Location';\r\nimport Time from './Time';\r\n\r\nexport default function CurrentDevice({os, place, time, browser}) {\r\n  return (\r\n    <div className='flex flex-col w-full rounded-[12px] py-[10px] px-[20px] gap-[10px] bg-[#FFFFFF]'>\r\n        <div className='w-full h-[26px] gap-[22px]'>\r\n            <div className='flex flex-row w-[238px] h-[26px] gap-[20px] text-center items-center'>\r\n                <h1 className='font-dmsans font-bold text-[18px] text-[#000000] leading-[100%] tracking-[0]'>{os}</h1>\r\n                <div className='flex flex-row items-center justify-center w-[106px] h-[26px] rounded-[5px] py-[5px] px-[10px] gap-[10px] bg-[#E6FBE9] text-center'>\r\n                    <p className='font-dmsans font-medium text-[12px] leading-[100%] tracking-[0]'>\r\n                        Current Device\r\n                    </p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div className='flex flex-row w-[2px] h-[20px] gap-[40px]'>\r\n            <Location place={place}/>\r\n            <Time time={time}/>\r\n        </div>\r\n        <div className='w-full h-[0px] border-[1px] border-[#999999]'></div>\r\n        <div className='flex flex-row w-[76px] h-[24px] gap-[14px]'>\r\n            <div className='flex flex-col w-[24px] h-[24px] justify-center items-center'>\r\n                <img src=\"/dot.svg\" className='w-[7.599999904632568px] h-[7.599999904632568px] top-[8.2px] left-[8.2px]' />\r\n            </div>\r\n            <div className='w-[38px] h-[18px] text-center'>\r\n                <p className='font-dmsans font-medium text-[14px] text-[#666666] mt-[4px] leading-[100%] tracking-[0]'>{browser}</p>\r\n            </div>\r\n        </div>\r\n    </div>\r\n  );\r\n}"
+        }
+    ]
+}

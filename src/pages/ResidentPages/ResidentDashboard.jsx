@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-//import ResidentLayout from '../../components/ResidentComponents/ResidentLayout';
 //import InviteGuest from '../../components/ResidentComponents/Buttons/InviteGuest';
 import SosButton from '../../components/ResidentComponents/Buttons/SosButton';
 import SafetyProtocolsButton from '../../components/ResidentComponents/Buttons/SafetyProtocolsButton';
@@ -25,8 +24,24 @@ function ResidentDashboard() {
     const [visitors, setVisitors] = useState([]);
     const navigate = useNavigate();
 
-    const notify = () =>{
-        toast.success("S.O.S triggered successfully");
+    const notify = () => {
+    toast.custom((t) => (
+        <div
+        className={`bg-white border border-red-500 text-red-700 rounded px-4 py-2 flex items-center gap-4 shadow-md ${
+            t.visible ? 'animate-enter' : 'animate-leave'
+        }`}
+        >
+        <span>🚨 S.O.S triggered successfully</span>
+        <button
+            onClick={() => toast.dismiss(t.id)}
+            className="ml-auto text-red-500 hover:text-red-700 font-bold"
+        >
+            ✖
+        </button>
+        </div>
+    ), {
+        duration: Infinity,
+    });
     };
 
     useEffect(() =>{
@@ -48,7 +63,6 @@ function ResidentDashboard() {
   return (
     <ResidentLayout>
      <div className="flex flex-wrap justify-start mb-[12px] space-y-4">
-        <input type="text" className='flex flex-row w-full h-[40px] rounded-[8px] border-[1px] border-[#E6FBE9] gap-[10px] py-[3px] px-[16px] bg-[#FFFFFF] ' style={{marginTop:'16px'}} placeholder={"Search"}/>
         <div className='flex flex-col w-full h-[341px] rounded-[12px] py-[12px] px-[8px] gap-[18px] bg-[#E6FBE9]'>
           <MyGuestsFrame/>
         </div>
@@ -62,7 +76,7 @@ function ResidentDashboard() {
                         />
                     </div>
                     <div className='w-[138px] h-[31px]'>
-                        <h1 className='font-dmsans font-semibold text-[24px] text-[#002706]'>Past Guests</h1>
+                        <h1 className='font-dmsans font-semibold text-[24px] sm:text-[18px] text-[#002706]'>Past Guests</h1>
                     </div>
                 </div>
             </div>
@@ -86,7 +100,7 @@ function ResidentDashboard() {
                         />
                     </div>
                     <div className='w-[218px] h-[31px]'>
-                        <h1 className='font-dmsans font-semibold text-[24px] text-[#610C07]'>Emergencies Panel</h1>
+                        <h1 className='font-dmsans font-semibold sm:text-base text-[24px] text-[#610C07]'>Emergencies Panel</h1>
                     </div>
                 </div>
             </div>

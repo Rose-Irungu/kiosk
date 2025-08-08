@@ -15,6 +15,7 @@ export const API_ENDPOINTS = {
   DELETE_USER: '/user/delete/',
   UPDATE_USER: '/user/update/',
   SENT_PASSWORD_RESET: '/user/password-reset/',
+  ADD_CARS: '/user/cars/',
   GET_UNITS: '/visitors/units/',
 
   // Auth
@@ -42,6 +43,7 @@ export const API_ENDPOINTS = {
 
   //Security dashboard 
   CREATE_EMERGENCY: '/incidence-and-emergency/create-emergency/',
+  GET_LATEST_EMERGENCY: '/incidence-and-emergency/latest-emergency/',
   CREATE_INCIDENCE: '/incidence-and-emergency/create-incidence/',
   STATISTICS: '/statistics/active-users/count/',
 
@@ -54,6 +56,17 @@ export const API_ENDPOINTS = {
  // Resident Blacklisted peeps
   BLACKLIST_PEEPS: '/visitors/all-blacklisted/',
   Resident_Incidence: '/incidence-and-emergency/view-my-incidence/',
+
+  //User logged devices
+  LOGGED_DEVICES: '/user/device-management/',
+
+  //blacklist guest
+  BLACKLIST_GUEST: '/visitors/blacklist/',
+  // Facility Management
+  FACILITY_NAME: '/user/facility/',
+  FACILITY_PROFILE: '/user/facility-profile/',
+  FLOOR: '/visitors/floors/',
+  ROOM: '/visitors/units/',
 
 }
 
