@@ -99,7 +99,7 @@ export function GuestFormFields({control}) {
         )}
       />
 
-      <FormField
+      {/* <FormField
         control={control}
         name="photo"
         render={({ field }) => (
@@ -115,7 +115,7 @@ export function GuestFormFields({control}) {
             <FormMessage />
           </FormItem>
         )}
-      />
+      /> */}
 
       <Button type="submit" className="w-full bg-green-500 hover:bg-green-600">
         Submit
