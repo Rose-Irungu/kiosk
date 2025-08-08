@@ -35,6 +35,8 @@ export default function SecurityIncidentTable({ incidentReports = [] }) {
     setActionsFor(null);
   };
 
+  
+
   return (
     <div className="relative max-w-6xl mx-auto bg-white rounded-xl shadow-sm">
       {/* Header */}
