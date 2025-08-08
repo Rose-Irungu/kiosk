@@ -476,44 +476,137 @@ const Home = () => {
       </section>
 
       {/* FAQs */}
-      <section className='flex flex-col items-center p-4 '>
+      <section className='flex flex-col items-center p-4 mb-16'>
         <h1 className='text-[36px] text-[#2D2264] font-bold mt-16'>FAQ's</h1>
 
 
         <AccordionItem question="1. Can I use the system on both desktop and mobile devices?"
           answer="yeah i mean sure" />
 
-          <AccordionItem question="2. How do visitors check in using the system?"
+        <AccordionItem question="2. How do visitors check in using the system?"
           answer="yeah i mean sure" />
 
-          <AccordionItem question="3. Is VisitorGate secure for managing sensitive visitor data?"
+        <AccordionItem question="3. Is VisitorGate secure for managing sensitive visitor data?"
           answer="yeah i mean sure" />
 
-          <AccordionItem question="4. Is there a free trial available?"
+        <AccordionItem question="4. Is there a free trial available?"
           answer="yeah i mean sure" />
 
-          
+
 
 
 
       </section>
 
       {/* Contact Us */}
-      <section className='flex flex-col items-center '
-      style={{
-                        // background: `linear-gradient(to right top, rgba(3, 10, 27, 1), rgba(3, 10, 27, 0.06)), url(${slides[current].poster_path || slides[current].backdrop_path})`,
-                         background: `linear-gradient(90deg, rgba(45, 34, 100, 1) 0%, rgba(80, 60, 177, 1) 50%, rgba(0, 210, 30, 1) 100%), url('https://images.unsplash.com/photo-1469022563428-aa04fef9f5a2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXBhcnRtZW50c3xlbnwwfHwwfHx8MA%3D%3D')`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        opacity: 1,
-                    }}>
-        <div className='flex items-center justify-center flex-col  gap-1'>
-          <h3 className=' text-[44px] font-bold text-white'>Contact Us</h3>
-          <p className=' text-[18px]  text-white'></p>
+      <section className='flex flex-col items-center bg-[#2D2264]/50 '
+        style={{
+          backgroundImage: `linear-gradient(rgba(45, 34, 100, 0.5), rgba(45, 34, 100, 0.5)), url('/contact-apartment-us.jpg')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          opacity: 1,
+        }}>
+        <div className='flex items-center justify-center flex-col'>
+          <h3 className=' text-[44px] font-bold text-white mt-[97px]'>Contact Us</h3>
+          <p className=' text-[18px]  text-white text-center'>Got a question? Need a demo?<br /> We’re here to help you secure your space — just drop us a message!</p>
+
+        </div>
+
+        <div className='flex flex-row justify-between items-center w-full '>
+          {/* Contact Details */}
+          <div className='flex flex-col items-center gap-[35px]  '>
+            {/* Contact 1 */}
+            <div className='flex flex-row items-center gap-6 ml-36'>
+              <div className="flex items-center justify-center w-[60px] h-[60px] border border-[#fffff] rounded-[8px] shrink-0">
+                <img className='w-[20px] h-[20px]' src="/ic-ct-1.svg" alt="" />
+              </div>
+              <div className="flex flex-col items-start gap-2 font-['DM Sans'] w-full text-[#333333] tracking-[0.5px]">
+                <p className=" text-[20px] text-white">john@gmail.com</p>
+
+              </div>
+
+            </div>
+
+            {/* Contact 1 */}
+            <div className='flex flex-row items-center gap-6 ml-36'>
+              <div className="flex items-center justify-center w-[60px] h-[60px] border border-[#fffff] rounded-[8px] shrink-0">
+                <img className='w-[20px] h-[20px]' src="ic-ct-2 (2).svg" alt="" />
+              </div>
+              <div className="flex flex-col items-start gap-2 font-['DM Sans'] w-full text-[#333333] tracking-[0.5px]">
+                <p className=" text-[20px] text-white">john@gmail.com</p>
+
+              </div>
+
+            </div>
+
+            {/* Contact 1 */}
+            <div className='flex flex-row items-center gap-6 ml-36'>
+              <div className="flex items-center justify-center w-[60px] h-[60px] border border-[#fffff] rounded-[8px] shrink-0">
+                <img className='w-[20px] h-[20px]' src="./ic-ct-2 (3).svg" alt="" />
+              </div>
+              <div className="flex flex-col items-start gap-2 font-['DM Sans'] w-full text-[#333333] tracking-[0.5px]">
+                <p className=" text-[20px] text-white">john@gmail.com</p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className='overflow-hidden '>
+            <img src="/man-on-comp.png" alt="" />
+          </div>
+
 
         </div>
 
 
+
+      </section>
+
+
+      {/* Footer */}
+      <section className='bg-[#16112F] flex flex-row justify-between p-16'>
+        {/* column 1 */}
+        <div className='flex flex-col items-start '>
+          <img src="./visitor-gate-white-logo.svg" alt="" />
+          <p className='text-white text-[16px] font-medium tracking-[0.5px]'>Where Every Visitor Counts</p>
+
+        </div>
+        {/* column 2 */}
+        <div className='flex flex-col items-start gap-[13px] text-white '>
+          <h3 className='font-semibold text-[16px] '>Quick Links</h3>
+          <Link className='text-[16px] tracking-[0.5px]'>Home</Link>
+          <Link className='text-[16px] tracking-[0.5px]'>Features</Link>
+          <Link className='text-[16px] tracking-[0.5px]'>Pricing</Link>
+
+        </div>
+
+        {/* column 3 */}
+        <div className='flex flex-col items-start gap-[13px] text-white '>
+          <h3 className='font-semibold text-[16px] '>Contacts</h3>
+          <div className='flex flex-row items-center gap-2 justify-between'>
+            <div className="justify-center items-center flex">
+              <img src="/mail-contact.svg" alt="" />
+            </div >
+
+            <p className='text-[16px] text-white tracking-[0.5px]'>john@gmail.com</p>
+
+
+          </div>
+
+          <div className='flex flex-row items-center gap-2 justify-between'>
+            <div className="justify-center items-center flex">
+              <img src="/mail-contact.svg" alt="" />
+            </div >
+
+            <p className='text-[16px] text-white tracking-[0.5px]'>john@gmail.com</p>
+
+
+          </div>
+
+        </div>
 
       </section>
 
