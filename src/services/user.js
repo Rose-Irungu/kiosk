@@ -15,17 +15,11 @@ export const userService = {
 
   addUser: async (formData) => {
     try {
-      const promise = api.post(API_ENDPOINTS.ADD_USER, formData, {
+      const response = await api.post(API_ENDPOINTS.ADD_USER, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         }
       });
-      const response = await toast.promise(promise, {
-        loading: "Adding user...",
-        success: "User added successfully!",
-        error: (err) =>
-          err?.response?.data?.message || "Failed to add user. Please try again.",
-      })
       return response.data;
     } catch (error) {
       console.error("Error adding user:", error);
