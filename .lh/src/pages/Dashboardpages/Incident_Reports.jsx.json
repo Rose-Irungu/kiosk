@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/pages/Dashboardpages/Incident_Reports.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1754657973518,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1754659005265,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import React, { useEffect, useState } from \"react\";\r\n import Layout from \"../../components/layout/Layout\";\r\n import IncidentTable from \"../../components/tables/Incident\";\r\n-import { incidenceService,  updateIncidentStatus } from \"../../services/incident\";\r\n+// import { incidenceService,  updateIncidentStatus } from \"../../services/incident\";\r\n \r\n export default function IncidentReportsPage() {\r\n   const [incidentData, setIncidentData] = useState([]);\r\n   const [loading, setLoading] = useState(true);\r\n"
+                },
+                {
+                    "date": 1754659330754,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,37 @@\n+import React, { useEffect, useState } from \"react\";\r\n+import Layout from \"../../components/layout/Layout\";\r\n+import IncidentTable from \"../../components/tables/Incident\";\r\n+import { incidenceService,  updateIncidentStatus } from \"../../services/incident\";\r\n+\r\n+export default function IncidentReportsPage() {\r\n+  const [incidentData, setIncidentData] = useState([]);\r\n+  const [loading, setLoading] = useState(true);\r\n+\r\n+  useEffect(() => {\r\n+    const fetchIncidents = async () => {\r\n+      try {\r\n+        const response = await incidenceService.getAllIncidence();\r\n+        \r\n+        const incidents = response.data || response;  \r\n+        \r\n+        setIncidentData(incidents);\r\n+      } catch (error) {\r\n+        console.error(\"Error fetching incident data:\", error);\r\n+      } finally {\r\n+        setLoading(false);\r\n+      }\r\n+    };\r\n+\r\n+    fetchIncidents();\r\n+  }, []);\r\n+\r\n+  return (\r\n+    <Layout>\r\n+      {loading ? (\r\n+        <div className=\"text-center py-10 text-gray-500\">Loading incidents...</div>\r\n+      ) : (\r\n+        <IncidentTable incidentReports={incidentData} />\r\n+      )}\r\n+    </Layout>\r\n+  );\r\n+}\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1754657973518,
+            "name": "Commit-0",
+            "content": "import React, { useEffect, useState } from \"react\";\r\nimport Layout from \"../../components/layout/Layout\";\r\nimport IncidentTable from \"../../components/tables/Incident\";\r\nimport { incidenceService, } from \"../../services/incident\";\r\n\r\nexport default function IncidentReportsPage() {\r\n  const [incidentData, setIncidentData] = useState([]);\r\n  const [loading, setLoading] = useState(true);\r\n\r\n  useEffect(() => {\r\n    const fetchIncidents = async () => {\r\n      try {\r\n        const response = await incidenceService.getAllIncidence();\r\n        \r\n        const incidents = response.data || response;  \r\n        \r\n        setIncidentData(incidents);\r\n      } catch (error) {\r\n        console.error(\"Error fetching incident data:\", error);\r\n      } finally {\r\n        setLoading(false);\r\n      }\r\n    };\r\n\r\n    fetchIncidents();\r\n  }, []);\r\n\r\n  return (\r\n    <Layout>\r\n      {loading ? (\r\n        <div className=\"text-center py-10 text-gray-500\">Loading incidents...</div>\r\n      ) : (\r\n        <IncidentTable incidentReports={incidentData} />\r\n      )}\r\n    </Layout>\r\n  );\r\n}"
+        }
+    ]
+}
