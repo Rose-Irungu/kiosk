@@ -361,7 +361,7 @@ const VisitorManagement = ({ datedata = [] }) => {
             See guests by date
           </h1>
           <div className="w-full overflow-x-auto scrollbar-hide ">
-            <div className='inline-flex items-center gap-6 border-[#54E168] border-[2.77974px] rounded-[33.3569px] bg-[#FFFF] py-4 px-4 font-["DM Sans"] w-full  '>
+            <div className='inline-flex w-max items-center gap-6 border-[#54E168] border-[2.77974px] rounded-[33.3569px] bg-[#FFFF] py-4 px-4 font-["DM Sans"] w-full  '>
               {datebuttons.map((datebutton) => (
                 <button
                   key={datebutton.id}
