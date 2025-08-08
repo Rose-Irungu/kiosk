@@ -44,7 +44,11 @@ const formSchema = z
     lastName: z.string().min(2, "Last name is required"),
     email: z.string().email("Enter a valid email"),
     phone: z.string().min(10, "Enter a valid phone number"),
-    idNo: z.string().min(4, "ID number is required"),
+   idNo: z
+  .string()
+  .regex(/^\d{6,8}$/, {
+    message: "ID number must be between 6 and 8 digits",
+  }),
     unit: z.string().min(1, "Unit is required"),
     password: z.string().optional(),
     confirmPassword: z.string().optional(),
