@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { HomeIcon } from "@heroicons/react/24/solid";
 import { Link, useLocation } from "react-router-dom";
 import Header from "../components/Header";
@@ -12,7 +11,7 @@ const Welcomeback = () => {
 
 
   return (
-    <div className="flex min-h-screen w-full flex-col overflow-x-hidden bg-white">
+    <div className="flex h-full min-h-screen w-full flex-col overflow-x-hidden bg-white">
       <Header />
       <main className="flex flex-1 flex-col lg:flex-row">
         <section

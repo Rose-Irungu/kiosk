@@ -11,5 +11,5 @@ export default function Time({time}) {
             </p>
         </div>
     </div>
-  )
+  );
 }

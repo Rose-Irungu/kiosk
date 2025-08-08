@@ -37,7 +37,7 @@ export default function ResidentSettings() {
   return (
     <ResidentLayout>
         <div className="flex flex-wrap flex-col justify-start mb-[12px] space-y-4">
-          {loading? (<NoteP text="Loading"/>): (
+          {loading? (<NoteP text="Loading..."/>): (
             <>
               <User image={user.profile_picture} name={`${user.first_name} ${user.last_name}`} unit={user.unit} id={user.id}/>
               <Header icon="/msee.svg" text={"My Profile"}/>

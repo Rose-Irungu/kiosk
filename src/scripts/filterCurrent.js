@@ -1,7 +1,7 @@
-export default function filterCurrent(visitors, isCurrent) {
-  if (!Array.isArray(visitors)) {
+export default function filterCurrent(devices, isCurrent) {
+  if (!Array.isArray(devices)) {
     throw new Error("Expected an array of visitors.");
   }
 
-  return visitors.filter(visitor => visitor.is_current === isCurrent);
+  return devices.filter(device => device.is_current === isCurrent);
 }
