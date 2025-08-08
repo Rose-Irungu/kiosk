@@ -1,4 +1,3 @@
-// OldSchoolDataToggle.jsx
 import React, { useState } from 'react';
 
 export default function ToggleSwitch({ onToggle }) {
@@ -16,7 +15,7 @@ export default function ToggleSwitch({ onToggle }) {
 
       <div
         onClick={toggleData}
-        className={`flex items-center w-[48px] h-[24px] rounded-full p-[2px] cursor-pointer transition-all duration-300 ${
+        className={`flex items-center w-[48px] sm:h-[24px] rounded-full p-[2px] cursor-pointer transition-all duration-300 ${
           isOn ? 'bg-[#B0F1B9]' : 'bg-[#ccc]'
         }`}
       >

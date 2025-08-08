@@ -8,7 +8,7 @@ export default function NotificationItem({ icon, text, callback }) {
         <div className='w-[24px] h-[24px] rounded-[20px]'>
           <img src={icon} className='w-full h-full object-contain' />
         </div>
-        <p className='font-dmsans font-medium text-[12px] sm:text-[16px] text-[#002706] mt-[12px] sm:mt-[8px] leading-[100%] tracking-[0]'>{text}</p>
+        <p className='font-dmsans font-medium text-[12px] sm:text-[16px] text-[#002706] mt-[10px] sm:mt-[8px] leading-[100%] tracking-[0]'>{text}</p>
       </div>
       <ToggleSwitch onToggle={() => callback()} />
     </div>

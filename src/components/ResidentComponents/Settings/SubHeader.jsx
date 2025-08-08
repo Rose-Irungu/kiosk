@@ -7,7 +7,7 @@ export default function SubHeader({ icon, text }) {
         <img src={icon} className='w-full h-full object-contain' />
       </div>
       <div className='w-full h-[31px] mt-[1px]'>
-        <h1 className='font-dmsans font-medium text-[16px] sm:text-[20px] sm:mt-[7px] mt-[5px] text-[#005E0E] leading-[100%] tracking-[0]'>{text}</h1>
+        <h1 className='font-dmsans font-medium text-[14px] sm:text-[20px] sm:mt-[7px] mt-[5px] text-[#005E0E] leading-[100%] tracking-[0]'>{text}</h1>
       </div>
     </div>
   );
