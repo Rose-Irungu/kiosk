@@ -9,7 +9,7 @@ export default function Header2({ icon, text, callback }) {
         />
       </div>
       <div className='w-full h-full'>
-        <h1 className='font-dmsans font-semibold text-[24px] mt-[4px] text-[#005E0E] leading-[100%] tracking-[0]'>{text}</h1>
+        <h1 className='font-dmsans font-semibold text-[16px] sm:text-[24px] mt-[4px] text-[#005E0E] leading-[100%] tracking-[0]'>{text}</h1>
       </div>
     </div>
   );

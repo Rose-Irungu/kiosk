@@ -62,7 +62,7 @@ function ResidentDashboard() {
 
   return (
     <ResidentLayout>
-     <div className="flex flex-wrap justify-start mb-[12px] space-y-4">
+     <div className="flex flex-wrap flex-col justify-center mb-[12px] space-y-4">
         <div className='flex flex-col w-full h-[341px] rounded-[12px] py-[12px] px-[8px] gap-[18px] bg-[#E6FBE9]'>
           <MyGuestsFrame/>
         </div>
