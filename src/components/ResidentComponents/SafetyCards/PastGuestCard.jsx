@@ -28,7 +28,7 @@ export default function PastGuestCard({ image, name, checkOutTime, type, id }) {
       </div>
 
       <button
-        className='w-[64px] h-[24px] rounded-[50px] px-[10px] bg-[#D1C9FA] text-[#2D2264]'
+        className='w-[64px] h-[24px] text-[12px] rounded-[50px] bg-[#D1C9FA] text-[#2D2264] text-center'
         onClick={toggleModal}
       >
         {type}
