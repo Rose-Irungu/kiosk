@@ -13,7 +13,7 @@ const navItems = [
 ];
 
 const secondaryItems = [
-  { id: "securitysettings", label: "Settings", icon: "/ic-round-settings0.svg", path: "/security/settings" },
+  { id: "securitysetting", label: "Settings", icon: "/ic-round-settings0.svg", path: "/security/settings" },
   { id: "securityhelp", label: "Help", icon: "/material-symbols-help-outline0.svg", path: "/security/help" },
 ];
 

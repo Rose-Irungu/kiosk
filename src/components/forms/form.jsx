@@ -532,7 +532,7 @@ export function UserForm({
 
                 <Button
                   type="submit"
-                  className="w-full bg-[#005E0E] hover:bg-gradient-to-r hover:from-indigo-500 hover:to-violet-600 text-white font-semibold py-2 rounded-md shadow-md transition-all duration-300"
+                  className="w-full bg-[#005E0E] hover:bg-gradient-to-r hover:from-[#01450b] hover:to-[#01450b] text-white font-semibold py-2 rounded-md shadow-md transition-all duration-300"
                 >
                   {editMode ? "Update" : submitLabel}
                 </Button>

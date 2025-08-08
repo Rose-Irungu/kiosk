@@ -1,4 +1,4 @@
-import Layout from "../../components/layout/Layout";
+import SecurityLayout from "../../components/SecurityComponents/SecurityLayout";
 import SystemPreference from "../../components/SystemPreference";
 import SessionManagement from "../../components/SessionManagement";
 
