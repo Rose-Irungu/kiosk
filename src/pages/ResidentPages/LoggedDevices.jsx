@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 //Components
 import Header2 from '../../components/ResidentComponents/Settings/Header2';
 import ResidentLayout from '../../components/ResidentComponents/ResidentLayout';
 import CurrentDevice from '../../components/ResidentComponents/Settings/CurrentDevice';
 import OtherDevice from '../../components/ResidentComponents/Settings/OtherDevice';
-import { useNavigate } from 'react-router-dom';
 import NoteP from '../../components/ResidentComponents/SafetyCards/NoteP';
-import { getRelativeTime } from '../../utils/fomatters';
 
 //scripts
 import { getLoggedDevices } from '../../services/getLoggedDevices';
 import logoutDevice from '../../services/logoutDevice';
 import filterCurrent from '../../scripts/filterCurrent';
+import { getRelativeTime } from '../../utils/fomatters';
 
 export default function LoggedDevices() {
   const [loggedDevices, setLoggedDevices] = useState([]);
@@ -21,7 +21,7 @@ export default function LoggedDevices() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const fetchData = async() =>{
+  const fetchData = async () =>{
 
     const response = await getLoggedDevices();
     const currentDevice = filterCurrent(response, true);
