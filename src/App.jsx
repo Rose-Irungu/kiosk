@@ -180,7 +180,7 @@ const App = () => {
         <Route path="/security/card6" element={<Card6 />} />
         <Route path="/security/settings" element={<SecuritySettingPage />} />
         {/* Kindly whoever removed my path, next time inform me */}
-        <Route path="/security/settings" element={<SecuritySettingPage />} />
+       
         <Route path="/security/help" element={<SecurityHelpPage />} />
         <Route path="/security/incident" element={<SecurityIncidentPage />} />
         {/* Kindly whoever removed my path, next time inform me */}

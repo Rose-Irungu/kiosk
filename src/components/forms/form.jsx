@@ -29,7 +29,6 @@ import {
 
 import uploadIcon from "@/assets/group01.svg";
 
-// Label with required asterisk
 const RequiredLabel = ({ children }) => (
   <FormLabel className="font-medium">
     {children}
@@ -37,15 +36,19 @@ const RequiredLabel = ({ children }) => (
   </FormLabel>
 );
 
-// Zod schema
+
 const formSchema = z
   .object({
-    role: z.string({ required_error: "Please select a role." }),
+    role: z.string().min(1, { message: "Please select a role." }),
     firstName: z.string().min(2, "First name is required"),
     lastName: z.string().min(2, "Last name is required"),
     email: z.string().email("Enter a valid email"),
     phone: z.string().min(10, "Enter a valid phone number"),
-    idNo: z.string().min(4, "ID number is required"),
+   idNo: z
+  .string()
+  .regex(/^\d{6,8}$/, {
+    message: "ID number must be between 6 and 8 digits",
+  }),
     unit: z.string().min(1, "Unit is required"),
     password: z.string().optional(),
     confirmPassword: z.string().optional(),
@@ -67,10 +70,15 @@ export function UserForm({
   const editMode = location.state?.editMode;
 
   const [units, setUnits] = useState([]);
-  const [showValidationError, setShowValidationError] = useState(false); // ⚠️ Added
+  const [showValidationError, setShowValidationError] = useState(false);
+  const [preview, setPreview] = useState(null);
+  const [serverMessage, setServerMessage] = useState(""); 
 
+  
   const form = useForm({
     resolver: zodResolver(formSchema),
+    mode: "onChange",
+    reValidateMode: "onChange",
     defaultValues: {
       role: editUser?.role || "",
       firstName: editUser?.first_name || "",
@@ -85,9 +93,26 @@ export function UserForm({
     },
   });
 
+  const {
+    control,
+    handleSubmit,
+    reset,
+    setError,
+    trigger,
+    setFocus,
+    formState,
+  } = form;
+
+  useEffect(() => {
+    userService
+      .getAllUnits()
+      .then(setUnits)
+      .catch((err) => console.error("Failed to fetch units:", err));
+  }, []);
+
   useEffect(() => {
     if (editMode && editUser) {
-      form.reset({
+      reset({
         role: editUser.role,
         firstName: editUser.first_name,
         lastName: editUser.last_name,
@@ -99,33 +124,107 @@ export function UserForm({
         confirmPassword: "",
         photo: null,
       });
+      setPreview(null);
     }
-  }, [editMode, editUser, form]);
+  }, [editMode, editUser, reset]);
 
   useEffect(() => {
-    const fetchUnits = async () => {
-      try {
-        const data = await userService.getAllUnits();
-        setUnits(data);
-      } catch (err) {
-        console.error("Failed to fetch units:", err);
+    if (Object.keys(formState.errors).length === 0) {
+      setShowValidationError(false);
+    }
+  }, [formState.errors]);
+
+  
+  const normalizeError = (err) => {
+    if (err === null || typeof err === "undefined") return "";
+    if (typeof err === "string") return err;
+    if (typeof err === "number" || typeof err === "boolean") return String(err);
+    if (Array.isArray(err)) return err.map(normalizeError).join(", ");
+    if (typeof err === "object") {
+      return Object.values(err).map(normalizeError).join(", ");
+    }
+    return String(err);
+  };
+
+  
+  const fieldMap = {
+    first_name: "firstName",
+    last_name: "lastName",
+    email: "email",
+    phone_number: "phone",
+    id_number: "idNo",
+    unit_number: "unit",
+    role: "role",
+    password: "password",
+    confirm_password: "confirmPassword",
+    profile_picture: "photo",
+  };
+
+  
+  const handleServerErrors = (errData) => {
+    
+    if (!errData) {
+      setServerMessage("Unknown server error");
+      setShowValidationError(true);
+      return;
+    }
+
+    const payload = errData.errors ? errData.errors : errData;
+
+   
+    if (typeof payload === "object" && !Array.isArray(payload)) {
+      const keys = Object.keys(payload);
+      const looksLikeFieldErrors = keys.some((k) => {
+        return (
+          Object.prototype.hasOwnProperty.call(fieldMap, k) ||
+          
+          ["email", "firstName", "lastName", "phone", "idNo", "unit", "role", "photo"].includes(k)
+        );
+      });
+
+      if (looksLikeFieldErrors) {
+        
+        setServerMessage("");
+
+        keys.forEach((field) => {
+          const mappedField = fieldMap[field] || field;
+          const normalized = normalizeError(payload[field]);
+
+          
+          try {
+            setError(mappedField, {
+              type: "server",
+              message: normalized,
+            });
+          } catch (e) {
+            
+            setServerMessage((prev) =>
+              prev ? `${prev}; ${mappedField}: ${normalized}` : `${mappedField}: ${normalized}`
+            );
+          }
+        });
+
+        setShowValidationError(true);
+        const firstField = keys[0];
+        const mappedFirst = fieldMap[firstField] || firstField;
+        
+        try {
+          setFocus(mappedFirst);
+        } catch (e) {
+        
+        }
+        return;
       }
-    };
-    fetchUnits();
-  }, []);
-
-  // Optional auto-dismiss
-  useEffect(() => {
-    if (showValidationError) {
-      const timer = setTimeout(() => {
-        setShowValidationError(false);
-      }, 3000);
-      return () => clearTimeout(timer);
     }
-  }, [showValidationError]);
+
+    
+    const generic = normalizeError(errData.detail ?? errData);
+    setServerMessage(generic || "An error occurred. Please try again.");
+    setShowValidationError(true);
+  };
 
   const onSubmit = async (values) => {
-    setShowValidationError(false);
+    setServerMessage("");
     try {
       const formData = new FormData();
       formData.append("first_name", values.firstName);
@@ -135,28 +234,53 @@ export function UserForm({
       formData.append("id_number", values.idNo);
       formData.append("unit_number", values.unit);
       formData.append("role", values.role);
-      if (values.password) {
-        formData.append("password", values.password);
-      }
-      if (values.photo) {
-        formData.append("profile_picture", values.photo);
-      }
+      if (values.password) formData.append("password", values.password);
+      if (values.photo) formData.append("profile_picture", values.photo);
 
       if (editMode) {
         await userService.updateUser(editUser.id, formData);
       } else {
         const addedUser = await userService.addUser(formData);
-        if (setUsers) {
-          setUsers((prev) => [...prev, addedUser]);
-        }
+        if (setUsers) setUsers((prev) => [...prev, addedUser]);
       }
 
-      form.reset();
+     
+      reset();
+      setPreview(null);
       navigate("/userspage");
     } catch (error) {
+      
       console.error("Error submitting user:", error);
-      alert("Failed to submit user. Please try again.");
+
+      
+      const respData = error?.response?.data;
+      if (respData) {
+        handleServerErrors(respData);
+      } else {
+       
+        setServerMessage(error?.message ?? "Failed to submit user. Please try again.");
+        setShowValidationError(true);
+      }
     }
+  };
+
+ 
+  const showFieldError = (name) => {
+    return (
+      !!formState.errors[name] &&
+      (showValidationError || formState.touchedFields[name] || formState.isSubmitted)
+    );
+  };
+
+  
+  const renderServerMessage = () => {
+    if (!serverMessage) return null;
+   
+    return (
+      <div className="bg-red-50 text-red-700 border border-red-200 px-3 py-2 rounded text-sm">
+        {serverMessage}
+      </div>
+    );
   };
 
   return (
@@ -170,43 +294,59 @@ export function UserForm({
 
             <Form {...form}>
               <form
-                onSubmit={form.handleSubmit(onSubmit, () => {
-                  setShowValidationError(true); // 🧨 Trigger popup on validation failure
+                noValidate
+                onSubmit={handleSubmit(onSubmit, (errors) => {
+                  setShowValidationError(true);
+                  trigger();
+                  const first = Object.keys(errors)[0];
+                  if (first) setFocus(first);
                 })}
                 className="space-y-6"
               >
-                {/* 🔴 Popup Error Message */}
                 {showValidationError && (
                   <div className="bg-red-100 text-red-800 border border-red-400 px-4 py-3 rounded-md text-sm">
                     Please fix the errors in the form before submitting.
                   </div>
                 )}
 
-                {/* Role Field */}
+               
+                {renderServerMessage()}
+
                 <FormField
-                  control={form.control}
+                  control={control}
                   name="role"
-                  render={({ field }) => (
-                    <FormItem>
-                      <RequiredLabel>Role</RequiredLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
-                        <FormControl>
-                          <SelectTrigger className="bg-[#f4eaff]">
-                            <SelectValue placeholder="Select a role" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="tenant">Resident</SelectItem>
-                          <SelectItem value="security">Security</SelectItem>
-                          <SelectItem value="admin">Admin</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                  render={({ field }) => {
+                    const errorMsg = normalizeError(formState.errors.role?.message);
+                    return (
+                      <FormItem>
+                        <RequiredLabel>Role</RequiredLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value}
+                          onBlur={field.onBlur}
+                        >
+                          <FormControl>
+                            <SelectTrigger
+                              className={`bg-[#f4eaff] ${showFieldError("role") ? "border border-red-500" : ""}`}
+                            >
+                              <SelectValue placeholder="Select a role" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="tenant">Resident</SelectItem>
+                            <SelectItem value="security">Security</SelectItem>
+                            <SelectItem value="admin">Admin</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        {showFieldError("role") && (
+                          <p className="text-red-500 text-sm mt-1">{errorMsg}</p>
+                        )}
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
                 />
 
-                {/* Name & Email Fields */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {[
                     ["firstName", "First Name"],
@@ -215,91 +355,100 @@ export function UserForm({
                   ].map(([name, label]) => (
                     <FormField
                       key={name}
-                      control={form.control}
+                      control={control}
                       name={name}
-                      render={({ field }) => (
-                        <FormItem>
-                          <RequiredLabel>{label}</RequiredLabel>
-                          <FormControl>
-                            <Input
-                              className="bg-[#f4eaff] placeholder-gray-600"
-                              placeholder={`Enter ${label}`}
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
+                      render={({ field }) => {
+                        const errorMsg = normalizeError(formState.errors[name]?.message);
+                        return (
+                          <FormItem>
+                            <RequiredLabel>{label}</RequiredLabel>
+                            <FormControl>
+                              <Input
+                                className={`bg-[#f4eaff] ${showFieldError(name) ? "border border-red-500 ring-1 ring-red-500" : ""}`}
+                                placeholder={`Enter ${label}`}
+                                {...field}
+                              />
+                            </FormControl>
+                            {showFieldError(name) && (
+                              <p className="text-red-500 text-sm mt-1">{errorMsg}</p>
+                            )}
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
                     />
                   ))}
                 </div>
 
-                {/* Phone, ID, Unit Fields */}
+               
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {/* Phone */}
+                  {[
+                    ["phone", "Phone No."],
+                    ["idNo", "ID No."],
+                  ].map(([name, label]) => (
+                    <FormField
+                      key={name}
+                      control={control}
+                      name={name}
+                      render={({ field }) => {
+                        const errorMsg = normalizeError(formState.errors[name]?.message);
+                        return (
+                          <FormItem>
+                            <RequiredLabel>{label}</RequiredLabel>
+                            <FormControl>
+                              <Input
+                                className={`bg-[#f4eaff] ${showFieldError(name) ? "border border-red-500 ring-1 ring-red-500" : ""}`}
+                                placeholder={`Enter ${label}`}
+                                {...field}
+                              />
+                            </FormControl>
+                            {showFieldError(name) && (
+                              <p className="text-red-500 text-sm mt-1">{errorMsg}</p>
+                            )}
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    />
+                  ))}
                   <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <RequiredLabel>Phone No.</RequiredLabel>
-                        <FormControl>
-                          <Input
-                            className="bg-[#f4eaff] placeholder-gray-600"
-                            placeholder="Enter Phone No."
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  {/* ID */}
-                  <FormField
-                    control={form.control}
-                    name="idNo"
-                    render={({ field }) => (
-                      <FormItem>
-                        <RequiredLabel>ID No.</RequiredLabel>
-                        <FormControl>
-                          <Input
-                            className="bg-[#f4eaff] placeholder-gray-600"
-                            placeholder="Enter ID No."
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  {/* Unit */}
-                  <FormField
-                    control={form.control}
+                    control={control}
                     name="unit"
-                    render={({ field }) => (
-                      <FormItem>
-                        <RequiredLabel>Unit</RequiredLabel>
-                        <Select onValueChange={field.onChange} value={field.value}>
-                          <FormControl>
-                            <SelectTrigger className="bg-[#f4eaff]">
-                              <SelectValue placeholder="Select a unit" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {units.map((unit) => (
-                              <SelectItem key={unit.id} value={String(unit.id)}>
-                                {unit.unit_name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    render={({ field }) => {
+                      const errorMsg = normalizeError(formState.errors.unit?.message);
+                      return (
+                        <FormItem>
+                          <RequiredLabel>Unit</RequiredLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            value={field.value}
+                            onBlur={field.onBlur}
+                          >
+                            <FormControl>
+                              <SelectTrigger
+                                className={`bg-[#f4eaff] ${showFieldError("unit") ? "border border-red-500" : ""}`}
+                              >
+                                <SelectValue placeholder="Select a unit" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {units.map((unit) => (
+                                <SelectItem key={unit.id} value={String(unit.id)}>
+                                  {unit.unit_name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          {showFieldError("unit") && (
+                            <p className="text-red-500 text-sm mt-1">{errorMsg}</p>
+                          )}
+                          <FormMessage />
+                        </FormItem>
+                      );
+                    }}
                   />
                 </div>
 
-                {/* Password Fields (Only on Add) */}
                 {!editMode && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {[
@@ -308,42 +457,39 @@ export function UserForm({
                     ].map(([name, label]) => (
                       <FormField
                         key={name}
-                        control={form.control}
+                        control={control}
                         name={name}
-                        render={({ field }) => (
-                          <FormItem>
-                            <RequiredLabel>{label}</RequiredLabel>
-                            <FormControl>
-                              <Input
-                                type="password"
-                                className="bg-[#f4eaff] placeholder-gray-600"
-                                placeholder={`Enter ${label}`}
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
+                        render={({ field }) => {
+                          const errorMsg = normalizeError(formState.errors[name]?.message);
+                          return (
+                            <FormItem>
+                              <RequiredLabel>{label}</RequiredLabel>
+                              <FormControl>
+                                <Input
+                                  type="password"
+                                  className={`bg-[#f4eaff] ${showFieldError(name) ? "border border-red-500 ring-1 ring-red-500" : ""}`}
+                                  placeholder={`Enter ${label}`}
+                                  {...field}
+                                />
+                              </FormControl>
+                              {showFieldError(name) && (
+                                <p className="text-red-500 text-sm mt-1">{errorMsg}</p>
+                              )}
+                              <FormMessage />
+                            </FormItem>
+                          );
+                        }}
                       />
                     ))}
                   </div>
                 )}
 
-                {/* File Upload */}
+               
                 <FormField
-                  control={form.control}
+                  control={control}
                   name="photo"
                   render={({ field: { onChange } }) => {
-                    const [preview, setPreview] = useState(null);
-
-                    const handleFileChange = (e) => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        setPreview(URL.createObjectURL(file));
-                        onChange(file);
-                      }
-                    };
-
+                    const errorMsg = normalizeError(formState.errors.photo?.message);
                     return (
                       <FormItem>
                         <FormLabel className="font-medium">Photo</FormLabel>
@@ -351,7 +497,13 @@ export function UserForm({
                           <div className="bg-[#f4eaff] h-28 rounded-md border border-dashed flex items-center justify-center text-sm text-gray-500 relative overflow-hidden">
                             <input
                               type="file"
-                              onChange={handleFileChange}
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                  setPreview(URL.createObjectURL(file));
+                                  onChange(file);
+                                }
+                              }}
                               accept="image/*"
                               className="opacity-0 absolute w-full h-full cursor-pointer"
                             />
@@ -373,16 +525,18 @@ export function UserForm({
                             )}
                           </div>
                         </FormControl>
+                        {showFieldError("photo") && (
+                          <p className="text-red-500 text-sm mt-1">{errorMsg}</p>
+                        )}
                         <FormMessage />
                       </FormItem>
                     );
                   }}
                 />
 
-                {/* Submit */}
                 <Button
                   type="submit"
-                  className="w-full bg-[#005E0E] hover:bg-gradient-to-r hover:from-indigo-500 hover:to-violet-600 text-white font-semibold py-2 rounded-md shadow-md transition-all duration-300"
+                  className="w-full bg-[#005E0E] hover:bg-gradient-to-r hover:from-[#01450b] hover:to-[#01450b] text-white font-semibold py-2 rounded-md shadow-md transition-all duration-300"
                 >
                   {editMode ? "Update" : submitLabel}
                 </Button>

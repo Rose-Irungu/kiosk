@@ -86,3 +86,13 @@ export const updateFacility = async (facilityId, facilityData) => {
     throw error;
   }
 }
+
+export const getLatestEmergency = async () => {
+  try {
+    const response = await api.get(API_ENDPOINTS.GET_LATEST_EMERGENCY);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching facilities:", error);
+    throw error;
+  }
+}

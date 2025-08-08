@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/components/GuestForm.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1754653552970,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1754653552970,
+            "name": "Commit-0",
+            "content": "import {\r\n  Form,\r\n  FormField,\r\n  FormItem,\r\n  FormLabel,\r\n  FormControl,\r\n  FormMessage,\r\n} from \"@/components/ui/form\";\r\nimport { Input } from \"@/components/ui/input\";\r\nimport { Button } from \"@/components/ui/button\";\r\nimport {useForm} from \"react-hook-form\";\r\n\r\nexport function GuestFormFields({control}) {\r\n\r\n  const form = useForm();\r\n  return (\r\n   <Form {...form}>\r\n    <FormField  \r\n        control={control}\r\n        name=\"guestName\"\r\n        render={({ field }) => (\r\n          <FormItem>\r\n            <FormLabel>Guest Name</FormLabel>\r\n            <FormControl>\r\n              <Input placeholder=\"Audrey\" {...field} />\r\n            </FormControl>\r\n            <FormMessage />\r\n          </FormItem>\r\n        )}\r\n      /> \r\n\r\n       <FormField\r\n        control={control}\r\n        name=\"phoneNumber\"\r\n        render={({ field }) => (\r\n          <FormItem>\r\n            <FormLabel>Phone Number</FormLabel>\r\n            <FormControl>\r\n              <Input placeholder=\"+254-723-456-789\" {...field} />\r\n            </FormControl>\r\n            <FormMessage />\r\n          </FormItem>\r\n        )}\r\n      />\r\n\r\n      <FormField\r\n        control={control}\r\n        name=\"email\"\r\n        render={({ field }) => (\r\n          <FormItem>\r\n            <FormLabel>Email</FormLabel>\r\n            <FormControl>\r\n              <Input placeholder=\"janenjoroge@email.com\" {...field} />\r\n            </FormControl>\r\n            <FormMessage />\r\n          </FormItem>\r\n        )}\r\n      />\r\n\r\n      <FormField\r\n        control={control}\r\n        name=\"date\"\r\n        render={({ field }) => (\r\n          <FormItem>\r\n            <FormLabel>Date</FormLabel>\r\n            <FormControl>\r\n              <Input type=\"date\" {...field} />\r\n            </FormControl>\r\n            <FormMessage />\r\n          </FormItem>\r\n        )}\r\n      />\r\n\r\n      <FormField\r\n        control={control}\r\n        name=\"hostUnit\"\r\n        render={({ field }) => (\r\n          <FormItem>\r\n            <FormLabel>Host Name/Unit</FormLabel>\r\n            <FormControl>\r\n              <Input placeholder=\"Angela Sinei (302b)\" {...field} />\r\n            </FormControl>\r\n            <FormMessage />\r\n          </FormItem>\r\n        )}\r\n      />\r\n\r\n      <FormField\r\n        control={control}\r\n        name=\"carPlate\"\r\n        render={({ field }) => (\r\n          <FormItem>\r\n            <FormLabel>Car Number Plate (Optional)</FormLabel>\r\n            <FormControl>\r\n              <Input placeholder=\"KCW 123K\" {...field} />\r\n            </FormControl>\r\n            <FormMessage />\r\n          </FormItem>\r\n        )}\r\n      />\r\n\r\n     \r\n\r\n      <Button type=\"submit\" className=\"w-full bg-green-500 hover:bg-green-600\">\r\n        Submit\r\n      </Button>\r\n   </Form>\r\n  );\r\n}\r\n"
+        }
+    ]
+}
