@@ -136,7 +136,7 @@ export default function ExpectedVisitors() {
                 <TableHead>Visit Unit</TableHead>
                 <TableHead>Visitor Type</TableHead>
                 <TableHead>Visit Date</TableHead>                
-                <TableHead>Action</TableHead>
+                {/* <TableHead>Action</TableHead> */}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -170,10 +170,10 @@ export default function ExpectedVisitors() {
                     <TableCell>{visitor.visit_date || "N/A"}</TableCell>
                   
                     <TableCell className="relative dropdown-parent">
-                      <MoreHorizontal
+                      {/* <MoreHorizontal
                         className="cursor-pointer text-muted-foreground"
                         onClick={() => toggleDropdown(index)}
-                      />
+                      /> */}
                       {openDropdown === index && (
                         <div className="absolute right-0 mt-2 w-36 bg-white border rounded shadow z-20">
                           <button
