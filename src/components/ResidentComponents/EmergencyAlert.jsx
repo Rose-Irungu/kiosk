@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getLatestEmergency } from "../../services/facility";
 import { getRelativeTime } from "../../utils/fomatters";
 
-export default function EmergencyCard({}) {
+export default function EmergencyCard() {
   const [emergency, setEmergency] = useState(null);
   const icon = "/emg1.svg";
   const instructionsTitle = "";
