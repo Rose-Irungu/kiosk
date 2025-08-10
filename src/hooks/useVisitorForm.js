@@ -120,7 +120,7 @@ const handleSubmit = async (e) => {
     if (isVisitorMode && token) {
       console.log("Submitting visitor form with data:", formData);
       await submitInvitation(token, data);
-      navigate("/");
+      navigate("/landingpage");
     } else {
       await createInvitation(data);
       if (isResidentMode) {

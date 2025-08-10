@@ -175,9 +175,11 @@ export default function GuestCheckInForm() {
     );
   }
 
+  
+
   return (
     <div className="flex flex-col gap-16 w-[280px]">
-      {/* Header */}
+     
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-5  px-1 py-1 h-[29px]">
           <div className="flex items-center gap-5">
@@ -265,11 +267,11 @@ export default function GuestCheckInForm() {
           {/* Photo Upload - Required for visitor mode */}
           {(isVisitorMode || isSecurityMode) && (
             <div className="flex flex-col gap-1 w-full">
-              <label className="text-[#00d21e] text-xs font-medium">
+              {/* <label className="text-[#00d21e] text-xs font-medium">
                 Photo {isVisitorMode ? "*" : "(Optional)"}
-              </label>
+              </label> */}
 
-              <div className="flex items-center justify-between border border-[#00d21e] rounded-xl overflow-hidden">
+              {/* <div className="flex items-center justify-between border border-[#00d21e] rounded-xl overflow-hidden">
                 <span className="text-[#9abd9f] text-xs px-3">
                   {formData.profile_pic ? formData.profile_pic.name : "PNG/JPG"}
                 </span>
@@ -293,7 +295,7 @@ export default function GuestCheckInForm() {
                   }
                   className="hidden"
                 />
-              </div>
+              </div> */}
 
               {/* Optional image preview */}
               {formData.profile_pic && (
