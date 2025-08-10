@@ -1,3 +1,4 @@
+import LandingPage from "../pages/LandingPage";
 import Home from "../pages/Home";
 import VisitorPage from "../pages/VisitorPage";
 import Verify from "../pages/Verify";
@@ -98,6 +99,7 @@ import ReportIncidentCard from "../components/ReportIncidentCard";
 
 
 export const publicRoutes = [
+    {path: '/landingpage', element: <LandingPage />},
     { path: '/', element: <Home /> },
     { path: '/intro', element: <Intro /> },
     { path: '/loginform', element: <LoginForm /> },

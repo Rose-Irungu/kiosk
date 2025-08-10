@@ -1,4 +1,4 @@
-// src/pages/VisitorPage.jsx
+
 import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
@@ -12,12 +12,9 @@ import rectangle from "../assets/rectangle-780.png";
 const HomePage = () => {
   return (
     <div className="flex flex-col min-h-screen w-full max-w-full overflow-x-hidden relative">
-      
       <Header />
 
-      {/* Content layout: responsive - vertical on mobile, horizontal on desktop */}
       <div className="flex flex-col lg:flex-row w-full flex-1 overflow-hidden ">
-        {/* Left section with background and logo */}
         <div
           className="w-full lg:w-1/2 h-[250px] sm:h-[300px] lg:h-auto bg-cover bg-center flex items-center justify-center p-4"
           style={{ backgroundImage: `url(${rectangle})` }}
@@ -29,18 +26,8 @@ const HomePage = () => {
           />
         </div>
 
-        {/* Right form section */}
-     <div className="w-full lg:w-1/2 bg-[#E6FBE9] relative flex flex-col items-center px-4 sm:px-6 lg:px-8 py-6 lg:pt-0 lg:pb-10 min-h-screen">
-
-
-
-          {/* Top bar with Navbar - only show on desktop */}
-          <div className="hidden lg:flex w-full justify-between items-center mt-0 mb-10">
-            <Navbar />
-          </div>
-
-          {/* Form */}
-          <div className="w-full max-w-sm sm:max-w-md text-center flex-1 flex flex-col justify-center lg:mt-10 ">
+        <div className="w-full lg:w-1/2 bg-[#E6FBE9] relative flex flex-col items-center px-4 sm:px-6 lg:px-8 py-6 lg:pt-0 lg:pb-10 min-h-screen">
+          <div className="w-full max-w-sm sm:max-w-md text-center flex-1 flex flex-col justify-center lg:mt-10 -mt-15">
             <h2 className="text-black font-bold text-xl sm:text-2xl mb-3 ">
               Welcome To
             </h2>
@@ -53,7 +40,6 @@ const HomePage = () => {
             </label>
 
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 lg:gap-8 mt-6">
-              {/* Check In Button */}
               <Link
                 to="/visitorpage"
                 className="flex flex-col items-center w-full sm:w-auto min-w-[140px] p-3 sm:p-4 rounded-md shadow-md bg-gradient-to-r from-green-500 via-green-500 to-green-600 hover:from-green-600 hover:via-green-600 hover:to-green-700 active:from-green-700 active:via-green-700 active:to-green-800 transition-all duration-200"
@@ -68,7 +54,6 @@ const HomePage = () => {
                 </span>
               </Link>
 
-              {/* Check Out Button */}
               <Link
                 to="/verify"
                 className="flex flex-col items-center w-full sm:w-auto min-w-[140px] p-3 sm:p-4 rounded-md shadow-md bg-gradient-to-r from-[#5c4fa3] to-[#4a3d85] hover:from-[#4a3d85] hover:to-[#3d3268] active:from-[#3d3268] active:to-[#302654] transition-all duration-200"
@@ -85,7 +70,6 @@ const HomePage = () => {
             </div>
           </div>
 
-          {/* Decorative Sphere - responsive positioning */}
           <img
             src={sphere}
             alt="Decorative sphere"
