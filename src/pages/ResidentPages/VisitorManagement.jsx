@@ -131,8 +131,8 @@ const VisitorManagement = ({ datedata = [] }) => {
       .length,
   };
   const buttons = [
-    { id: "btn1", label: `Expected (${statusCounts.approved})` },
-    { id: "btn2", label: `Pending (${statusCounts.pending})` },
+    { id: "btn1", label: `Pending (${statusCounts.pending})` },
+    { id: "btn2", label: `Expected (${statusCounts.approved})` },
     { id: "btn3", label: `Onsite (${statusCounts.checked_in})` },
   ];
   const [filteredGuests, setFilteredGuests] = useState([]);
@@ -506,7 +506,7 @@ const VisitorManagement = ({ datedata = [] }) => {
                         {/* Conditional Buttons based on status */}
                         {selectedGuest.status === "checked_in" && (
                             <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
-                                <div className='flex bg-[#00580D] rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-red-500'>
+                                <div className='flex bg-[#00580D] rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-green-500'>
                                     <button
                                         onClick={() => setIsDetailsModalOpen(true)}
                                         className='flex items-center text-[12px] text-white'
