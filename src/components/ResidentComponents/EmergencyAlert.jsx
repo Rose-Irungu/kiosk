@@ -34,7 +34,7 @@ export default function EmergencyCard({}) {
         </div>
 
         <p className="text-[20px] font-medium">
-          Fire Drill at {emergency?.emergency_location}
+          Fire  at {emergency?.emergency_location}
         </p>
         <p className="text-[16px]">{getRelativeTime(emergency?.created_at)}</p>
 
