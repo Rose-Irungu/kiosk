@@ -1,46 +1,10 @@
-import React, { useState } from 'react'
-import { User } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
-
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 const GuestListTable = () => {
     const location = useLocation();
     const { day, daynum, month, year, fullDate, guests } = location.state || {};
-    const [isLoading, Loading] = useState(true);
-    // const location = useLocation();
-    // let data = location.state?.datedata;
-    // console.log(datedata)
-
-    // const [visitors, setVisitors] = useState([]);
-
-    // useEffect(() => {
-    //         fetchVisitors();
-    //     }, []);
-
-
-
-    //     const fetchVisitors = async () => {
-    //     // setLoading(true);
-    //     try {
-    //       if (visitorTypeFilter !== "all") {
-    //         data = data.filter((v) => v.visitor_type === visitorTypeFilter);
-    //         setFilteredAllVisitors(data);
-    //         setVisitors();
-    //       } else {
-    //         setVisitors(data)
-    //       }
-    //       // } else {
-    //       //   setVisitors([]);
-    //       //   setFilteredAllVisitors([]);
-    //       //   setTotalEntries(0);
-    //       // }
-    //     } catch (error) {
-    //       setVisitors([]);
-    //     } finally {
-    //     //   setLoading(false);
-    //     }
-    //   };
+    const navigate = useNavigate();
 
 
     return (
@@ -69,7 +33,7 @@ const GuestListTable = () => {
                         guests.map(guest => (
                             <div key={guest.visitor_id} className='flex flex-row w-full h-[64px] bg-[#FFFF] items-center justify-between shadow-[2px_2px_4px_0px_rgba(0,_88,_13,_0.25)] rounded-[8px] gap-2 p-2 mb-2'>
                                 <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                                    <img src={guest.image  || "/boy-avatar.svg"} className="w-10 h-10 rounded-full object-cover" alt="" />
+                                    <img src={guest.image || "/boy-avatar.svg"} className="w-10 h-10 rounded-full object-cover" alt="" />
                                 </div>
 
                                 <div className='flex  items-start w-full'>
@@ -85,9 +49,9 @@ const GuestListTable = () => {
                             </div>
                         ))
                     ) : (
-                       <div className="w-full  h-[300px] flex items-center justify-center mx-auto">
-                                <p className="text-[#495057] text-base ">No guests here :(</p>
-                            </div>
+                        <div className="w-full  h-[300px] flex items-center justify-center mx-auto">
+                            <p className="text-[#495057] text-base ">No guests here :(</p>
+                        </div>
                     )}
                 </div>
 

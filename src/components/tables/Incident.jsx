@@ -53,11 +53,11 @@ export default function IncidentTable({ incidentReports = [] }) {
       {/* Header */}
       <div className="flex justify-between items-center p-6 pb-4">
         <h2 className="text-xl font-semibold">Reported Incidents</h2>
-        <select className="h-10 px-3 rounded-md border text-sm">
+        {/* <select className="h-10 px-3 rounded-md border text-sm">
           {["This Week", "Today", "This Month", "This Year"].map((opt) => (
             <option key={opt}>{opt}</option>
           ))}
-        </select>
+        </select> */}
       </div>
 
       <div className="overflow-auto">
