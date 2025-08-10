@@ -65,11 +65,11 @@ const EmergencyTableContent = () => {
                     </span>
                 </h2>
                 <div className="relative">
-                    <select className="flex h-8 items-center rounded-md border border-gray-300 px-3 py-1 text-sm text-gray-600 pr-6 appearance-none">
+                    {/* <select className="flex h-8 items-center rounded-md border border-gray-300 px-3 py-1 text-sm text-gray-600 pr-6 appearance-none">
                         <option>All</option>
                         <option>Floor 1</option>
                         <option>Floor 2</option>
-                    </select>
+                    </select> */}
                 </div>
             </div>
 
