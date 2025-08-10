@@ -45,7 +45,7 @@ export default function EmergencyControlApp() {
 
   return (
     <ResidentLayout>
-      <div className="p-6 flex flex-col items-center mb-[70px]">
+      <div className="flex flex-col items-start gap-4 bg-[#E6FBE9] justify-between mx-auto mb-[32px] p-3 rounded-[12px]">
         <div className="flex items-center justify-center md:justify-start w-full mb-4">
           <img
             src="/emg.svg"

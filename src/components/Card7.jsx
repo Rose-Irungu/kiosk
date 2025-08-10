@@ -73,7 +73,7 @@ export default function Card4({ id, floor, unit, name, status, onResolved }) {
 
         {/* Button Row */}
         <div className="flex flex-col sm:flex-row w-full gap-3 min-w-0">
-          <Link to="/triggers" className="flex-1 min-w-0" state={{ id, floor, unit }}>
+          <Link to="/triggers/security" className="flex-1 min-w-0" state={{ id, floor, unit }}>
               <button className="w-full min-h-[40px] bg-[#005E0E] text-white rounded hover:bg-[#002A05] px-4 py-2 transition-all duration-300 text-center whitespace-normal break-words">
                 Open Roll Call
               </button>

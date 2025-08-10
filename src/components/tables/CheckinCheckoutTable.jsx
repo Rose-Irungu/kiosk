@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table";
 import { Upload, ChevronDown } from "lucide-react";
 import { getVisitLogs } from "@/services/checkincheckout";
+import { getRelativeTime } from "../../utils/fomatters";
 
 export default function CheckinCheckoutTable() {
   const [visitors, setVisitors] = useState([]);
@@ -206,13 +207,13 @@ export default function CheckinCheckoutTable() {
                       {visitor.phone_number}
                     </TableCell>
                     <TableCell className="px-4 py-4 text-[#464F60]">
-                      {visitor.host_unit || "N/A"}
+                      {visitor.unit_number || "N/A"}
                     </TableCell>
                     <TableCell className="px-4 py-4 text-[#464F60]">
-                      {visitor.check_in_time || "--"}
+                      {(visitor.check_in_time && getRelativeTime(visitor.check_in_time)) || "--"}
                     </TableCell>
                     <TableCell className="px-4 py-4 text-[#464F60]">
-                      {visitor.check_out_time || "--"}
+                      {(visitor.check_out_time && getRelativeTime(visitor.check_out_time)) || "--"}
                     </TableCell>
                     <TableCell className="px-4 py-4">
                       <div

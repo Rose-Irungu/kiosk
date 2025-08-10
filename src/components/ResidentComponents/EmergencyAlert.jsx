@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getLatestEmergency } from "../../services/facility";
 import { getRelativeTime } from "../../utils/fomatters";
 
-export default function EmergencyCard({}) {
+export default function EmergencyCard() {
   const [emergency, setEmergency] = useState(null);
   const icon = "/emg1.svg";
   const instructionsTitle = "";
@@ -34,7 +34,7 @@ export default function EmergencyCard({}) {
         </div>
 
         <p className="text-[20px] font-medium">
-          Fire Drill at {emergency?.emergency_location}
+          Fire  at {emergency?.emergency_location}
         </p>
         <p className="text-[16px]">{getRelativeTime(emergency?.created_at)}</p>
 
