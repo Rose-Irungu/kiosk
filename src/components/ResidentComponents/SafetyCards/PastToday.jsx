@@ -3,6 +3,10 @@ import filterVisitorsByDate from '../../../scripts/filter';
 import PastGuestCard from './PastGuestCard';
 import NoteP from './NoteP';
 
+//scripts
+import { getRelativeTime } from '../../../utils/fomatters';
+import getVisitorType from '../../../scripts/getVisitorType';
+
 export default function PastToday({ allVisitors }) {
   const [todayVisitors, setTodayVisitors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,8 +32,8 @@ export default function PastToday({ allVisitors }) {
             key={index}
             image={visitor.image}
             name={visitor.visitor_name}
-            checkOutTime={visitor.check_out}
-            type={visitor.visitor_type}
+            checkOutTime={getRelativeTime(visitor.check_out)}
+            type={getVisitorType(visitor.visitor_type)}
             id={visitor.visitor_id}
           />
         ))

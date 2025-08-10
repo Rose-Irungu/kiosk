@@ -9,6 +9,8 @@ export default function VisitorLog() {
   useEffect(() => {
     async function fetchVisitorLogs() {
       try {
+        console.log("-------------trying---------");
+        
         const response = await fetch("/visits/visit-logs/");
         const data = await response.json();
 

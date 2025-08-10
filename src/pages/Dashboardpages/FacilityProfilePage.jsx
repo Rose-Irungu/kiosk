@@ -13,7 +13,6 @@ export default function FacilityProfile() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("userInfo")) || {};
   const facilityId = user.facility || null;
@@ -36,7 +35,7 @@ export default function FacilityProfile() {
       }
     };
     fetchFacilityData();
-  });
+  }, []);
 
   const handleSave = async () => {
     // Validation
@@ -58,8 +57,7 @@ export default function FacilityProfile() {
         facility_type: facilityType.toLowerCase(),
         safety_instruction: safetyInstructionValue,
       };
-
-      const res = await updateFacility(facilityId, newFacility);
+      await updateFacility(facilityId, newFacility);
       setSuccess("Facility updated successfully!");
 
       setFacilityName("");
@@ -172,11 +170,10 @@ export default function FacilityProfile() {
           <button
             onClick={handleSave}
             disabled={loading}
-            className={`text-white text-sm font-medium px-6 py-3 rounded-md w-full ${
-              loading
+            className={`text-white text-sm font-medium px-6 py-3 rounded-md w-full ${loading
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-[#005e0e] hover:bg-[#023609]"
-            }`}
+              }`}
           >
             {loading ? "SAVING..." : "SAVE FACILITY PROFILE"}
           </button>

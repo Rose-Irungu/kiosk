@@ -7,7 +7,6 @@ import {
   deleteRoom,
 } from "../services/facility";
 
-// Fix 1: Destructure props properly
 const FloorRoomManager = ({ floors, setFloors }) => {
   const [showFloorModal, setShowFloorModal] = useState(false);
   const [showRoomModal, setShowRoomModal] = useState(false);
@@ -15,7 +14,7 @@ const FloorRoomManager = ({ floors, setFloors }) => {
   const [floorName, setFloorName] = useState("");
   const [roomName, setRoomName] = useState("");
 
-  // get saved user data from localStorage on component mount
+  
   const user = JSON.parse(localStorage.getItem("userInfo")) || {};
   const facilityId = user.facility || null;
 
@@ -34,7 +33,7 @@ const FloorRoomManager = ({ floors, setFloors }) => {
     }
   }, [setFloors]);
 
-  // Save floors data to localStorage whenever floors change
+  
   const saveFloorsData = (updatedFloors) => {
     const existingFacilityData = localStorage.getItem("facilityData");
     let facilityData = {};
@@ -47,7 +46,6 @@ const FloorRoomManager = ({ floors, setFloors }) => {
       }
     }
 
-    // Update the floors data within the facility data
     facilityData.floors = updatedFloors;
     facilityData.lastUpdated = new Date().toISOString();
 
@@ -157,7 +155,7 @@ const FloorRoomManager = ({ floors, setFloors }) => {
     setSelectedFloorId(null);
   };
 
-  // Fix 2: Add safety check for floors array
+
   if (!floors || !Array.isArray(floors)) {
     return (
       <div className="min-h-screen bg-gray-100 rounded-md p-6 w-full">
@@ -174,16 +172,16 @@ const FloorRoomManager = ({ floors, setFloors }) => {
   return (
     <div className="min-h-screen bg-gray-100 rounded-md p-6 w-full">
       <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-xl font-bold font-sans text-[#495057]">
+         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 md:gap-0 mb-4 sm:mb-6 lg:mb-8">
+          <h1 className="text-lg sm:text-xl lg:text-2xl font-bold font-sans text-[#495057] truncate">
             Building Management
           </h1>
           <button
             onClick={() => setShowFloorModal(true)}
-            className="bg-[#005e0e] hover:bg-[#023609] ml-[50px] text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors duration-200 shadow-md"
+            className="bg-[#005e0e] hover:bg-[#023609] text-white px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 rounded-md sm:rounded-lg flex items-center gap-1.5 sm:gap-2 transition-colors duration-200 shadow-sm sm:shadow-md w-full sm:w-auto justify-center text-sm sm:text-base whitespace-nowrap"
           >
-            <Plus size={20} />
-            Add Floor
+            <Plus size={16} className="sm:w-5 sm:h-5" />
+            <span>Add Floor</span>
           </button>
         </div>
 
@@ -216,7 +214,7 @@ const FloorRoomManager = ({ floors, setFloors }) => {
                     </button>
                     <button
                       onClick={() => handleDeleteFloor(floor.id)}
-                      className="text-red-500 hover:text-red-700 p-1"
+                      className="text-red-500 hover:text-red-700  p-2 sm:p-1 "
                       title="Delete Floor"
                     >
                       <Trash2 size={20} />

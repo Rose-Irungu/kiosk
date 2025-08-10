@@ -8,7 +8,7 @@ export default async function blacklistVisitor(visitor_id){
             'visitor_id': visitor_id,
             'reason':"Broke house rules"
         });
-        return response;
+        return { response, status: true };
     } catch(error){
         console.log("Failed to blacklist visitor", error);
         throw error;

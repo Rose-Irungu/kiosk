@@ -44,11 +44,11 @@ const formSchema = z
     lastName: z.string().min(2, "Last name is required"),
     email: z.string().email("Enter a valid email"),
     phone: z.string().min(10, "Enter a valid phone number"),
-   idNo: z
-  .string()
-  .regex(/^\d{6,8}$/, {
-    message: "ID number must be between 6 and 8 digits",
-  }),
+    idNo: z
+      .string()
+      .regex(/^\d{6,8}$/, {
+        message: "ID number must be between 6 and 8 digits",
+      }),
     unit: z.string().min(1, "Unit is required"),
     password: z.string().optional(),
     confirmPassword: z.string().optional(),
@@ -68,13 +68,13 @@ export function UserForm({
   const location = useLocation();
   const editUser = location.state?.user;
   const editMode = location.state?.editMode;
-
+  const [loading, setLoading] = useState(false);
   const [units, setUnits] = useState([]);
   const [showValidationError, setShowValidationError] = useState(false);
   const [preview, setPreview] = useState(null);
-  const [serverMessage, setServerMessage] = useState(""); 
+  const [serverMessage, setServerMessage] = useState("");
 
-  
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     mode: "onChange",
@@ -134,7 +134,7 @@ export function UserForm({
     }
   }, [formState.errors]);
 
-  
+
   const normalizeError = (err) => {
     if (err === null || typeof err === "undefined") return "";
     if (typeof err === "string") return err;
@@ -146,7 +146,7 @@ export function UserForm({
     return String(err);
   };
 
-  
+
   const fieldMap = {
     first_name: "firstName",
     last_name: "lastName",
@@ -160,9 +160,9 @@ export function UserForm({
     profile_picture: "photo",
   };
 
-  
+
   const handleServerErrors = (errData) => {
-    
+
     if (!errData) {
       setServerMessage("Unknown server error");
       setShowValidationError(true);
@@ -171,33 +171,33 @@ export function UserForm({
 
     const payload = errData.errors ? errData.errors : errData;
 
-   
+
     if (typeof payload === "object" && !Array.isArray(payload)) {
       const keys = Object.keys(payload);
       const looksLikeFieldErrors = keys.some((k) => {
         return (
           Object.prototype.hasOwnProperty.call(fieldMap, k) ||
-          
+
           ["email", "firstName", "lastName", "phone", "idNo", "unit", "role", "photo"].includes(k)
         );
       });
 
       if (looksLikeFieldErrors) {
-        
+
         setServerMessage("");
 
         keys.forEach((field) => {
           const mappedField = fieldMap[field] || field;
           const normalized = normalizeError(payload[field]);
 
-          
+
           try {
             setError(mappedField, {
               type: "server",
               message: normalized,
             });
           } catch (e) {
-            
+
             setServerMessage((prev) =>
               prev ? `${prev}; ${mappedField}: ${normalized}` : `${mappedField}: ${normalized}`
             );
@@ -207,17 +207,17 @@ export function UserForm({
         setShowValidationError(true);
         const firstField = keys[0];
         const mappedFirst = fieldMap[firstField] || firstField;
-        
+
         try {
           setFocus(mappedFirst);
         } catch (e) {
-        
+
         }
         return;
       }
     }
 
-    
+
     const generic = normalizeError(errData.detail ?? errData);
     setServerMessage(generic || "An error occurred. Please try again.");
     setShowValidationError(true);
@@ -225,6 +225,7 @@ export function UserForm({
 
   const onSubmit = async (values) => {
     setServerMessage("");
+    setLoading(true)
     try {
       const formData = new FormData();
       formData.append("first_name", values.firstName);
@@ -241,30 +242,38 @@ export function UserForm({
         await userService.updateUser(editUser.id, formData);
       } else {
         const addedUser = await userService.addUser(formData);
+        if (addedUser.result_code == 1) {
+
+          handleServerErrors(addedUser);
+
+          return
+        }
+
         if (setUsers) setUsers((prev) => [...prev, addedUser]);
       }
 
-     
+
       reset();
       setPreview(null);
       navigate("/userspage");
     } catch (error) {
-      
-      console.error("Error submitting user:", error);
 
-      
+
       const respData = error?.response?.data;
+
       if (respData) {
         handleServerErrors(respData);
       } else {
-       
+
         setServerMessage(error?.message ?? "Failed to submit user. Please try again.");
         setShowValidationError(true);
       }
+    } finally {
+      setLoading(false)
     }
   };
 
- 
+
   const showFieldError = (name) => {
     return (
       !!formState.errors[name] &&
@@ -272,10 +281,10 @@ export function UserForm({
     );
   };
 
-  
+
   const renderServerMessage = () => {
     if (!serverMessage) return null;
-   
+
     return (
       <div className="bg-red-50 text-red-700 border border-red-200 px-3 py-2 rounded text-sm">
         {serverMessage}
@@ -309,7 +318,7 @@ export function UserForm({
                   </div>
                 )}
 
-               
+
                 {renderServerMessage()}
 
                 <FormField
@@ -380,7 +389,7 @@ export function UserForm({
                   ))}
                 </div>
 
-               
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {[
                     ["phone", "Phone No."],
@@ -484,7 +493,7 @@ export function UserForm({
                   </div>
                 )}
 
-               
+
                 <FormField
                   control={control}
                   name="photo"
@@ -538,7 +547,7 @@ export function UserForm({
                   type="submit"
                   className="w-full bg-[#005E0E] hover:bg-gradient-to-r hover:from-[#01450b] hover:to-[#01450b] text-white font-semibold py-2 rounded-md shadow-md transition-all duration-300"
                 >
-                  {editMode ? "Update" : submitLabel}
+                  {editMode ? (loading ? "Updating" : "Update") : (loading ? "Submiting...." : submitLabel)}
                 </Button>
               </form>
             </Form>
