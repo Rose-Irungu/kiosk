@@ -13,6 +13,16 @@ export const incidenceService = {
     }
   },
 
+  getResidentIncidence: async () => {
+    try {
+      const response = await api.get(API_ENDPOINTS.R_INCIDENCE_LIST);
+      return response.data;
+    } catch (error) {
+      console.error("Error during check-in:", error);
+      throw error;
+    }
+  },
+
   updateIncidentStatus: async (id, newStatus = "resolved") => {
     try {
       const url = API_ENDPOINTS.UPDATED_INCIDENTS.replace("{id}", id);
