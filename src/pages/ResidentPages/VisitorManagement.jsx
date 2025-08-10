@@ -15,8 +15,8 @@ const VisitorManagement = ({ datedata = [] }) => {
     setDateButtons(generateDateButtons());
   }, []);
 
-    const navigate = useNavigate();
-    const [active, setActive] = useState('btn1');
+  const navigate = useNavigate();
+  const [active, setActive] = useState('btn1');
 
 
 
@@ -45,9 +45,9 @@ const VisitorManagement = ({ datedata = [] }) => {
 
   const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
 
   const openModal = (guest) => {
@@ -60,11 +60,11 @@ const VisitorManagement = ({ datedata = [] }) => {
     setIsGuestModalOpen(true);
   };
 
-  const closeModal = () => setIsModalOpen(false);
+  // const closeModal = () => setIsModalOpen(false);
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
+  // const toggleModal = () => {
+  //   setIsModalOpen(!isModalOpen);
+  // };
 
   useEffect(() => {
     if (isModalOpen || isGuestModalOpen) {
@@ -221,51 +221,51 @@ const VisitorManagement = ({ datedata = [] }) => {
   };
   // ----------------------------------------------------------------------
 
-    // Approve & Decline ----------------------------------------------------
-    const handleApprove = async () => {
-        try {
-            await approveVisit(selectedGuest.visit_id)
-            setGuestLists(prev =>
-                prev.filter(guest => guest.visit_id !== selectedGuest.visit_id)
-            );
-            setIsGuestModalOpen(false);
-        } catch (error) {
-
-        }
-
-    }
-    const handleCancel = async () => {
-        try {
-            await cancelVisit(selectedGuest.visit_id)
-            setGuestLists(prev =>
-                prev.filter(guest => guest.visit_id !== selectedGuest.visit_id)
-            );
-            setIsGuestModalOpen(false);
-        } catch (error) {
-
-        }
+  // Approve & Decline ----------------------------------------------------
+  const handleApprove = async () => {
+    try {
+      await approveVisit(selectedGuest.visit_id)
+      setGuestLists(prev =>
+        prev.filter(guest => guest.visit_id !== selectedGuest.visit_id)
+      );
+      setIsGuestModalOpen(false);
+    } catch (error) {
 
     }
 
-    //   ----------------------------------------------------------------------------------
+  }
+  const handleCancel = async () => {
+    try {
+      await cancelVisit(selectedGuest.visit_id)
+      setGuestLists(prev =>
+        prev.filter(guest => guest.visit_id !== selectedGuest.visit_id)
+      );
+      setIsGuestModalOpen(false);
+    } catch (error) {
 
-    // Add To Blacklist
-    const handleAddToBlacklist = async () => {
-        try {
-            const response = await blacklistVisitor({ visitor_id: selectedGuest.visitor_id });
+    }
 
-            setBlackLists(prev =>
-                prev.filter(guest => guest.visitor_id !== selectedGuest.visitor_id)
-            );
+  }
+
+  //   ----------------------------------------------------------------------------------
+
+  // Add To Blacklist
+  const handleAddToBlacklist = async () => {
+    try {
+      const response = await blacklistVisitor({ visitor_id: selectedGuest.visitor_id });
+
+      setBlackLists(prev =>
+        prev.filter(guest => guest.visitor_id !== selectedGuest.visitor_id)
+      );
 
 
 
 
-        } catch (error) {
-            console.error("Failed to blacklist visitor:", error);
+    } catch (error) {
+      console.error("Failed to blacklist visitor:", error);
 
-        }
-    };
+    }
+  };
 
 
 
@@ -398,18 +398,18 @@ const VisitorManagement = ({ datedata = [] }) => {
           {/* {blacklists.length > 0 ? (
                             blacklist.map((guestlist, index) => ( */}
 
-                    <div className='h-[227px] overflow-y-scroll'>
-                        {blacklists.length > 0 ? (
-                            blacklists.map((blacklist) => (
+          <div className='h-[227px] overflow-y-scroll'>
+            {blacklists.length > 0 ? (
+              blacklists.map((blacklist) => (
 
 
-                                <div onClick={() => openModal(blacklist)} className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4  '>
+                <div onClick={() => openModal(blacklist)} className='w-full h-[64px] bg-[#FFFF] mb-2 rounded-sm  flex flex-row items-center justify-between font-["DM Sans"] p-4  '>
 
-                                    <button onClick={() => openModal(blacklist)} className='flex flex-row justify-between gap-4 items-center '>
+                  <button onClick={() => openModal(blacklist)} className='flex flex-row justify-between gap-4 items-center '>
 
-                                        <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                                            <img src={blacklist.image || "/boy-avatar.svg"} className="w-10 h-10 rounded-full object-cover" alt="" />
-                                        </div>
+                    <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
+                      <img src={blacklist.image || "/boy-avatar.svg"} className="w-10 h-10 rounded-full object-cover" alt="" />
+                    </div>
 
                     <div className="flex flex-col items-start w-full">
                       <p className="text-sm font-medium text-[#002706] ">
@@ -480,28 +480,28 @@ const VisitorManagement = ({ datedata = [] }) => {
         </div>
       )}
 
-            {/* Table/Card Modal for Guest */}
-            {isGuestModalOpen && selectedGuest && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
-                    <div
-                        className='flex flex-col items-start gap-4 w-[292px] border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]'
-                        ref={guestModalRef}
-                    >
-                        {/* Profile section */}
-                        <div className='flex flex-row w-full items-center justify-between gap-2'>
-                            <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
-                                <img src={selectedGuest.image || "/boy-avatar.svg"} alt="" className="w-10 h-10 rounded-full object-cover" />
-                            </div>
+      {/* Table/Card Modal for Guest */}
+      {isGuestModalOpen && selectedGuest && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
+          <div
+            className='flex flex-col items-start gap-4 w-[292px] border border-[1px] border-[#54E168] shadow-[0px_1px_10px_0px_rgba(0_,_88,_13,_0.15)] bg-[#ffff] p-4 rounded-[24px]'
+            ref={guestModalRef}
+          >
+            {/* Profile section */}
+            <div className='flex flex-row w-full items-center justify-between gap-2'>
+              <div className="flex items-center justify-center w-10 h-10 bg-[#005E0E]/5 rounded-full shrink-0">
+                <img src={selectedGuest.image || "/boy-avatar.svg"} alt="" className="w-10 h-10 rounded-full object-cover" />
+              </div>
 
-                            <div className='flex flex-col items-start w-full'>
-                                <p className='text-[14px] font-medium text-[#002706]'>{selectedGuest.visitor_name}</p>
-                                <p className='text-[11px]'>Arrival Time: {selectedGuest.visit_date}</p>
-                            </div>
+              <div className='flex flex-col items-start w-full'>
+                <p className='text-[14px] font-medium text-[#002706]'>{selectedGuest.visitor_name}</p>
+                <p className='text-[11px]'>Arrival Time: {selectedGuest.visit_date}</p>
+              </div>
 
-                            <div className='rounded-md bg-[#D1C9FA] flex items-center w-[64px] h-[22px] justify-center'>
-                                <p className='text-[12px] text-[#2D2264]'>guest</p>
-                            </div>
-                        </div>
+              <div className='rounded-md bg-[#D1C9FA] flex items-center w-[64px] h-[22px] justify-center'>
+                <p className='text-[12px] text-[#2D2264]'>guest</p>
+              </div>
+            </div>
 
                         {/* Conditional Buttons based on status */}
                         {selectedGuest.status === "checked_in" && (
@@ -515,81 +515,81 @@ const VisitorManagement = ({ datedata = [] }) => {
                                     </button>
                                 </div>
 
-                                <div className='flex rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-gray-500 border border-[#00580D]'>
-                                    <button
-                                        onClick={handleAddToBlacklist}
-                                        className='flex text-[12px] text-[#00580D]'
-                                    >
-                                        Add To Blacklist
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-
-
-                        {selectedGuest.status === "pending" && (
-                            <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
-                                <div className='flex bg-[#00580D] rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-green-500'>
-                                    <button onClick={handleApprove} className='flex items-center text-[12px] text-white'>
-                                        Approve
-                                    </button>
-                                </div>
-
-                                <div className='flex rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-gray-500 border border-[#00580D]'>
-                                    <button onClick={handleCancel} className='flex text-[12px] text-[#00580D]'>
-                                        Decline
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-                    </div>
+                <div className='flex rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-gray-500 border border-[#00580D]'>
+                  <button
+                    onClick={handleAddToBlacklist}
+                    className='flex text-[12px] text-[#00580D]'
+                  >
+                    Add To Blacklist
+                  </button>
                 </div>
+              </div>
             )}
 
 
-            {isDetailsModalOpen && selectedGuest && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm">
-                    <div className='flex flex-col gap-4 w-[320px] border border-[#54E168] shadow bg-white p-5 rounded-[16px]'>
-                        {/* Title */}
-                        <h2 className='text-lg font-semibold text-[#002706]'>Visitor Details</h2>
-
-                        {/* Visitor Info */}
-                        <div className='flex flex-col gap-2'>
-                            <div className="flex items-center gap-3">
-                                <img
-                                    src={selectedGuest.image || "/boy-avatar.svg"}
-                                    alt=""
-                                    className="w-14 h-14 rounded-full object-cover border border-gray-300"
-                                />
-                                <div>
-                                    <p className='text-sm font-medium'>{selectedGuest.visitor_name}</p>
-                                    <p className='text-xs text-gray-500'>Status: {selectedGuest.status}</p>
-                                </div>
-                            </div>
-                            <p className='text-sm'>Visit Date: {selectedGuest.visit_date}</p>
-                            <p className='text-sm'>Check In: {selectedGuest.check_in || "Not recorded"}</p>
-                            <p className='text-sm'>Visitor Type: {selectedGuest.visitor_type}</p>
-                            {selectedGuest.reason && (
-                                <p className='text-sm text-red-600'>Reason: {selectedGuest.reason}</p>
-                            )}
-                        </div>
-
-                        {/* Close Button */}
-                        <div className='flex justify-end'>
-                            <button
-                                onClick={() => setIsDetailsModalOpen(false)}
-                                className='bg-[#00580D] text-white px-4 py-1 rounded hover:bg-green-600 text-sm'
-                            >
-                                Close
-                            </button>
-                        </div>
-                    </div>
+            {selectedGuest.status === "pending" && (
+              <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
+                <div className='flex bg-[#00580D] rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-green-500'>
+                  <button onClick={handleApprove} className='flex items-center text-[12px] text-white'>
+                    Approve
+                  </button>
                 </div>
+
+                <div className='flex rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-gray-500 border border-[#00580D]'>
+                  <button onClick={handleCancel} className='flex text-[12px] text-[#00580D]'>
+                    Decline
+                  </button>
+                </div>
+              </div>
             )}
+          </div>
+        </div>
+      )}
 
 
-        </>
-    )
+      {isDetailsModalOpen && selectedGuest && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm">
+          <div className='flex flex-col gap-4 w-[320px] border border-[#54E168] shadow bg-white p-5 rounded-[16px]'>
+            {/* Title */}
+            <h2 className='text-lg font-semibold text-[#002706]'>Visitor Details</h2>
+
+            {/* Visitor Info */}
+            <div className='flex flex-col gap-2'>
+              <div className="flex items-center gap-3">
+                <img
+                  src={selectedGuest.image || "/boy-avatar.svg"}
+                  alt=""
+                  className="w-14 h-14 rounded-full object-cover border border-gray-300"
+                />
+                <div>
+                  <p className='text-sm font-medium'>{selectedGuest.visitor_name}</p>
+                  <p className='text-xs text-gray-500'>Status: {selectedGuest.status}</p>
+                </div>
+              </div>
+              <p className='text-sm'>Visit Date: {selectedGuest.visit_date}</p>
+              <p className='text-sm'>Check In: {selectedGuest.check_in || "Not recorded"}</p>
+              <p className='text-sm'>Visitor Type: {selectedGuest.visitor_type}</p>
+              {selectedGuest.reason && (
+                <p className='text-sm text-red-600'>Reason: {selectedGuest.reason}</p>
+              )}
+            </div>
+
+            {/* Close Button */}
+            <div className='flex justify-end'>
+              <button
+                onClick={() => setIsDetailsModalOpen(false)}
+                className='bg-[#00580D] text-white px-4 py-1 rounded hover:bg-green-600 text-sm'
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+    </>
+  )
 }
 
 export default VisitorManagement;
