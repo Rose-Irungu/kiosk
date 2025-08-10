@@ -4,10 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import SecurityLayout from '../../components/SecurityComponents/SecurityLayout.jsx';
 import { securityRegistervisitor } from '../../services/securityVisitorRegister.js';
 import { userService } from "../../services/user";
-import { useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
-
-
 
 
 export default function VisitorRegistration() {
