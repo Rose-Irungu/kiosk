@@ -131,8 +131,8 @@ const VisitorManagement = ({ datedata = [] }) => {
       .length,
   };
   const buttons = [
-    { id: "btn1", label: `Pending (${statusCounts.pending})` },
-    { id: "btn2", label: `Expected (${statusCounts.approved})` },
+    { id: "btn1", label: `Expected (${statusCounts.approved})` },
+    { id: "btn2", label: `Pending (${statusCounts.pending})` },
     { id: "btn3", label: `Onsite (${statusCounts.checked_in})` },
   ];
   const [filteredGuests, setFilteredGuests] = useState([]);
