@@ -4,9 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import SecurityLayout from '../../components/SecurityComponents/SecurityLayout.jsx';
 import { securityRegistervisitor } from '../../services/securityVisitorRegister.js';
 import { userService } from "../../services/user";
-import { useLocation } from 'react-router-dom';
-
-
+import toast from 'react-hot-toast';
 
 
 export default function VisitorRegistration() {
@@ -38,11 +36,7 @@ export default function VisitorRegistration() {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const [houseNumbers, setHouseNumbers] = useState([]);
   const [units, setUnits] = useState([]);
-
-  const location = useLocation();
-  const editUser = location.state?.editUser;
 
 
   const validate = () => {
@@ -97,12 +91,16 @@ export default function VisitorRegistration() {
         payload.append(key, formData[key]);
       }
 
-      await securityRegistervisitor(payload);
-      alert("Visitor successfully registered!");
-      navigate('/security/dashboard');
+      const res = await securityRegistervisitor(payload);
+      if (res.result_code == 0) {
+        toast.success("Visitor successfully registered!")
+        navigate('/security/dashboard');
+      } else {
+        toast.error(res.error)
+      }
     } catch (error) {
       console.error("Registration failed:", error);
-      alert("Failed to register visitor. Please try again later.");
+      toast.error("Failed to register visitor. Please try again later.")
     } finally {
       setIsSubmitting(false);
     }

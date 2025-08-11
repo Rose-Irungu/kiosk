@@ -28,7 +28,7 @@ const ErrorPage = () => {
       <Header />
 
      
-      <div className="flex flex-col lg:flex-row w-full min-w-[768px] flex-1 overflow-hidden">
+      <div className="flex flex-col lg:flex-row w-full flex-1 overflow-hidden">
       
         <div
           className="w-full lg:w-1/2 h-[250px] sm:h-[300px] lg:h-auto bg-cover bg-center flex items-center justify-center p-4"
@@ -105,7 +105,7 @@ const ErrorPage = () => {
           </div>
 
        
-          <div className="flex flex-col items-start gap-6 text-[#F83162] mt-10 px-4 text-left">
+          <div className="flex flex-col items-start gap-6 text-[#F83162] mt-10 px-4 ">
            
             <p className="text-[24px] font-semibold leading-[31px]">Oops!</p>
 
@@ -116,7 +116,7 @@ const ErrorPage = () => {
             </p>
 
           
-            <div className="flex items-center justify-center gap-8 mt-4">
+            <div className="flex flex-row items-center justify-center gap-8 mt-4">
              
               <Link
                 to="/"

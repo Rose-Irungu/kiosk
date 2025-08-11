@@ -36,7 +36,7 @@ export default function Card2({
       setError("");
       const result = await updateEmergency(id, "resolved");
       if (result?.emergency_status === "resolved") {
-        setIsResolved(true);
+        // setIsResolved(true);
         onResolved(); 
       }
     } catch (err) {
