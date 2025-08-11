@@ -95,6 +95,7 @@ import ResidentLayout from "../components/ResidentComponents/ResidentLayout";
 import FireAlertForm from "../components/ResidentComponents/FireAlertForm";
 import Security_form from "../components/ResidentComponents/Security_form";
 import ReportIncidentCard from "../components/ReportIncidentCard";
+import UserForm from "../components/forms/form";
 
 
 
@@ -144,6 +145,7 @@ export const adminRoutes = [
     { path: '/emergencypage', element: <Emergencypage /> },
     { path: '/help', element: <HelpPage /> },
     { path: '/facilityprofile', element: <FacilityProfilePage /> },
+    { path: '/userform', element: <UserForm />},
 
     // Admin-only utilities
     { path: '/visitors', element: <Visitors /> },
