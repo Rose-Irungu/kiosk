@@ -94,7 +94,7 @@ import ResidentHeader from "../components/ResidentComponents/ResidentHeader";
 import ResidentLayout from "../components/ResidentComponents/ResidentLayout";
 import FireAlertForm from "../components/ResidentComponents/FireAlertForm";
 import Security_form from "../components/ResidentComponents/Security_form";
-import ReportIncidentCard from "../components/ReportIncidentCard";
+import ReportIncidentCard from "../pages/ResidentPages/ReportIncidentCard";
 import UserForm from "../components/forms/form";
 
 
