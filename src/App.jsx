@@ -9,6 +9,7 @@ import {
   tenantRoutes
 } from "./routes/routeConfig";
 
+
 const App = () => {
 
   return (

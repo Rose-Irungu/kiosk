@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom"; 
 import { ArrowLeft } from 'lucide-react'; // 
-import selectImage from '../scripts/selectImage';
-import { submitIncidence } from '../scripts/submitIncidence';
+import { Upload } from 'lucide-react';
+import selectImage from '../../scripts/selectImage';
+import { submitIncidence } from '../../scripts/submitIncidence';
+import ResidentLayout from "../../components/ResidentComponents/ResidentLayout";
 
 function ReportIncidentCard() {
   const [description, setDescription] = useState('');
@@ -21,26 +23,26 @@ function ReportIncidentCard() {
   };
 
   return (
+    <ResidentLayout>
+      <button 
+          onClick={handleBackNavigation}
+          className="flex items-center gap-2 text-[#005E0E] font-inter text-sm font-medium hover:text-[#004A0B] transition-colors self-start"
+        >
+          <ArrowLeft size={16} />
+          Back to Reports
+        </button>
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="flex flex-col justify-between w-full lg:max-w-[400px] h-auto lg:h-[594px] rounded-[10px] p-4 gap-[33px] bg-white border-none">
         
         
-        {incidentSubmitted && (
-          <button 
-            onClick={handleBackNavigation}
-            className="flex items-center gap-2 text-[#005E0E] font-inter text-sm font-medium hover:text-[#004A0B] transition-colors self-start"
-          >
-            <ArrowLeft size={16} />
-            Back to Reports
-          </button>
-        )}
+        
 
         <div className="flex flex-col w-full gap-6">
           <h1 className="font-inter font-bold text-[18px] leading-5 tracking-[1%] text-[#495057]">
             {incidentSubmitted ? 'Incident Reported Successfully!' : 'Report Incident'}
           </h1>
 
-          
+          {/* Success message */}
           {incidentSubmitted && (
             <div className="flex flex-col items-center gap-4 p-6 bg-green-50 rounded-[8px] border border-green-200">
               <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
@@ -54,7 +56,7 @@ function ReportIncidentCard() {
             </div>
           )}
 
-          
+          {/* Form - only shown when incident not submitted */}
           {!incidentSubmitted && (
             <div className="flex flex-col w-full gap-4">
               <div className="flex flex-col gap-3">
@@ -87,7 +89,7 @@ function ReportIncidentCard() {
                       });
                     }}
                   >
-                    {/* <Upload size={20} /> */}
+                    <Upload size={20} />
                   </div>
                   <p className="font-inter text-[14px] leading-5 tracking-[1%] text-center text-[#495057]">
                     Upload Media (Optional)
@@ -106,7 +108,9 @@ function ReportIncidentCard() {
         </div>
       </div>
     </div>
+    </ResidentLayout>
   );
+  
 }
 
 export default ReportIncidentCard;
