@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ErrorPage from "./pages/Error";
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./components/ProtectedRoute";
 import {
@@ -7,6 +8,7 @@ import {
   securityRoutes,
   tenantRoutes
 } from "./routes/routeConfig";
+
 
 const App = () => {
 
@@ -70,7 +72,7 @@ const App = () => {
             }
           />
 
-          <Route path="*" element={<Error />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>
 
