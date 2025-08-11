@@ -88,7 +88,7 @@ import GuestList from "./pages/ResidentPages/GuestList";
 import { Toaster } from "react-hot-toast";
 import FacilityProfilePage from "./pages/Dashboardpages/FacilityProfilePage";
 import ReportIncidentPage from "./pages/ResidentPages/ReportPage";
-import ReportIncidentCard from "./components/ReportIncidentCard";
+import ReportIncidentCard from "./pages/ResidentPages/ReportIncidentCard";
 import PastReportsPage from "./pages/ResidentPages/PastReports";
 
 const App = () => {
