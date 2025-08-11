@@ -1,4 +1,4 @@
-// src/pages/VisitorPage.jsx
+
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
@@ -147,13 +147,13 @@ const VisitorPage = () => {
         </div>
 
         <div className="w-full lg:w-1/2 bg-[#E6FBE9] relative flex flex-col items-center px-4 sm:px-6 lg:px-8 py-6 lg:pt-0 lg:pb-10 min-h-[600px] lg:min-h-full">
-          <div className="hidden lg:flex w-full justify-between items-center mt-0 mb-10">
+          {/* <div className="hidden lg:flex w-full justify-between items-center mt-0 mb-10">
             <Navbar />
-          </div>
+          </div> */}
 
           <div className="w-full max-w-sm sm:max-w-md text-start flex-1 flex flex-col justify-center lg:mt-10">
             <h2 className="text-lg sm:text-xl font-semibold text-[#00580D] mb-4 sm:mb-6 text-center lg:text-left lg:-ml-7">
-              {t("submitDetails")}
+              Submit Details
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -208,7 +208,7 @@ const VisitorPage = () => {
             </div>
 
             <p className="text-xs sm:text-sm text-[#00580D] text-center">
-              {t("let Security Scan the QR code sent to your email")}
+              Let Security Scan The QR Code Sent To Your Email
             </p>
           </div>
 
