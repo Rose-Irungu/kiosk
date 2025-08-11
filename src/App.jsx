@@ -8,6 +8,10 @@ import {
   securityRoutes,
   tenantRoutes
 } from "./routes/routeConfig";
+import FacilityProfilePage from "./pages/Dashboardpages/FacilityProfilePage";
+import ReportIncidentPage from "./pages/ResidentPages/ReportPage";
+import ReportIncidentCard from "./pages/ResidentPages/ReportIncidentCard";
+import PastReportsPage from "./pages/ResidentPages/PastReports";
 
 const App = () => {
 
