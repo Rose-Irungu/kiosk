@@ -1,4 +1,4 @@
-// src/pages/VisitorPage.jsx
+
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
@@ -207,9 +207,9 @@ const VisitorPage = () => {
               <hr className="flex-grow border-t border-dashed border-purple-600" />
             </div>
 
-            {/* <p className="text-xs sm:text-sm text-[#00580D] text-center">
-              {t("let Security Scan the QR code sent to your email")}
-            </p> */}
+            <p className="text-xs sm:text-sm text-[#00580D] text-center">
+              Let Security Scan The QR Code Sent To Your Email
+            </p>
           </div>
 
           <img
