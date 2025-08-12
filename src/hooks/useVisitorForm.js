@@ -9,6 +9,7 @@ import {
 export const useVisitorForm = () => {
   const { token: urlToken } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const token = urlToken;
 
@@ -17,32 +18,31 @@ export const useVisitorForm = () => {
     phone_number: "",
     email: "",
     visit_date: "",
-    host_name: "",
-    unit_number: "",
     plate_number: "",
     visitor_type: "visitor",
-    // profile_pic: null,
+  
   });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [isVisitorMode, setIsVisitorMode] = useState(false);
   const [isSecurityMode, setIsSecurityMode] = useState(false);
   const [isResidentMode, setIsResidentMode] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Token found:", token);
-
     if (token) {
+      
       setIsVisitorMode(true);
       setIsSecurityMode(false);
       setIsResidentMode(false);
       fetchInvitationData();
     } else if (location.pathname.includes("security-checkin")) {
+      
       setIsSecurityMode(true);
       setIsVisitorMode(false);
       setIsResidentMode(false);
     } else {
+      
       setIsResidentMode(true);
       setIsVisitorMode(false);
       setIsSecurityMode(false);
@@ -55,10 +55,7 @@ export const useVisitorForm = () => {
     setLoading(true);
     setError("");
     try {
-      console.log("Fetching invitation data for token:", token);
       const response = await getInvitation(token);
-      console.log("Received invitation data:", response);
-
       const { data } = response;
       const visitor = data;
       const visit = visitor.latest_visit;
@@ -71,8 +68,8 @@ export const useVisitorForm = () => {
         plate_number: visitor.plate_number || "",
         visitor_type: visitor.visitor_type || "visitor",
         visit_date: visit?.visit_date || "",
-        host_name: visit?.host_name || "",
-        unit_number: visit?.unit_number || "",
+        host_name: visit?.host_name || "", 
+        unit_number: visit?.unit_number || "", 
       }));
     } catch (err) {
       setError("Failed to load invitation data");
@@ -83,59 +80,44 @@ export const useVisitorForm = () => {
   };
 
   const handleInputChange = (field, value) => {
-    if (field === "profile_pic" && value instanceof File) {
-      setFormData((prev) => ({
-        ...prev,
-        [field]: value,
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [field]: value,
-      }));
-    }
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setError("");
-
-  // if (isVisitorMode && !formData.profile_pic) {
-  //   setError("Please upload a photo before submitting the form.");
-  //   setLoading(false);
-  //   return;
-  // }
-
-  try {
-    const data = new FormData();
-
-    for (const key in formData) {
-      if (formData[key]) {
-        data.append(key, formData[key]);
+    try {
+      const data = new FormData();
+      for (const key in formData) {
+        if (formData[key]) {
+          data.append(key, formData[key]);
+        }
       }
-    }
 
-    if (isVisitorMode && token) {
-      console.log("Submitting visitor form with data:", formData);
-      await submitInvitation(token, data);
-      navigate("/");
-    } else {
-      await createInvitation(data);
-      if (isResidentMode) {
-        navigate("/guestregsuccess");
+      if (isVisitorMode && token) {
+        await submitInvitation(token, data);
+        navigate("/landingpage");
       } else {
-        alert("Visitor registered successfully!");
+        
+        await createInvitation(data);
+        if (isResidentMode) {
+          navigate("/guestregsuccess");
+        } else {
+          alert("Visitor registered successfully!");
+        }
       }
+    } catch (err) {
+      setError("Failed to submit form");
+      console.error("Error submitting form:", err);
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    setError("Failed to submit form");
-    console.error("Error submitting form:", err);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return {
     formData,

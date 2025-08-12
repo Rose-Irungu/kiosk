@@ -1,0 +1,58 @@
+{
+    "sourceFile": "src/components/ResidentComponents/Buttons/InviteGuest.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 10,
+            "patches": [
+                {
+                    "date": 1754926141981,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1754926201969,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \r\n export default function InviteGuest({callback}) {\r\n   return (\r\n     <button className='flex items-center justify-center w-[126px] h-[32px] rounded-[8px] py-[4px] px-[10px] bg-[#005E0E] text-white text-center font-dmsans text-[14px] font-semibold'\r\n-      onClick={() => callback()} >\r\n+      onClick={() => callback()} target>\r\n       <img src=\"../../../assets/plus.svg\" alt=\"Invite Guest\" className=\"w-[14px] h-[14px] top-[5px] left-[5px] object-contain\" />\r\n       Invite Guest\r\n     </button>\r\n   );\r\n"
+                },
+                {
+                    "date": 1754926208707,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,11 @@\n+import React from 'react';\r\n+\r\n+export default function InviteGuest({callback}) {\r\n+  return (\r\n+    <button className='flex items-center justify-center w-[126px] h-[32px] rounded-[8px] py-[4px] px-[10px] bg-[#005E0E] text-white text-center font-dmsans text-[14px] font-semibold'\r\n+      onClick={() => callback()} target=\"\">\r\n+      <img src=\"../../../assets/plus.svg\" alt=\"Invite Guest\" className=\"w-[14px] h-[14px] top-[5px] left-[5px] object-contain\" />\r\n+      Invite Guest\r\n+    </button>\r\n+  );\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754926214451,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,11 @@\n+import React from 'react';\r\n+\r\n+export default function InviteGuest({callback}) {\r\n+  return (\r\n+    <button className='flex items-center justify-center w-[126px] h-[32px] rounded-[8px] py-[4px] px-[10px] bg-[#005E0E] text-white text-center font-dmsans text-[14px] font-semibold'\r\n+      onClick={() => callback()} target=\"_blank\">\r\n+      <img src=\"../../../assets/plus.svg\" alt=\"Invite Guest\" className=\"w-[14px] h-[14px] top-[5px] left-[5px] object-contain\" />\r\n+      Invite Guest\r\n+    </button>\r\n+  );\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754926311788,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,11 @@\n+import React from 'react';\r\n+\r\n+export default function InviteGuest({callback}) {\r\n+  return (\r\n+    <button className='flex items-center justify-center w-[126px] h-[32px] rounded-[8px] py-[4px] px-[10px] bg-[#005E0E] text-white text-center font-dmsans text-[14px] font-semibold'\r\n+      onClick={() => callback()} >\r\n+      <img src=\"../../../assets/plus.svg\" alt=\"Invite Guest\" className=\"w-[14px] h-[14px] top-[5px] left-[5px] object-contain\" />\r\n+      Invite Guest\r\n+    </button>\r\n+  );\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754926350388,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \r\n export default function InviteGuest({callback}) {\r\n   return (\r\n     <button className='flex items-center justify-center w-[126px] h-[32px] rounded-[8px] py-[4px] px-[10px] bg-[#005E0E] text-white text-center font-dmsans text-[14px] font-semibold'\r\n-      onClick={() => callback()} >\r\n+      onClick={() => callback()} target=\"_blank\">\r\n       <img src=\"../../../assets/plus.svg\" alt=\"Invite Guest\" className=\"w-[14px] h-[14px] top-[5px] left-[5px] object-contain\" />\r\n       Invite Guest\r\n     </button>\r\n   );\r\n"
+                },
+                {
+                    "date": 1754926371275,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,11 @@\n+import React from 'react';\r\n+\r\n+export default function InviteGuest({callback}) {\r\n+  return (\r\n+    <button className='flex items-center justify-center w-[126px] h-[32px] rounded-[8px] py-[4px] px-[10px] bg-[#005E0E] text-white text-center font-dmsans text-[14px] font-semibold'\r\n+      onClick={() => callback()}>\r\n+      <img src=\"../../../assets/plus.svg\" alt=\"Invite Guest\" className=\"w-[14px] h-[14px] top-[5px] left-[5px] object-contain\" />\r\n+      Invite Guest\r\n+    </button>\r\n+  );\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754926602737,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,54 +2,14 @@\n \r\n export default function InviteGuest({callback}) {\r\n   return (\r\n     <button className='flex items-center justify-center w-[126px] h-[32px] rounded-[8px] py-[4px] px-[10px] bg-[#005E0E] text-white text-center font-dmsans text-[14px] font-semibold'\r\n-      onClick={() => callback()}>\r\n+     onClick={() => {\r\n+  callback();\r\n+  window.open(\"/visitor-form\", \"_blank\");\r\n+}}\r\n+>\r\n       <img src=\"../../../assets/plus.svg\" alt=\"Invite Guest\" className=\"w-[14px] h-[14px] top-[5px] left-[5px] object-contain\" />\r\n       Invite Guest\r\n     </button>\r\n   );\r\n-}\n-import React from 'react';\r\n-\r\n-export default function InviteGuest({callback}) {\r\n-  return (\r\n-    <button className='flex items-center justify-center w-[126px] h-[32px] rounded-[8px] py-[4px] px-[10px] bg-[#005E0E] text-white text-center font-dmsans text-[14px] font-semibold'\r\n-      onClick={() => callback()} target=\"_blank\">\r\n-      <img src=\"../../../assets/plus.svg\" alt=\"Invite Guest\" className=\"w-[14px] h-[14px] top-[5px] left-[5px] object-contain\" />\r\n-      Invite Guest\r\n-    </button>\r\n-  );\r\n-}\n-import React from 'react';\r\n-\r\n-export default function InviteGuest({callback}) {\r\n-  return (\r\n-    <button className='flex items-center justify-center w-[126px] h-[32px] rounded-[8px] py-[4px] px-[10px] bg-[#005E0E] text-white text-center font-dmsans text-[14px] font-semibold'\r\n-      onClick={() => callback()} target=\"_blank\">\r\n-      <img src=\"../../../assets/plus.svg\" alt=\"Invite Guest\" className=\"w-[14px] h-[14px] top-[5px] left-[5px] object-contain\" />\r\n-      Invite Guest\r\n-    </button>\r\n-  );\r\n-}\n-import React from 'react';\r\n-\r\n-export default function InviteGuest({callback}) {\r\n-  return (\r\n-    <button className='flex items-center justify-center w-[126px] h-[32px] rounded-[8px] py-[4px] px-[10px] bg-[#005E0E] text-white text-center font-dmsans text-[14px] font-semibold'\r\n-      onClick={() => callback()} target=\"\">\r\n-      <img src=\"../../../assets/plus.svg\" alt=\"Invite Guest\" className=\"w-[14px] h-[14px] top-[5px] left-[5px] object-contain\" />\r\n-      Invite Guest\r\n-    </button>\r\n-  );\r\n-}\n-import React from 'react';\r\n-\r\n-export default function InviteGuest({callback}) {\r\n-  return (\r\n-    <button className='flex items-center justify-center w-[126px] h-[32px] rounded-[8px] py-[4px] px-[10px] bg-[#005E0E] text-white text-center font-dmsans text-[14px] font-semibold'\r\n-      onClick={() => callback()} target>\r\n-      <img src=\"../../../assets/plus.svg\" alt=\"Invite Guest\" className=\"w-[14px] h-[14px] top-[5px] left-[5px] object-contain\" />\r\n-      Invite Guest\r\n-    </button>\r\n-  );\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754926609227,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n   return (\r\n     <button className='flex items-center justify-center w-[126px] h-[32px] rounded-[8px] py-[4px] px-[10px] bg-[#005E0E] text-white text-center font-dmsans text-[14px] font-semibold'\r\n      onClick={() => {\r\n   callback();\r\n-  window.open(\"/visitor-form\", \"_blank\");\r\n+  window.open(\"/\", \"_blank\");\r\n }}\r\n >\r\n       <img src=\"../../../assets/plus.svg\" alt=\"Invite Guest\" className=\"w-[14px] h-[14px] top-[5px] left-[5px] object-contain\" />\r\n       Invite Guest\r\n"
+                },
+                {
+                    "date": 1754926615604,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n   return (\r\n     <button className='flex items-center justify-center w-[126px] h-[32px] rounded-[8px] py-[4px] px-[10px] bg-[#005E0E] text-white text-center font-dmsans text-[14px] font-semibold'\r\n      onClick={() => {\r\n   callback();\r\n-  window.open(\"/guest\", \"_blank\");\r\n+  window.open(\"/guestf\", \"_blank\");\r\n }}\r\n >\r\n       <img src=\"../../../assets/plus.svg\" alt=\"Invite Guest\" className=\"w-[14px] h-[14px] top-[5px] left-[5px] object-contain\" />\r\n       Invite Guest\r\n"
+                },
+                {
+                    "date": 1754926632723,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,11 @@\n+import React from 'react';\r\n+\r\n+export default function InviteGuest({callback}) {\r\n+  return (\r\n+    <button className='flex items-center justify-center w-[126px] h-[32px] rounded-[8px] py-[4px] px-[10px] bg-[#005E0E] text-white text-center font-dmsans text-[14px] font-semibold'\r\n+      onClick={() => callback()}>\r\n+      <img src=\"../../../assets/plus.svg\" alt=\"Invite Guest\" className=\"w-[14px] h-[14px] top-[5px] left-[5px] object-contain\" />\r\n+      Invite Guest\r\n+    </button>\r\n+  );\r\n+}\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1754926141981,
+            "name": "Commit-0",
+            "content": "import React from 'react';\r\n\r\nexport default function InviteGuest({callback}) {\r\n  return (\r\n    <button className='flex items-center justify-center w-[126px] h-[32px] rounded-[8px] py-[4px] px-[10px] bg-[#005E0E] text-white text-center font-dmsans text-[14px] font-semibold'\r\n      onClick={() => callback()} >\r\n      <img src=\"../../../assets/plus.svg\" alt=\"Invite Guest\" className=\"w-[14px] h-[14px] top-[5px] left-[5px] object-contain\" />\r\n      Invite Guest\r\n    </button>\r\n  );\r\n}"
+        }
+    ]
+}
