@@ -32,7 +32,7 @@ export default function ResidentSettings() {
       console.log("Hew is the user", thisUser)
     };
     getUser();
-    setLoading(false);
+    setLoading(false);                      
   }, []);
   return (
     <ResidentLayout>
