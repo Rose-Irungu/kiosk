@@ -20,7 +20,7 @@ const LandingPage = () => {
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-6">
         <div className="flex flex-wrap justify-center gap-10">
           <div 
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/home')}
       
           className="w-[350px] h-[110px] bg-[#130e2a] hover:bg-[#160c45] rounded-[24px] flex items-center justify-center p-[30px_20px] mt-20">
             <button className="text-white text-[34px] font-semibold text-center">KIOSK</button>

@@ -58,6 +58,8 @@ export default function EmergencyControlApp() {
         </div>
 
         <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center mb-10">
+         
+
           <button
             onClick={handleSOSClick}
             className="bg-gradient-to-r from-[#F6003B] to-[#550115] text-white p-4 rounded-lg font-bold w-[300px] h-[100px] text-center shadow-lg transform hover:scale-105 transition-transform"

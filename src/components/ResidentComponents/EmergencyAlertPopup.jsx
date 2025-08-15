@@ -1,26 +1,44 @@
 import { useState } from "react";
 import { createEmergency } from "../../services/securityDashboardService";
 import { toast } from "react-hot-toast";
-import AlertCard from "./AlertCard";
+// import AlertCard from "./AlertCard";
+import { useRef } from "react";
 
 export default function EmergencyAlertCard({ time }) {
   const [stats, setStats] = useState([]);
   const [visible, setVisible] = useState(true);
-  
+  const alarmRef = useRef (null);
 
-  const handleYes = async () => {
-      setVisible(false);
-    try {
-      const data = await createEmergency({"emergency_type": 'sos'}); 
-      setStats(data);
-      time(30)
-      console.log("Emergency created:", data);
-       toast.success("Emergency alert sent! ");
-    } catch (error) {
-      console.error("Failed to create emergency:", error);
-        toast.error("Failed to send emergency alert.");
-    } 
-  };
+const handleYes = async () => {
+  try {
+
+    if (alarmRef.current) {
+      alarmRef.current.currentTime = 0;
+      await alarmRef.current.play();
+
+   
+      setTimeout(() => {
+        alarmRef.current.pause();
+        alarmRef.current.currentTime = 0; 
+      }, 20000);
+    }
+  } catch (err) {
+    console.error("Audio error:", err);
+  }
+
+  setVisible(false);
+
+  try {
+    const data = await createEmergency({ emergency_type: "sos" });
+    setStats(data);
+    time(20); 
+    toast.success("S.O.S triggered! Help is on the way!");
+  } catch (error) {
+    console.error("Failed to create emergency:", error);
+    toast.error("Failed to send emergency alert.");
+  }
+};
+
 
   const handleNo = () => {
     setVisible(false);
@@ -39,6 +57,7 @@ export default function EmergencyAlertCard({ time }) {
           </p>
 
           <div className="flex gap-4">
+             <audio ref={alarmRef} src="/fire_alarm.mp3" preload="auto" loop />
             <button
               onClick={handleYes}
               className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"

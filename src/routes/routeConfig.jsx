@@ -99,8 +99,8 @@ import ReportIncidentCard from "../components/ReportIncidentCard";
 
 
 export const publicRoutes = [
-    {path: '/landingpage', element: <LandingPage />},
-    { path: '/', element: <Home /> },
+    {path: '/', element: <LandingPage />},
+    { path: '/home', element: <Home /> },
     { path: '/intro', element: <Intro /> },
     { path: '/loginform', element: <LoginForm /> },
     { path: '/registrationform', element: <RegistrationForm /> },
