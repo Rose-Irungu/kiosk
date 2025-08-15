@@ -13,7 +13,8 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal, ChevronDown, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export default function Users({ users = [], setUsers = () => {} }) {
+
+export default function Users({ users = [], setUsers = () => { } }) {
   const navigate = useNavigate();
   const [openMenuIndex, setOpenMenuIndex] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -21,19 +22,39 @@ export default function Users({ users = [], setUsers = () => {} }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
   const [roleFilter, setRoleFilter] = useState("all");
+  const [entriesPerPage, setEntriesPerPage] = useState(5);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOrderAsc, setSortOrderAsc] = useState(true);
 
-  const filteredUsers = users.filter(user => {
-    if (roleFilter === "all") return true;
-    return user.role === roleFilter;
-  });
+
+
+
+  const filteredUsers = users
+    .filter((user) => {
+      if (roleFilter === "all") return true;
+      return user.role === roleFilter;
+    })
+    .filter((user) => {
+      const fullName = `${user.first_name} ${user.last_name}`.toLowerCase();
+      return fullName.includes(searchQuery.toLowerCase());
+    })
+    .sort((a, b) => {
+      const nameA = `${a.first_name} ${a.last_name}`.toLowerCase();
+      const nameB = `${b.first_name} ${b.last_name}`.toLowerCase();
+      return sortOrderAsc ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+    });
+
+
+
+  const visibleUsers = filteredUsers.slice(0, entriesPerPage);
   const handleToggleStatus = async () => {
-  try {
-    const updatedUser = await userService.toggleUserStatus(selectedUser.id, selectedUser.is_active);
-    setSelectedUser(updatedUser);
-  } catch (error) {
-    console.error("Failed to toggle user status:", error);
-  }
-};
+    try {
+      const updatedUser = await userService.toggleUserStatus(selectedUser.id, selectedUser.is_active);
+      setSelectedUser(updatedUser);
+    } catch (error) {
+      console.error("Failed to toggle user status:", error);
+    }
+  };
 
 
 
@@ -59,21 +80,55 @@ export default function Users({ users = [], setUsers = () => {} }) {
 
   const handleEdit = (user) => {
     navigate("/userform", { state: { user, editMode: true } });
+  }; const handleDisable = async (user) => {
+    try {
+      const updatedUser = await userService.toggleUserStatus(user.id, user.is_active);
+      // Update users state with the updated user status
+      setUsers((prevUsers) =>
+        prevUsers.map((u) => (u.id === updatedUser.id ? updatedUser : u))
+      );
+      // Close the dropdown menu
+      setOpenMenuIndex(null);
+
+      // If the toggled user is the selectedUser (modal), update it too
+      if (selectedUser && selectedUser.id === updatedUser.id) {
+        setSelectedUser(updatedUser);
+      }
+    } catch (error) {
+      console.error("Failed to toggle user status:", error);
+    }
   };
 
+
+
+
   return (
-    <div className="w-full max-w-7xl mx-auto p-4 h-full relative">
-      <div className="bg-white rounded-xl shadow-sm p-0 h-full flex flex-col">
+    <div className="w-full max-w-7xl mx-auto overflow-y-auto p-4 h-full relative">
+      <div className="bg-white rounded-xl shadow-sm overflow-y-auto p-0 h-full flex flex-col">
         {/* Header */}
         <div className="flex justify-between items-center p-4">
           <h2 className="text-xl font-semibold text-[#000]">Manage Users</h2>
-          <Button
-            className="bg-[#005e0e] hover:bg-[#033e0c] text-white px-5 py-2 rounded-md"
-            onClick={() => navigate("/userform")}
-          >
-            + Add User
-          </Button>
+          <div className="flex gap-2">
+            {[
+              { label: "All", value: "all" },
+              { label: "Security", value: "security" },
+              { label: "Resident", value: "tenant" },
+
+            ].map((role) => (
+              <Button
+                key={role.value}
+                className={`px-5 py-2 rounded-md text-white ${roleFilter === role.value
+                  ? "bg-[#005e0e]"
+                  : "bg-[#005e0e] hover:[#005e0e]"
+                  }`}
+                onClick={() => setRoleFilter(role.value)}
+              >
+                {role.label}
+              </Button>
+            ))}
+          </div>
         </div>
+
 
         <div className="border-t border-gray-300 w-full" />
 
@@ -82,39 +137,75 @@ export default function Users({ users = [], setUsers = () => {} }) {
           <div className="flex items-center gap-2 text-sm text-gray-600">
             Show
             <div className="relative">
-              <select className="border border-gray-300 rounded-md px-3 py-2 bg-white pr-8 appearance-none">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
+              <select
+                className="border border-gray-300 rounded-md px-3 py-2 bg-white pr-8 appearance-none"
+                value={entriesPerPage}
+                onChange={(e) => setEntriesPerPage(Number(e.target.value))}
+              >
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={25}>25</option>
+                <option value={50}>50</option>
               </select>
               <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
             </div>
             entries
           </div>
 
-          <div className="relative text-sm text-gray-600">
-            <select
-              className="border border-gray-300 rounded-md px-3 py-2 bg-white pr-8 appearance-none"
-              value={roleFilter}
-              onChange={(e) => setRoleFilter(e.target.value)}
-            >
-              <option value="all">All</option>
-              <option value="tenant">Resident</option>
-              <option value="security">Security</option>
-              <option value="admin">Admin</option>
-            </select>
-            <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+          <div className="text-sm text-gray-600 flex gap-4 items-center">
+            {roleFilter === "all" && (
+              <div className="relative w-full max-w-sm">
+                <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                  <img src="/search-icon.svg" alt="Search Icon" className="w-3 h-3" />
+                </div>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  placeholder="Search"
+                  className="border border-gray-300 rounded-md pl-10 pr-3 py-2 w-full"
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+            )}
+
+            {roleFilter === "tenant" && (
+              <button
+                className="bg-[#005e0e] text-white px-4 py-2 rounded-md hover:bg-green-700 flex items-center gap-2"
+                onClick={() => navigate("/userform", { state: { role: "tenant" } })}
+              >
+                <img src="/plus-visitors.svg" alt="Add" className="w-5 h-5" />
+                Add Resident
+              </button>
+            )}
+
+            {roleFilter === "security" && (
+              <button
+                className="bg-[#005e0e] text-white px-4 py-2 rounded-md hover:bg-green-700 flex items-center gap-2"
+                onClick={() => navigate("/userform", { state: { role: "security" } })}
+              >
+                <img src="/plus-visitors.svg" alt="Add" className="w-5 h-5" />
+                Add Security
+              </button>
+            )}
           </div>
+
         </div>
 
+
         {/* Table */}
-        <div className="flex-1 overflow-y-auto px-4">
+        <div className="px-4 overflow-y-auto max-h-[500px]">
+
           <Table>
             <TableHeader>
               <TableRow>
                 {/* <TableHead>Photo</TableHead> */}
-                <TableHead>Name</TableHead>
+                <TableHead className="cursor-pointer select-none" onClick={() => setSortOrderAsc(!sortOrderAsc)}>
+                  <div className="flex items-center gap-1">
+                    Name
+                    <i className={`bx ${sortOrderAsc ? "bx-sort-a-z" : "bx-sort-z-a"} text-gray-500`}></i>
+                  </div>
+                </TableHead>
+
                 <TableHead />
                 <TableHead>Phone</TableHead>
                 <TableHead>Role</TableHead>
@@ -125,12 +216,12 @@ export default function Users({ users = [], setUsers = () => {} }) {
             </TableHeader>
 
             <TableBody>
-              {filteredUsers.map((user, index) => (
+              {visibleUsers.map((user, index) => (
                 <TableRow
                   key={index}
                   className={index % 2 === 0 ? "bg-[#f2f7f3]" : ""}
                 >
-                {/* <TableCell>
+                  {/* <TableCell>
                   {user.profile_picture ? (
                     <img
                       src={user.profile_picture}
@@ -189,6 +280,14 @@ export default function Users({ users = [], setUsers = () => {} }) {
                           >
                             Edit
                           </li>
+                          <li
+                            className={`px-4 py-2 hover:bg-gray-100 cursor-pointer ${user.is_active ? "" : "text-green-600"
+                              }`}
+                            onClick={() => handleDisable(user)}
+                          >
+                            {user.is_active ? "Disable" : "Enable"}
+                          </li>
+
                           <li className="px-4 py-2 hover:bg-red-50 text-red-600 cursor-pointer" onClick={() => {
                             setUserToDelete(user);
                             setShowDeleteModal(true);
@@ -196,6 +295,8 @@ export default function Users({ users = [], setUsers = () => {} }) {
                           }}>
                             Delete
                           </li>
+
+
                         </ul>
                       </div>
                     )}
@@ -207,22 +308,23 @@ export default function Users({ users = [], setUsers = () => {} }) {
         </div>
       </div>
 
-      
+
 
       {/* View Modal */}
-      {showModal && selectedUser && (
-        <div className="absolute top-20 right-8 bg-white border border-gray-300 shadow-lg rounded-lg w-[400px] z-50 p-6">
-          <button
-            onClick={() => setShowModal(false)}
-            className="absolute top-4 right-4 text-gray-500 hover:text-black"
-          >
-            <X className="w-6 h-6" />
-          </button>
+      {
+        showModal && selectedUser && (
+          <div className="absolute top-20 right-8 bg-white border border-gray-300 shadow-lg rounded-lg w-[400px] z-50 p-6">
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-black"
+            >
+              <X className="w-6 h-6" />
+            </button>
 
-          <div className="flex flex-col gap-8">
-            {/* Header */}
-            <div className="flex items-center gap-6 border-b pb-4">
-              {selectedUser.profile_picture ? (
+            <div className="flex flex-col gap-8">
+              {/* Header */}
+              <div className="flex items-center gap-6 border-b pb-4">
+                {selectedUser.profile_picture ? (
                   <img
                     src={selectedUser.profile_picture}
                     alt={`${selectedUser.first_name} ${selectedUser.last_name}`}
@@ -235,145 +337,146 @@ export default function Users({ users = [], setUsers = () => {} }) {
                   </div>
                 )}
 
+                <div>
+                  <h2 className="text-xl font-bold text-gray-700">
+                    {selectedUser.first_name} {selectedUser.last_name}
+                  </h2>
+                  <div className="flex gap-6 mt-4 text-sm text-gray-700">
+                    <div>
+                      <div>Phone</div>
+                      <div>Role</div>
+                    </div>
+                    <div>
+                      <div>:</div>
+                      <div>:</div>
+                    </div>
+                    <div>
+                      <div>{selectedUser.phone_number || "No Phone"}</div>
+                      <div>{selectedUser.role}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact Info */}
               <div>
-                <h2 className="text-xl font-bold text-gray-700">
-                  {selectedUser.first_name} {selectedUser.last_name}
-                </h2>
-                <div className="flex gap-6 mt-4 text-sm text-gray-700">
+                <h3 className="text-green-800 font-bold mb-2">
+                  Contact Information
+                </h3>
+                <div className="flex gap-12 text-sm text-gray-700">
                   <div>
-                    <div>Phone</div>
-                    <div>Role</div>
+                    <div>Email</div>
+                    <div>ID No</div>
                   </div>
                   <div>
                     <div>:</div>
                     <div>:</div>
                   </div>
                   <div>
-                    <div>{selectedUser.phone_number || "No Phone"}</div>
-                    <div>{selectedUser.role}</div>
+                    <div>{selectedUser.email}</div>
+                    <div>{selectedUser.id_number || "N/A"}</div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Contact Info */}
-            <div>
-              <h3 className="text-green-800 font-bold mb-2">
-                Contact Information
-              </h3>
-              <div className="flex gap-12 text-sm text-gray-700">
-                <div>
-                  <div>Email</div>
-                  <div>ID No</div>
-                </div>
-                <div>
+              {/* Status */}
+              <div>
+                <h3 className="text-green-800 font-bold mb-2">Account Status</h3>
+                <div className="flex gap-12 items-center text-sm text-gray-700">
+                  <div>Current Status</div>
                   <div>:</div>
-                  <div>:</div>
-                </div>
-                <div>
-                  <div>{selectedUser.email}</div>
-                  <div>{selectedUser.id_number || "N/A"}</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Status */}
-            <div>
-              <h3 className="text-green-800 font-bold mb-2">Account Status</h3>
-              <div className="flex gap-12 items-center text-sm text-gray-700">
-                <div>Current Status</div>
-                <div>:</div>
-                <div
-                  className={`${
-                    selectedUser.is_active
+                  <div
+                    className={`${selectedUser.is_active
                       ? "bg-green-100 text-green-800"
                       : "bg-red-100 text-red-800"
-                  } px-2 py-1 rounded text-sm w-[90px] text-center`}
-                >
-                  {selectedUser.is_active ? "Active" : "Inactive"}
+                      } px-2 py-1 rounded text-sm w-[90px] text-center`}
+                  >
+                    {selectedUser.is_active ? "Active" : "Inactive"}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Buttons */}
-            <div className="flex gap-4">
-              <button
-                onClick={handleToggleStatus}
-                className={`border px-6 py-2 rounded font-semibold ${
-                  selectedUser?.is_active
+              {/* Buttons */}
+              <div className="flex gap-4">
+                <button
+                  onClick={handleToggleStatus}
+                  className={`border px-6 py-2 rounded font-semibold ${selectedUser?.is_active
                     ? "border-red-600 text-red-600 hover:bg-red-100"
                     : "border-green-600 text-green-600 hover:bg-green-100"
-                }`}
-              >
-                {selectedUser?.is_active ? "DISABLE" : "ENABLE"}
-              </button>
+                    }`}
+                >
+                  {selectedUser?.is_active ? "DISABLE" : "ENABLE"}
+                </button>
 
+                <button
+                  className="bg-red-600 text-white px-6 py-2 rounded shadow"
+                  onClick={() => {
+                    setUserToDelete(selectedUser);
+                    setShowModal(false);
+                    setShowDeleteModal(true);
+                  }}
+                >
+                  DELETE
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      }
+
+      {
+        showDeleteModal && userToDelete && (
+          <div className="absolute top-24 right-8 bg-white rounded-xl border shadow-lg p-6 w-[300px] z-50 flex flex-col items-center gap-6">
+            <div className="bg-[#fee9e7] p-2 rounded-full">
+              <img
+                src="/material-symbols-light-warning-outline-rounded0.svg"
+                alt="Warning"
+                className="w-6 h-6"
+              />
+            </div>
+            <p className="text-center text-sm text-black">
+              Are you sure you want to delete{" "}
+              <strong>
+                {userToDelete.first_name} {userToDelete.last_name}
+              </strong>
+              ?<br />
+              This action is irreversible.
+            </p>
+            <div className="w-full flex flex-col gap-3">
               <button
-                className="bg-red-600 text-white px-6 py-2 rounded shadow"
-                onClick={() => {
-                  setUserToDelete(selectedUser);
-                  setShowModal(false);
-                  setShowDeleteModal(true);
+                onClick={async () => {
+                  try {
+                    // Call your delete API
+                    await userService.deleteUser(userToDelete.id);
+
+                    // Update local state
+                    setUsers((prev) =>
+                      prev.filter((u) => u.id !== userToDelete.id)
+                    );
+
+                    // Close modal
+                    setShowDeleteModal(false);
+                    setUserToDelete(null);
+                  } catch (error) {
+                    console.error("Failed to delete user:", error);
+                    alert("Something went wrong while deleting the user.");
+                  }
                 }}
+                className="bg-[#e61c11] text-white w-full py-2 rounded shadow"
               >
-                DELETE
+                DELETE USER
+              </button>
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="border border-[#0a5b60] text-black w-full py-2 rounded"
+              >
+                CANCEL
               </button>
             </div>
           </div>
-        </div>
-      )}
+        )
+      }
 
-      {showDeleteModal && userToDelete && (
-        <div className="absolute top-24 right-8 bg-white rounded-xl border shadow-lg p-6 w-[300px] z-50 flex flex-col items-center gap-6">
-          <div className="bg-[#fee9e7] p-2 rounded-full">
-            <img
-              src="/material-symbols-light-warning-outline-rounded0.svg"
-              alt="Warning"
-              className="w-6 h-6"
-            />
-          </div>
-          <p className="text-center text-sm text-black">
-            Are you sure you want to delete{" "}
-            <strong>
-              {userToDelete.first_name} {userToDelete.last_name}
-            </strong>
-            ?<br />
-            This action is irreversible.
-          </p>
-          <div className="w-full flex flex-col gap-3">
-            <button
-              onClick={async () => {
-                try {
-                  // Call your delete API
-                  await userService.deleteUser(userToDelete.id);
-
-                  // Update local state
-                  setUsers((prev) =>
-                    prev.filter((u) => u.id !== userToDelete.id)
-                  );
-
-                  // Close modal
-                  setShowDeleteModal(false);
-                  setUserToDelete(null);
-                } catch (error) {
-                  console.error("Failed to delete user:", error);
-                  alert("Something went wrong while deleting the user.");
-                }
-              }}
-              className="bg-[#e61c11] text-white w-full py-2 rounded shadow"
-            >
-              DELETE USER
-            </button>
-            <button
-              onClick={() => setShowDeleteModal(false)}
-              className="border border-[#0a5b60] text-black w-full py-2 rounded"
-            >
-              CANCEL
-            </button>
-          </div>
-        </div>
-      )}
-
-    </div>
+    </div >
   );
 }
