@@ -17,6 +17,8 @@ export const useVisitorForm = () => {
     full_name: "",
     phone_number: "",
     email: "",
+    id: "",
+    photo: null,
     visit_date: "",
     plate_number: "",
     visitor_type: "visitor",
