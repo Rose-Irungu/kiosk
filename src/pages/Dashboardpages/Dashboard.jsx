@@ -74,7 +74,7 @@ const Dashboard = () => {
           }
         />
         <Card1
-          cardTitle="Active Incidents"
+          cardTitle="Unresolved Incidents"
           count={loading ? "..." : stats?.incidents_in_progress?.total || 0}
           link="View details"
           linkHref="/incident_report"
