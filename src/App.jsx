@@ -8,6 +8,8 @@ import {
   securityRoutes,
   tenantRoutes
 } from "./routes/routeConfig";
+import VisitorDetails from "./pages/Dashboardpages/VisitorDetails";
+import EditVisitor from "./pages/Dashboardpages/EditVisitor";
 
 
 const App = () => {
@@ -73,6 +75,9 @@ const App = () => {
           />
 
           <Route path="*" element={<ErrorPage />} />
+          <Route path= '/viewvisitor' element= {<VisitorDetails />} />
+          <Route path= '/editvisitor' element= {<EditVisitor />} />
+          
         </Routes>
       </Router>
 
