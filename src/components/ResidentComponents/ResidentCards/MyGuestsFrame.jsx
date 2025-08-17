@@ -33,7 +33,7 @@ const MyGuestsFrame = () => {
   const handleApproveVisit = async (visitId) => {
     try {
       await approveVisit(visitId);
-      // ✅ Refresh guest list
+
       setGuestList((prev) =>
         prev.map((g) => g.visit_id === visitId ? { ...g, status: 'approved' } : g)
       );
@@ -45,7 +45,7 @@ const MyGuestsFrame = () => {
   const handleCancelVisit = async (visitId) => {
     try {
       await cancelVisit(visitId);
-      // ✅ Refresh guest list
+      
       setGuestList((prev) =>
         prev.map((g) => g.visit_id === visitId ? { ...g, status: 'cancelled' } : g)
       );
@@ -66,7 +66,8 @@ const MyGuestsFrame = () => {
           <h2 className="text-green-900 text-2xl font-semibold">My Guests</h2>
         </div>
         <button
-          onClick={() => navigate('/guestform')}
+          onClick={() => window.open(`${window.location.origin}/guestform`, '_blank')}
+
           className="bg-green-600 shadow-md rounded-md flex items-center gap-1 px-3 py-1"
         >
           <img src="/ic-round-plus0.svg" className="w-6 h-6" />

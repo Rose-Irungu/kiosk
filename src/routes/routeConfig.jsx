@@ -102,8 +102,8 @@ import UserForm from "../components/forms/form";
 
 
 export const publicRoutes = [
-    {path: '/landingpage', element: <LandingPage />},
-    { path: '/', element: <Home /> },
+    {path: '/', element: <LandingPage />},
+    { path: '/home', element: <Home /> },
     { path: '/intro', element: <Intro /> },
     { path: '/loginform', element: <LoginForm /> },
     { path: '/registrationform', element: <RegistrationForm /> },
