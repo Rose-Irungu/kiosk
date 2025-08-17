@@ -171,7 +171,7 @@ export default function Users({ users = [], setUsers = () => { } }) {
             {roleFilter === "tenant" && (
               <button
                 className="bg-[#005e0e] text-white px-4 py-2 rounded-md hover:bg-green-700 flex items-center gap-2"
-                onClick={() => navigate("/userform", { state: { role: "tenant" } })}
+                onClick={() => navigate("/residentregistration", { state: { role: "tenant" } })}
               >
                 <img src="/plus-visitors.svg" alt="Add" className="w-5 h-5" />
                 Add Resident
@@ -181,7 +181,7 @@ export default function Users({ users = [], setUsers = () => { } }) {
             {roleFilter === "security" && (
               <button
                 className="bg-[#005e0e] text-white px-4 py-2 rounded-md hover:bg-green-700 flex items-center gap-2"
-                onClick={() => navigate("/userform", { state: { role: "security" } })}
+                onClick={() => navigate("/securityregistration", { state: { role: "security" } })}
               >
                 <img src="/plus-visitors.svg" alt="Add" className="w-5 h-5" />
                 Add Security

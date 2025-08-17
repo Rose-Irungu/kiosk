@@ -7,6 +7,8 @@ import Error from "../pages/Error";
 import Welcomeback from "../pages/Welcomeback";
 import LoginForm from "../components/forms/LoginForm";
 import RegistrationForm from "../components/forms/RegistrationForm";
+import ResidentRegistration from "../components/forms/ResidentRegistration";
+import SecurityRegistration from "../components/forms/SecurityRegistration";
 import ForgotPassword from "../components/forms/ForgotPassword";
 import ForgotPasswordError from "../components/forms/ForgotPasswordError";
 import ResetEmail from "../components/forms/ResetEmail";
@@ -146,6 +148,10 @@ export const adminRoutes = [
     { path: '/help', element: <HelpPage /> },
     { path: '/facilityprofile', element: <FacilityProfilePage /> },
     { path: '/userform', element: <UserForm />},
+    { path: '/residentregistration', element: <ResidentRegistration />},
+     { path: '/securityregistration', element: <SecurityRegistration />},
+    
+
 
     // Admin-only utilities
     { path: '/visitors', element: <Visitors /> },
