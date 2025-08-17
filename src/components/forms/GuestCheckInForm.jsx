@@ -165,7 +165,7 @@ ${formData?.host_name || "a resident"} has sent you an invite link to West Brook
                           value={formData[key] || ""}
                           onChange={(e) => {
                             if ((key === "phone_number" || key === "id") && e.target.value !== "") {
-                              if (!/^[0-9]*$/.test(e.target.value)) return; // only numbers
+                              if (!/^[0-9]*$/.test(e.target.value)) return; 
                             }
                             handleInputChange(key, e.target.value);
                           }}
