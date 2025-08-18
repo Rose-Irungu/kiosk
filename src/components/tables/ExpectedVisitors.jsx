@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useExpectedVisitors } from "../../hooks/useExpectedVisitors";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
 import { Upload, ChevronDown, MoreHorizontal } from "lucide-react";
 
 export default function ExpectedVisitors() {
@@ -17,11 +18,11 @@ export default function ExpectedVisitors() {
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage, setEntriesPerPage] = useState(5);
   const [visitorTypeFilter, setVisitorTypeFilter] = useState("all");
-  const [openDropdown, setOpenDropdown] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(null);
+  const dropdownRef = useRef(null);
 
   const navigate = useNavigate();
 
-  
   const filteredVisitors =
     visitorTypeFilter === "all"
       ? expectedVisitors
@@ -35,26 +36,33 @@ export default function ExpectedVisitors() {
     startIndex + entriesPerPage
   );
 
-  const handleAction = (action, e, index) => {
-    e.stopPropagation();
-    const visitor = currentVisitors[index];
-    console.log(`Action "${action}" on visitor:`, visitor);
-    setOpenDropdown(null);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-    if (action === "View" && visitor) {
-      
-      navigate("/view", { state: { visitor } });
-    }
+  const toggleDropdown = (index) => {
+    setDropdownOpen(dropdownOpen === index ? null : index);
   };
 
-
   const handleExportCSV = () => {
-    const headers = ["Name", "Phone", "Visitor Type", "Host/Unit", "Visit Date"];
+    const headers = [
+      "Name",
+      "Phone",
+      "Visitor Type",
+      "Host/Unit",
+      "Visit Date",
+    ];
     const rows = filteredVisitors.map((v) => [
-      v.full_name || "N/A", 
+      v.full_name || "N/A",
       v.phone_number || "N/A",
       v.visitor_type || "N/A",
-      v.unit_number || "N/A", 
+      v.unit_number || "N/A",
       v.visit_date || "N/A",
     ]);
 
@@ -70,12 +78,12 @@ export default function ExpectedVisitors() {
     link.click();
     document.body.removeChild(link);
   };
-  
 
   return (
     <>
-      <div className="w-full max-w-7xl mx-auto bg-white  rounded-xl shadow-sm mt-5">
-        <div className="flex justify-between items-center overflow-y-auto p-6 mb-4 border-b border-[rgba(0,0,0,0.3)]">
+      <div className="w-full max-w-7xl mx-auto bg-white rounded-xl shadow-sm mt-5">
+        {/* Header */}
+        <div className="flex justify-between items-center p-6 mb-4 border-b border-[rgba(0,0,0,0.3)]">
           <h2 className="text-2xl font-semibold">Expected Visitors</h2>
           <button
             onClick={handleExportCSV}
@@ -86,6 +94,7 @@ export default function ExpectedVisitors() {
           </button>
         </div>
 
+        {/* Filters */}
         <div className="flex justify-between items-center px-6">
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-600">Show</span>
@@ -98,10 +107,11 @@ export default function ExpectedVisitors() {
                   setCurrentPage(1);
                 }}
               >
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
+                {[5, 10, 25, 50].map((value) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
               </select>
               <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
             </div>
@@ -126,7 +136,7 @@ export default function ExpectedVisitors() {
           </div>
         </div>
 
-        
+        {/* Table */}
         <div className="p-4">
           <Table>
             <TableHeader>
@@ -135,54 +145,59 @@ export default function ExpectedVisitors() {
                 <TableHead>Phone No.</TableHead>
                 <TableHead>Visit Unit</TableHead>
                 <TableHead>Visitor Type</TableHead>
-                <TableHead>Visit Date</TableHead>                
-                {/* <TableHead>Action</TableHead> */}
+                <TableHead>Visit Date</TableHead>
+                <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={7}>
-                    <div className="text-center text-gray-500 py-10">
-                      Loading...
-                    </div>
+                  <TableCell
+                    colSpan={6}
+                    className="text-center text-gray-500 py-10"
+                  >
+                    Loading...
                   </TableCell>
                 </TableRow>
               ) : currentVisitors.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7}>
-                    <div className="text-center text-gray-500 py-10">
-                      No visitors found.
-                    </div>
+                  <TableCell
+                    colSpan={6}
+                    className="text-center text-gray-500 py-10"
+                  >
+                    No visitors found.
                   </TableCell>
                 </TableRow>
               ) : (
-              currentVisitors.map((visitor, index) => (
+                currentVisitors.map((visitor, index) => (
                   <TableRow key={visitor.id || index}>
                     <TableCell className="font-medium">
                       {visitor.full_name || "N/A"}
                     </TableCell>
                     <TableCell>{visitor.phone_number || "N/A"}</TableCell>
                     <TableCell>{visitor.unit_number || "N/A"}</TableCell>
-                    <TableCell>
-                      <span className="capitalize">{visitor.visitor_type || "N/A"}</span>
+                    <TableCell className="capitalize">
+                      {visitor.visitor_type || "N/A"}
                     </TableCell>
                     <TableCell>{visitor.visit_date || "N/A"}</TableCell>
-                  
-                    <TableCell className="relative dropdown-parent">
-                      {/* <MoreHorizontal
+                    <TableCell className="relative">
+                      <MoreHorizontal
                         className="cursor-pointer text-muted-foreground"
                         onClick={() => toggleDropdown(index)}
-                      /> */}
-                      {openDropdown === index && (
-                        <div className="absolute right-0 mt-2 w-36 bg-white border rounded shadow z-20">
+                      />
+                      {dropdownOpen === index && (
+                        <div
+                          ref={dropdownRef}
+                          className="absolute right-0 z-10 mt-2 w-28 bg-white border rounded shadow-lg"
+                        >
                           <button
-                            onClick={(e) => handleAction("View", e, index)}
+                           onClick={() =>
+                              navigate("/view", { state: { visitor } })
+                            }
                             className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                           >
                             View
-                          </button>                        
-                        
+                          </button>
                         </div>
                       )}
                     </TableCell>
@@ -194,28 +209,28 @@ export default function ExpectedVisitors() {
         </div>
       </div>
 
-      <div className="mt-4 flex flex-col sm:flex-row items-center justify-between w-full px-4 h-auto sm:h-12 gap-2 sm:gap-0">
-        <div className="flex items-center gap-2 w-full sm:w-auto">
+      {/* Pagination */}
+      <div className="mt-4 flex flex-col sm:flex-row items-center justify-between w-full px-4 gap-4">
+        <div className="flex items-center gap-2">
           <button
             onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
             disabled={currentPage === 1}
-            className="h-12 flex items-center justify-center px-6 py-2 border border-[#005E0E] rounded-lg bg-white text-[#005E0E] hover:bg-[#f4fdf5] transition disabled:opacity-50"
+            className="h-12 px-6 border border-[#005E0E] rounded-lg bg-white text-[#005E0E] hover:bg-[#f4fdf5] disabled:opacity-50"
           >
             Previous
           </button>
-          <button className="w-14 h-12 flex items-center justify-center bg-[#005E0E] text-white rounded-lg hover:bg-[#004a0b] transition">
+          <span className="w-14 h-12 flex items-center justify-center bg-[#005E0E] text-white rounded-lg">
             {currentPage}
-          </button>
+          </span>
           <button
             onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
             disabled={currentPage === totalPages}
-            className="h-12 flex items-center justify-center px-6 py-2 border border-[#005E0E] rounded-lg bg-white text-[#005E0E] hover:bg-[#f4fdf5] transition disabled:opacity-50"
+            className="h-12 px-6 border border-[#005E0E] rounded-lg bg-white text-[#005E0E] hover:bg-[#f4fdf5] disabled:opacity-50"
           >
             Next
           </button>
         </div>
-
-        <div className="text-sm text-gray-600 mt-4 sm:mt-0">
+        <div className="text-sm text-gray-600">
           Showing {startIndex + 1} to{" "}
           {Math.min(startIndex + entriesPerPage, totalEntries)} of{" "}
           {totalEntries} entries
