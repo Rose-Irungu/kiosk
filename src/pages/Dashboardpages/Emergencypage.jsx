@@ -5,7 +5,6 @@ import Card4 from "../../components/Card4";
 import EmergencyStatsChart from "../../components/Chart2";
 import EmergencyTable from "../../components/tables/Emergencies";
 import Layout from "../../components/layout/Layout";
-import { useLocation } from "react-router-dom";
 import {
   fetchEmergencies,
   updateEmergency,
@@ -20,7 +19,7 @@ export default function Emergencypage() {
   const [error, setError] = useState(null);
   const [timeFilter, setTimeFilter] = useState("This Week");
 
-  const location = useLocation();
+
 
 
 
