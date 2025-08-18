@@ -14,6 +14,7 @@ export default function SecurityIncidentPage() {
         const incidents = response.data || response;  
         
         setIncidentData(incidents);
+        console.log(response)
       } catch (error) {
         console.error("Error fetching incident data:", error);
       } finally {

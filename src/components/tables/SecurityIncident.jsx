@@ -195,9 +195,9 @@ export default function SecurityIncidentTable({ incidentReports = [] }) {
         <div>
           <h3 className="text-lg font-medium mb-2">Photo</h3>
           <div className="bg-gray-100 rounded overflow-hidden aspect-square flex items-center justify-center">
-            {selected.photo_url ? (
+            {selected.incident_image_url ? (
               <img
-                src={selected.photo_url}
+                src={selected.incident_image_url}
                 alt="Incident"
                 className="object-cover "
               />

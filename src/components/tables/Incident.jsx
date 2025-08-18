@@ -137,6 +137,7 @@ export default function IncidentTable({ incidentReports = [] }) {
                 </TableCell>
               </TableRow>
             ))}
+            <TableRow className="h-30"></TableRow>
           </TableBody>
         </Table>
       </div>
@@ -199,12 +200,12 @@ export default function IncidentTable({ incidentReports = [] }) {
                 </div>
               </div>
 
-              <div>
-                <h3 className="text-lg font-medium mb-2">Photo</h3>
-                <div className="bg-gray-100 rounded overflow-hidden aspect-square flex items-center justify-center">
-                  {selected.photo_url ? (
+              <div className="p-2">
+                <h3 className="text-lg font-medium mb-2 p-1">Photo</h3>
+                <div className="bg-gray-100 rounded w-32 h-32 overflow-hidden aspect-square flex items-center justify-center">
+                  {selected.incident_image_url ? (
                     <img
-                      src={selected.photo_url}
+                      src={selected.incident_image_url}
                       alt="Incident"
                       className="object-cover "
                     />
