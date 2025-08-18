@@ -19,7 +19,7 @@ export default function ModalDash({callback1, callback2}) {
                 Cancel
             </button>
             <button className='w-[133.5px] h-[40px] rounded-[8px] py-[10px] px-[24px] gap-[10px] bg-[#005E0E]
-                               font-inter font-normal text-[13px] leading-[20px] text-center text-[#000000]'
+                               font-inter font-normal text-[13px] leading-[20px] text-center text-[#FFFFFF]'
                     onClick={()=>callback2()}>
                 Submit
             </button>
