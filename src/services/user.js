@@ -23,16 +23,6 @@ export const userService = {
     }
   },
 
-   addSecurity: async (formData) => {
-    try {
-      const response = await api.post(API_ENDPOINTS.ADD_SECURITY, formData);
-      return response.data;
-    } catch (error) {
-      console.error("Error adding security:", error);
-      throw error;
-    }
-  },
-
 
   deleteUser: async (userId) => {
     try {
