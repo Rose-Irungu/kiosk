@@ -31,7 +31,7 @@ function ResidentDashboard() {
           <MyGuestsFrame/>
         </div>
         <div className='flex flex-col w-full h-[341px] rounded-[12px] py-[12px] px-[8px] gap-[18px] bg-[#E6FBE9]'>
-          {loading? (<NoteP/>) : (<Favorites guests={visitors}/>)}
+          {loading? (<NoteP text={"Loading..."}/>) : (<Favorites guests={visitors}/>)}
         </div>
      </div>
      </ResidentLayout>
