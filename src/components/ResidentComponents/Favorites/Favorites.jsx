@@ -15,12 +15,13 @@ export default function Favorites({guests}) {
                type="text" 
         />
         <div className='flex flex-col w-full h-[301px] gap-[16px] overflow-y-scroll'>
-            {/* {guests.length === 0 ? (<NoteP text={"No favorite guests"}/>) : 
-                (guests.map((guest, index)=>{
-                    return <FavoriteCard key={index} img={guest.img} name={guest.name} time={guest.time}/>
+            {guests.length === 0 ? (<div className='flex flex-col items-center justify-center'>
+                                        <NoteP text={"No favorite guests"}/>
+                                    </div>) : 
+                (guests.map((guest)=>{
+                    return <FavoriteCard key={guest.visit_id} img={guest.image} name={guest.visitor_name} time={guest.latest_time}/>
                 })
-            )} */}
-            <FavoriteCard img={"/mshale.svg"} name={"Mngori Mnare"} phone={"0759736096"} email={"blah@blah.com"}/>
+            )}
         </div>
     </div>
   );
