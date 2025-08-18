@@ -11,7 +11,11 @@ import {
 import { MoreHorizontal } from "lucide-react";
 import { Label } from "recharts";
 
-export function EmergencyTable({ 
+//components
+import ModalDash from "../extras/ModalDash";
+
+export function EmergencyTable({
+  submitEmergencyFeedback, 
   events = [], 
   onStatusChange,
   isLoading = false,
@@ -23,6 +27,19 @@ export function EmergencyTable({
 }) {
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  
+  //function to close the resolve modal
+  const handleCancel = () => {
+    setShowModal(false);
+  };
+
+  //function to submit feedback
+  const submitFeedback = () =>{
+    submitEmergencyFeedback();
+    console.log('Feedback submitted successfully');
+    setShowModal(false);
+  };
 
   const toggleDropdown = (index) => {
     setOpenDropdown((prev) => (prev === index ? null : index));
@@ -160,11 +177,16 @@ export function EmergencyTable({
                   {openDropdown === index && (
                     <div className="absolute right-0 mt-2 w-36 bg-white border rounded shadow z-20">
                       <button
-                        onClick={() => handleAction("Resolved", event, index)}
+                        onClick={() => setShowModal(true)}
                         className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                       >
-                        Resolved
+                        Resolve
                       </button>
+                      {showModal && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-black/40">
+                          <ModalDash callback1={handleCancel} callback2={submitFeedback} />
+                        </div>
+                      )}                      
                       <button
                         onClick={() => handleAction("Unresolved", event, index)}
                         className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
