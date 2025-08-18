@@ -25,6 +25,9 @@ export default function LiveLogsTable({
   isLoading = false,
   title = "Expected Visitors",
   entriesPerPage = 5,
+  callback2,
+  callback3,
+  callback4
 }) {
   const [currentPage/*, setCurrentPage*/] = useState(1);
   const [dropdownOpen, setDropdownOpen] = useState(null);
@@ -121,14 +124,30 @@ export default function LiveLogsTable({
                         <MoreHorizontal className="h-5 w-5 text-gray-600" />
                       </button>
                       {dropdownOpen === index && (
-                        <div className="absolute right-0 z-10 mt-2 w-28 bg-white border rounded shadow-lg">
+                        <div className="absolute right-0 mt-2 w-28 bg-white border rounded shadow-lg z-50">
                           <button
-                            onClick={() =>
-                              navigate("/view", { state: { visitor } })
-                            }
+                            onClick={() => navigate("/view", { state: { visitor } })}
                             className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                           >
                             View
+                          </button>
+                          <button
+                            className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                            onClick={() => callback2()}
+                          >
+                            Check In
+                          </button>
+                          <button
+                            className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                            onClick={() => callback3()}
+                          >
+                            Check Out
+                          </button>
+                          <button
+                            className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                            onClick={() => callback4()}
+                          >
+                            Report
                           </button>
                         </div>
                       )}

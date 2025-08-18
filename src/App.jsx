@@ -1,28 +1,84 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ErrorPage from "./pages/Error";
 import { Toaster } from "react-hot-toast";
+import React, { useEffect, useRef, useState } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 import {
-  publicRoutes, 
+  publicRoutes,
   adminRoutes,
   securityRoutes,
-  tenantRoutes
+  tenantRoutes,
 } from "./routes/routeConfig";
+import VisitorDetails from "./pages/Dashboardpages/VisitorDetails";
+import EditVisitor from "./pages/Dashboardpages/EditVisitor";
 
 
 const App = () => {
+  const [alarmActive, setAlarmActive] = useState(false);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    const socket = new WebSocket("wss://guestapi.zynamis.co.ke/ws/emergency/");
+
+    socket.onopen = () => {
+      console.log("WebSocket connection opened");
+    };
+
+    socket.onmessage = (event) => {
+      try {
+        const message = JSON.parse(event.data);
+
+        if (message.event === "sos_alert") {
+          const shouldPlay = message.actions?.play_sound === true;
+          setAlarmActive(shouldPlay);
+        }
+
+        if (
+          message.event === "stop_sos_alert" ||
+          message.data?.emergency_status === "resolved"
+        ) {
+          setAlarmActive(false); // stop alarm when alert is resolved
+        }
+      } catch (err) {
+        console.error("WebSocket message error:", err);
+      }
+    };
+
+    socket.onerror = (err) => {
+      console.error("WebSocket error:", err);
+    };
+
+    socket.onclose = () => {
+      console.warn("WebSocket closed");
+    };
+
+    return () => {
+      socket.close();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!audioRef.current) return;
+
+    if (alarmActive) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch((err) => {
+        console.error("Autoplay error:", err);
+      });
+    } else {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  }, [alarmActive]);
 
   return (
     <>
+      <audio ref={audioRef} src="/sounds/fire_alarm.mp3" preload="auto" loop />
       <Router>
         <Routes>
           {/* Public Routes */}
           {publicRoutes.map((route, index) => (
-            <Route
-              key={index}
-              path={route.path}
-              element={route.element}
-            />
+            <Route key={index} path={route.path} element={route.element} />
           ))}
 
           {/* Admin Protected Routes */}
@@ -31,7 +87,7 @@ const App = () => {
               key={`admin-${index}`}
               path={route.path}
               element={
-                <ProtectedRoute allowedRoles={['admin']}>
+                <ProtectedRoute allowedRoles={["admin"]}>
                   {route.element}
                 </ProtectedRoute>
               }
@@ -44,7 +100,7 @@ const App = () => {
               key={`security-${index}`}
               path={route.path}
               element={
-                <ProtectedRoute allowedRoles={['security']}>
+                <ProtectedRoute allowedRoles={["security"]}>
                   {route.element}
                 </ProtectedRoute>
               }
@@ -57,7 +113,7 @@ const App = () => {
               key={`tenant-${index}`}
               path={route.path}
               element={
-                <ProtectedRoute allowedRoles={['tenant']}>
+                <ProtectedRoute allowedRoles={["tenant"]}>
                   {route.element}
                 </ProtectedRoute>
               }
@@ -67,12 +123,16 @@ const App = () => {
           <Route
             path="/userprofile"
             element={
-              <ProtectedRoute allowedRoles={['admin', 'security', 'tenant']}>
-              </ProtectedRoute>
+              <ProtectedRoute
+                allowedRoles={["admin", "security", "tenant"]}
+              ></ProtectedRoute>
             }
           />
 
           <Route path="*" element={<ErrorPage />} />
+          <Route path= '/viewvisitor' element= {<VisitorDetails />} />
+          <Route path= '/editvisitor' element= {<EditVisitor />} />
+          
         </Routes>
       </Router>
 
@@ -81,17 +141,17 @@ const App = () => {
         toastOptions={{
           duration: 4000,
           style: {
-            background: '#363636',
-            color: '#fff',
+            background: "#363636",
+            color: "#fff",
           },
           success: {
             style: {
-              background: '#4caf50',
+              background: "#4caf50",
             },
           },
           error: {
             style: {
-              background: '#f44336',
+              background: "#f44336",
             },
           },
         }}

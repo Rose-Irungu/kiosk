@@ -7,12 +7,15 @@ import EmergencyAlertPopup from "../../components/ResidentComponents/EmergencyAl
 import FireAlertForm from "../../components/ResidentComponents/FireAlertForm";
 import Security_form from "../../components/ResidentComponents/Security_form";
 import ResidentLayout from "../../components/ResidentComponents/ResidentLayout";
+import SafetyProtocolsButton from "../../components/ResidentComponents/Buttons/SafetyProtocolsButton";
 
 export default function EmergencyControlApp() {
   const [showPopup, setShowPopup] = useState(false);
   const [activeForm, setActiveForm] = useState(null);
   const [emergencyType, setEmergencyType] = useState(null);
   const [timeLeft, setTimeLeft] = useState(0);
+
+  
 
   useEffect(() => {
     if (timeLeft <= 0) return;
@@ -23,14 +26,13 @@ export default function EmergencyControlApp() {
 
     return () => clearTimeout(timeout);
   }, [timeLeft]);
+
   const navigate = useNavigate();
 
-  const handleSOSClick = () => {
-    setShowPopup(true);
-    setTimeout(() => {
-      setShowPopup(false);
+  const handleSafetyProtocols = () => {
       setEmergencyType("sos");
-    }, 5000);
+      navigate("/resident/safetyprotocols")
+    
   };
 
   const handleFireClick = () => {
@@ -57,16 +59,7 @@ export default function EmergencyControlApp() {
           </h1>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center mb-10">
-         
-
-          <button
-            onClick={handleSOSClick}
-            className="bg-gradient-to-r from-[#F6003B] to-[#550115] text-white p-4 rounded-lg font-bold w-[300px] h-[100px] text-center shadow-lg transform hover:scale-105 transition-transform"
-          >
-            S.O.S
-          </button>
-
+        <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center mb-10">         
           <button
             onClick={handleFireClick}
             className="bg-[#fde8e7] text-[#e61c11] border border-red-300 rounded-[12px] p-6 font-bold text-center shadow-lg hover:shadow-xl w-[300px] h-[100px] transform hover:scale-105 transition-transform"
@@ -80,6 +73,13 @@ export default function EmergencyControlApp() {
           >
             Security <br /> Concern
           </button>
+           <button
+            onClick={handleSafetyProtocols }
+            className="bg-[#fde8e7] text-[#e61c11] border border-red-300 rounded-[12px] p-6 font-bold text-center shadow-lg hover:shadow-xl w-[300px] h-[100px] transform hover:scale-105 transition-transform"
+          >
+            Safety <br /> Protocols
+          </button>
+          
         </div>
 
         {showPopup && (

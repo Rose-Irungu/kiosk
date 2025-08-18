@@ -452,7 +452,8 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                 <p className=" text-xs">1 day ago</p>
               </div>
             </div>
-          </div>
+          </div> 
+
         </div>
       )}
 

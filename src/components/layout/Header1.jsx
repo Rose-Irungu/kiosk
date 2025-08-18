@@ -238,7 +238,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
           <p className="text-sm">EN</p>
 
           <div className="relative flex items-center justify-center">
-            <button
+            {/* <button
               className="text-gray-600 hover:text-gray-800 relative"
               onClick={() => setShowNotification(!showNotification)}
             >
@@ -256,7 +256,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
               >
                 3
               </span>
-            </button>
+            </button> */}
           </div>
 
           <div className="relative">

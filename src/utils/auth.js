@@ -10,10 +10,14 @@ export const getUserInfo = () => {
 
 export const getUserRole = () => {
     const userInfo = getUserInfo();
+    console.log(userInfo);
+    
     return userInfo?.role || null;
 };
 
 export const isAuthenticated = () => {
     const userInfo = getUserInfo();
+    console.log(`--------------Here is info-------${userInfo.is_active}`);
+    
     return userInfo && userInfo.is_active;
 };

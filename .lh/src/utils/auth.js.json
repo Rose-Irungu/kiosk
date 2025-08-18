@@ -1,0 +1,70 @@
+{
+    "sourceFile": "src/utils/auth.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 13,
+            "patches": [
+                {
+                    "date": 1755514996355,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1755515003166,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,21 @@\n+export const getUserInfo = () => {\r\n+    try {\r\n+        const userInfo = localStorage.getItem('userInfo');\r\n+        return userInfo ? JSON.parse(userInfo) : null;\r\n+    } catch (error) {\r\n+        console.error('Error parsing user info:', error);\r\n+        return null;\r\n+    }\r\n+};\r\n+\r\n+export const getUserRole = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log();\r\n+    \r\n+    return userInfo?.role || null;\r\n+};\r\n+\r\n+export const isAuthenticated = () => {\r\n+    const userInfo = getUserInfo();\r\n+    return userInfo && userInfo.is_active;\r\n+};\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755515010189,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,21 @@\n+export const getUserInfo = () => {\r\n+    try {\r\n+        const userInfo = localStorage.getItem('userInfo');\r\n+        return userInfo ? JSON.parse(userInfo) : null;\r\n+    } catch (error) {\r\n+        console.error('Error parsing user info:', error);\r\n+        return null;\r\n+    }\r\n+};\r\n+\r\n+export const getUserRole = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log(user);\r\n+    \r\n+    return userInfo?.role || null;\r\n+};\r\n+\r\n+export const isAuthenticated = () => {\r\n+    const userInfo = getUserInfo();\r\n+    return userInfo && userInfo.is_active;\r\n+};\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755515121780,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,22 @@\n+export const getUserInfo = () => {\r\n+    try {\r\n+        const userInfo = localStorage.getItem('userInfo');\r\n+        return userInfo ? JSON.parse(userInfo) : null;\r\n+    } catch (error) {\r\n+        console.error('Error parsing user info:', error);\r\n+        return null;\r\n+    }\r\n+};\r\n+\r\n+export const getUserRole = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log(userInfo);\r\n+    \r\n+    return userInfo?.role || null;\r\n+};\r\n+\r\n+export const isAuthenticated = () => {\r\n+    const userInfo = getUserInfo();\r\n+    \r\n+    return userInfo && userInfo.is_active;\r\n+};\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755515130302,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,22 @@\n+export const getUserInfo = () => {\r\n+    try {\r\n+        const userInfo = localStorage.getItem('userInfo');\r\n+        return userInfo ? JSON.parse(userInfo) : null;\r\n+    } catch (error) {\r\n+        console.error('Error parsing user info:', error);\r\n+        return null;\r\n+    }\r\n+};\r\n+\r\n+export const getUserRole = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log(userInfo);\r\n+    \r\n+    return userInfo?.role || null;\r\n+};\r\n+\r\n+export const isAuthenticated = () => {\r\n+    const userInfo = getUserInfo();\r\n+    log\r\n+    return userInfo && userInfo.is_active;\r\n+};\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755515140899,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,23 @@\n+export const getUserInfo = () => {\r\n+    try {\r\n+        const userInfo = localStorage.getItem('userInfo');\r\n+        return userInfo ? JSON.parse(userInfo) : null;\r\n+    } catch (error) {\r\n+        console.error('Error parsing user info:', error);\r\n+        return null;\r\n+    }\r\n+};\r\n+\r\n+export const getUserRole = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log(userInfo);\r\n+    \r\n+    return userInfo?.role || null;\r\n+};\r\n+\r\n+export const isAuthenticated = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log(``);\r\n+    \r\n+    return userInfo && userInfo.is_active;\r\n+};\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755515148567,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,8 @@\n };\r\n \r\n export const isAuthenticated = () => {\r\n     const userInfo = getUserInfo();\r\n-    console.log(``);\r\n+    console.log(`--------------Here`);\r\n     \r\n     return userInfo && userInfo.is_active;\r\n };\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755515176236,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,23 @@\n+export const getUserInfo = () => {\r\n+    try {\r\n+        const userInfo = localStorage.getItem('userInfo');\r\n+        return userInfo ? JSON.parse(userInfo) : null;\r\n+    } catch (error) {\r\n+        console.error('Error parsing user info:', error);\r\n+        return null;\r\n+    }\r\n+};\r\n+\r\n+export const getUserRole = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log(userInfo);\r\n+    \r\n+    return userInfo?.role || null;\r\n+};\r\n+\r\n+export const isAuthenticated = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log(`--------------Here is info`);\r\n+    \r\n+    return userInfo && userInfo.is_active;\r\n+};\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755515181874,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,8 @@\n };\r\n \r\n export const isAuthenticated = () => {\r\n     const userInfo = getUserInfo();\r\n-    console.log(`--------------Here is info`);\r\n+    console.log(`--------------Here is info-------`);\r\n     \r\n     return userInfo && userInfo.is_active;\r\n };\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755515187026,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,23 @@\n+export const getUserInfo = () => {\r\n+    try {\r\n+        const userInfo = localStorage.getItem('userInfo');\r\n+        return userInfo ? JSON.parse(userInfo) : null;\r\n+    } catch (error) {\r\n+        console.error('Error parsing user info:', error);\r\n+        return null;\r\n+    }\r\n+};\r\n+\r\n+export const getUserRole = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log(userInfo);\r\n+    \r\n+    return userInfo?.role || null;\r\n+};\r\n+\r\n+export const isAuthenticated = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log(`--------------Here is info-------$`);\r\n+    \r\n+    return userInfo && userInfo.is_active;\r\n+};\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755515193119,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,23 @@\n+export const getUserInfo = () => {\r\n+    try {\r\n+        const userInfo = localStorage.getItem('userInfo');\r\n+        return userInfo ? JSON.parse(userInfo) : null;\r\n+    } catch (error) {\r\n+        console.error('Error parsing user info:', error);\r\n+        return null;\r\n+    }\r\n+};\r\n+\r\n+export const getUserRole = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log(userInfo);\r\n+    \r\n+    return userInfo?.role || null;\r\n+};\r\n+\r\n+export const isAuthenticated = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log(`--------------Here is info-------${userInfo}`);\r\n+    \r\n+    return userInfo && userInfo.is_active;\r\n+};\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755515238149,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,23 @@\n+export const getUserInfo = () => {\r\n+    try {\r\n+        const userInfo = localStorage.getItem('userInfo');\r\n+        return userInfo ? JSON.parse(userInfo) : null;\r\n+    } catch (error) {\r\n+        console.error('Error parsing user info:', error);\r\n+        return null;\r\n+    }\r\n+};\r\n+\r\n+export const getUserRole = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log(userInfo);\r\n+    \r\n+    return userInfo?.role || null;\r\n+};\r\n+\r\n+export const isAuthenticated = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log(`--------------Here is info-------${userInfo.}`);\r\n+    \r\n+    return userInfo && userInfo.is_active;\r\n+};\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755515303220,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,23 @@\n+export const getUserInfo = () => {\r\n+    try {\r\n+        const userInfo = localStorage.getItem('userInfo');\r\n+        return userInfo ? JSON.parse(userInfo) : null;\r\n+    } catch (error) {\r\n+        console.error('Error parsing user info:', error);\r\n+        return null;\r\n+    }\r\n+};\r\n+\r\n+export const getUserRole = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log(userInfo);\r\n+    \r\n+    return userInfo?.role || null;\r\n+};\r\n+\r\n+export const isAuthenticated = () => {\r\n+    const userInfo = getUserInfo();\r\n+    console.log(`--------------Here is info-------${userInfo.}`);\r\n+    \r\n+    return userInfo && userInfo.is_active;\r\n+};\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755515308614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,8 @@\n };\r\n \r\n export const isAuthenticated = () => {\r\n     const userInfo = getUserInfo();\r\n-    console.log(`--------------Here is info-------${userInfo.is_act}`);\r\n+    console.log(`--------------Here is info-------${userInfo.is_active}`);\r\n     \r\n     return userInfo && userInfo.is_active;\r\n };\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1755514996355,
+            "name": "Commit-0",
+            "content": "export const getUserInfo = () => {\r\n    try {\r\n        const userInfo = localStorage.getItem('userInfo');\r\n        return userInfo ? JSON.parse(userInfo) : null;\r\n    } catch (error) {\r\n        console.error('Error parsing user info:', error);\r\n        return null;\r\n    }\r\n};\r\n\r\nexport const getUserRole = () => {\r\n    const userInfo = getUserInfo();\r\n    \r\n    return userInfo?.role || null;\r\n};\r\n\r\nexport const isAuthenticated = () => {\r\n    const userInfo = getUserInfo();\r\n    return userInfo && userInfo.is_active;\r\n};"
+        }
+    ]
+}
