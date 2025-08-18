@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Upload, ChevronDown, ArrowUpDown } from "lucide-react";
+import { Upload, ChevronDown, ArrowUp, ArrowDown, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function Visitors() {
@@ -27,7 +27,38 @@ export default function Visitors() {
   const menuRef = useRef(null);
   const [selectedVisitor, setSelectedVisitor] = useState(null);
   const [editModal, setEditModal] = useState(null);
+  const [deleteModal, setDeleteModal] = useState(null);
   const navigate = useNavigate();
+  // sorting
+  const [sortConfig, setSortConfig] = useState({
+    key: 'visitor_name', // default sort by name
+    direction: 'ascending', // default direction
+  });
+
+  const sortVisitors = (key) => {
+    let direction = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+
+    const sortedVisitors = [...filteredAllVisitors].sort((a, b) => {
+      if (a[key] < b[key]) {
+        return direction === 'ascending' ? -1 : 1;
+      }
+      if (a[key] > b[key]) {
+        return direction === 'ascending' ? 1 : -1;
+      }
+      return 0;
+    });
+
+    setFilteredAllVisitors(sortedVisitors);
+
+    // Update the paginated visitors
+    const start = (currentPage - 1) * entriesPerPage;
+    const end = start + entriesPerPage;
+    setVisitors(sortedVisitors.slice(start, end));
+  };
   // View visitor
   const handleView = (visitor) => {
     navigate(`/viewvisitor`, {
@@ -40,6 +71,11 @@ export default function Visitors() {
     navigate("/editvisitor", {
       state: { visitorData: visitor }
     });
+  };
+
+  // Delete Visitor
+  const handleDelete = (visitor) => {
+    setDeleteModal(true);
   };
 
   // Close menu if user clicks outside
@@ -278,9 +314,16 @@ export default function Visitors() {
               <TableRow>
                 <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Photo</TableHead>
                 <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">
-                  <div className="flex items-center gap-4 cursor-pointer ">
+                  <div
+                    className="flex items-center gap-4 cursor-pointer"
+                    onClick={() => sortVisitors('visitor_name')}
+                  >
                     Name
-                    <ArrowUpDown className="w-4 h-4 inline" />
+                    {sortConfig.key === 'visitor_name' && (
+                      sortConfig.direction === 'ascending' ?
+                        <ArrowUp className="w-4 h-4 inline" /> :
+                        <ArrowDown className="w-4 h-4 inline" />
+                    )}
                   </div>
                 </TableHead>
                 <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Phone</TableHead>
@@ -392,6 +435,35 @@ export default function Visitors() {
           </Table>
         </div>
       </div>
+
+      {deleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
+          <div className="relative flex flex-col items-center p-4 gap-8 w-[289px] max-h-screen bg-white shadow-[0px_1px_20px_rgba(0,0,0,0.25)] rounded-[16px]">
+            <button
+              onClick={() => setDeleteModal(false)}
+              className="absolute top-4 right-4 p-1 rounded-full hover:bg-gray-200 transition"
+              aria-label="Close Edit Form"
+            >
+              <X className="w-6 h-6 text-gray-500 hover:text-gray-800" />
+            </button>
+
+            <img src="/delete-guy.svg" alt="" />
+
+            <p className="font-['Inter'] text-xs text-[#000000] text-center ">Are you sure you want to delete ‘User X’? This action is irreversible.</p>
+
+            <div className="flex flex-col items-center gap-2 ">
+              <div className=" flex rounded-sm h-[40px] w-[257px] items-center bg-[#E61C11] justify-center font-['Inter'] font-light hover:bg-red-500">
+                <button className="flex items-center text-white text-sm tracking-[1%]  ">DELETE USER</button>
+              </div>
+
+              <div className="flex rounded-sm h-[40px] w-[257px] border border-[#0A5B60] justify-center font-['Inter'] hover:bg-green-500">
+                <button className="flex items-center text-[#000000] ">CANCEL</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      )}
 
 
 
