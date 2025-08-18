@@ -1,6 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Layout from "../../components/layout/Layout";
+import userService from "../../services/user";
+
 // import users from "../../services/user";
 
 export default function SecurityRegistration() {
@@ -11,26 +13,30 @@ export default function SecurityRegistration() {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (values) => {
         try {
+            const data = {
+                first_name: values.firstName,
+                last_name: values.lastName,
+                email: values.email,
+                role: "security",
+                phone_number: values.phone,
+                id_number: values.idNo,
+                password: values.password,
+                next_of_kin: [{
+                    full_name: values.nextOfKinName?.toString(),
+                    relationship: values.nextOfKinRelationship?.toString(),
+                    phone_number: values.nextOfKinPhone?.toString(),
+                    email: values.nextOfKinEmail?.toString(),
+                }],
+                security_profile: {
+                    company: "Kiosk Security",
+                    badge_number: "SEC-001",
+                    post: "Main Gate",
+                },
+            };
 
-            const formData = new FormData();
-            formData.append("first_name", data.firstName);
-            formData.append("last_name", data.lastName);
-            formData.append("email", data.email);
-            formData.append("phone_number", data.phone);
-            formData.append("id_number", data.idNo);
-            formData.append("unit_number", data.unitNumber);
-            formData.append("num_people", data.numPeople);
-            formData.append("password", data.password);
-            formData.append("photo", data.photo[0]); // file
-
-            formData.append("next_of_kin_full_name", data.nextOfKinName);
-            formData.append("next_of_kin_relationship", data.nextOfKinRelationship);
-            formData.append("next_of_kin_phone", data.nextOfKinPhone);
-            formData.append("next_of_kin_email", data.nextOfKinEmail);
-
-            const response = await users.addResident(formData);
+            const response = await userService.addUser(data);
 
             console.log("Resident added:", response);
             alert("Resident registered successfully!");
