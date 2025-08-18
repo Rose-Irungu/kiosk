@@ -1,20 +1,14 @@
 import React, { useState, useEffect, use } from "react";
 import { Menu } from "lucide-react";
 import { useRef } from "react";
+import { createEmergency } from "../../services/securityDashboardService";
 
 const ResidentHeader = ({ imageUrl, setMobileOpen }) => {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const audioRef = useRef(null);
 
-  //   const handleSOSClick = () => {
-  //   setShowPopup(true);
-  //   setTimeout(() => {
-  //     setShowPopup(false);
-  //     setEmergencyType("sos");
-  //   }, 5000);
-  // };
-
+ 
   const handleSOSClick = async () => {
     try {
       if (audioRef.current) {
@@ -37,8 +31,8 @@ const ResidentHeader = ({ imageUrl, setMobileOpen }) => {
       time(20);
       toast.success("S.O.S triggered! Help is on the way!");
     } catch (error) {
-      console.error("Failed to create emergency:", error);
-      toast.error("Failed to send emergency alert.");
+      // console.error("Failed to create emergency:", error);
+      // toast.error("Failed to send emergency alert.");
     }
   };
 

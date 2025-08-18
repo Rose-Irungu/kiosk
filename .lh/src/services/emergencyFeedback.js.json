@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/services/emergencyFeedback.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1755511513374,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1755511616521,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,22 @@\n+import api from \"./api\";\r\n+import { API_ENDPOINTS } from \"../utils/constants\";\r\n+\r\n+/**\r\n+ * Submits emergency feedback.\r\n+ * @param {Object} payload - The feedback data.\r\n+ * @param {string} payload.emergencyHandled - \"yes\" or \"no\"\r\n+ * @param {string} [payload.message] - Optional user message\r\n+ */\r\n+export const submitEmergencyFeedback = async ({ emergencyHandled, message }) => {\r\n+  try {\r\n+    const response = await api.post(API_ENDPOINTS.FEEDBACK, {\r\n+      emergencyHandled,\r\n+      message: message || null,\r\n+    });\r\n+\r\n+    return response.data;\r\n+  } catch (error) {\r\n+    console.error(\"Failed to submit emergency feedback\", error);\r\n+    throw error;\r\n+  }\r\n+};\r\n"
+                },
+                {
+                    "date": 1755511647762,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,22 @@\n+import api from \"./api\";\r\n+import { API_ENDPOINTS } from \"../utils/constants\";\r\n+\r\n+/**\r\n+ * Submits emergency feedback.\r\n+ * @param {Object} payload - The feedback data.\r\n+ * @param {string} payload.emergencyHandled - \"yes\" or \"no\"\r\n+ * @param {string} [payload.message] - Optional user message\r\n+ */\r\n+export const submitEmergencyFeedback = async ({ emergencyHandled, message }) => {\r\n+  try {\r\n+    const response = await api.post(API_ENDPOINTS.  EMERGENCY_FEEDBACK, {\r\n+      emergencyHandled,\r\n+      message: message || null,\r\n+    });\r\n+\r\n+    return response.data;\r\n+  } catch (error) {\r\n+    console.error(\"Failed to submit emergency feedback\", error);\r\n+    throw error;\r\n+  }\r\n+};\r\n"
+                }
+            ],
+            "date": 1755511513374,
+            "name": "Commit-0",
+            "content": "import api from \"./api\";\r\nimport { API_ENDPOINTS } from \"../utils/constants\";"
+        }
+    ]
+}

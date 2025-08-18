@@ -98,6 +98,8 @@ import FireAlertForm from "../components/ResidentComponents/FireAlertForm";
 import Security_form from "../components/ResidentComponents/Security_form";
 import ReportIncidentCard from "../pages/ResidentPages/ReportIncidentCard";
 import UserForm from "../components/forms/form";
+import ReportIncidentCard from "../components/ReportIncidentCard";
+// import EmergencyFeedback from "../components/ResidentComponents/EmergencyFeedback";
 
 
 
@@ -206,4 +208,5 @@ export const tenantRoutes = [
     { path: '/resident/security-form', element: <Security_form /> },
     { path: '/CardA', element: <CardA /> },
     { path: '/MyGuestsFrame', element: <MyGuestsFrame /> },
+    // { path: '/emergency/feedback', element: <EmergencyFeedback />},
 ];
