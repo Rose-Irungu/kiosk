@@ -2,6 +2,7 @@ import React from 'react';
 
 //components
 import Header from '../Settings/Header';
+import NoteP from '../SafetyCards/NoteP';
 import FavoriteCard from './FavoriteCard';
 
 export default function Favorites({guests}) {
@@ -14,10 +15,12 @@ export default function Favorites({guests}) {
                type="text" 
         />
         <div className='flex flex-col w-full h-[301px] gap-[16px] overflow-y-scroll'>
-            {guests.map((guest, index)=>{
-                return <FavoriteCard key={index} img={guest.img} name={guest.name} time={guest.time}/>
-            })}
+            {guests.length === 0 ? (<NoteP text={"No favorite guests"}/>) : 
+                (guests.map((guest, index)=>{
+                    return <FavoriteCard key={index} img={guest.img} name={guest.name} time={guest.time}/>
+                })
+            )}
         </div>
     </div>
-  )
+  );
 }
