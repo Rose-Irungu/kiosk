@@ -180,7 +180,7 @@ export function EmergencyTable({
                         onClick={() => setShowModal(true)}
                         className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                       >
-                        Resolved
+                        Resolve
                       </button>
                       {showModal && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black/40">

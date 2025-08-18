@@ -79,7 +79,7 @@ export default function SecurityDashboard() {
         <Card1
           cardTitle="Emergency Today"
           count={stats?.emergencies?.stats?.today_emergencies || 0}
-          link="View users"
+          link="View logs"
           linkHref="/security/emergencypage"
           icon={
             <img
