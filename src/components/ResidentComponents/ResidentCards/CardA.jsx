@@ -1,7 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Heart } from 'lucide-react';
 import { getRelativeTime } from '../../../utils/fomatters';
-import { approveVisit, cancelVisit, blacklistVisitor } from '../../../services/visitsuser';
+import { approveVisit, cancelVisit, blacklistVisitor, addFavourite } from '../../../services/visitsuser';
+
+
+
+
 
 const CardA = ({
   visit_id,
@@ -19,7 +23,9 @@ const CardA = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showDetailsView, setShowDetailsView] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false); // ✅ Track favorites
+  const [isEditing, setIsEditing] = useState(false);
+  const [isloading, setIsLoading] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false); 
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -61,6 +67,7 @@ const CardA = ({
     date
   } = visitorData;
 
+
   const openModal = () => {
     if (st !== 'expected') setIsModalOpen(true);
   };
@@ -86,11 +93,25 @@ const CardA = ({
     }
   };
 
-  
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    // Later: call API to persist favorite
-  };
+
+  const toggleFavorite = async () => {
+    
+
+  try {
+    if (!isFavorite) {
+      setIsLoading(true);
+      await addFavourite(visitor_id); 
+      setIsFavorite(true); 
+    }
+  } catch (error) {
+    console.error("Error toggling favourite:", error);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+
+
 
   return (
     <>
@@ -99,7 +120,7 @@ const CardA = ({
           className="bg-white rounded-lg p-7 px-7 md:p-4 md:px-6 flex items-center w-full justify-between h-auto md:h-15 md:w-auto shadow-md cursor-pointer"
           onClick={openModal}
         >
-          
+
           <div className="flex items-center gap-1.5">
             <img className="w-10 h-10 rounded-full object-cover" src={img} alt={n} />
             <div className="flex flex-col gap-0.5 w-[145px]">
@@ -136,7 +157,7 @@ const CardA = ({
           ref={modalRef}
         >
           {showDetailsView ? (
-            
+
             <div className="bg-white rounded-lg p-6 w-96 shadow-xl">
               <h2 className="text-lg font-semibold text-green-900 mb-4">Visitor Details</h2>
               <p className="text-sm text-gray-700 mb-2"><strong>Name:</strong> {n}</p>
@@ -150,7 +171,7 @@ const CardA = ({
               </button>
             </div>
           ) : st === 'pending' ? (
-            
+
             <div className="bg-white rounded-2xl border border-green-300 p-5 flex flex-col gap-4 w-[292px] shadow-md">
               <div className="flex gap-3 items-start">
                 <img className="w-10 h-10 rounded-full object-cover" src={img} alt={n} />
@@ -179,83 +200,135 @@ const CardA = ({
                 </button>
               </div>
             </div>
+
+
+
+
+
+
           ) : st === "checked_in" ? (
-            <div className="bg-white rounded-2xl border border-gray-200 p-6 flex flex-col gap-4 w-[350px] shadow-md">
-              
-              <div className="flex justify-between items-center border-b border-gray-200 pb-2">
-                <h2 className="text-green-900 font-semibold text-lg">Visitor Details</h2>
-                <div className="flex items-center gap-3">
-              
+            isEditing ? (
+              // EDIT MODAL
+              <div className="bg-[#f5f4f5] rounded-2xl p-6 w-[517px] h-[605px] shadow-md">
+                <h2 className="text-green-900 font-semibold text-lg mb-4">Edit Visitor</h2>
+                <input
+                  type="text"
+                  defaultValue={n}
+                  className="w-full mb-3 px-3 py-2 rounded border border-gray-300"
+                />
+                <input
+                  type="text"
+                  defaultValue={phone}
+                  className="w-full mb-3 px-3 py-2 rounded border border-gray-300"
+                />
+                <input
+                  type="email"
+                  defaultValue={email}
+                  className="w-full mb-3 px-3 py-2 rounded border border-gray-300"
+                />
+                <div className="flex justify-end gap-3 mt-4">
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleFavorite();
-                    }}
+                    onClick={() => setIsEditing(false)}
+                    className="px-4 py-2 border rounded text-gray-700"
                   >
-                    <Heart
-                      size={20}
-                      className={`cursor-pointer transition-colors ${isFavorite ? "text-red-500 fill-red-500" : "text-gray-400"
-                        }`}
-                    />
+                    Cancel
                   </button>
-                  {/* Close button
+                  <button
+                    onClick={() => {
+                      // TODO: call updateVisitor API here
+                      setIsEditing(false);
+                    }}
+                    className="px-4 py-2 bg-green-900 text-white rounded"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            ) : (
+
+              <div className="bg-white rounded-2xl border border-gray-200 p-6 flex flex-col gap-4 w-[350px] shadow-md">
+
+                <div className="flex justify-between items-center border-b border-gray-200 pb-2">
+                  <h2 className="text-green-900 font-semibold text-lg">Visitor Details</h2>
+                  <div className="flex items-center gap-3">
+
+                    <button
+                      onClick={(e) => {
+                        if (isloading) return;
+                        e.stopPropagation();
+                        toggleFavorite();
+                      }}
+                    >
+                      <Heart
+                        size={20}
+                        className={`cursor-pointer transition-colors ${isFavorite ? "text-red-500 fill-red-500" : "text-gray-400"
+                          }`}
+                      />
+                    </button>
+                    {/* Close button
                   <button onClick={() => setShowModal(false)} className="text-gray-500">
                     ✕
                   </button> */}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-green-900 text-sm font-semibold mb-2">
-                  Personal Information
-                </h3>
-                <div className="flex items-center gap-3">
-                  <img
-                    className="w-14 h-14 rounded-full object-cover"
-                    src={img}
-                    alt={n}
-                  />
-                  <div className="flex flex-col">
-                    <span className="text-gray-900 font-medium">{n}</span>
-                    <span className="text-gray-700 text-sm">Phone: {phone}</span>
-                    <span className="text-gray-700 text-sm">Email: {email}</span>
                   </div>
                 </div>
 
-                
-                <div className="flex gap-3 mt-3">
-                  <button
-                    // onClick={handleEdit}
-                    className="bg-green-900 text-white text-sm font-medium px-4 py-1.5 rounded"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={handleAddToBlacklist}
-                    className="text-red-600 text-sm font-medium px-4 py-1.5 rounded border border-red-600"
-                  >
-                    Add to Blacklist
-                  </button>
-                </div>
-              </div>
+                <div>
+                  <h3 className="text-green-900 text-sm font-semibold mb-2">
+                    Personal Information
+                  </h3>
+                  <div className="flex items-center gap-3">
+                    <img
+                      className="w-14 h-14 rounded-full object-cover"
+                      src={img}
+                      alt={n}
+                    />
+                    <div className="flex flex-col">
+                      <span className="text-gray-900 font-medium">{n}</span>
+                      <span className="text-gray-700 text-sm">Phone: {phone}</span>
+                      <span className="text-gray-700 text-sm">Email: {email}</span>
+                    </div>
+                  </div>
 
-             
-              <div>
-                <h3 className="text-green-900 text-sm font-semibold mb-2">
-                  Visit Information
-                </h3>
-                <div className="text-gray-700 text-sm">
-                  <p>Guest Type: {tg}</p>
-                  <p>Check in date: {date}</p>
-                  <p>Check in time: {t}</p>
+
+                  <div className="flex gap-3 mt-3">
+                    <button
+                      onClick={() => setIsEditing(true)}
+                      className="bg-green-900 text-white text-sm font-medium px-4 py-1.5 rounded"
+                    >
+                      Edit
+                    </button>
+
+                    <button
+                      onClick={handleAddToBlacklist}
+                      className="text-red-600 text-sm font-medium px-4 py-1.5 rounded border border-red-600"
+                    >
+                      Add to Blacklist
+                    </button>
+                  </div>
+                </div>
+
+
+                <div>
+                  <h3 className="text-green-900 text-sm font-semibold mb-2">
+                    Visit Information
+                  </h3>
+                  <div className="text-gray-700 text-sm">
+                    <p>Guest Type: {tg}</p>
+                    <p>Check in date: {date}</p>
+                    <p>Check in time: {t}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ) : null}
+            )
+          
+            ) : null}
+
 
         </div>
+
       )}
     </>
+
   );
 };
 

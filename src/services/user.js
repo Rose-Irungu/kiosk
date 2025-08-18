@@ -27,6 +27,35 @@ export const userService = {
     }
   },
 
+  addResident: async (formData) => {
+    try {
+      const response = await api.post(API_ENDPOINTS.ADD_RESIDENT, formData, {
+        headers: {
+          "Content-Type":  'multipart/form-data',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error adding resident:", error);
+      throw error;
+    }
+  },
+
+   addSecurity: async (formData) => {
+    try {
+      const response = await api.post(API_ENDPOINTS.ADD_SECURITY, formData, {
+        headers: {
+          "Content-Type":  'multipart/form-data',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error adding security:", error);
+      throw error;
+    }
+  },
+
+
   deleteUser: async (userId) => {
     try {
       const response = await api.delete(`${API_ENDPOINTS.DELETE_USER}${userId}/`);
@@ -108,4 +137,5 @@ export const userService = {
 
 
 };
+export default userService;
 

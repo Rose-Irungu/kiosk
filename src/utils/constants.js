@@ -11,6 +11,8 @@ export const API_ENDPOINTS = {
  
   //users
   ADD_USER: '/user/create/',
+  ADD_RESIDENT: '/user/user/',
+  ADD_SECURITY: '/user/user/',
   ALL_USERS: '/user/all_users/',
   DELETE_USER: '/user/delete/',
   UPDATE_USER: '/user/update/',
@@ -54,10 +56,14 @@ export const API_ENDPOINTS = {
 
   //Resident dashboard
   ALL_VISITORS: '/visits/visits-user/',
+  
 
  // Resident Blacklisted peeps
   BLACKLIST_PEEPS: '/visitors/all-blacklisted/',
   Resident_Incidence: '/incidence-and-emergency/view-my-incidence/',
+  ADD_FAVOURITE: '/visitors/favourite/',
+  // REMOVE_FAVOURITE: '/visitor/remove-favourite/',
+
 
   //User logged devices
   LOGGED_DEVICES: '/user/device-management/',
