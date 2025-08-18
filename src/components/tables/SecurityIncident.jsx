@@ -127,6 +127,7 @@ export default function SecurityIncidentTable({ incidentReports = [] }) {
                 </TableCell>
               </TableRow>
             ))}
+            <TableRow className="h-30"></TableRow>
           </TableBody>
         </Table>
       </div>
