@@ -28,11 +28,14 @@ const LoginForm = () => {
         localStorage.setItem("refreshToken", refresh);
         localStorage.setItem("userInfo", JSON.stringify(user));
         localStorage.setItem("userRole", user.role);
+        console.log(user.role);
+        
         // toast.success("Login successful!");
 
         switch (user.role) {
           case "admin":
             navigate("/dashboard");
+            console.log("Admin login successful");
             break;
           case "tenant":
               navigate("/resident/dashboard");

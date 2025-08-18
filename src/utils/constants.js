@@ -26,6 +26,7 @@ export const API_ENDPOINTS = {
   // Emergencies
   EMERGENCY_LIST: '/incidence-and-emergency/emergency-list/',
   EMERGENCY_UPDATE: '/incidence-and-emergency/update-emergency/{id}/',
+  EMERGENCY_FEEDBACK: '/incidence-and-emergency/add-emergency-feedback/',
 
   //Incidence Management
   INCIDENCE_LIST: '/incidence-and-emergency/incidence-list/',

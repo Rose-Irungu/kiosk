@@ -31,8 +31,8 @@ const ResidentHeader = ({ imageUrl, setMobileOpen }) => {
       time(20);
       toast.success("S.O.S triggered! Help is on the way!");
     } catch (error) {
-      console.error("Failed to create emergency:", error);
-      toast.error("Failed to send emergency alert.");
+      // console.error("Failed to create emergency:", error);
+      // toast.error("Failed to send emergency alert.");
     }
   };
 
