@@ -19,7 +19,11 @@ export default function Favorites({guests}) {
                                         <NoteP text={"No favorite guests"}/>
                                     </div>) : 
                 (guests.map((guest)=>{
-                    return <FavoriteCard key={guest.visit_id} img={guest.image} name={guest.visitor_name} time={guest.latest_time}/>
+                    return <FavoriteCard key={guest.visit_id} 
+                                         img={guest.image} 
+                                         name={guest.visitor_name} 
+                                         time={guest.latest_time}
+                           />
                 })
             )}
         </div>
