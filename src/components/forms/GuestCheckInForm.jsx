@@ -18,7 +18,7 @@ export default function GuestCheckInForm() {
   const titles = {
     visitor: "Complete Your Invitation",
     security: "Security Check-in",
-    resident: "Invite a Visitor",
+    // resident: "Invite a Visitor",
   };
 
   const descriptions = {
@@ -79,7 +79,6 @@ ${formData?.host_name || "a resident"} has sent you an invite link to West Brook
   const handleSubmit = (e) => {
     e.preventDefault();
 
-   
     if (!formData.full_name || !formData.phone_number || !formData.email || !formData.id || !formData.photo || !formData.visit_date || !formData.visitor_type) {
       alert("Please fill in all required fields.");
       return;
@@ -99,9 +98,9 @@ ${formData?.host_name || "a resident"} has sent you an invite link to West Brook
   };
 
   return (
-    <div className="flex flex-col gap-16 w-[480px] overflow-hidden">
-      <div className="flex flex-col items-center gap-4 w-full h-full mt-[-20px]">
-        <div className="text-[#002706] text-sm font-medium">
+    <div className="flex flex-col gap-8 w-full max-w-[480px] mx-auto px-4 sm:px-6 md:px-8 overflow-hidden">
+      <div className="flex flex-col items-center gap-4 w-full h-full">
+        <div className="text-[#002706] text-[20px] font-sans font-medium text-center">
           <h2 className="font-bold mb-2">{titles[mode]}</h2>
           <p className="whitespace-pre-line">{descriptions[mode]}</p>
         </div>
@@ -115,11 +114,11 @@ ${formData?.host_name || "a resident"} has sent you an invite link to West Brook
 
               return (
                 <div key={key} className="flex flex-col gap-1">
-                  <label className="text-[#002706] text-xs font-medium">{label}</label>
+                  <label className="text-[#002706] text-medium font-sans font-medium">{label}</label>
 
                   {type === "file" ? (
-                    <div className="flex items-center justify-between bg-white border border-gray-400 rounded-xl px-3 py-2">
-                      <span className="text-xs text-gray-500">
+                    <div className="flex items-center justify-between bg-white border border-gray-600 rounded-xl px-3 py-2">
+                      <span className="text-xs text-gray-500 truncate max-w-[60%]">
                         {formData[key] ? formData[key].name : "No file chosen"}
                       </span>
                       <button
@@ -166,7 +165,7 @@ ${formData?.host_name || "a resident"} has sent you an invite link to West Brook
                           value={formData[key] || ""}
                           onChange={(e) => {
                             if ((key === "phone_number" || key === "id") && e.target.value !== "") {
-                              if (!/^[0-9]*$/.test(e.target.value)) return; // only numbers
+                              if (!/^[0-9]*$/.test(e.target.value)) return; 
                             }
                             handleInputChange(key, e.target.value);
                           }}
@@ -189,7 +188,7 @@ ${formData?.host_name || "a resident"} has sent you an invite link to West Brook
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#005e0e] hover:bg-[#1ba134] text-white rounded-[26px] px-6 py-2 shadow-md text-base font-medium mt-4"
+            className="bg-[#005e0e] hover:bg-[#1ba134] text-white rounded-[26px] px-6 py-2 shadow-md text-base font-medium mt-4 w-full"
           >
             {loading
               ? "Submitting..."

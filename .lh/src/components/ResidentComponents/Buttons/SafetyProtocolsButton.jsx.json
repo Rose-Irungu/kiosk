@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 17,
             "patches": [
                 {
                     "date": 1754464829640,
@@ -36,6 +36,46 @@
                 {
                     "date": 1754464936091,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+import React from 'react'\r\n+\r\n+export default function SafetyProtocolsButton({callback}) {\r\n+  return (\r\n+    <button className='flex flex-col justify-center w-[540px] h-[72px] rounded-[12px] py-[10.11px]\r\n+                       lg:w-1/2 \r\n+                       px-[13.47px] gap-[8.42px] font-dmsans text-[13.47px] font-medium text-[#E61C11] text-center align-items-center bg-[#FFFFFF] border-[0.84px] border-[#E61C11]'\r\n+        onClick={() => callback()}>\r\n+        Safety Protocols\r\n+    </button>\r\n+  );\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755439840215,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,36 +1,12 @@\n import React from 'react'\r\n \r\n export default function SafetyProtocolsButton({callback}) {\r\n   return (\r\n-    <button className='flex flex-col justify-center w-[540px] h-[72px] rounded-[12px] py-[10.11px]\r\n+    <button className='flex flex-col justify-center w-[300px] h-[100px]  rounded-[12px] py-[10.11px]\r\n                        lg:w-1/2 \r\n                        px-[13.47px] gap-[8.42px] font-dmsans text-[13.47px] font-medium text-[#E61C11] text-center align-items-center bg-[#FFFFFF] border-[0.84px] border-[#E61C11]'\r\n         onClick={() => callback()}>\r\n         Safety Protocols\r\n     </button>\r\n   );\r\n-}\n-import React from 'react'\r\n-\r\n-export default function SafetyProtocolsButton({callback}) {\r\n-  return (\r\n-    <button className='flex flex-col justify-center w-[540px] h-[72px] rounded-[12px] py-[10.11px]\r\n-                       lg:w-1/2 \r\n-                       px-[13.47px] gap-[8.42px] font-dmsans text-[13.47px] font-medium text-[#E61C11] text-center align-items-center bg-[#FFFFFF] border-[0.84px] border-[#E61C11] hover:bg-[][]'\r\n-        onClick={() => callback()}>\r\n-        Safety Protocols\r\n-    </button>\r\n-  );\r\n-}\n-import React from 'react'\r\n-\r\n-export default function SafetyProtocolsButton({callback}) {\r\n-  return (\r\n-    <button className='flex flex-col justify-center w-[540px] h-[72px] rounded-[12px] py-[10.11px]\r\n-                       lg:w-1/2 \r\n-                       px-[13.47px] gap-[8.42px] font-dmsans text-[13.47px] font-medium text-[#E61C11] text-center align-items-center bg-[#FFFFFF] border-[0.84px] border-[#E61C11] hover:bg-[[]'\r\n-        onClick={() => callback()}>\r\n-        Safety Protocols\r\n-    </button>\r\n-  );\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755439868337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import React from 'react'\r\n \r\n export default function SafetyProtocolsButton({callback}) {\r\n   return (\r\n-    <button className='flex flex-col justify-center w-[300px] h-[100px]  rounded-[12px] py-[10.11px]\r\n+    <button className='flex flex-col justify-center w-[300px] h-[100px] border-red-300  rounded-[12px] py-[10.11px]\r\n                        lg:w-1/2 \r\n                        px-[13.47px] gap-[8.42px] font-dmsans text-[13.47px] font-medium text-[#E61C11] text-center align-items-center bg-[#FFFFFF] border-[0.84px] border-[#E61C11]'\r\n         onClick={() => callback()}>\r\n         Safety Protocols\r\n"
+                },
+                {
+                    "date": 1755439877289,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n export default function SafetyProtocolsButton({callback}) {\r\n   return (\r\n     <button className='flex flex-col justify-center w-[300px] h-[100px] border-red-300  rounded-[12px] py-[10.11px]\r\n                        lg:w-1/2 \r\n-                       px-[13.47px] gap-[8.42px] font-dmsans text-[13.47px] font-medium text-[#E61C11] text-center align-items-center bg-[#FFFFFF] border-[0.84px] border-[#E61C11]'\r\n+                       px-[13.47px] gap-[8.42px] font-dmsans text-[13.47px] font-medium text-[#E61C11] text-center align-items-center bg-[#FFFFFF] border-[0.84px] '\r\n         onClick={() => callback()}>\r\n         Safety Protocols\r\n     </button>\r\n   );\r\n"
+                },
+                {
+                    "date": 1755439898290,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n export default function SafetyProtocolsButton({callback}) {\r\n   return (\r\n     <button className='flex flex-col justify-center w-[300px] h-[100px] border-red-300  rounded-[12px] py-[10.11px]\r\n                        lg:w-1/2 \r\n-                       px-[13.47px] gap-[8.42px] font-dmsans text-[13.47px] font-medium text-[#E61C11] text-center align-items-center bg-[#FFFFFF] border-[0.84px] '\r\n+                       px-[13.47px] gap-[8.42px] font-dmsans text-[13.47px] font-medium text-[#E61C11] text-center align-items-center bg-[#fde8e7] border-[0.84px] '\r\n         onClick={() => callback()}>\r\n         Safety Protocols\r\n     </button>\r\n   );\r\n"
+                },
+                {
+                    "date": 1755439948584,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n export default function SafetyProtocolsButton({callback}) {\r\n   return (\r\n     <button className='flex flex-col justify-center w-[300px] h-[100px] border-red-300  rounded-[12px] py-[10.11px]\r\n                        lg:w-1/2 \r\n-                       px-[13.47px] gap-[8.42px] font-dmsans text-[13.47px] font-medium text-[#E61C11] text-center align-items-center bg-[#fde8e7] border-[0.84px] '\r\n+                       px-[13.47px] gap-[8.42px] font-sans text-[13.47px] font-medium text-[#E61C11] text-center align-items-center bg-[#fde8e7] border-[0.84px] '\r\n         onClick={() => callback()}>\r\n         Safety Protocols\r\n     </button>\r\n   );\r\n"
+                },
+                {
+                    "date": 1755439967671,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n export default function SafetyProtocolsButton({callback}) {\r\n   return (\r\n     <button className='flex flex-col justify-center w-[300px] h-[100px] border-red-300  rounded-[12px] py-[10.11px]\r\n                        lg:w-1/2 \r\n-                       px-[13.47px] gap-[8.42px] font-sans text-[13.47px] font-medium text-[#E61C11] text-center align-items-center bg-[#fde8e7] border-[0.84px] '\r\n+                       px-[13.47px] gap-[8.42px] font-sans t font-medium text-[#E61C11] text-center align-items-center bg-[#fde8e7] border-[0.84px] '\r\n         onClick={() => callback()}>\r\n         Safety Protocols\r\n     </button>\r\n   );\r\n"
+                },
+                {
+                    "date": 1755439976894,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n export default function SafetyProtocolsButton({callback}) {\r\n   return (\r\n     <button className='flex flex-col justify-center w-[300px] h-[100px] border-red-300  rounded-[12px] py-[10.11px]\r\n                        lg:w-1/2 \r\n-                       px-[13.47px] gap-[8.42px] font-sans t font-medium text-[#E61C11] text-center align-items-center bg-[#fde8e7] border-[0.84px] '\r\n+                       px-[13.47px] gap-[8.42px] font-sans font-text-[13.47px] font-medium text-[#E61C11] text-center align-items-center bg-[#fde8e7] border-[0.84px] '\r\n         onClick={() => callback()}>\r\n         Safety Protocols\r\n     </button>\r\n   );\r\n"
+                },
+                {
+                    "date": 1755439987497,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+import React from 'react'\r\n+\r\n+export default function SafetyProtocolsButton({callback}) {\r\n+  return (\r\n+    <button className='flex flex-col justify-center w-[300px] h-[100px] border-red-300  rounded-[12px] py-[10.11px]\r\n+                       lg:w-1/2 \r\n+                       px-[13.47px] gap-[8.42px] font-sans font-bold text-[13.47px] text-[#E61C11] text-center align-items-center bg-[#fde8e7] border-[0.84px] '\r\n+        onClick={() => callback()}>\r\n+        Safety Protocols\r\n+    </button>\r\n+  );\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755440011667,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,8 @@\n     <button className='flex flex-col justify-center w-[300px] h-[100px] border-red-300  rounded-[12px] py-[10.11px]\r\n                        lg:w-1/2 \r\n                        px-[13.47px] gap-[8.42px] font-sans font-bold text-[13.47px] text-[#E61C11] text-center align-items-center bg-[#fde8e7] border-[0.84px] '\r\n         onClick={() => callback()}>\r\n-        Safety<brProtocols\r\n+        Safety<br>Protocols\r\n     </button>\r\n   );\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1755440018820,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,8 @@\n     <button className='flex flex-col justify-center w-[300px] h-[100px] border-red-300  rounded-[12px] py-[10.11px]\r\n                        lg:w-1/2 \r\n                        px-[13.47px] gap-[8.42px] font-sans font-bold text-[13.47px] text-[#E61C11] text-center align-items-center bg-[#fde8e7] border-[0.84px] '\r\n         onClick={() => callback()}>\r\n-        Safety<br>Protocols\r\n+        Safety<br />Protocols\r\n     </button>\r\n   );\r\n }\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1754464829640,
