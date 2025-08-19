@@ -67,7 +67,7 @@ export default function SecurityIncidentTable({ incidentReports = [] }) {
           </TableHeader>
           <TableBody>
             {incidents.map(r => (
-              <TableRow key={r.id} className="hover:bg-gray-50 border-b">
+              <TableRow key={r.id} className="hover:bg-gray-100 border-b odd:bg-green-50 even:bg-gray-50">
                 <TableCell>{r.reporter_name}</TableCell>
                 <TableCell className="capitalize">{r.reporter_role}</TableCell>
                 <TableCell>{r.incident_type.replace(/_/g, " ")}</TableCell>
@@ -127,6 +127,7 @@ export default function SecurityIncidentTable({ incidentReports = [] }) {
                 </TableCell>
               </TableRow>
             ))}
+            <TableRow className="h-20"></TableRow>
           </TableBody>
         </Table>
       </div>
@@ -195,9 +196,9 @@ export default function SecurityIncidentTable({ incidentReports = [] }) {
         <div>
           <h3 className="text-lg font-medium mb-2">Photo</h3>
           <div className="bg-gray-100 rounded overflow-hidden aspect-square flex items-center justify-center">
-            {selected.photo_url ? (
+            {selected.incident_image_url ? (
               <img
-                src={selected.photo_url}
+                src={selected.incident_image_url}
                 alt="Incident"
                 className="object-cover "
               />

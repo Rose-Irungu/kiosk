@@ -72,3 +72,24 @@ export const unBlacklistVisitor = async(payload) => {
     console.log(error)
   }
 }
+
+export const addFavourite = async (visitorId) => {
+  try {
+    const response = await api.post(API_ENDPOINTS.ADD_FAVOURITE, { visitor_id: visitorId });
+    return response.data;
+  } catch (error) {
+    console.error("Error adding favourite:", error);
+    throw error;
+  }
+};
+
+// export const addFavourite = async (visitorId) => {
+//   try {
+//     const response = await api.delete(`${API_ENDPOINTS.ADD_FAVOURITE}${visitorId}/`);
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error removing favourite:", error);
+//     throw error;
+//   }
+// };
+

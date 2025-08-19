@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Layout from "../../components/layout/Layout";
+import users from "../../services/user";
 
 export default function ResidentRegistration() {
     const {
@@ -10,9 +11,50 @@ export default function ResidentRegistration() {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => {
-        console.log("Form submitted:", data);
-        alert("Form submitted successfully!");
+    const onSubmit = async (values) => {
+        try {
+
+            const formData = new FormData();
+            formData.append("first_name", values.firstName);
+            formData.append("last_name", values.lastName);
+            formData.append("email", values.email);
+            formData.append("role", "tenant");
+            formData.append("phone_number", values.phone);
+            formData.append("id_number", values.idNo);
+            formData.append("password", values.password);
+
+            // file
+            // formData.append("profile_picture", values.photo[0]);
+
+            // nested objects need stringifying
+            formData.append(
+            "next_of_kin",
+            JSON.stringify({
+                full_name: values.nextOfKinName,
+                relationship: values.nextOfKinRelationship,
+                phone_number: values.nextOfKinPhone,
+                email: values.nextOfKinEmail,
+            })
+            );
+
+            formData.append(
+            "resident_profile",
+            JSON.stringify({
+                no_of_residents: values.numPeople,
+                unit_number: values.unitNumber,
+                number_of_cars: 0,
+            })
+            );
+
+
+            const response = await users.addResident(formData);
+
+            console.log("Resident added:", response);
+            alert("Resident registered successfully!");
+        } catch (error) {
+            console.error("Error adding resident:", error);
+            alert("Failed to register resident.");
+        }
     };
 
     return (
@@ -121,20 +163,31 @@ export default function ResidentRegistration() {
                                 <label className="text-sm text-[#495057]">
                                     Unit <span className="text-[#f93162]">*</span>
                                 </label>
-                                <input
-                                    type="text"
-                                    placeholder="e.g. B-05A"
+
+                                <select
                                     {...register("unitNumber", {
                                         required: "Unit number is required",
-                                        minLength: { value: 2, message: "Unit must be at least 2 characters" },
                                     })}
                                     className={`bg-[#f4f4f4] rounded-lg px-3 py-2 h-12 outline-none ${errors.unitNumber ? "border border-red-500" : ""
                                         }`}
-                                />
+                                >
+                                    <option value="">-- Select Unit --</option>
+                                    <option value="A-01">A-01</option>
+                                    <option value="A-02">A-02</option>
+                                    <option value="B-05A">B-05A</option>
+                                    <option value="C-10">C-10</option>
+                                    <option value="D-12">D-12</option>
+                               
+                                </select>
+
                                 {errors.unitNumber && (
-                                    <span className="text-red-500 text-sm">{errors.unitNumber.message}</span>
+                                    <span className="text-red-500 text-sm">
+                                        {errors.unitNumber.message}
+                                    </span>
                                 )}
                             </div>
+
+
 
                             {/* Number of People */}
                             <div className="flex flex-col gap-2">
@@ -148,7 +201,7 @@ export default function ResidentRegistration() {
                                     defaultValue=""
                                 >
                                     <option value="" disabled>
-                                        -- Select --
+                                        --Select--
                                     </option>
                                     {[1, 2, 3, 4, 5, 6].map((num) => (
                                         <option key={num} value={num}>

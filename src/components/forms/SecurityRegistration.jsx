@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Layout from "../../components/layout/Layout";
+// import users from "../../services/user";
 
 export default function SecurityRegistration() {
     const {
@@ -10,11 +11,33 @@ export default function SecurityRegistration() {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => {
-        console.log("Form submitted:", data);
-        alert("Form submitted successfully!");
-    };
+    const onSubmit = async (data) => {
+        try {
 
+            const formData = new FormData();
+            formData.append("first_name", data.firstName);
+            formData.append("last_name", data.lastName);
+            formData.append("email", data.email);
+            formData.append("phone_number", data.phone);
+            formData.append("id_number", data.idNo);
+            formData.append("unit_number", data.unitNumber);
+            formData.append("num_people", data.numPeople);
+            formData.append("password", data.password);
+            formData.append("photo", data.photo[0]); // file
+
+            formData.append("next_of_kin_full_name", data.nextOfKinName);
+            formData.append("next_of_kin_relationship", data.nextOfKinRelationship);
+            formData.append("next_of_kin_phone", data.nextOfKinPhone);
+            formData.append("next_of_kin_email", data.nextOfKinEmail);
+
+            const response = await users.addResident(formData);
+
+            console.log("Resident added:", response);
+            alert("Resident registered successfully!");
+        } catch (error) {
+            alert("Failed to register resident.");
+        }
+    };
     return (
         <Layout>
             <form
@@ -121,16 +144,23 @@ export default function SecurityRegistration() {
                                 <label className="text-sm text-[#495057]">
                                     Unit <span className="text-[#f93162]">*</span>
                                 </label>
+
                                 <input
-                                    type="text"
-                                    placeholder="e.g. B-05A"
-                                    {...register("unitNumber", {
-                                        required: "Unit number is required",
-                                        minLength: { value: 2, message: "Unit must be at least 2 characters" },
-                                    })}
+                                    list="unitNumbers"
+                                    {...register("unitNumber", { required: "Unit number is required" })}
+                                    placeholder="Search or select unit"
                                     className={`bg-[#f4f4f4] rounded-lg px-3 py-2 h-12 outline-none ${errors.unitNumber ? "border border-red-500" : ""
                                         }`}
                                 />
+
+                                <datalist id="unitNumbers">
+                                    <option value="A-01" />
+                                    <option value="A-02" />
+                                    <option value="B-05A" />
+                                    <option value="C-10" />
+                                    <option value="D-12" />
+                                </datalist>
+
                                 {errors.unitNumber && (
                                     <span className="text-red-500 text-sm">{errors.unitNumber.message}</span>
                                 )}
