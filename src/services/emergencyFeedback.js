@@ -1,5 +1,5 @@
-import api from "./api";
-import { API_ENDPOINTS } from "../utils/constants";
+// import api from "./api";
+// import { API_ENDPOINTS } from "../utils/constants";
 
 export default async function submitEmergencyFeedback(id, feedback){
     try{
