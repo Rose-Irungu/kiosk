@@ -115,11 +115,11 @@ export default function VisitorRegistration() {
                             type="text"
                             placeholder='e.g John Doe'
                             name='full_name'
-                            value={visitorData.full_name}
+                            value={visitorData.visitor_name}
                             onChange={handleChange}
                             className={`h-12 px-4 rounded-lg bg-[#F4F4F4] w-full focus:outline-none ${errors.full_name ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-green-600'}`}
                         />
-                        {errors.full_name && <p className="text-red-500 text-sm">{errors.full_name}</p>}
+                        {errors.visitor_name && <p className="text-red-500 text-sm">{errors.visitor_name}</p>}
                     </div>
 
                     {/* Email + Phone */}

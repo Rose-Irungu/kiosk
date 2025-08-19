@@ -482,9 +482,9 @@ const VisitorManagement = ({ datedata = [] }) => {
                 <p className="font-medium text-[#002706] text-lg">Email: <span className="text-[#002706] text-lg ">{selectedGuest.email || "N/A"}</span></p>
 
                 <div className="flex flex-row items-center justify-between gap-4 mt-4">
-                  <div className="rounded-lg bg-[#005E0E] flex items-center justify-center w-[91px] h-[35px] ">
+                  <div onClick={handleEditModal} className="rounded-lg bg-[#005E0E] flex items-center justify-center w-[91px] h-[35px] hover:bg-green-600 ">
 
-                    <button onClick={handleEditModal} className="text-white font-bold text-base">Edit</button>
+                    <button  className="text-white font-bold text-base">Edit</button>
                   </div>
 
 
