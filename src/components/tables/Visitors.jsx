@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/table";
 import { Upload, ChevronDown, ArrowUp, ArrowDown, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { kioskService } from '@/services/kiosk';
+import toast from "react-hot-toast";
 
 export default function Visitors() {
   const [visitors, setVisitors] = useState([]);
@@ -29,19 +31,17 @@ export default function Visitors() {
   const [editModal, setEditModal] = useState(null);
   const [deleteModal, setDeleteModal] = useState(null);
   const navigate = useNavigate();
-  // sorting
+  // sorting--------------------------------------------
   const [sortConfig, setSortConfig] = useState({
     key: 'visitor_name', // default sort by name
     direction: 'ascending', // default direction
   });
-
   const sortVisitors = (key) => {
     let direction = 'ascending';
     if (sortConfig.key === key && sortConfig.direction === 'ascending') {
       direction = 'descending';
     }
     setSortConfig({ key, direction });
-
     const sortedVisitors = [...filteredAllVisitors].sort((a, b) => {
       if (a[key] < b[key]) {
         return direction === 'ascending' ? -1 : 1;
@@ -51,14 +51,58 @@ export default function Visitors() {
       }
       return 0;
     });
-
     setFilteredAllVisitors(sortedVisitors);
-
-    // Update the paginated visitors
     const start = (currentPage - 1) * entriesPerPage;
     const end = start + entriesPerPage;
     setVisitors(sortedVisitors.slice(start, end));
   };
+
+  // sorting--------------------------------------------
+  // check in visitor--------------------------------------
+
+  const handleCheckIn = async (visitor) => {
+      const formData = {
+        email: visitor.email,
+      };
+      console.log("here is the payload", visitor);
+
+      const res = await kioskService.checkIn(formData);
+      if (res.result_code === 0){
+        toast.success("Visitor checked in succesful");
+        setVisitors(prevVisitors =>
+          prevVisitors.map(v =>
+            v.visit_id === visitor.visit_id ? { ...v, status: 'checked_in' } : v
+          )
+        );
+      } else {
+        toast.error(res.message);
+      }
+      setMenuOpenIndex(null);
+  };
+
+  const handleCheckOut = async (visitor) => {
+      const formData = {
+        visit_id: visitor.visit_id,
+      };
+      const res = await kioskService.checkOut(formData);
+      if (res.result_code === 0){
+        toast.success("Visitor checked out succesful");
+        setVisitors(prevVisitors =>
+          prevVisitors.map(v =>
+            v.visit_id === visitor.visit_id ? { ...v, status: 'checked_out' } : v
+          )
+        );
+      } else {
+        toast.error(res.message);
+      }
+      setMenuOpenIndex(null);
+  };
+
+
+
+
+
+  // check in visitor--------------------------------------
   // View visitor
   const handleView = (visitor) => {
     navigate(`/viewvisitor`, {
@@ -136,7 +180,7 @@ export default function Visitors() {
       v.visitor_name,
       v.phone_number,
       v.visitor_type,
-      v.host_unit || "N/A",
+      v.unit_number || "N/A",
       v.status,
     ]);
 
@@ -366,7 +410,7 @@ export default function Visitors() {
                     <TableCell >{visitor.visitor_name}</TableCell>
                     <TableCell>{visitor.phone_number}</TableCell>
                     <TableCell>{visitor.visitor_type}</TableCell>
-                    <TableCell>{visitor.host_unit || "N/A"}</TableCell>
+                    <TableCell>{visitor.unit_number || "N/A"}</TableCell>
                     <TableCell>
                       <div
                         className={`flex items-center justify-center  gap-2 w-[90px] h-[20px] rounded text-xs  font-['Inter'] ${visitor.status === "checked_in"
@@ -414,10 +458,22 @@ export default function Visitors() {
                               Edit
                             </li>
 
-                            <li className="px-4 py-2 hover:bg-green-100 cursor-pointer" onClick={() => handleCheckIn(selectedVisitor)}>
+                            <li
+                              className={`px-4 py-2 ${selectedVisitor.status === 'checked_in'
+                                ? 'text-gray-400 cursor-not-allowed'
+                                : 'hover:bg-green-100 cursor-pointer'
+                                }`}
+                              onClick={selectedVisitor.status !== 'checked_in' ? () => handleCheckIn(selectedVisitor) : undefined}
+                            >
                               Check In
                             </li>
-                            <li className="px-4 py-2 hover:bg-green-100 cursor-pointer" onClick={() => handleCheckOut(selectedVisitor)}>
+                            <li
+                              className={`px-4 py-2 ${selectedVisitor.status !== 'checked_in'
+                                ? 'text-gray-400 cursor-not-allowed'
+                                : 'hover:bg-green-100 cursor-pointer'
+                                }`}
+                              onClick={selectedVisitor.status === 'checked_in' ? () => handleCheckOut(selectedVisitor) : undefined}
+                            >
                               Check Out
                             </li>
                             <li className="px-4 py-2 hover:bg-green-100 cursor-pointer text-red-500" onClick={() => handleDelete(selectedVisitor)}>
@@ -453,11 +509,11 @@ export default function Visitors() {
 
             <div className="flex flex-col items-center gap-2 ">
               <div className=" flex rounded-sm h-[40px] w-[257px] items-center bg-[#E61C11] justify-center font-['Inter'] font-light hover:bg-red-500">
-                <button className="flex items-center text-white text-sm tracking-[1%]  ">DELETE USER</button>
+                <button className="flex items-center text-white text-sm tracking-[1%] ">DELETE USER</button>
               </div>
 
-              <div className="flex rounded-sm h-[40px] w-[257px] border border-[#0A5B60] justify-center font-['Inter'] hover:bg-green-500">
-                <button className="flex items-center text-[#000000] ">CANCEL</button>
+              <div onClick={() => setDeleteModal(false)} className="flex rounded-sm h-[40px] w-[257px] border border-[#0A5B60] justify-center font-['Inter'] hover:bg-green-500">
+                <button  className="flex items-center text-[#000000] ">CANCEL</button>
               </div>
 
             </div>
