@@ -59,6 +59,38 @@ export const blacklistVisitor = async(payload) => {
   }
 }
 
+
+export const editVisitor = async (visitorId, values) => {
+  try {
+    const formData = new FormData();
+    formData.append("email", values.email);
+    formData.append("full_name", values.full_name);
+    formData.append("phone_number", values.phone_number);
+    formData.append("visitor_type", values.visitor_type);
+
+    if (values.profile_pic) {
+      formData.append("profile_pic", values.profile_pic);
+    }
+
+    const promise = api.put(`API_ENDPOINTS.EDIT_VISITOR}${visitorId}/`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    const res = await toast.promise(promise, {
+      loading: "Updating visitor...",
+      success: "Visitor updated successfully",
+      error: "Failed to update visitor",
+    });
+
+    return res.data;
+  } catch (error) {
+    console.error("Error editing visitor:", error);
+    throw error;
+  }
+};
+
 export const unBlacklistVisitor = async(payload) => {
   try {
     const promise = api.post(API_ENDPOINTS.UN_BLACKLIST_VISITOR, payload)

@@ -3,6 +3,7 @@ import { Heart } from 'lucide-react';
 import { getRelativeTime } from '../../../utils/fomatters';
 import { approveVisit, cancelVisit, blacklistVisitor, addFavourite, } from '../../../services/visitsuser';
 
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -28,6 +29,9 @@ const CardA = ({
   const [isloading, setIsLoading] = useState(false);
   const [isfavorite, setIsFavorite] = useState(false); 
   const modalRef = useRef(null);
+   const navigate = useNavigate();
+
+  
 
   useEffect(() => {
     setIsFavorite(isFavorite);
@@ -113,6 +117,9 @@ const CardA = ({
 
 //   fetchFavourites();
 // }, [visitor_id]);
+
+
+ 
 
 
   const toggleFavorite = async () => {
@@ -314,7 +321,8 @@ const CardA = ({
 
                   <div className="flex gap-3 mt-3">
                     <button
-                      onClick={() => setIsEditing(true)}
+                      // onClick={() => setIsEditing(true)}
+                       onClick={() => navigate("/edit")}
                       className="bg-green-900 text-white text-sm font-medium px-4 py-1.5 rounded"
                     >
                       Edit
