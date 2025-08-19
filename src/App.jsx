@@ -12,7 +12,6 @@ import {
 import VisitorDetails from "./pages/Dashboardpages/VisitorDetails";
 import EditVisitor from "./pages/Dashboardpages/EditVisitor";
 
-
 const App = () => {
   const [alarmActive, setAlarmActive] = useState(false);
   const audioRef = useRef(null);
@@ -27,17 +26,15 @@ const App = () => {
     socket.onmessage = (event) => {
       try {
         const message = JSON.parse(event.data);
+        console.log("📩 Incoming WS message:", message);
 
         if (message.event === "sos_alert") {
-          const shouldPlay = message.actions?.play_sound === true;
+          const shouldPlay = message.actions?.play_sound;
           setAlarmActive(shouldPlay);
         }
 
-        if (
-          message.event === "stop_sos_alert" ||
-          message.data?.emergency_status === "resolved"
-        ) {
-          setAlarmActive(false); 
+        if (message.event === "stop_sos_alert" || message.actions?.play_sound) {
+          // setAlarmActive(false);
         }
       } catch (err) {
         console.error("WebSocket message error:", err);
@@ -130,9 +127,8 @@ const App = () => {
           />
 
           <Route path="*" element={<ErrorPage />} />
-          <Route path= '/viewvisitor' element= {<VisitorDetails />} />
-          <Route path= '/editvisitor' element= {<EditVisitor />} />
-          
+          <Route path="/viewvisitor" element={<VisitorDetails />} />
+          <Route path="/editvisitor" element={<EditVisitor />} />
         </Routes>
       </Router>
 
