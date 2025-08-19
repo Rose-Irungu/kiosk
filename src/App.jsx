@@ -33,7 +33,7 @@ const App = () => {
           message.event === "stop_sos_alert" ||
           message.data?.emergency_status === "resolved"
         ) {
-          setAlarmActive(false); // stop alarm when alert is resolved
+          setAlarmActive(false); 
         }
       } catch (err) {
         console.error("WebSocket message error:", err);
