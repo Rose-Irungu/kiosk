@@ -100,7 +100,7 @@ export default function ResidentPastIncident({ incidentReports = [] }) {
                         </div>
                         <div>
                           <span className="text-gray-600">Location: </span>
-                          <span className="font-medium">{incident.location || 'Not specified'}</span>
+                          <span className="font-medium">{incident.incident_location || 'Not specified'}</span>
                         </div>
                         <div className="bg-white shadow rounded p-4">
                 <h3 className="text-lg font-medium mb-3">Incident Photo</h3>
