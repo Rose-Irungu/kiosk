@@ -43,7 +43,7 @@ export default function EmergencyAlertCard({ time }) {
 
   return (
     <div>
-      <audio ref={audioRef} src="/sounds/fire_alarm.mp3" preload="auto" loop />
+      {/* <audio ref={audioRef} src="/sounds/fire_alarm.mp3" preload="auto" loop /> */}
 
       <div className="fixed top-[250px] left-1/2 transform -translate-x-1/2 bg-[#fde8e7] rounded-2xl w-[560px] h-auto shadow-lg overflow-hidden z-50 p-6">
         <div className="flex gap-6 items-start">
