@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Eye, EyeOff, Shield, Heart } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { authService } from "../../services/authService";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -20,8 +21,8 @@ const LoginForm = () => {
 
     try {
       const result = await authService.loginUser(credentials);
-
       if (result.result_code === 0) {
+        toast.success(result.message)
         const { access, refresh, user } = result.data;
 
         localStorage.setItem("accessToken", access);
@@ -35,7 +36,7 @@ const LoginForm = () => {
         switch (user.role) {
           case "admin":
             navigate("/dashboard");
-            console.log("Admin login successful");
+            // console.log("Admin login successful");
             break;
           case "tenant":
               navigate("/resident/dashboard");
@@ -53,7 +54,7 @@ const LoginForm = () => {
       }
     } catch (err) {
       setError(err.message || "Something went wrong.");
-      // toast.error(err.message || "Login failed. Please try again.");
+      toast.error(err.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }

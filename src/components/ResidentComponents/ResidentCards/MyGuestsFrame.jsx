@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { visitsuser, approveVisit, cancelVisit,  } from "../../../services/visitsuser";
+import { visitsuser, approveVisit, cancelVisit, } from "../../../services/visitsuser";
 
 import CardA from './CardA';
 
@@ -10,7 +10,8 @@ const MyGuestsFrame = () => {
   const [guestList, setGuestList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchGuests = async () => {
@@ -45,7 +46,7 @@ const MyGuestsFrame = () => {
   const handleCancelVisit = async (visitId) => {
     try {
       await cancelVisit(visitId);
-      
+
       setGuestList((prev) =>
         prev.map((g) => g.visit_id === visitId ? { ...g, status: 'cancelled' } : g)
       );
@@ -56,6 +57,12 @@ const MyGuestsFrame = () => {
 
 
   const filteredGuests = guestList.filter((guest) => guest.status === activeTab);
+
+
+  const searchedGuests = filteredGuests.filter((guest) =>
+    guest.visitor_name?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
 
   return (
     <div className="bg-[#e6fbe9] rounded-xl px-2 py-3 flex flex-col gap-4 items-center justify-start overflow-y-auto relative max-h-[90vh]">
@@ -74,6 +81,24 @@ const MyGuestsFrame = () => {
           <span className="text-white text-sm font-semibold -ml-1">Invite Guest</span>
         </button>
       </div>
+
+
+      {/* Search Bar */}
+      <div className="relative w-full mb-3">
+        <img
+          src="/search-icon.svg"
+          alt="search"
+          className="absolute left-3 top-1/2 transform -translate-y-1/2 w-3 h- text-gray-400"
+        />
+        <input
+          type="text"
+          placeholder="Search guests..."
+          className="border p-2 pl-10 rounded w-full focus:outline-none focus:ring-0 focus:border-gray-400"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
 
       <div className="flex flex-col gap-4 items-center w-full  px-4">
         <div className="bg-[rgba(51,51,51,0.1)] bg-opacity-80 rounded-full px-2 py-1 flex gap-4 w-full">
@@ -96,16 +121,19 @@ const MyGuestsFrame = () => {
           <div className="flex flex-col gap-2 w-full max-w-[932px]">
             {loading && <div className="text-gray-600 text-sm">Loading guests...</div>}
             {error && <div className="text-red-600 text-sm">Error: {error}</div>}
-            {!loading && !error && guestList.length === 0 && (
+            {!loading && !error && searchedGuests.length === 0 && (
               <div className="text-gray-600 text-sm">No guests found.</div>
             )}
             {!loading &&
               !error &&
-              filteredGuests.map((guest, index) => <CardA key={index}
-                {...guest}
-                onApproveVisit={handleApproveVisit}
-                onCancelVisit={handleCancelVisit} />)
-            }
+              searchedGuests.map((guest, index) => (
+                <CardA
+                  key={index}
+                  {...guest}
+                  onApproveVisit={handleApproveVisit}
+                  onCancelVisit={handleCancelVisit}
+                />
+              ))}
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@ export default function FacilityProfile() {
   const [success, setSuccess] = useState("");
 
   const user = JSON.parse(localStorage.getItem("userInfo")) || {};
-  const facilityId = user.facility || null;
+  const facilityId = user.admin_profile.facility || null;
 
   useEffect(() => {
     const fetchFacilityData = async () => {

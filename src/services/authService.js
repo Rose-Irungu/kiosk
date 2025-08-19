@@ -9,6 +9,7 @@ export const authService = {
         API_ENDPOINTS.SENT_PASSWORD_RESET,
         formData
       );
+    
       return response.data;
     } catch (error) {
       console.error("Error during sent email:", error);
@@ -29,14 +30,14 @@ export const authService = {
   },
   loginUser: async (credentials) => {
     try {
-      const promise = api.post(API_ENDPOINTS.LOGIN, credentials);
+      const response = await api.post(API_ENDPOINTS.LOGIN, credentials);
 
-      const response = await toast.promise(promise, {
-        loading: "Logging in...",
-        success: "Login successful!",
-        error: (err) =>
-          err?.response?.data?.message || "Login failed. Please try again.",
-      });
+      // const response = await toast.promise(promise, {
+      //   loading: "Logging in...",
+      //   success: "Login successful!",
+      //   error: (err) =>
+      //     err?.response?.data?.message || "Login failed. Please try again.",
+      // });
 // console.log("Login response:", response.data);
 // return
       return response.data;

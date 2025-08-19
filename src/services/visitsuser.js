@@ -83,6 +83,17 @@ export const addFavourite = async (visitorId) => {
   }
 };
 
+// export const getallFavourite = async () => {
+//   try {
+//     const response = await api.get(API_ENDPOINTS.GET_FAVOURITES); 
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error fetching favourites:", error);
+//     throw error;
+//   }
+// };
+
+
 // export const addFavourite = async (visitorId) => {
 //   try {
 //     const response = await api.delete(`${API_ENDPOINTS.ADD_FAVOURITE}${visitorId}/`);

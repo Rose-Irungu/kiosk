@@ -63,6 +63,7 @@ export const API_ENDPOINTS = {
   BLACKLIST_PEEPS: '/visitors/all-blacklisted/',
   Resident_Incidence: '/incidence-and-emergency/view-my-incidence/',
   ADD_FAVOURITE: '/visitors/favourite/',
+  GET_FAVOURITES: '/visitors/getallfavourite/',
   // REMOVE_FAVOURITE: '/visitor/remove-favourite/',
 
 
