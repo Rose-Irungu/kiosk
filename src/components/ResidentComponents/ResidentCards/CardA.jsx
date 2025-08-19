@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Heart } from 'lucide-react';
 import { getRelativeTime } from '../../../utils/fomatters';
-import { approveVisit, cancelVisit, blacklistVisitor, addFavourite } from '../../../services/visitsuser';
+import { approveVisit, cancelVisit, blacklistVisitor, addFavourite, } from '../../../services/visitsuser';
 
 
 
@@ -14,6 +14,7 @@ const CardA = ({
   check_in,
   stayTime,
   status,
+  isFavorite,
   // phone,
   // email,
   tag,
@@ -25,8 +26,12 @@ const CardA = ({
   const [showDetailsView, setShowDetailsView] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isloading, setIsLoading] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false); 
+  const [isfavorite, setIsFavorite] = useState(false); 
   const modalRef = useRef(null);
+
+  useEffect(() => {
+    setIsFavorite(isFavorite);
+  }, [isFavorite]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -51,6 +56,7 @@ const CardA = ({
     status,
     tag,
     image,
+    isFavorite,
     // phone,
     // email,
   };
@@ -93,16 +99,32 @@ const CardA = ({
     }
   };
 
+//   useEffect(() => {
+//   const fetchFavourites = async () => {
+//     try {
+//       const data = await getallFavourite();
+//       // Check if this visitor is in the favourites list
+//       const isFav = data?.some(fav => fav.visitor_id === visitor_id);
+//       setIsFavorite(isFav);
+//     } catch (error) {
+//       console.error("Error loading favourites:", error);
+//     }
+//   };
+
+//   fetchFavourites();
+// }, [visitor_id]);
+
 
   const toggleFavorite = async () => {
     
 
   try {
-    if (!isFavorite) {
       setIsLoading(true);
-      await addFavourite(visitor_id); 
-      setIsFavorite(true); 
-    }
+      const res = await addFavourite(visitor_id); 
+      console.log("Toggle Favourite Response:", res.data);
+      
+      setIsFavorite(res.data.isFavorite); 
+    
   } catch (error) {
     console.error("Error toggling favourite:", error);
   } finally {
@@ -141,7 +163,7 @@ const CardA = ({
           >
             <Heart
               size={18}
-              className={`cursor-pointer transition-colors ${isFavorite ? "text-red-500 fill-red-500" : "text-gray-400"
+              className={`cursor-pointer transition-colors ${isfavorite ? "text-red-500 fill-red-500" : "text-gray-400"
                 }`}
             />
           </button>
@@ -207,44 +229,44 @@ const CardA = ({
 
 
           ) : st === "checked_in" ? (
-            isEditing ? (
-              // EDIT MODAL
-              <div className="bg-[#f5f4f5] rounded-2xl p-6 w-[517px] h-[605px] shadow-md">
-                <h2 className="text-green-900 font-semibold text-lg mb-4">Edit Visitor</h2>
-                <input
-                  type="text"
-                  defaultValue={n}
-                  className="w-full mb-3 px-3 py-2 rounded border border-gray-300"
-                />
-                <input
-                  type="text"
-                  defaultValue={phone}
-                  className="w-full mb-3 px-3 py-2 rounded border border-gray-300"
-                />
-                <input
-                  type="email"
-                  defaultValue={email}
-                  className="w-full mb-3 px-3 py-2 rounded border border-gray-300"
-                />
-                <div className="flex justify-end gap-3 mt-4">
-                  <button
-                    onClick={() => setIsEditing(false)}
-                    className="px-4 py-2 border rounded text-gray-700"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={() => {
-                      // TODO: call updateVisitor API here
-                      setIsEditing(false);
-                    }}
-                    className="px-4 py-2 bg-green-900 text-white rounded"
-                  >
-                    Save
-                  </button>
-                </div>
-              </div>
-            ) : (
+            // isEditing ? (
+            //   // EDIT MODAL
+            //   <div className="bg-[#f5f4f5] rounded-2xl p-6 w-[517px] h-[605px] shadow-md">
+            //     <h2 className="text-green-900 font-semibold text-lg mb-4">Edit Visitor</h2>
+            //     <input
+            //       type="text"
+            //       defaultValue={n}
+            //       className="w-full mb-3 px-3 py-2 rounded border border-gray-300"
+            //     />
+            //     <input
+            //       type="text"
+            //       defaultValue={phone}
+            //       className="w-full mb-3 px-3 py-2 rounded border border-gray-300"
+            //     />
+            //     <input
+            //       type="email"
+            //       defaultValue={email}
+            //       className="w-full mb-3 px-3 py-2 rounded border border-gray-300"
+            //     />
+            //     <div className="flex justify-end gap-3 mt-4">
+            //       <button
+            //         onClick={() => setIsEditing(false)}
+            //         className="px-4 py-2 border rounded text-gray-700"
+            //       >
+            //         Cancel
+            //       </button>
+            //       <button
+            //         onClick={() => {
+            //           // TODO: call updateVisitor API here
+            //           setIsEditing(false);
+            //         }}
+            //         className="px-4 py-2 bg-green-900 text-white rounded"
+            //       >
+            //         Save
+            //       </button>
+            //     </div>
+            //   </div>
+            // ) : (
 
               <div className="bg-white rounded-2xl border border-gray-200 p-6 flex flex-col gap-4 w-[350px] shadow-md">
 
@@ -321,7 +343,7 @@ const CardA = ({
               </div>
             )
           
-            ) : null}
+             : null}
 
 
         </div>

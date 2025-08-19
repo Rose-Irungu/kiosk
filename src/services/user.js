@@ -15,42 +15,10 @@ export const userService = {
 
   addUser: async (formData) => {
     try {
-      const response = await api.post(API_ENDPOINTS.ADD_USER, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        }
-      });
-      return response.data;
-    } catch (error) {
-      console.error("Error adding user:", error);
-      throw error;
-    }
-  },
-
-  addResident: async (formData) => {
-    try {
-      const response = await api.post(API_ENDPOINTS.ADD_RESIDENT, formData, {
-        headers: {
-          "Content-Type":  'multipart/form-data',
-        },
-      });
+      const response = await api.post(API_ENDPOINTS.ADD_RESIDENT, formData);
       return response.data;
     } catch (error) {
       console.error("Error adding resident:", error);
-      throw error;
-    }
-  },
-
-   addSecurity: async (formData) => {
-    try {
-      const response = await api.post(API_ENDPOINTS.ADD_SECURITY, formData, {
-        headers: {
-          "Content-Type":  'multipart/form-data',
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.error("Error adding security:", error);
       throw error;
     }
   },

@@ -1,6 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Layout from "../../components/layout/Layout";
+import userService from "../../services/user";
+
 // import users from "../../services/user";
 
 export default function SecurityRegistration() {
@@ -11,31 +13,35 @@ export default function SecurityRegistration() {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (values) => {
         try {
+            const data = {
+                first_name: values.firstName,
+                last_name: values.lastName,
+                email: values.email,
+                role: "security",
+                phone_number: values.phone,
+                id_number: values.idNo,
+                password: values.password,
+                next_of_kin: [{
+                    full_name: values.nextOfKinName?.toString(),
+                    relationship: values.nextOfKinRelationship?.toString(),
+                    phone_number: values.nextOfKinPhone?.toString(),
+                    email: values.nextOfKinEmail?.toString(),
+                }],
+                security_profile: {
+                    company: "Kiosk Security",
+                    badge_number: "SEC-001",
+                    post: "Main Gate",
+                },
+            };
 
-            const formData = new FormData();
-            formData.append("first_name", data.firstName);
-            formData.append("last_name", data.lastName);
-            formData.append("email", data.email);
-            formData.append("phone_number", data.phone);
-            formData.append("id_number", data.idNo);
-            formData.append("unit_number", data.unitNumber);
-            formData.append("num_people", data.numPeople);
-            formData.append("password", data.password);
-            formData.append("photo", data.photo[0]); // file
+            const response = await userService.addUser(data);
 
-            formData.append("next_of_kin_full_name", data.nextOfKinName);
-            formData.append("next_of_kin_relationship", data.nextOfKinRelationship);
-            formData.append("next_of_kin_phone", data.nextOfKinPhone);
-            formData.append("next_of_kin_email", data.nextOfKinEmail);
-
-            const response = await users.addResident(formData);
-
-            console.log("Resident added:", response);
-            alert("Resident registered successfully!");
+            console.log("Security added:", response);
+            alert("Security registered successfully!");
         } catch (error) {
-            alert("Failed to register resident.");
+            alert("Failed to register security.");
         }
     };
     return (
@@ -142,14 +148,14 @@ export default function SecurityRegistration() {
                             {/* Unit Number */}
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm text-[#495057]">
-                                    Unit <span className="text-[#f93162]">*</span>
+                                    Post <span className="text-[#f93162]">*</span>
                                 </label>
 
                                 <input
                                     list="unitNumbers"
-                                    {...register("unitNumber", { required: "Unit number is required" })}
-                                    placeholder="Search or select unit"
-                                    className={`bg-[#f4f4f4] rounded-lg px-3 py-2 h-12 outline-none ${errors.unitNumber ? "border border-red-500" : ""
+                                    {...register("unitNumber", { required: "Post number is required" })}
+                                    placeholder="Search or select post"
+                                    className={`bg-[#f4f4f4] rounded-lg px-3 py-2 h-12 outline-none ${errors.post ? "border border-red-500" : ""
                                         }`}
                                 />
 
@@ -169,11 +175,11 @@ export default function SecurityRegistration() {
                             {/* Number of People */}
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm text-[#495057]">
-                                    Number of People <span className="text-[#f93162]">*</span>
+                                    Company <span className="text-[#f93162]">*</span>
                                 </label>
                                 <select
                                     {...register("numPeople", { required: "Please select the number of people" })}
-                                    className={`bg-[#f4f4f4] rounded-lg px-3 py-2 h-12 outline-none ${errors.numPeople ? "border border-red-500" : ""
+                                    className={`bg-[#f4f4f4] rounded-lg px-3 py-2 h-12 outline-none ${errors.company ? "border border-red-500" : ""
                                         }`}
                                     defaultValue=""
                                 >
@@ -236,7 +242,7 @@ export default function SecurityRegistration() {
                             </div>
                         </div>
 
-                        {/* Upload Photo - single row */}
+                        {/* Upload Photo - single row
                         <div className="flex flex-col gap-2 w-full mt-6">
                             <label className="text-sm text-[#495057]">
                                 Upload Photo <span className="text-[#f93162]">*</span>
@@ -260,8 +266,8 @@ export default function SecurityRegistration() {
                                 <span className="text-red-500 text-sm">{errors.photo.message}</span>
                             )}
                         </div>
-                    </div>
-
+                    </div> */}
+        </div>
                     {/* Next of Kin Section */}
                     <div className="flex flex-col gap-6 w-full">
                         <h3 className="text-lg font-semibold text-[#495057]">Next of Kin Details</h3>
