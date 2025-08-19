@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { MoreHorizontal, Eye, User, FileText, X, Search } from "lucide-react";
+import { MoreHorizontal, Eye, User, FileText, X, Search, ChevronDown } from "lucide-react";
 import { incidenceService } from "../../services/incident";
 
 const statusStyles = {
@@ -23,6 +23,8 @@ export default function IncidentTable({ incidentReports = [] }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [actionsFor, setActionsFor] = useState(null);
   const [selected, setSelected] = useState(null);
+  const [dateFilter, setDateFilter] = useState("all");
+  const [showDateDropdown, setShowDateDropdown] = useState(false);
 
   useEffect(() => {
     setIncidents(incidentReports);
@@ -30,18 +32,50 @@ export default function IncidentTable({ incidentReports = [] }) {
   }, [incidentReports]);
 
   useEffect(() => {
-    const filtered = incidents.filter((incident) => {
+    let filtered = incidents;
+
+    // Apply date filter
+    if (dateFilter !== "all") {
+      const now = new Date();
+      let filterDate;
+
+      switch (dateFilter) {
+        case "day":
+          filterDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+          break;
+        case "week":
+          filterDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+          break;
+        case "month":
+          filterDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+          break;
+        default:
+          filterDate = null;
+      }
+
+      if (filterDate) {
+        filtered = filtered.filter((incident) => {
+          const incidentDate = new Date(incident.created_at || incident.date_reported);
+          return incidentDate >= filterDate;
+        });
+      }
+    }
+
+    // Apply search filter
+    if (searchQuery) {
       const searchLower = searchQuery.toLowerCase();
-      return (
-        incident.reporter_name.toLowerCase().includes(searchLower) ||
-        incident.incident_type.toLowerCase().replace(/_/g, " ").includes(searchLower) ||
-        incident.incident_description.toLowerCase().includes(searchLower) ||
-        incident.reporter_role.toLowerCase().includes(searchLower)
-      );
-    });
+      filtered = filtered.filter((incident) => {
+        return (
+          incident.reporter_name.toLowerCase().includes(searchLower) ||
+          incident.incident_type.toLowerCase().replace(/_/g, " ").includes(searchLower) ||
+          incident.incident_description.toLowerCase().includes(searchLower) ||
+          incident.reporter_role.toLowerCase().includes(searchLower)
+        );
+      });
+    }
+
     setFilteredIncidents(filtered);
-  }, [searchQuery, incidents]);
-  
+  }, [searchQuery, incidents, dateFilter]);
   
   const formatStatus = (s) => {
     if (s === "new") return "New Incident";
@@ -65,18 +99,51 @@ export default function IncidentTable({ incidentReports = [] }) {
     }
   };
 
+  const filterButtons = [
+    { key: "all", label: "All " },
+    { key: "day", label: "Today" },
+    { key: "week", label: "This Week" },
+    { key: "month", label: "This Month" },
+  ];
 
   return (
     <div className="relative max-w-6xl mx-auto bg-white rounded-xl shadow-sm">
       {/* Header */}
       <div>
-          <div className="flex justify-between items-center p-6 pb-4">
+        <div className="flex justify-between items-center p-6 pb-4">
           <h2 className="text-xl font-semibold">Reported Incidents</h2>
-          </div>
-
           
+          {/* Date Filter Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setShowDateDropdown(!showDateDropdown)}
+              className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+            >
+              {filterButtons.find(b => b.key === dateFilter)?.label || "All Time"}
+              <ChevronDown className="w-4 h-4" />
+            </button>
+            
+            {showDateDropdown && (
+              <div className="absolute right-0 top-12 bg-white border rounded-lg shadow-lg z-30 w-40">
+                {filterButtons.map((button) => (
+                  <button
+                    key={button.key}
+                    onClick={() => {
+                      setDateFilter(button.key);
+                      setShowDateDropdown(false);
+                    }}
+                    className={`w-full text-left px-4 py-2 hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg ${
+                      dateFilter === button.key ? "bg-green-50 text-green-700 font-medium" : "text-gray-700"
+                    }`}
+                  >
+                    {button.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
-      
 
       {/* Search Bar */}
       <div className="px-6 pb-4">
@@ -175,7 +242,7 @@ export default function IncidentTable({ incidentReports = [] }) {
       </div>
 
       {selected && (
-        <div className="absolute inset-0 bg-gray-100 rounded-lg   border-hidden  ">
+        <div className="absolute inset-0 bg-gray-100 rounded-lg border-hidden">
           <div className="flex justify-between items-center bg-white shadow rounded px-4 py-2 mb-4">
             <div className="flex items-center gap-2">
               <div className="w-2 place-self-start h-10 bg-green-500 rounded" />
@@ -202,7 +269,7 @@ export default function IncidentTable({ incidentReports = [] }) {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="lg:col-span-1  bg-white shadow rounded p-4">
+            <div className="lg:col-span-1 bg-white shadow rounded p-4">
               <div className="flex items-center gap-2 mb-2">
                 <FileText className="text-gray-500" />
                 <h3 className="text-lg font-medium">Incident Description</h3>
@@ -212,7 +279,7 @@ export default function IncidentTable({ incidentReports = [] }) {
               </div>
             </div>
 
-            <div className=" grid-cols-2 bg-white shadow rounded p-4 space-y-6 flex ">
+            <div className="grid-cols-2 bg-white shadow rounded p-4 space-y-6 flex">
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <User className="text-gray-500" />
@@ -239,7 +306,7 @@ export default function IncidentTable({ incidentReports = [] }) {
                     <img
                       src={selected.incident_image_url}
                       alt="Incident"
-                      className="object-cover "
+                      className="object-cover"
                     />
                   ) : (
                     <div className="text-gray-400 text-center p-4">
