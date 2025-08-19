@@ -10,14 +10,24 @@ import {
 } from "./routes/routeConfig";
 
 const App = () => {
-  const [alarmActive, setAlarmActive] = useState(false);
+  const [alarmActive, setAlarmActive] = useState(() => {
+    return localStorage.getItem("emergencyActive") === "true";
+  });
   const audioRef = useRef(null);
+  const socketRef = useRef(null);
 
   useEffect(() => {
     const socket = new WebSocket("wss://guestapi.zynamis.co.ke/ws/emergency/");
+    socketRef.current = socket;
 
     socket.onopen = () => {
       console.log("WebSocket connection opened");
+
+      socket.send(
+        JSON.stringify({
+          type: "get_emergency_status",
+        })
+      );
     };
 
     socket.onmessage = (event) => {
@@ -27,13 +37,28 @@ const App = () => {
         if (message.event === "sos_alert") {
           const shouldPlay = message.actions?.play_sound === true;
           setAlarmActive(shouldPlay);
+
+          localStorage.setItem("emergencyActive", shouldPlay.toString());
         }
 
         if (
           message.event === "stop_sos_alert" ||
           message.data?.emergency_status === "resolved"
         ) {
-          setAlarmActive(false); 
+          setAlarmActive(false);
+
+          localStorage.removeItem("emergencyActive");
+        }
+
+        if (message.event === "emergency_status_response") {
+          const isActive = message.data?.is_active === true;
+          setAlarmActive(isActive);
+
+          if (isActive) {
+            localStorage.setItem("emergencyActive", "true");
+          } else {
+            localStorage.removeItem("emergencyActive");
+          }
         }
       } catch (err) {
         console.error("WebSocket message error:", err);
@@ -46,6 +71,10 @@ const App = () => {
 
     socket.onclose = () => {
       console.warn("WebSocket closed");
+
+      setTimeout(() => {
+        console.log("Attempting to reconnect...");
+      }, 3000);
     };
 
     return () => {
@@ -66,6 +95,18 @@ const App = () => {
       audioRef.current.currentTime = 0;
     }
   }, [alarmActive]);
+
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === "emergencyActive") {
+        const isActive = e.newValue === "true";
+        setAlarmActive(isActive);
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   return (
     <>
