@@ -20,3 +20,16 @@ export async function getAllVisitors(){
 export async function clickTest(){
     console.log("Button clicked successfully");
 }
+
+
+export const editVisitor = async (visitorId, updatedData) => {
+  try {
+    const res = await api.get(`${API_ENDPOINTS.EDIT_VISITOR}${visitorId}`, updatedData);
+
+    const data = await res.data;
+    return data; 
+  } catch (error) {
+    console.error("Error editing visitor:", error);
+    throw error;
+  }
+};

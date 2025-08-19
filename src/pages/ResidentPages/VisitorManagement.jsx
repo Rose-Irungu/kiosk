@@ -3,13 +3,23 @@ import { useNavigate } from "react-router";
 import ResidentLayout from '../../components/ResidentComponents/ResidentLayout.jsx';
 import { getAllBlackListed } from '../../services/blacklistedpeeps';
 import { blacklistVisitor, unBlacklistVisitor, visitsuser, approveVisit, cancelVisit } from "../../services/visitsuser";
-
+import { editVisitor } from "../../services/residentDashboardServices.js";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 
 
 const VisitorManagement = ({ datedata = [] }) => {
   const [day, setDay] = useState(new Date().toDateString());
   const [datebuttons, setDateButtons] = useState([]);
+  const [fileName, setFileName] = useState("name of existing file");
+
+  const handleFileChange = (e) => {
+    if (e.target.files.length > 0) {
+      setFileName(e.target.files[0].name);
+    }
+  };
 
   useEffect(() => {
     setDateButtons(generateDateButtons());
@@ -340,8 +350,8 @@ const VisitorManagement = ({ datedata = [] }) => {
                       <p className="text-sm font-medium text-[#002706] ">
                         {guestlist.visitor_name}
                       </p>
-                      <p className="text-[12px] text-[#333333]">
-                        {guestlist.check_in}
+                      <p className="text-[12px] text-[#999999] font-medium">
+                        {dayjs(guestlist.check_in).fromNow()}
                       </p>
                     </div>
                   </div>
@@ -506,79 +516,90 @@ const VisitorManagement = ({ datedata = [] }) => {
       {/* Table/Card Modal for Guest */}
 
       {isGuestModalOpen && selectedGuest && (
-        // Expected vistors modal
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
-          <div
-            className='flex flex-col items-center gap-2 bg-[#F5F4F5] w-[517px] h-[518px] rounded-[24px]'
-            ref={guestModalRef}
-          >
+        <>
+        
+        { selectedGuest.status === "approved" &&(
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
+            <div
+              className='flex flex-col items-center gap-2 bg-[#F5F4F5] w-[517px] h-[518px] rounded-[24px]'
+              ref={guestModalRef}
+            >
 
-            <div className="flex flex-row w-full justify-between items-center border-b border-[#E6FBE9] shadow-[0px_1px_10px_0px_rgba(0,_88,_13,_0.25)] p-4">
-              <h2 className="text-2xl text-[#002706] font-bold">Visitor Details</h2>
-              <button
-                onClick={() => setIsGuestModalOpen(false)}
-                className="justify-end text-gray-500 hover:text-gray-700 cursor-pointer hover:bg-green-500"
-              >
-                <img src="/x-sign.svg" alt="" />
-              </button>
-
-            </div>
-
-            <div className="flex flex-row justify-between w-full items-center  pt-4 px-4">
-              <p className="font-bold text-lg text-[#005E0E]">Personal Information</p>
-              <img src="/favorite.svg" alt="" />
-            </div>
-
-            <div className="flex flex-row items-center justify-start w-full  px-4 ">
-              <div className="rounded-full bg-gray-500 w-[120px] h-[120px]">
-                <img className="w-full h-full object-cover" src="/boy-avatar.svg" alt="" />
+              <div className="flex flex-row w-full justify-between items-center border-b border-[#E6FBE9] shadow-[0px_1px_10px_0px_rgba(0,_88,_13,_0.25)] p-4">
+                <h2 className="text-2xl text-[#002706] font-bold">Visitor Details</h2>
+                <button
+                  onClick={() => setIsGuestModalOpen(false)}
+                  className="justify-end text-gray-500 hover:text-gray-700 cursor-pointer hover:bg-green-500"
+                >
+                  <img src="/x-sign.svg" alt="" />
+                </button>
 
               </div>
 
-              <div className="flex flex-col  items-start p-6">
-                <p className="font-bold text-[#002706] text-xl">{selectedGuest.visitor_name}</p>
-                <p className="font-medium text-[#002706] text-lg">Phone: <span className="text-[#002706] text-lg ">{selectedGuest.phone_number || "N/A"}</span></p>
-                <p className="font-medium text-[#002706] text-lg">Email: <span className="text-[#002706] text-lg ">{selectedGuest.email || "N/A"}</span></p>
+              <div className="flex flex-row justify-between w-full items-center  pt-4 px-4">
+                <p className="font-bold text-lg text-[#005E0E]">Personal Information</p>
+                <img src="/favorite.svg" alt="" />
+              </div>
 
-                <div className="flex flex-row items-center justify-between gap-4 mt-4">
-                  <div className="rounded-lg bg-[#005E0E] flex items-center justify-center w-[91px] h-[35px] ">
+              <div className="flex flex-row items-center justify-start w-full  px-4 ">
+                <div className="rounded-full bg-gray-500 w-[120px] h-[120px]">
+                  <img className="w-full h-full object-cover" src="/boy-avatar.svg" alt="" />
 
-                    <button onClick={handleEditModal} className="text-white font-bold text-base">Edit</button>
-                  </div>
+                </div>
+
+                <div className="flex flex-col  items-start p-6">
+                  <p className="font-bold text-[#002706] text-xl">{selectedGuest.visitor_name}</p>
+                  <p className="font-medium text-[#002706] text-lg">Phone: <span className="text-[#002706] text-lg ">{selectedGuest.phone_number || "N/A"}</span></p>
+                  <p className="font-medium text-[#002706] text-lg">Email: <span className="text-[#002706] text-lg ">{selectedGuest.email || "N/A"}</span></p>
+
+                  <div className="flex flex-row items-center justify-between gap-4 mt-4">
+                    <div className="rounded-lg bg-[#005E0E] flex items-center justify-center w-[91px] h-[35px] ">
+
+                      <button onClick={handleEditModal} className="text-white font-bold text-base">Edit</button>
+                    </div>
 
 
-                  <div className=" flex items-center justify-center  h-[35px] p-2 ">
+                    <div className=" flex items-center justify-center  h-[35px] p-2 ">
 
-                    <button onClick={handleAddToBlacklist} className=" font-bold text-base underline underline-[#D1190F] text-[#D1190F] hover:text-red-400 cursor-pointer">Add to Blacklist</button>
+                      <button onClick={handleAddToBlacklist} className=" font-bold text-base underline underline-[#D1190F] text-[#D1190F] hover:text-red-400 cursor-pointer">Add to Blacklist</button>
+                    </div>
+
                   </div>
 
                 </div>
 
+
+
+              </div>
+
+              <div className="flex flex-col  items-start w-full justify-start px-6" >
+                <p className="font-bold text-lg text-[#005E0E]">Visitor Information</p>
+                <p className="font-medium text-[#002706] text-lg" >Guest Type: {selectedGuest.visitor_type || "N/A"}</p>
+                <p className="font-medium text-[#002706] text-lg">
+                  Check In Date:{" "}
+                  {selectedGuest.visit_date
+                    ? dayjs(selectedGuest.visit_date).format("DD/MM/YYYY")
+                    : "N/A"}
+                </p>
+                <p className="font-medium text-[#002706] text-lg">Check In time:{" "}
+                  {selectedGuest.check_in ? dayjs(selectedGuest.check_in).fromNow() : "N/A"}</p>
+
+              </div>
+
+              <div className="flex justify-end items-end  w-full px-6 pt-4">
+                <div className="border border-[#610C07] flex items-end justify-end px-2 py-1 rounded-lg">
+                  <button className="text-[#610C07]">Delete Invitation</button>
+                </div>
               </div>
 
 
 
-            </div>
-
-            <div className="flex flex-col  items-start w-full justify-start px-6" >
-              <p className="font-bold text-lg text-[#005E0E]">Visitor Information</p>
-              <p className="font-medium text-[#002706] text-lg" >Guest Type: {selectedGuest.visitor_type || "N/A"}</p>
-              <p className="font-medium text-[#002706] text-lg">Check In Date: {selectedGuest.visit_date || "N/A"}</p>
-              <p className="font-medium text-[#002706] text-lg">Check In time: {selectedGuest.check_in || "N/A"}</p>
-
-            </div>
-
-            <div className="flex justify-end items-end  w-full px-6 pt-4">
-              <div className="border border-[#610C07] flex items-end justify-end px-2 py-1 rounded-lg">
-                <button className="text-[#610C07]">Delete Invitation</button>
-              </div>
-            </div>
 
 
 
 
-            {/* Conditional Buttons based on status */}
-            {selectedGuest.status === "checked_in" && (
+              {/* Conditional Buttons based on status */}
+              {/* {selectedGuest.status === "checked_in" && (
               <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
                 <div className='flex bg-[#00580D] rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-green-500'>
                   <button
@@ -598,73 +619,293 @@ const VisitorManagement = ({ datedata = [] }) => {
                   </button>
                 </div>
               </div>
-            )}
+            )} */}
 
 
-            {selectedGuest.status === "pending" && (
+              {/* {selectedGuest.status === "pending" && (
               <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
-                {/* <div className='flex bg-[#00580D] rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-green-500'>
+                 <div className='flex bg-[#00580D] rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-green-500'>
                   <button onClick={handleApprove} className='flex items-center text-[12px] text-white'>
                     Approve
                   </button>
-                </div> */}
+                </div> 
 
-                {/* <div className='flex rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-gray-500 border border-[#00580D]'>
+                <div className='flex rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-gray-500 border border-[#00580D]'>
                   <button onClick={handleCancel} className='flex text-[12px] text-[#00580D]'>
                     Decline
                   </button>
-                </div> */}
+                </div> 
               </div>
-            )}
+            )} */}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
 
-      {isDetailsModalOpen && selectedGuest && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm">
-          <div className='flex flex-col gap-4 w-[320px] border border-[#54E168] shadow bg-white p-5 rounded-[16px]'>
-            {/* Title */}
-            <h2 className='text-lg font-semibold text-[#002706]'>Visitor Details</h2>
+        { selectedGuest.status === "pending" &&(
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
+            <div
+              className='flex flex-col items-center gap-2 bg-[#F5F4F5] w-[517px] h-[518px] rounded-[24px]'
+              ref={guestModalRef}
+            >
 
-            {/* Visitor Info */}
-            <div className='flex flex-col gap-2'>
-              <div className="flex items-center gap-3">
-                <img
-                  src={selectedGuest.image || "/boy-avatar.svg"}
-                  alt=""
-                  className="w-14 h-14 rounded-full object-cover border border-gray-300"
-                />
-                <div>
-                  <p className='text-sm font-medium'>{selectedGuest.visitor_name}</p>
-                  <p className='text-xs text-gray-500'>Status: {selectedGuest.status}</p>
+              <div className="flex flex-row w-full justify-between items-center border-b border-[#E6FBE9] shadow-[0px_1px_10px_0px_rgba(0,_88,_13,_0.25)] p-4">
+                <h2 className="text-2xl text-[#002706] font-bold">Visitor Details</h2>
+                <button
+                  onClick={() => setIsGuestModalOpen(false)}
+                  className="justify-end text-gray-500 hover:text-gray-700 cursor-pointer hover:bg-green-500"
+                >
+                  <img src="/x-sign.svg" alt="" />
+                </button>
+
+              </div>
+
+              <div className="flex flex-row justify-between w-full items-center  pt-4 px-4">
+                <p className="font-bold text-lg text-[#005E0E]">Personal Information</p>
+                <img src="/favorite.svg" alt="" />
+              </div>
+
+              <div className="flex flex-row items-center justify-start w-full  px-4 ">
+                <div className="rounded-full bg-gray-500 w-[120px] h-[120px]">
+                  <img className="w-full h-full object-cover" src="/boy-avatar.svg" alt="" />
+
+                </div>
+
+                <div className="flex flex-col  items-start p-6">
+                  <p className="font-bold text-[#002706] text-xl">{selectedGuest.visitor_name}</p>
+                  <p className="font-medium text-[#002706] text-lg">Phone: <span className="text-[#002706] text-lg ">{selectedGuest.phone_number || "N/A"}</span></p>
+                  <p className="font-medium text-[#002706] text-lg">Email: <span className="text-[#002706] text-lg ">{selectedGuest.email || "N/A"}</span></p>
+
+                  <div className="flex flex-row items-center justify-between gap-4 mt-4">
+                    <div className="rounded-lg bg-[#005E0E] flex items-center justify-center w-[91px] h-[35px] ">
+
+                      <button onClick={handleEditModal} className="text-white font-bold text-base">Approve</button>
+                    </div>
+
+
+                    <div className=" flex items-center justify-center  h-[35px] p-2 ">
+
+                      <button onClick={handleAddToBlacklist} className=" font-bold text-base underline underline-[#D1190F] text-[#D1190F] hover:text-red-400 cursor-pointer">Decline</button>
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+
+              </div>
+
+              {/* <div className="flex flex-col  items-start w-full justify-start px-6" >
+                <p className="font-bold text-lg text-[#005E0E]">Visitor Information</p>
+                <p className="font-medium text-[#002706] text-lg" >Guest Type: {selectedGuest.visitor_type || "N/A"}</p>
+                <p className="font-medium text-[#002706] text-lg">
+                  Check In Date:{" "}
+                  {selectedGuest.visit_date
+                    ? dayjs(selectedGuest.visit_date).format("DD/MM/YYYY")
+                    : "N/A"}
+                </p>
+                <p className="font-medium text-[#002706] text-lg">Check In time:{" "}
+                  {selectedGuest.check_in ? dayjs(selectedGuest.check_in).fromNow() : "N/A"}</p>
+
+              </div> */}
+
+              <div className="flex justify-end items-end  w-full px-6 pt-4">
+                <div className="border border-[#610C07] flex items-end justify-end px-2 py-1 rounded-lg">
+                  <button className="text-[#610C07]">Delete Invitation</button>
                 </div>
               </div>
-              <p className='text-sm'>Visit Date: {selectedGuest.visit_date}</p>
-              <p className='text-sm'>Check In: {selectedGuest.check_in || "Not recorded"}</p>
-              <p className='text-sm'>Visitor Type: {selectedGuest.visitor_type}</p>
-              {selectedGuest.reason && (
-                <p className='text-sm text-red-600'>Reason: {selectedGuest.reason}</p>
-              )}
-            </div>
 
-            {/* Close Button */}
-            <div className='flex justify-end'>
-              <button
-                onClick={() => setIsDetailsModalOpen(false)}
-                className='bg-[#00580D] text-white px-4 py-1 rounded hover:bg-green-600 text-sm'
-              >
-                Close
-              </button>
+
+
+
+
+
+
+              {/* Conditional Buttons based on status */}
+              {/* {selectedGuest.status === "checked_in" && (
+              <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
+                <div className='flex bg-[#00580D] rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-green-500'>
+                  <button
+                    onClick={() => setIsDetailsModalOpen(true)}
+                    className='flex items-center text-[12px] text-white'
+                  >
+                    Visitor Details
+                  </button>
+                </div>
+
+                <div className='flex rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-gray-500 border border-[#00580D]'>
+                  <button
+                    onClick={handleAddToBlacklist}
+                    className='flex text-[12px] text-[#00580D]'
+                  >
+                    Add To Blacklist
+                  </button>
+                </div>
+              </div>
+            )} */}
+
+
+              {/* {selectedGuest.status === "pending" && (
+              <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
+                 <div className='flex bg-[#00580D] rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-green-500'>
+                  <button onClick={handleApprove} className='flex items-center text-[12px] text-white'>
+                    Approve
+                  </button>
+                </div> 
+
+                <div className='flex rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-gray-500 border border-[#00580D]'>
+                  <button onClick={handleCancel} className='flex text-[12px] text-[#00580D]'>
+                    Decline
+                  </button>
+                </div> 
+              </div>
+            )} */}
             </div>
           </div>
-        </div>
+        )}
+
+        { selectedGuest.status === "checked_in" &&(
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
+            <div
+              className='flex flex-col items-center gap-2 bg-[#F5F4F5] w-[517px] h-[518px] rounded-[24px]'
+              ref={guestModalRef}
+            >
+
+              <div className="flex flex-row w-full justify-between items-center border-b border-[#E6FBE9] shadow-[0px_1px_10px_0px_rgba(0,_88,_13,_0.25)] p-4">
+                <h2 className="text-2xl text-[#002706] font-bold">Visitor Details</h2>
+                <button
+                  onClick={() => setIsGuestModalOpen(false)}
+                  className="justify-end text-gray-500 hover:text-gray-700 cursor-pointer hover:bg-green-500"
+                >
+                  <img src="/x-sign.svg" alt="" />
+                </button>
+
+              </div>
+
+              <div className="flex flex-row justify-between w-full items-center  pt-4 px-4">
+                <p className="font-bold text-lg text-[#005E0E]">Personal Information</p>
+                <img src="/favorite.svg" alt="" />
+              </div>
+
+              <div className="flex flex-row items-center justify-start w-full  px-4 ">
+                <div className="rounded-full bg-gray-500 w-[120px] h-[120px]">
+                  <img className="w-full h-full object-cover" src="/boy-avatar.svg" alt="" />
+
+                </div>
+
+                <div className="flex flex-col  items-start p-6">
+                  <p className="font-bold text-[#002706] text-xl">{selectedGuest.visitor_name}</p>
+                  <p className="font-medium text-[#002706] text-lg">Phone: <span className="text-[#002706] text-lg ">{selectedGuest.phone_number || "N/A"}</span></p>
+                  <p className="font-medium text-[#002706] text-lg">Email: <span className="text-[#002706] text-lg ">{selectedGuest.email || "N/A"}</span></p>
+
+                  <div className="flex flex-row items-center justify-between gap-4 mt-4">
+                    <div className="rounded-lg bg-[#005E0E] flex items-center justify-center w-[91px] h-[35px] ">
+
+                      <button onClick={handleEditModal} className="text-white font-bold text-base">Edit</button>
+                    </div>
+
+
+                    <div className=" flex items-center justify-center  h-[35px] p-2 ">
+
+                      <button onClick={handleAddToBlacklist} className=" font-bold text-base underline underline-[#D1190F] text-[#D1190F] hover:text-red-400 cursor-pointer">Add to Blacklist</button>
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+
+              </div>
+
+              <div className="flex flex-col  items-start w-full justify-start px-6" >
+                <p className="font-bold text-lg text-[#005E0E]">Visitor Information</p>
+                <p className="font-medium text-[#002706] text-lg" >Guest Type: {selectedGuest.visitor_type || "N/A"}</p>
+                <p className="font-medium text-[#002706] text-lg">
+                  Check In Date:{" "}
+                  {selectedGuest.visit_date
+                    ? dayjs(selectedGuest.visit_date).format("DD/MM/YYYY")
+                    : "N/A"}
+                </p>
+                <p className="font-medium text-[#002706] text-lg">Check In time:{" "}
+                  {selectedGuest.check_in ? dayjs(selectedGuest.check_in).fromNow() : "N/A"}</p>
+
+              </div>
+
+              <div className="flex justify-end items-end  w-full px-6 pt-4">
+                <div className="border border-[#610C07] flex items-end justify-end px-2 py-1 rounded-lg">
+                  <button className="text-[#610C07]">Delete Invitation</button>
+                </div>
+              </div>
+
+
+
+
+
+
+
+              {/* Conditional Buttons based on status */}
+              {/* {selectedGuest.status === "checked_in" && (
+              <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
+                <div className='flex bg-[#00580D] rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-green-500'>
+                  <button
+                    onClick={() => setIsDetailsModalOpen(true)}
+                    className='flex items-center text-[12px] text-white'
+                  >
+                    Visitor Details
+                  </button>
+                </div>
+
+                <div className='flex rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-gray-500 border border-[#00580D]'>
+                  <button
+                    onClick={handleAddToBlacklist}
+                    className='flex text-[12px] text-[#00580D]'
+                  >
+                    Add To Blacklist
+                  </button>
+                </div>
+              </div>
+            )} */}
+
+
+              {/* {selectedGuest.status === "pending" && (
+              <div className='flex flex-row justify-between items-center w-full font-["DM Sans"]'>
+                 <div className='flex bg-[#00580D] rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-green-500'>
+                  <button onClick={handleApprove} className='flex items-center text-[12px] text-white'>
+                    Approve
+                  </button>
+                </div> 
+
+                <div className='flex rounded-[8px] h-[32px] w-[110px] items-center justify-center p-2 hover:bg-gray-500 border border-[#00580D]'>
+                  <button onClick={handleCancel} className='flex text-[12px] text-[#00580D]'>
+                    Decline
+                  </button>
+                </div> 
+              </div>
+            )} */}
+            </div>
+          </div>
+        )}
+
+        
+        
+          
+        </>
+
+
+
+
+
       )}
+
+
+
 
       {isEditModalOpen && setIsEditModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm">
           <div
-            className="flex flex-col items-center gap-2 bg-[#F5F4F5] w-[517px] h-[450px] rounded-[24px]"
+            className="flex flex-col items-center gap-2 bg-[#F5F4F5] w-[517px] h-[530px] rounded-[24px]"
 
           >
 
@@ -672,7 +913,7 @@ const VisitorManagement = ({ datedata = [] }) => {
             <div className="flex flex-row w-full justify-between items-center border-b border-[#E6FBE9] shadow-[0px_1px_10px_0px_rgba(0,_88,_13,_0.25)] p-4">
               <h2 className="text-2xl text-[#002706] font-bold">Visitor Details</h2>
               <button
-                onClick={() => setIsGuestModalOpen(false)}
+                onClick={() => setIsEditModalOpen(false)}
                 className="justify-end text-gray-500 hover:text-gray-700 cursor-pointer hover:bg-green-500"
               >
                 <img src="/x-sign.svg" alt="" />
@@ -685,38 +926,51 @@ const VisitorManagement = ({ datedata = [] }) => {
               <img src="/favorite.svg" alt="" />
             </div>
 
-            
-              <form action="" className='flex flex-col w-full  gap-2 px-4  '>
-                <div className="flex flex-col  mb-2 ">
-                  <label htmlFor="" className="font-semibold text-base text-[#000000]">Name</label>
-                  <input className="rounded-lg border border-[#333333] p-2" type="text" placeholder="Robert Nanjala" />
 
+            <form action="" className='flex flex-col w-full  gap-2 px-4  '>
+              <div className="flex flex-col  mb-2 ">
+                <label htmlFor="" className="font-semibold text-base text-[#000000]">Name</label>
+                <input className="rounded-lg border border-[#333333] p-2" type="text" placeholder="Robert Nanjala"  />
+
+              </div>
+
+              <div className="flex flex-col  mb-2 ">
+                <label htmlFor="" className="font-semibold text-base text-[#000000]">Phone</label>
+                <input className="rounded-lg border border-[#333333] p-2" type="text" placeholder="+254-712-345-678" />
+
+              </div>
+
+              <div className="flex flex-col  mb-2 ">
+                <label htmlFor="" className="font-semibold text-base text-[#000000]">Email</label>
+                <input className="rounded-lg border border-[#333333] p-2" type="text" placeholder="rnanjala@gmail.com" />
+
+              </div>
+
+              <div className="flex flex-col  mb-2">
+                <label className="font-semibold text-base text-[#000000]">Photo</label>
+                <div className="flex rounded-lg border border-[#333333]  overflow-hidden">
+                  <div className="flex-1 px-3 py-2 bg-gray-100 text-gray-700 text-sm truncate">
+                    {fileName}
+                  </div>
+
+                  {/* Upload button */}
+                  <label className="bg-[#005E0E] text-white font-bold text-base px-4 py-2 cursor-pointer whitespace-nowrap hover:bg-green-800">
+                    upload new photo
+                    <input
+                      type="file"
+                      className="hidden"
+                      onChange={handleFileChange}
+                    />
+                  </label>
                 </div>
+              </div>
 
-                <div className="flex flex-col  mb-2 ">
-                  <label htmlFor="" className="font-semibold text-base text-[#000000]">Phone</label>
-                  <input className="rounded-lg border border-[#333333] p-2" type="text" placeholder="Robert Nanjala" />
+              <div className="flex flex-col items-center justify-center mb-2 mt-2 bg-[#005E0E] h-[50px] rounded-lg hover:bg-green-700">
+                <button className="flex items-center text-sm font-bold text-white">Save Information</button>
+              </div>
 
-                </div>
+            </form>
 
-                <div className="flex flex-col  mb-2 ">
-                  <label htmlFor="" className="font-semibold text-base text-[#000000]">Email</label>
-                  <input className="rounded-lg border border-[#333333] p-2" type="text" placeholder="Robert Nanjala" />
-
-                </div>
-
-                <div className="flex flex-col  mb-2 ">
-                  <label htmlFor="" className="font-semibold text-base text-[#000000]">Photo</label>
-                  <input className="rounded-lg border border-[#333333] p-2" type="text" placeholder="Robert Nanjala" />
-
-                </div>
-
-                <div className="flex flex-col items-center justify-center mb-2 bg-[#005E0E] ">
-                  <button className="flex items-center text-sm font-medium">Save Information</button>
-                </div>
-
-              </form>
-            
 
 
           </div>

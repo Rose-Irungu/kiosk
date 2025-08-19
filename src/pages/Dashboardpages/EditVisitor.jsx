@@ -11,7 +11,7 @@ import { useLocation } from 'react-router-dom';
 export default function VisitorRegistration() {
     const location = useLocation();
     const [visitorData, setVisitorData] = useState(location.state?.visitorData);
-    
+
 
     useEffect(() => {
         const fetchUnits = async () => {
@@ -36,7 +36,7 @@ export default function VisitorRegistration() {
     const validate = () => {
         const newErrors = {};
 
-        if (!visitorData.full_name.trim()) newErrors.full_name = "Full name is required.";
+        if (!visitorData.visitor_name.trim()) newErrors.full_name = "Full name is required.";
         if (!visitorData.email.trim()) {
             newErrors.email = "Email is required.";
         } else if (!/^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/.test(visitorData.email)) {
@@ -152,7 +152,7 @@ export default function VisitorRegistration() {
                     </div>
 
                     {/* Visitor Type */}
-                    <div className="flex flex-col gap-2 w-full mt-4">
+                    {/* <div className="flex flex-col gap-2 w-full mt-4">
                         <label className="text-sm text-[#495057]">Visitor Type<span className='text-[#E61C11]'>*</span></label>
                         <div className="relative">
                             <select
@@ -169,46 +169,23 @@ export default function VisitorRegistration() {
                             <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#495057] pointer-events-none w-4 h-4" />
                         </div>
                         {errors.visitor_type && <p className="text-red-500 text-sm">{errors.visitor_type}</p>}
-                    </div>
+                    </div> */}
 
                     {/* House Number & Car Plate */}
-                    <div className="flex flex-col md:flex-row gap-6 w-full mt-4">
-                        <div className="flex flex-col gap-2 w-full md:w-1/2">
-                            <label className="text-sm text-[#495057]">House Number</label>
-                            <div className='relative'>
-
-                                <select
-                                    name="unit_number"
-
-                                    value={visitorData.unit_number}
-                                    onChange={handleChange}
-                                    className="appearance-none h-12 px-4 rounded-lg bg-[#F4F4F4] w-full focus:outline-none focus:ring-2 focus:ring-green-600"
-
-                                >
-                                    <option value="">Select Unit Number</option>
-                                    {units.map((unit) => (
-                                        <option key={unit.id} value={unit.unit_name}>
-                                            {unit.unit_name}
-                                        </option>
-                                    ))}
-                                </select>
-                                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#495057] pointer-events-none w-4 h-4" />
-                            </div>
+                    <div className="flex flex-col gap-2 w-full mt-4">
 
 
-                        </div>
 
-                        <div className="flex flex-col gap-2 w-full md:w-1/2">
-                            <label className="text-sm text-[#495057]">Car Number Plate</label>
-                            <input
-                                type="text"
-                                name='plate_number'
-                                value={visitorData.plate_number}
-                                onChange={handleChange}
-                                className="h-12 px-4 rounded-lg bg-[#F4F4F4] w-full focus:outline-none focus:ring-2 focus:ring-green-600"
-                                placeholder='e.g KDQ XXXX'
-                            />
-                        </div>
+                        <label className="text-sm text-[#495057]">Car Number Plate</label>
+                        <input
+                            type="text"
+                            name='plate_number'
+                            value={visitorData.plate_number}
+                            onChange={handleChange}
+                            className="h-12 px-4 rounded-lg bg-[#F4F4F4] w-full focus:outline-none focus:ring-2 focus:ring-green-600"
+                            placeholder='e.g KDQ XXXX'
+                        />
+
                     </div>
 
                     {/* Photo Upload */}

@@ -77,6 +77,12 @@ export const API_ENDPOINTS = {
   FLOOR: '/visitors/floors/',
   ROOM: '/visitors/units/',
 
+
+  //delete visitor
+  DELETE_VISITOR: '/visitors/delete/visitor/',
+  EDIT_VISITOR_RESIDENT: '/visitors/resident/edit-visitor/',
+  EDIT_VISITOR: '/visitors/edit/visitor/'
+
 }
 
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://292695e84858.ngrok-free.app'

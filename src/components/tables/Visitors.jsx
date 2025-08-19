@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { getAllVisitors } from "../../services/visitorservice";
+import deleteVisitor, { getAllVisitors } from "../../services/visitorservice";
 import {
   Table,
   TableBody,
@@ -61,48 +61,67 @@ export default function Visitors() {
   // check in visitor--------------------------------------
 
   const handleCheckIn = async (visitor) => {
-      const formData = {
-        email: visitor.email,
-      };
-      console.log("here is the payload", visitor);
+    const formData = {
+      email: visitor.email,
+    };
+    console.log("here is the payload", visitor);
 
-      const res = await kioskService.checkIn(formData);
-      if (res.result_code === 0){
-        toast.success("Visitor checked in succesful");
-        setVisitors(prevVisitors =>
-          prevVisitors.map(v =>
-            v.visit_id === visitor.visit_id ? { ...v, status: 'checked_in' } : v
-          )
-        );
-      } else {
-        toast.error(res.message);
-      }
-      setMenuOpenIndex(null);
+    const res = await kioskService.checkIn(formData);
+    if (res.result_code === 0) {
+      toast.success("Visitor checked in succesful");
+      setVisitors(prevVisitors =>
+        prevVisitors.map(v =>
+          v.visit_id === visitor.visit_id ? { ...v, status: 'checked_in' } : v
+        )
+      );
+    } else {
+      toast.error(res.message);
+    }
+    setMenuOpenIndex(null);
   };
-
+// check in visitor end --------------------------------------
   const handleCheckOut = async (visitor) => {
-      const formData = {
-        visit_id: visitor.visit_id,
-      };
-      const res = await kioskService.checkOut(formData);
-      if (res.result_code === 0){
-        toast.success("Visitor checked out succesful");
-        setVisitors(prevVisitors =>
-          prevVisitors.map(v =>
-            v.visit_id === visitor.visit_id ? { ...v, status: 'checked_out' } : v
-          )
-        );
+    const formData = {
+      visit_id: visitor.visit_id,
+    };
+    const res = await kioskService.checkOut(formData);
+    if (res.result_code === 0) {
+      toast.success("Visitor checked out succesful");
+      setVisitors(prevVisitors =>
+        prevVisitors.map(v =>
+          v.visit_id === visitor.visit_id ? { ...v, status: 'checked_out' } : v
+        )
+      );
+    } else {
+      toast.error(res.message);
+    }
+    setMenuOpenIndex(null);
+  };
+  
+  // Delete Visitor --------------------------------------------------
+  const handleDeleteVisitor = async () => {
+    
+      const res = await deleteVisitor(selectedVisitor.visitor_id);
+
+      if (res.result_code === 0) {
+        toast.success(res.message);
+
+        setVisitors(prevVisitors => {
+          const updated = prevVisitors.filter(v => v.visitor_id !== selectedVisitor.visitor_id);
+          setTotalEntries(updated.length);
+          return updated;
+        });
+
+
+        setDeleteModal(false);
+        setSelectedVisitor(null); 
       } else {
         toast.error(res.message);
       }
-      setMenuOpenIndex(null);
   };
 
+  // Delete Visitor end --------------------------------------------
 
-
-
-
-  // check in visitor--------------------------------------
   // View visitor
   const handleView = (visitor) => {
     navigate(`/viewvisitor`, {
@@ -119,6 +138,9 @@ export default function Visitors() {
 
   // Delete Visitor
   const handleDelete = (visitor) => {
+    console.log("Visitor to be deleted", visitor);
+    
+    setSelectedVisitor(visitor);
     setDeleteModal(true);
   };
 
@@ -256,7 +278,13 @@ export default function Visitors() {
 
 
           <div className="flex flex-row items-center justify-end gap-[24px] font-['Inter']">
-            <div className="flex items-center justify-center w-[128px] h-[40px] bg-[#005E0E] rounded-lg hover:bg-green-500">
+            <div
+              onClick={() => setActiveTab("visitor")}
+              className={`flex items-center justify-center w-[128px] h-[40px] rounded-lg cursor-pointer ${activeTab === "visitor"
+                ? "bg-[#005E0E] text-white"
+                : "bg-white border border-[#005E0E] text-dark hover:bg-gray-200"
+                }`}
+            >
               <button className="flex items-center text-white text-sm font-medium">
                 Visitor Logs
 
@@ -265,7 +293,13 @@ export default function Visitors() {
 
             </div>
 
-            <div className="flex items-center justify-center w-[128px] h-[40px] bg-[#FFFFF rounded-lg border border-[#005E0E] hover:bg-gray-500">
+            <div
+              onClick={() => setActiveTab("security")}
+              className={`flex items-center justify-center w-[128px] h-[40px] rounded-lg cursor-pointer ${activeTab === "security"
+                ? "bg-[#005E0E] text-[#FFFFF]"
+                : "bg-white border border-[#005E0E] text-[#005E0E] hover:bg-gray-200"
+                }`}
+            >
               <button className="flex items-center text-[#005E0E] text-sm  font-medium">
                 Security Logs
 
@@ -492,7 +526,7 @@ export default function Visitors() {
         </div>
       </div>
 
-      {deleteModal && (
+      {deleteModal && selectedVisitor && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
           <div className="relative flex flex-col items-center p-4 gap-8 w-[289px] max-h-screen bg-white shadow-[0px_1px_20px_rgba(0,0,0,0.25)] rounded-[16px]">
             <button
@@ -505,15 +539,15 @@ export default function Visitors() {
 
             <img src="/delete-guy.svg" alt="" />
 
-            <p className="font-['Inter'] text-xs text-[#000000] text-center ">Are you sure you want to delete ‘User X’? This action is irreversible.</p>
+            <p className="font-['Inter'] text-xs text-[#000000] text-center ">Are you sure you want to delete ‘{selectedVisitor.visitor_name}’? This action is irreversible.</p>
 
             <div className="flex flex-col items-center gap-2 ">
-              <div className=" flex rounded-sm h-[40px] w-[257px] items-center bg-[#E61C11] justify-center font-['Inter'] font-light hover:bg-red-500">
-                <button className="flex items-center text-white text-sm tracking-[1%] ">DELETE USER</button>
+              <div onClick={handleDeleteVisitor} className=" flex rounded-sm h-[40px] w-[257px] items-center bg-[#E61C11] justify-center font-['Inter'] font-light hover:bg-red-500">
+                <button  className="flex items-center text-white text-sm tracking-[1%] ">DELETE USER</button>
               </div>
 
               <div onClick={() => setDeleteModal(false)} className="flex rounded-sm h-[40px] w-[257px] border border-[#0A5B60] justify-center font-['Inter'] hover:bg-green-500">
-                <button  className="flex items-center text-[#000000] ">CANCEL</button>
+                <button className="flex items-center text-[#000000] ">CANCEL</button>
               </div>
 
             </div>
