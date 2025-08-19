@@ -184,7 +184,7 @@ export function EmergencyTable({
                       </button>
                       {showModal && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black/40">
-                          <ModalDash callback1={handleCancel} callback2={submitFeedback} />
+                          <ModalDash id={event.id} callback1={handleCancel} callback2={submitFeedback} />
                         </div>
                       )}                      
                       <button
