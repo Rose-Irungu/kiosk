@@ -4,7 +4,7 @@ import {
   TableCell, TableHead, TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { MoreHorizontal, Eye, User, FileText, X } from "lucide-react";
+import { MoreHorizontal, Eye, User, FileText, X, Search } from "lucide-react";
 
 const statusStyles = {
   new: "bg-red-100 text-red-700",
@@ -14,12 +14,28 @@ const statusStyles = {
 
 export default function SecurityIncidentTable({ incidentReports = [] }) {
   const [incidents, setIncidents] = useState(incidentReports);
+  const [filteredIncidents, setFilteredIncidents] = useState(incidentReports);
+  const [searchQuery, setSearchQuery] = useState("");
   const [actionsFor, setActionsFor] = useState(null);
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
     setIncidents(incidentReports);
+    setFilteredIncidents(incidentReports);
   }, [incidentReports]);
+
+  useEffect(() => {
+    const filtered = incidents.filter((incident) => {
+      const searchLower = searchQuery.toLowerCase();
+      return (
+        incident.reporter_name.toLowerCase().includes(searchLower) ||
+        incident.incident_type.toLowerCase().replace(/_/g, " ").includes(searchLower) ||
+        incident.incident_description.toLowerCase().includes(searchLower) ||
+        incident.reporter_role.toLowerCase().includes(searchLower)
+      );
+    });
+    setFilteredIncidents(filtered);
+  }, [searchQuery, incidents]);
 
   const formatStatus = s => {
     if (s === "new") return "New Incident";
@@ -47,7 +63,20 @@ export default function SecurityIncidentTable({ incidentReports = [] }) {
         </select>
       </div>
 
-      
+      {/* Search Bar */}
+      <div className="px-6 pb-4">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <input
+            type="text"
+            placeholder="Search by name, type, description, or role..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-colors"
+          />
+        </div>
+      </div>
+
       <div className="overflow-auto">
         <Table>
           <TableCaption className="sr-only">Incident reports</TableCaption>
@@ -66,156 +95,163 @@ export default function SecurityIncidentTable({ incidentReports = [] }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {incidents.map(r => (
-              <TableRow key={r.id} className="hover:bg-gray-100 border-b odd:bg-green-50 even:bg-gray-50">
-                <TableCell>{r.reporter_name}</TableCell>
-                <TableCell className="capitalize">{r.reporter_role}</TableCell>
-                <TableCell>{r.incident_type.replace(/_/g, " ")}</TableCell>
-                <TableCell>
-                  {r.incident_description.slice(0, 50)}...
-                </TableCell>
-                <TableCell>
-                  <span
-                    className={`text-xs px-3 py-1 rounded-full ${
-                      statusStyles[r.incident_status] || ""
-                    }`}
-                  >
-                    {formatStatus(r.incident_status)}
-                  </span>
-                </TableCell>
-                <TableCell className="relative overflow-visible">
-                  <button
-                    onClick={() =>
-                      setActionsFor(actionsFor === r.id ? null : r.id)
-                    }
-                    className="p-2 rounded hover:bg-gray-100 overflow-visible"
-                  >
-                    <MoreHorizontal />
-                  </button>
-
-                  {actionsFor === r.id && (
-                    <div className="absolute right-0 top-10 bg-white border rounded-lg shadow-lg z-20 w-48 overflow-visible sticky-bottom-0">
-                      <button
-                        onClick={() => {
-                          setSelected(r);
-                          setActionsFor(null);
-                        }}
-                        className="flex items-center w-full px-4 py-2 hover:bg-gray-50"
-                      >
-                        <Eye className="mr-2" /> View Details
-                      </button>
-                      {/* <div className="border-t my-1" /> */}
-                      {/* {["new", "under_review", "resolved"].map(st =>
-                        r.incident_status !== st ? (
-                          <button
-                            key={st}
-                            onClick={() => updateStatus(r.id, st)}
-                            className={`flex w-full px-4 py-2 text-sm ${
-                              st === "new"
-                                ? "text-red-700 hover:bg-red-50"
-                                : st === "under_review"
-                                ? "text-yellow-700 hover:bg-yellow-50"
-                                : "text-green-700 hover:bg-green-50"
-                            }`}
-                          >
-                            Mark as {formatStatus(st)}
-                          </button>
-                        ) : null
-                      )} */}
+            {filteredIncidents.length > 0 ? (
+              filteredIncidents.map(r => (
+                <TableRow key={r.id} className="hover:bg-gray-100 border-b odd:bg-green-50 even:bg-gray-50">
+                  <TableCell>{r.reporter_name}</TableCell>
+                  <TableCell className="capitalize">{r.reporter_role}</TableCell>
+                  <TableCell className="capitalize">{r.incident_type.replace(/_/g, " ")}</TableCell>
+                  <TableCell>
+                    <div className="max-w-xs truncate">
+                      {r.incident_description.length > 50 
+                        ? `${r.incident_description.slice(0, 50)}...`
+                        : r.incident_description}
                     </div>
-                  )}
+                  </TableCell>
+                  <TableCell>
+                    <span
+                      className={`text-xs px-3 py-1 rounded-full ${
+                        statusStyles[r.incident_status] || ""
+                      }`}
+                    >
+                      {formatStatus(r.incident_status)}
+                    </span>
+                  </TableCell>
+                  <TableCell className="relative overflow-visible">
+                    <button
+                      onClick={() =>
+                        setActionsFor(actionsFor === r.id ? null : r.id)
+                      }
+                      className="p-2 rounded hover:bg-gray-100 overflow-visible"
+                    >
+                      <MoreHorizontal />
+                    </button>
+
+                    {actionsFor === r.id && (
+                      <div className="absolute right-0 top-10 bg-white border rounded-lg shadow-lg z-20 w-48 overflow-visible sticky-bottom-0">
+                        <button
+                          onClick={() => {
+                            setSelected(r);
+                            setActionsFor(null);
+                          }}
+                          className="flex items-center w-full px-4 py-2 hover:bg-gray-50"
+                        >
+                          <Eye className="mr-2" /> View Details
+                        </button>
+                        {/* <div className="border-t my-1" /> */}
+                        {/* {["new", "under_review", "resolved"].map(st =>
+                          r.incident_status !== st ? (
+                            <button
+                              key={st}
+                              onClick={() => updateStatus(r.id, st)}
+                              className={`flex w-full px-4 py-2 text-sm ${
+                                st === "new"
+                                  ? "text-red-700 hover:bg-red-50"
+                                  : st === "under_review"
+                                  ? "text-yellow-700 hover:bg-yellow-50"
+                                  : "text-green-700 hover:bg-green-50"
+                              }`}
+                            >
+                              Mark as {formatStatus(st)}
+                            </button>
+                          ) : null
+                        )} */}
+                      </div>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-8 text-gray-500">
+                  {searchQuery ? "No incidents match your search" : "No incidents found"}
                 </TableCell>
               </TableRow>
-            ))}
+            )}
             <TableRow className="h-20"></TableRow>
           </TableBody>
         </Table>
       </div>
 
-{selected && (
-  <div className="absolute inset-0 bg-gray-100 rounded-lg   border-hidden  ">
-    {/* Header */}
-    <div className="flex justify-between items-center bg-white shadow rounded px-4 py-2 mb-4">
-      <div className="flex items-center gap-2">
-        <div className="w-2 place-self-start h-10 bg-green-500 rounded" />
-        <h2 className="text-xl font-semibold capitalize">
-          {selected.incident_type.replace(/_/g, " ")}
-        </h2>
-      </div>
-      <div className="flex items-center gap-2">
-
-      </div>
-      <div className="flex items-center gap-4">
-        <span
-          className={`text-xs px-3 py-1 rounded-full ${
-            statusStyles[selected.incident_status]
-          }`}
-        >
-          {formatStatus(selected.incident_status)}
-        </span>
-        <button onClick={() => setSelected(null)} className="p-1 rounded hover:bg-gray-100">
-          <X />
-        </button>
-      </div>
-    </div>
-
-    
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      
-      <div className="lg:col-span-1  bg-white shadow rounded p-4">
-        <div className="flex items-center gap-2 mb-2">
-          <FileText className="text-gray-500" />
-          <h3 className="text-lg font-medium">Incident Description</h3>
-        </div>
-        <div className="bg-gray-50 rounded p-4">
-          <p className="text-gray-700">{selected.incident_description}</p>
-        </div>
-      </div>
-
-      
-      <div className="grid grid-cols-2 bg-white shadow rounded p-4 space-y-6 flex ">
-        
-        <div >
-          <div className="flex items-center gap-2 mb-2">
-            <User className="text-gray-500" />
-            <h3 className="text-lg font-medium">Reporter Information</h3>
-          </div>
-          <div className="bg-gray-50 rounded p-4 space-y-2">
-            <div>
-              <span className="text-sm text-gray-500">Name:</span>
-              <p className="font-medium">{selected.reporter_name}</p>
+      {selected && (
+        <div className="absolute inset-0 bg-gray-100 rounded-lg border-hidden p-4 overflow-y-auto">
+          {/* Header */}
+          <div className="flex justify-between items-center bg-white shadow rounded px-4 py-2 mb-4">
+            <div className="flex items-center gap-2">
+              <div className="w-2 place-self-start h-10 bg-green-500 rounded" />
+              <h2 className="text-xl font-semibold capitalize">
+                {selected.incident_type.replace(/_/g, " ")}
+              </h2>
             </div>
-            <div>
-              <span className="text-sm text-gray-500">Role:</span>
-              <p className="font-medium capitalize">{selected.reporter_role}</p>
+            <div className="flex items-center gap-2">
+            </div>
+            <div className="flex items-center gap-4">
+              <span
+                className={`text-xs px-3 py-1 rounded-full ${
+                  statusStyles[selected.incident_status]
+                }`}
+              >
+                {formatStatus(selected.incident_status)}
+              </span>
+              <button onClick={() => setSelected(null)} className="p-1 rounded hover:bg-gray-100">
+                <X />
+              </button>
             </div>
           </div>
-        </div>
 
-        
-        <div>
-          <h3 className="text-lg font-medium mb-2">Photo</h3>
-          <div className="bg-gray-100 rounded overflow-hidden aspect-square flex items-center justify-center">
-            {selected.incident_image_url ? (
-              <img
-                src={selected.incident_image_url}
-                alt="Incident"
-                className="object-cover "
-              />
-            ) : (
-              <div className="text-gray-400 text-center p-4">
-                {/* placeholder icon */}
-                <svg className="w-16 h-16 mx-auto mb-2" fill="currentColor" /*...*/ />
-                <p className="text-sm">No photo available</p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="lg:col-span-1 bg-white shadow rounded p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <FileText className="text-gray-500" />
+                <h3 className="text-lg font-medium">Incident Description</h3>
               </div>
-            )}
+              <div className="bg-gray-50 rounded p-4">
+                <p className="text-gray-700">{selected.incident_description}</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 bg-white shadow rounded p-4 space-y-6 flex ">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <User className="text-gray-500" />
+                  <h3 className="text-lg font-medium">Reporter Information</h3>
+                </div>
+                <div className="bg-gray-50 rounded p-4 space-y-2">
+                  <div>
+                    <span className="text-sm text-gray-500">Name:</span>
+                    <p className="font-medium">{selected.reporter_name}</p>
+                  </div>
+                  <div>
+                    <span className="text-sm text-gray-500">Role:</span>
+                    <p className="font-medium capitalize">{selected.reporter_role}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-medium mb-2">Photo</h3>
+                <div className="bg-gray-100 rounded overflow-hidden aspect-square flex items-center justify-center">
+                  {selected.incident_image_url ? (
+                    <img
+                      src={selected.incident_image_url}
+                      alt="Incident"
+                      className="object-cover "
+                    />
+                  ) : (
+                    <div className="text-gray-400 text-center p-4">
+                      {/* placeholder icon */}
+                      <div className="w-16 h-16 mx-auto mb-2 bg-gray-300 rounded-lg flex items-center justify-center">
+                        <FileText className="w-8 h-8" />
+                      </div>
+                      <p className="text-sm">No photo available</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
-  </div>
-
-)}
-</div>
   );
 }
