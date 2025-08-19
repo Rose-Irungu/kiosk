@@ -70,6 +70,9 @@ export const API_ENDPOINTS = {
   FLOOR: '/visitors/floors/',
   ROOM: '/visitors/units/',
 
+  //Emergency feedback
+  EMERGENCY_FEEDBACK: '/incidence-and-emergency/add-emergency-feedback/',
+
 }
 
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://292695e84858.ngrok-free.app'

@@ -2,12 +2,15 @@ import React, {useState} from 'react';
 
 //components
 import FavoriteDetail from './FavoriteDetail';
+import EditVisitor from './EditVisitor';
 
 export default function FavoriteCard({img, name, phone, email, time, function1, function2}) {
   //function1 - Invite guest
   //function2 - Edit guest
   const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
   const handleClose = () => setShowModal(false);
+  const handleClose2 = () => setShowModal2(false);
 
   return (
     <div className='flex flex-row w-full h-[64px] justify-between rounded-[8px] p-[12px] bg-[#FFFFFF]'
@@ -36,10 +39,16 @@ export default function FavoriteCard({img, name, phone, email, time, function1, 
                                             email={email}
                                             callback1={()=> handleClose()}
                                             callback2={()=> function1()}
-                                            callback3={()=> function2()}
+                                            callback3={()=> setShowModal2(true)}
                             />
                         </div>
                       </div>
+        }
+        {showModal2 && <div className="fixed inset-0 flex items-center justify-center bg-black/40">
+                            <div onClick={(e) => e.stopPropagation()}>
+                                <EditVisitor callback1={()=> handleClose2()}/>
+                            </div>
+                       </div>
         }
     </div>
   );
