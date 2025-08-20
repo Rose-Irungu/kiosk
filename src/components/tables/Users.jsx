@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { userService } from "../../services/user";
-
+import dayjs from "dayjs";
 import {
   Table,
   TableBody,
@@ -24,7 +24,8 @@ export default function Users({ users = [], setUsers = () => { } }) {
   const [roleFilter, setRoleFilter] = useState("all");
   const [entriesPerPage, setEntriesPerPage] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortOrderAsc, setSortOrderAsc] = useState(true);
+  // const [sortOrderAsc, setSortOrderAsc] = useState(true);
+  const [sortdOrderAsc, setSortdOrderAsc] = useState(true);
 
 
 
@@ -38,10 +39,15 @@ export default function Users({ users = [], setUsers = () => { } }) {
       const fullName = `${user.first_name} ${user.last_name}`.toLowerCase();
       return fullName.includes(searchQuery.toLowerCase());
     })
+    // .sort((a, b) => {
+    //   const nameA = `${a.first_name} ${a.last_name}`.toLowerCase();
+    //   const nameB = `${b.first_name} ${b.last_name}`.toLowerCase();
+    //   return sortOrderAsc ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+    // })
     .sort((a, b) => {
-      const nameA = `${a.first_name} ${a.last_name}`.toLowerCase();
-      const nameB = `${b.first_name} ${b.last_name}`.toLowerCase();
-      return sortOrderAsc ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+      const dateA = `${a.date_joined} ${a.date_joined}`.toLowerCase();
+      const dateB = `${b.date_joined} ${b.date_joined}`.toLowerCase();
+      return sortdOrderAsc ? dateA.localeCompare(dateB) : dateB.localeCompare(dateA);
     });
 
 
@@ -199,17 +205,12 @@ export default function Users({ users = [], setUsers = () => { } }) {
             <TableHeader>
               <TableRow>
                 {/* <TableHead>Photo</TableHead> */}
-                <TableHead className="cursor-pointer select-none" onClick={() => setSortOrderAsc(!sortOrderAsc)}>
-                  <div className="flex items-center gap-1">
-                    Name
-                    <i className={`bx ${sortOrderAsc ? "bx-sort-a-z" : "bx-sort-z-a"} text-gray-500`}></i>
-                  </div>
-                </TableHead>
-
-                <TableHead />
+                <TableHead>Name</TableHead>
+                {/* <TableHead /> */}
                 <TableHead>Phone</TableHead>
                 <TableHead>Role</TableHead>
                 <TableHead>Unit</TableHead>
+                <TableHead className="cursor-pointer select-none" onClick={() => setSortdOrderAsc(!sortdOrderAsc)}>Date Joined</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Action</TableHead>
               </TableRow>
@@ -239,14 +240,23 @@ export default function Users({ users = [], setUsers = () => { } }) {
                   <TableCell className="font-medium">
                     {user.first_name} {user.last_name}
                   </TableCell>
-                  <TableCell />
                   <TableCell>
                     {user.phone_number || (
                       <span className="text-gray-400 italic">No Phone</span>
                     )}
                   </TableCell>
-                  <TableCell>{user.role}</TableCell>
-                  <TableCell>{user.unit_number}</TableCell>
+                  <TableCell>
+                    {user.role === "tenant"
+                      ? "Resident"
+                      : user.role === "security"
+                        ? "Security"
+                        : "Administrator"}
+                  </TableCell>
+
+                  <TableCell>
+                    {user.resident_profile ? user.resident_profile.unit_name : user.security_profile.post}
+                  </TableCell>
+                  <TableCell>{dayjs(user.date_joined).format("YYYY-MM-DD")}</TableCell>
                   <TableCell>
                     {user.is_active ? (
                       <span className="text-green-600 font-semibold">
@@ -352,7 +362,12 @@ export default function Users({ users = [], setUsers = () => { } }) {
                     </div>
                     <div>
                       <div>{selectedUser.phone_number || "No Phone"}</div>
-                      <div>{selectedUser.role}</div>
+                      <div>{selectedUser.role === "tenant"
+                        ? "Resident"
+                        : selectedUser.role === "security"
+                          ? "Security"
+                          : "Administrator"}
+                      </div>
                     </div>
                   </div>
                 </div>

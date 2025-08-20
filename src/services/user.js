@@ -44,9 +44,6 @@ export const userService = {
       });
       const response = await toast.promise(promise, {
         loading: "Updating user...",
-        success: "User updated successfully!",
-        error: (err) =>
-          err?.response?.data?.message || "Failed to update user. Please try again.",
       });
       return response.data;
     } catch (error) {

@@ -10,7 +10,7 @@ const ForgotPasswordForm = () => {
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-    setErrorMessage(""); // Clear error when user types again
+    setErrorMessage(""); 
   };
 
   const handleOnSubmit = async (e) => {

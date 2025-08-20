@@ -81,32 +81,23 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
       const response = await userService.updateUser(userData.id, editFormData);
 
+      if (response.result_code == 0){
+        const updatedUserData = {
+          ...userData,
+          ...editFormData,
+          fullName: `${editFormData.first_name} ${editFormData.last_name}`.trim(),
+        };
 
+        setUserData(updatedUserData);
+        localStorage.setItem("userInfo", JSON.stringify(response.data));
 
-      const updatedUserData = {
-        ...userData,
-        ...editFormData,
-        fullName: `${editFormData.first_name} ${editFormData.last_name}`.trim(),
-      };
+        toast.success("Profile updated successfully!");
+        setShowEditForm(false);
+      } else {
+        toast.error(response.message)
+      }
 
-      setUserData(updatedUserData);
-
-
-      const currentUserInfo = JSON.parse(
-        localStorage.getItem("userInfo") || "{}"
-      );
-      const updatedUserInfo = {
-        ...currentUserInfo,
-        first_name: editFormData.first_name,
-        last_name: editFormData.last_name,
-        email: editFormData.email,
-        phone_number: editFormData.phone_number,
-        residence: editFormData.residence,
-      };
-      localStorage.setItem("userInfo", JSON.stringify(updatedUserInfo));
-
-      toast.success("Profile updated successfully!");
-      setShowEditForm(false);
+      
     } catch (error) {
       toast.error(error?.response?.data?.message || "Failed to update profile. Please try again.")
     } finally {
@@ -225,14 +216,14 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
       {/* Right Header Icons */}
       <div className="flex items-center gap-4 w-full sm:w-auto justify-end">
-        <div className="flex items-center w-full max-w-[200px] sm:w-[233px] px-4 py-[3px] gap-2.5 bg-white border border-[rgba(108,117,125,0.3)] rounded-md">
+        {/* <div className="flex items-center w-full max-w-[200px] sm:w-[233px] px-4 py-[3px] gap-2.5 bg-white border border-[rgba(108,117,125,0.3)] rounded-md">
           <Search className="min-w-[16px]" />
           <input
             type="text"
             placeholder="Search..."
             className="flex-1 bg-transparent focus:outline-none text-sm"
           />
-        </div>
+        </div> */}
 
         <div className="flex items-center gap-4">
           <p className="text-sm">EN</p>
@@ -447,6 +438,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                   onChange={(e) =>
                     handleEditFormChange("email", e.target.value)
                   }
+                  readOnly
                   className=" flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border border-[#005E0E]/50 rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
                 />
               </div>
@@ -477,6 +469,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                   onChange={(e) =>
                     handleEditFormChange("residence", e.target.value)
                   }
+                  readOnly
                   className=" flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border border-[#005E0E]/50 rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
                 />
               </div>
