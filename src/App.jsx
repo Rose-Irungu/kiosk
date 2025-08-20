@@ -26,7 +26,7 @@ const App = () => {
     socket.onmessage = (event) => {
       try {
         const message = JSON.parse(event.data);
-        console.log("📩 Incoming WS message:", message);
+        console.log("Incoming WS message:", message);
 
         if (message.event === "sos_alert") {
           const shouldPlay = message.actions?.play_sound;

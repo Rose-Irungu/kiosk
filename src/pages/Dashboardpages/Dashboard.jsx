@@ -154,13 +154,13 @@ const Dashboard = () => {
           <div className="bg-white p-3 rounded-lg shadow h-full">
             <Card3
               companyVisitors={
-                loading ? 0 : stats?.visitor_trend?.totals?.company_visitor || 0
+                loading ? 0 : stats?.visitor_trend?.totals?.company || 0
               }
               residentVisitors={
-                loading ? 0 : stats?.visitor_trend?.totals?.visitor || 0
+                loading ? 0 : stats?.visitor_trend?.totals?.guest || 0
               }
               serviceProviders={
-                loading ? 0 : stats?.visitor_trend?.totals?.service_provider || 0
+                loading ? 0 : stats?.visitor_trend?.totals?.service || 0
               }
               className="h-full"
             />

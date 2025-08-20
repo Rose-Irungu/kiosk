@@ -42,11 +42,11 @@ const transformVisitorTrend = (trendData) => {
     };
 
     datasets.forEach((ds) => {
-      if (ds.label === "Visitors") {
+      if (ds.label === "guest") {
         entry.resident = ds.data[index];
-      } else if (ds.label === "Service Providers") {
+      } else if (ds.label === "service") {
         entry.service = ds.data[index];
-      } else if (ds.label === "Company Visitors") {
+      } else if (ds.label === "company") {
         entry.company = ds.data[index];
       }
     });
