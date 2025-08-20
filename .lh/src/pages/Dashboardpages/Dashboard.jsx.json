@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1755247318354,
@@ -16,6 +16,22 @@
                 {
                     "date": 1755274399008,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,9 +73,9 @@\n             />\r\n           }\r\n         />\r\n         <Card1\r\n-          cardTitle=\" Incidents\"\r\n+          cardTitle=\"Active Incidents\"\r\n           count={loading ? \"...\" : stats?.incidents_in_progress?.total || 0}\r\n           link=\"View details\"\r\n           linkHref=\"/incident_report\"\r\n           icon={\r\n"
+                },
+                {
+                    "date": 1755699293852,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -153,9 +153,9 @@\n         <div className=\"flex-1 lg:max-w-sm\">\r\n           <div className=\"bg-white p-3 rounded-lg shadow h-full\">\r\n             <Card3\r\n               companyVisitors={\r\n-                loading ? 0 : stats?.visitor_trend?.totals?.company_visitor || 0\r\n+                loading ? 0 : stats?.visitor_trend?.totals?. || 0\r\n               }\r\n               residentVisitors={\r\n                 loading ? 0 : stats?.visitor_trend?.totals?.visitor || 0\r\n               }\r\n"
+                },
+                {
+                    "date": 1755699300029,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -153,9 +153,9 @@\n         <div className=\"flex-1 lg:max-w-sm\">\r\n           <div className=\"bg-white p-3 rounded-lg shadow h-full\">\r\n             <Card3\r\n               companyVisitors={\r\n-                loading ? 0 : stats?.visitor_trend?.totals?. || 0\r\n+                loading ? 0 : stats?.visitor_trend?.totals?.company || 0\r\n               }\r\n               residentVisitors={\r\n                 loading ? 0 : stats?.visitor_trend?.totals?.visitor || 0\r\n               }\r\n"
+                },
+                {
+                    "date": 1755699306282,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -156,9 +156,9 @@\n               companyVisitors={\r\n                 loading ? 0 : stats?.visitor_trend?.totals?.company || 0\r\n               }\r\n               residentVisitors={\r\n-                loading ? 0 : stats?.visitor_trend?.totals?.visitor || 0\r\n+                loading ? 0 : stats?.visitor_trend?.totals?.guest || 0\r\n               }\r\n               serviceProviders={\r\n                 loading ? 0 : stats?.visitor_trend?.totals?.service_provider || 0\r\n               }\r\n"
+                },
+                {
+                    "date": 1755699311625,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -159,9 +159,9 @@\n               residentVisitors={\r\n                 loading ? 0 : stats?.visitor_trend?.totals?.guest || 0\r\n               }\r\n               serviceProviders={\r\n-                loading ? 0 : stats?.visitor_trend?.totals?.service_provider || 0\r\n+                loading ? 0 : stats?.visitor_trend?.totals?.service || 0\r\n               }\r\n               className=\"h-full\"\r\n             />\r\n           </div>\r\n"
                 }
             ],
             "date": 1755247318354,
