@@ -5,32 +5,29 @@ import toast from "react-hot-toast";
 
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); 
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-    setErrorMessage(""); 
+    setErrorMessage(""); // Clear error when user types again
   };
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      await authService.sent_password_reset({ email });
-      toast.success("Password reset email sent successfully!");
-      setEmail("");
-      navigate("/loginform");
+      const res = await authService.sent_password_reset({ email });
+      if (res.result_code == 0){
+        toast.success(res.message);
+        setEmail("");
+        navigate("/loginform");
+        }
+      else {
+        toast.error(res.message)
+      }
+      
     } catch (error) {
       console.log("Error sending reset email:", error);
-
-      
-      if (error?.response?.status === 404) {
-        setErrorMessage("Email not found.");
-        toast.error(errorMessage || "Email not found. Try again.");
-      } else {
-        setErrorMessage("Email not found. Try again.");
-        toast.error("An error occurred while sending the reset email.");
-      }
     }
   };
 
@@ -80,7 +77,7 @@ const ForgotPasswordForm = () => {
               <div className="mt-6 mb-6">
                 <button
                   type="submit"
-                  className="shadow w-full h-12 bg-green-700 hover:bg-green-800 transition-colors text-white rounded-lg cursor-pointer"
+                  className="shadow w-full h-12 bg-green-700 hover:bg-green-800 transition-colors text-white rounded-lg"
                 >
                   SEND RESET EMAIL
                 </button>

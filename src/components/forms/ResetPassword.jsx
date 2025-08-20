@@ -55,13 +55,17 @@ const ResetPasswordForm = () => {
     setServerError("");
 
     try {
-      await authService.password_reset({
+      const res = await authService.password_reset({
         uid,
         token,
         new_password: password,
       });
-      toast.success("Password reset successful!");
-      navigate("/loginform");
+      if (res.result_code == 0){
+        toast.success(res.message);
+        navigate("/loginform");
+      } else {
+        toast.error(res.message);
+      }
     } catch (error) {
       if (
         error.response &&
