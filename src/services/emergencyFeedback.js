@@ -1,22 +1,16 @@
-// import api from "./api";
-// import { API_ENDPOINTS } from "../utils/constants";
+import api from "./api";
+import { API_ENDPOINTS } from "../utils/constants";
 
-// /**
-//  * Submits emergency feedback.
-//  * @param {Object} payload - The feedback data.
-//  * @param {string} payload.emergencyHandled - "yes" or "no"
-//  * @param {string} [payload.message] - Optional user message
-//  */
-// export const submitEmergencyFeedback = async ({ emergencyHandled, message }) => {
-//   try {
-//     const response = await api.post(API_ENDPOINTS.EMERGENCY_FEEDBACK, {
-//       emergencyHandled,
-//       message: message || null,
-//     });
-
-//     return response.data;
-//   } catch (error) {
-//     console.error("Failed to submit emergency feedback", error);
-//     throw error;
-//   }
-// };
+export default async function submitEmergencyFeedback(id, feedback){
+    try{
+        const url = API_ENDPOINTS.EMERGENCY_UPDATE.replace("{id}", id);
+        const response = await api.patch(url,{
+            "emergency_status": "resolved",
+            "emergency_resolution_comment":feedback,
+        });
+        return { response, status:true};
+    } catch(err){
+        console.error(`Error ${err} occurred while submitting the emergency`);
+        throw err;
+    }
+}

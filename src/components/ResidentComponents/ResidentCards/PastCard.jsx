@@ -31,16 +31,7 @@ export default function ResidentPastIncident({ incidentReports = [] }) {
     }));
   };
 
-  const getIncidentTypeColor = (type) => {
-    const colors = {
-      maintenance: "bg-green-100 text-green-700",
-      electrical_issue: "bg-blue-100 text-blue-700",
-      plumbing: "bg-purple-100 text-purple-700",
-      noise_complaint: "bg-orange-100 text-orange-700",
-      security_concern: "bg-red-100 text-red-700",
-    };
-    return colors[type] || "bg-gray-100 text-gray-700";
-  };
+  
 
   const filteredIncidents = incidents.filter(() => {
     
@@ -52,29 +43,28 @@ export default function ResidentPastIncident({ incidentReports = [] }) {
       {!selected ? (
         <>
           {/* Header */}
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">Reported Incidents</h2>
-            
-          </div>
+          
 
           {/* Incident Cards */}
           <div className="space-y-4">
             {filteredIncidents.map(incident => (
               <div key={incident.id} className="bg-white rounded-lg shadow-sm border overflow-hidden">
                 {/* Card Header */}
-                <div 
-                  className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition-colors"
-                  onClick={() => toggleCard(incident.id)}
-                >
-                  <div className="flex items-center gap-3">
-                  
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
+                <div className="flex items-center P-4 m-3">
                         <span className={`text-xs px-2 py-1 rounded ${statusStyles[incident.incident_status]}`}>
                           {formatStatus(incident.incident_status)}
                         </span>
                       </div>
-                      <span className={` px-2 py-1 bg-green-400 w-full rounded font-large${getIncidentTypeColor(incident.incident_type)}`}>
+                <div 
+                  className="flex items-center justify-between p-4 cursor-pointer bg-green-400 hover:bg-green-200 transition-colors m-1 mb-2"
+                  onClick={() => toggleCard(incident.id)}
+                >
+                  
+                  <div className="flex items-center gap-3">
+                     
+                    <div>
+                      
+                      <span className={` px-2 py-1 bg-inherit w-full rounded font-large`}>
                           {incident.incident_type.replace(/_/g, " ")}
                         </span>
                       

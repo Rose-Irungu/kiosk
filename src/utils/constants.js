@@ -78,11 +78,13 @@ export const API_ENDPOINTS = {
   FLOOR: '/visitors/floors/',
   ROOM: '/visitors/units/',
 
-
-  //delete visitor
+    //delete visitor
   DELETE_VISITOR: '/visitors/delete/visitor/',
   EDIT_VISITOR_RESIDENT: '/visitors/resident/edit-visitor/',
-  EDIT_VISITOR: '/visitors/edit/visitor/'
+  EDIT_VISITOR: '/visitors/edit/visitor/',
+
+  //Emergency feedback
+  EMERGENCY_FEEDBACK_SUBMIT: '/incidence-and-emergency/add-emergency-feedback/',
 
 }
 
