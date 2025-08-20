@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { authService } from "../../services/authService";
 import toast from "react-hot-toast";
+import { Eye, EyeOff } from "lucide-react"; // 👈 import icons
 
 const ResetPasswordForm = () => {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ const ResetPasswordForm = () => {
   const [fieldError, setFieldError] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // 👈 new state
 
   const onPasswordChange = (e) => {
     setPassword(e.target.value);
@@ -42,7 +45,6 @@ const ResetPasswordForm = () => {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-
     const errors = validate();
     if (Object.keys(errors).length > 0) {
       setFieldError(errors);
@@ -61,7 +63,6 @@ const ResetPasswordForm = () => {
       toast.success("Password reset successful!");
       navigate("/loginform");
     } catch (error) {
-      // Extract server-side token validation errors if present
       if (
         error.response &&
         error.response.data &&
@@ -80,11 +81,13 @@ const ResetPasswordForm = () => {
     }
   };
 
-
   return (
-    <form onSubmit={handleResetPassword} className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+    <form
+      onSubmit={handleResetPassword}
+      className="min-h-screen flex items-center justify-center bg-gray-100 p-6"
+    >
       <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl flex flex-col md:flex-row">
-
+        {/* Left side image */}
         <div className="w-full md:w-1/2 relative">
           <img
             src="/rectangle-780.png"
@@ -98,9 +101,12 @@ const ResetPasswordForm = () => {
           />
         </div>
 
+        {/* Right side form */}
         <div className="w-full md:w-1/2 p-8 mt-10 ">
           <div className="mb-6">
-            <h2 className="text-2xl font-DM Sans font-bold text-[#445963] mb-2">Reset Password</h2>
+            <h2 className="text-2xl font-DM Sans font-bold text-[#445963] mb-2">
+              Reset Password
+            </h2>
             <p className="text-m text-[#445963]">
               Enter your new password so as to <br /> continue and login
             </p>
@@ -110,45 +116,71 @@ const ResetPasswordForm = () => {
             <p className="text-red-600 text-sm mb-4">{serverError}</p>
           )}
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">New Password*</label>
+          {/* New Password */}
+          <div className="mb-4 relative">
+            <label className="block text-sm font-medium mb-1">
+              New Password*
+            </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Create New Password"
-              className={`w-full border rounded px-3 py-2 ${fieldError.password && "border-red-500"}`}
+              className={`w-full border rounded px-3 py-2 pr-10 ${
+                fieldError.password && "border-red-500"
+              }`}
               value={password}
               onChange={onPasswordChange}
             />
+            <div
+              className="absolute top-9 right-3 cursor-pointer text-gray-500"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            </div>
             {fieldError.password && (
               <p className="text-red-600 text-sm mt-1">{fieldError.password}</p>
             )}
           </div>
 
-          <div className="mb-6">
-            <label className="block text-sm font-medium mb-1">Confirm New Password*</label>
+          {/* Confirm Password */}
+          <div className="mb-6 relative">
+            <label className="block text-sm font-medium mb-1">
+              Confirm New Password*
+            </label>
             <input
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               placeholder="Enter Password Again"
-              className={`w-full border rounded px-3 py-2 ${fieldError.confirmPassword && "border-red-500"}`}
+              className={`w-full border rounded px-3 py-2 pr-10 ${
+                fieldError.confirmPassword && "border-red-500"
+              }`}
               value={confirmPassword}
               onChange={onConfirmPasswordChange}
             />
+            <div
+              className="absolute top-9 right-3 cursor-pointer text-gray-500"
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
+            >
+              {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            </div>
             {fieldError.confirmPassword && (
               <p className="text-red-600 text-sm mt-1">{fieldError.confirmPassword}</p>
             )}
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#005e0e] text-white py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed mb-6"
+            className="w-full bg-[#005e0e] hover:bg-green-900 text-white py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed mb-6 cursor-pointer"
           >
             {isLoading ? "RESETTING..." : "RESET PASSWORD"}
           </button>
 
           <div className="text-center text-sm text-gray-600">
             Go back to{" "}
-            <Link to="/loginform" className="text-[#005e0e] font-medium hover:underline">
+            <Link
+              to="/loginform"
+              className="text-[#005e0e] font-medium hover:underline"
+            >
               LOGIN
             </Link>
           </div>

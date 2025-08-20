@@ -5,12 +5,12 @@ import toast from "react-hot-toast";
 
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); // ⬅️ new
+  const [errorMessage, setErrorMessage] = useState(""); 
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-    setErrorMessage(""); // Clear error when user types again
+    setErrorMessage(""); 
   };
 
   const handleOnSubmit = async (e) => {
@@ -80,7 +80,7 @@ const ForgotPasswordForm = () => {
               <div className="mt-6 mb-6">
                 <button
                   type="submit"
-                  className="shadow w-full h-12 bg-green-700 hover:bg-green-800 transition-colors text-white rounded-lg"
+                  className="shadow w-full h-12 bg-green-700 hover:bg-green-800 transition-colors text-white rounded-lg cursor-pointer"
                 >
                   SEND RESET EMAIL
                 </button>

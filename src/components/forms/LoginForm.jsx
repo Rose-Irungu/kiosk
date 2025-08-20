@@ -31,8 +31,7 @@ const LoginForm = () => {
         localStorage.setItem("userRole", user.role);
         console.log(user.role);
         
-        // toast.success("Login successful!");
-
+     
         switch (user.role) {
           case "admin":
             navigate("/dashboard");
@@ -81,7 +80,7 @@ const LoginForm = () => {
 
           <form onSubmit={handleLogin}>
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">Email *</label>
+              <label className="block text-sm font-medium mb-1">Email*</label>
               <input
                 type="email"
                 placeholder="Your Email"
@@ -135,7 +134,7 @@ const LoginForm = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#005e0e] text-white py-2 rounded hover:bg-green-700"
+                className="w-full bg-[#005e0e] text-white py-2 rounded hover:bg-green-700 cursor-pointer"
               >
                 {loading ? "Signing In..." : "SIGN IN"}
               </button>

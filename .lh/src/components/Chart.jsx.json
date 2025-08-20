@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/components/Chart.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1755698584329,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1755698667118,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,9 +86,9 @@\n                 axisLine\r\n                 tickLine\r\n                 tickMargin={8}\r\n                 label={{\r\n-                  value: \"Days of the Week\",\r\n+                  value: \"Day of the Week\",\r\n                   position: \"insideBottom\",\r\n                   dy: 10,\r\n                 }}\r\n               />\r\n"
+                }
+            ],
+            "date": 1755698584329,
+            "name": "Commit-0",
+            "content": "\"use client\";\r\n\r\nimport {\r\n  BarChart,\r\n  Bar,\r\n  XAxis,\r\n  CartesianGrid,\r\n  YAxis,\r\n  ResponsiveContainer,\r\n  Legend,\r\n} from \"recharts\";\r\n\r\nimport {\r\n  ChartContainer,\r\n  ChartLegendContent,\r\n} from \"@/components/ui/chart\";\r\n\r\nimport useVisitorStats from \"@/hooks/useVisitorStats\";\r\n\r\nconst chartConfig = {\r\n  company: {\r\n    label: \"Company Visitors\",\r\n    color: \"#502deb\",\r\n  },\r\n  resident: {\r\n    label: \"Resident’s Visitors\",\r\n    color: \"#005e0e\",\r\n  },\r\n  service: {\r\n    label: \"Service Providers\",\r\n    color: \"#a996fe\",\r\n  },\r\n};\r\n\r\nconst transformVisitorTrend = (trendData) => {\r\n  const labels = trendData?.labels || [];\r\n  const datasets = trendData?.datasets || [];\r\n\r\n  const result = labels.map((label, index) => {\r\n    const entry = {\r\n      day: label[0],\r\n    };\r\n\r\n    datasets.forEach((ds) => {\r\n      if (ds.label === \"Visitors\") {\r\n        entry.resident = ds.data[index];\r\n      } else if (ds.label === \"Service Providers\") {\r\n        entry.service = ds.data[index];\r\n      } else if (ds.label === \"Company Visitors\") {\r\n        entry.company = ds.data[index];\r\n      }\r\n    });\r\n\r\n    return entry;\r\n  });\r\n\r\n  return result;\r\n};\r\n\r\n\r\nexport default function ChartPage() {\r\n  const { stats, loading, error } = useVisitorStats();\r\n  const visitorTrend = stats?.visitor_trend || {};\r\n  const chartData = transformVisitorTrend(visitorTrend);\r\n  const maxYValue = Math.max(\r\n    ...chartData.flatMap((item) => [item.company, item.resident, item.service])\r\n  );\r\n  const dynamicMax = Math.ceil((maxYValue + 5) / 10) * 10;\r\n  \r\n\r\n  return (\r\n    <div className=\"max-w-3xl mx-auto\">\r\n      <h2 className=\"text-2xl font-bold text-gray-800\">Visitors Trend</h2>\r\n\r\n      {loading ? (\r\n        <p className=\"text-center py-10\">Loading chart...</p>\r\n      ) : error ? (\r\n        <p className=\"text-red-500 text-center py-10\">{error}</p>\r\n      ) : (\r\n        <ChartContainer config={chartConfig} className=\"h-[280px] w-full\">\r\n          <ResponsiveContainer width=\"100%\" height=\"100%\">\r\n            <BarChart data={chartData}>\r\n              <CartesianGrid strokeDasharray=\"3 3\" vertical={false} stroke=\"#E5E7EB\" />\r\n              <XAxis\r\n                dataKey=\"day\"\r\n                axisLine\r\n                tickLine\r\n                tickMargin={8}\r\n                label={{\r\n                  value: \"Days of the Week\",\r\n                  position: \"insideBottom\",\r\n                  dy: 10,\r\n                }}\r\n              />\r\n              <YAxis\r\n                axisLine\r\n                tickLine\r\n                tick={{ fontSize: 12 }}\r\n                domain={[0, dynamicMax]}\r\n                tickFormatter={(value) => (Number.isInteger(value) ? value : \"\")}\r\n              />\r\n              <Legend content={<ChartLegendContent />} verticalAlign=\"top\" align=\"center\" />\r\n              <Bar dataKey=\"company\" fill={chartConfig.company.color} />\r\n              <Bar dataKey=\"resident\" fill={chartConfig.resident.color} />\r\n              <Bar dataKey=\"service\" fill={chartConfig.service.color} />\r\n            </BarChart>\r\n          </ResponsiveContainer>\r\n        </ChartContainer>\r\n      )}\r\n    </div>\r\n  );\r\n}\r\n"
+        }
+    ]
+}
