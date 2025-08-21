@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { Upload } from 'lucide-react';
+import toast from 'react-hot-toast';
 import selectImage from '../scripts/selectImage';
 import { submitEmergency } from '../scripts/submitEmergency';
 import { submitIncidence } from '../scripts/submitIncidence';
@@ -15,11 +16,13 @@ function Card6() {
   const handleEmergency = () => {
     submitEmergency();
     setEmergencyTriggered(true);
+    toast.success("Emergency submitted successfully");
   };
 
   const handleIncidentSubmit = () => {
     submitIncidence(type, description, image);
     setIncidentSubmitted(true);
+    toast.success("Incidence submitted successfully");
   };
 
   return (

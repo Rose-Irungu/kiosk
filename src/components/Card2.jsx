@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Siren } from "lucide-react";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 import { updateEmergency } from "../services/adminEmergencyServices";
 import { getRelativeTime } from "../utils/fomatters";
 
@@ -30,6 +31,7 @@ export default function Card2({
         // setIsResolved(true);
         onResolved(); 
       }
+      toast.success("Emergency resolved successfully");
     } catch (err) {
       setError(err?.toString() || "Failed to update.");
     } finally {

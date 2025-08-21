@@ -2,12 +2,17 @@
 import { useState } from "react";
 import { Siren } from "lucide-react";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 import { updateEmergency } from "../services/adminEmergencyServices";
+
+//components
+import ModalDash from "./extras/ModalDash";
 
 export default function Card4({ id, floor, unit, name, status, onResolved }) {
   const [isResolved, setIsResolved] = useState(status === "resolved");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const handleResolve = async () => {
     if (isResolved || loading) return;
@@ -20,6 +25,7 @@ export default function Card4({ id, floor, unit, name, status, onResolved }) {
         setIsResolved(true);
         onResolved(); // Notify parent to refetch data
       }
+      toast.success("Emergency resolved successfully");
     } catch (err) {
       setError(err?.toString() || "Failed to update.");
     } finally {
@@ -80,7 +86,7 @@ export default function Card4({ id, floor, unit, name, status, onResolved }) {
             </Link>
 
             <button
-              onClick={handleResolve}
+              onClick={()=>setShowModal(true)}
               disabled={isResolved || loading}
               className={`cursor-pointer flex-1 min-w-0 px-4 py-2 min-h-[40px] rounded-sm transition-all duration-300 text-center whitespace-normal break-words ${
                 isResolved
@@ -89,6 +95,10 @@ export default function Card4({ id, floor, unit, name, status, onResolved }) {
               }`}
             >
               {loading ? "Updating..." : isResolved ? "Resolved ✅" : "Mark Resolved"}
+              {showModal && <div className="fixed inset-0 flex items-center justify-center bg-black/40">
+                                <ModalDash callback1={()=>setShowModal(false)}/>
+                            </div>
+              }
             </button>
         </div>
 

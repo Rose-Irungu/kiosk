@@ -28,7 +28,7 @@ export default function FavoriteDetail({img, name, phone, email, callback1, call
             </div>
         </div>
         <div className='flex flex-row justify-between'>
-            <div className='w-[120px] h-[120px] left-[30px]'>
+            <div className='w-[120px] h-[120px] ml-[30px]'>
                 <img src={img} className='w-[120px] h-[120px] top-[128px]'/>
             </div>
             <div className='flex flex-col w-[275px] h-[126px] top-[125px] left-[184px] gap-[5px]'>

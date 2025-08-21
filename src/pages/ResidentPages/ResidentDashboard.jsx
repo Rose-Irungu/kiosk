@@ -15,13 +15,14 @@ function ResidentDashboard() {
     useEffect(() =>{
 
         const getVisitors = async () =>{
-            const faveVisitors = await getFavouriteVisitors();
+            const allVisitors = await getFavouriteVisitors();
+            const faveVisitors = await allVisitors.data;
             setVisitors(faveVisitors);
             console.log("Favourite visitors:", faveVisitors);
             return faveVisitors;
         };
         getVisitors();
-        console.log(`The shit got here`);
+        console.log(`Execution got here`);
         setLoading(false);
     }, []);
 

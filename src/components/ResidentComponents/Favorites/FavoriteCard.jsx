@@ -46,7 +46,12 @@ export default function FavoriteCard({img, name, phone, email, time, function1, 
         }
         {showModal2 && <div className="fixed inset-0 flex items-center justify-center bg-black/40">
                             <div onClick={(e) => e.stopPropagation()}>
-                                <EditVisitor callback1={()=> handleClose2()}/>
+                                <EditVisitor callback1={()=> handleClose2()}
+                                             name={name}
+                                             phone={phone}
+                                             email={email}
+                                             photo={()=>img.toString()}
+                                />
                             </div>
                        </div>
         }
