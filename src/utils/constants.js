@@ -84,7 +84,10 @@ export const API_ENDPOINTS = {
   EDIT_VISITOR: '/visitors/edit/visitor/',
 
   //Emergency feedback
-  EMERGENCY_FEEDBACK_SUBMIT: '/incidence-and-emergency/add-emergency-feedback/',
+  EMERGENCY_FEEDBACK_SUBMIT: `/incidence-and-emergency/update-emergency/{id}/`,
+
+  //Get favourites
+  GET_FAVOURITE_VISITORS: '/visitors/getallfavourite/',
 
 }
 

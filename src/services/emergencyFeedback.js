@@ -3,7 +3,7 @@ import { API_ENDPOINTS } from "../utils/constants";
 
 export default async function submitEmergencyFeedback(id, feedback){
     try{
-        const url = API_ENDPOINTS.EMERGENCY_UPDATE.replace("{id}", id);
+        const url = API_ENDPOINTS.EMERGENCY_FEEDBACK_SUBMIT.replace("{id}", id);
         const response = await api.patch(url,{
             "emergency_status": "resolved",
             "emergency_resolution_comment":feedback,
