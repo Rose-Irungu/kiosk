@@ -1,19 +1,11 @@
 import { useState } from "react";
 import { Siren } from "lucide-react";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 import { updateEmergency } from "../services/adminEmergencyServices";
 import { getRelativeTime } from "../utils/fomatters";
 
 
-/**
- * Card2 – Panic‑button incident card
- *
- * @param {String} unit
- * @param {String} floor
- * @param {Number} minute
- * @param {String} resident
- * @param {String} status
- */
 export default function Card2({
   id,
   floor,
@@ -39,6 +31,7 @@ export default function Card2({
         // setIsResolved(true);
         onResolved(); 
       }
+      toast.success("Emergency resolved successfully");
     } catch (err) {
       setError(err?.toString() || "Failed to update.");
     } finally {
@@ -48,9 +41,7 @@ export default function Card2({
 
   return (
     <div className="bg-white w-full p-4 rounded-[10px] shadow flex flex-col lg:flex-row lg:justify-between gap-6">
-      {/* Left side */}
       <div className="flex-1">
-        {/* Siren + headline */}
         <div className="flex items-center gap-2">
           <div className="w-[60px] h-[60px] flex items-center justify-center rounded-sm">
             <Siren className="w-6 h-6 text-[#F93162] animate-ping flex-shrink-0" />
@@ -66,7 +57,7 @@ export default function Card2({
 
         <div className="flex gap-2 mt-3">
           <Link to="/triggers" state={{id, floor, unit}}>
-            <button className="bg-[#005E0E] text-white text-sm font-inter font-normal px-3 py-1 border rounded hover:bg-[#002A05]">
+            <button className="cursor-pointer bg-[#005E0E] text-white text-sm font-inter font-normal px-3 py-1 border rounded hover:bg-[#002A05]">
               Open Roll Call
             </button>
           </Link>
@@ -74,7 +65,7 @@ export default function Card2({
           <button
             onClick={handleResolve}
             disabled={isResolved || loading}
-            className={`border border-[#005E0E] text-sm font-inter font-normal px-3 py-1 rounded transition-colors hover:bg-[#CCCCCC] ${
+            className={`cursor-pointer border border-[#005E0E] text-sm font-inter font-normal px-3 py-1 rounded transition-colors hover:bg-[#CCCCCC] ${
                 isResolved
                   ? "bg-[#CCCCCC] text-white border border-[#CCCCCC] cursor-not-allowed"
                   : "text-[#005E0E] border border-[#005E0E] hover:bg-[#CCCCCC] hover:text-white"
@@ -89,7 +80,6 @@ export default function Card2({
         )}
       </div>
 
-      {/* Right side */}
       <div className="w-full lg:w-[258px] h-[140px] rounded-[10px] border-[0.5px] p-4 flex items-center gap-[8px]">
         <div className="flex flex-col justify-between w-[103px] h-[52px] gap-[12px]">
           <p className="font-dmsans text-sm text-slateboost w-[103px] h-[20px]">

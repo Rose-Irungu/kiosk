@@ -10,8 +10,6 @@ import {
   updateEmergency,
 } from "../../services/adminEmergencyServices";
 
-import submitEmergencyFeedback from '../../services/emergencyFeedback';
-
 export default function Emergencypage() {
   const [latest, setLatest] = useState(null);
   const [all, setAll] = useState([]);
@@ -116,7 +114,6 @@ export default function Emergencypage() {
         {/* ---- Lower Row ---- */}
         <div className="w-full max-w-[1140px] mt-10">
           <EmergencyTable
-            submitEmergencyFeedback={()=>submitEmergencyFeedback()}
             events={filteredEvents.map((e) => ({
               id: e.id,
               location: e.emergency_location || "Unknown",

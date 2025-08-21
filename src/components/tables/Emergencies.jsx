@@ -14,8 +14,10 @@ import { Label } from "recharts";
 //components
 import ModalDash from "../extras/ModalDash";
 
+//Services
+import submitEmergencyFeedback from '../../services/emergencyFeedback';
+
 export function EmergencyTable({
-  submitEmergencyFeedback, 
   events = [], 
   onStatusChange,
   isLoading = false,
@@ -28,18 +30,22 @@ export function EmergencyTable({
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const [openDropdown, setOpenDropdown] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [activeEvent, setActiveEvent] = useState(null);
   
   //function to close the resolve modal
-  const handleCancel = () => {
-    setShowModal(false);
-  };
+  const handleCancel = () => setActiveEvent(null);
 
   //function to submit feedback
-  const submitFeedback = () =>{
-    submitEmergencyFeedback();
-    console.log('Feedback submitted successfully');
-    setShowModal(false);
-  };
+    const submitFeedback = async (id, feedback) => {
+      try {
+        const result = await submitEmergencyFeedback(id, feedback);
+        console.log("Feedback submitted successfully:", result);
+      } catch (err) {
+        console.error("Failed to submit feedback:", err);
+      } finally {
+        setActiveEvent(null); // or setShowModal(false) if you stick with boolean
+      }
+    };
 
   const toggleDropdown = (index) => {
     setOpenDropdown((prev) => (prev === index ? null : index));
@@ -177,16 +183,20 @@ export function EmergencyTable({
                   {openDropdown === index && (
                     <div className="absolute right-0 mt-2 w-36 bg-white border rounded shadow z-20">
                       <button
-                        onClick={() => setShowModal(true)}
+                        onClick={() => setActiveEvent(event)}
                         className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                       >
                         Resolve
                       </button>
-                      {showModal && (
+                      {activeEvent && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black/40">
-                          <ModalDash id={event.id} callback1={handleCancel} callback2={submitFeedback} />
+                          <ModalDash 
+                            id={activeEvent.id} 
+                            callback1={handleCancel} 
+                            callback2={()=>submitFeedback(activeEvent.id, )} 
+                          />
                         </div>
-                      )}                      
+                      )}                     
                       <button
                         onClick={() => handleAction("Unresolved", event, index)}
                         className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"

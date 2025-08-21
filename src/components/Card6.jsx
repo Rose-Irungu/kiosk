@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { Upload } from 'lucide-react';
+import toast from 'react-hot-toast';
 import selectImage from '../scripts/selectImage';
 import { submitEmergency } from '../scripts/submitEmergency';
 import { submitIncidence } from '../scripts/submitIncidence';
@@ -15,11 +16,13 @@ function Card6() {
   const handleEmergency = () => {
     submitEmergency();
     setEmergencyTriggered(true);
+    toast.success("Emergency submitted successfully");
   };
 
   const handleIncidentSubmit = () => {
     submitIncidence(type, description, image);
     setIncidentSubmitted(true);
+    toast.success("Incidence submitted successfully");
   };
 
   return (
@@ -30,7 +33,7 @@ function Card6() {
         </h1>
 
         <button
-          className={`flex flex-row w-full h-[56px] border rounded-[4px] px-3 py-4 gap-2 text-white text-center items-center justify-center ${
+          className={`cursor-pointer flex flex-row w-full h-[56px] border rounded-[4px] px-3 py-4 gap-2 text-white text-center items-center justify-center ${
             emergencyTriggered ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#E61C11]'
           }`}
           onClick={handleEmergency}
@@ -44,7 +47,7 @@ function Card6() {
           <span>Trigger Emergency</span>
         </button>
         <Link to="/triggers/security" className="flex-1 min-w-0" >
-          <button className="flex items-center justify-center border border-[#005E0E] w-full h-[56px] rounded-[4px] px-6 text-center">
+          <button className="cursor-pointer flex items-center justify-center border border-[#005E0E] w-full h-[56px] rounded-[4px] px-6 text-center">
             <span className="font-inter text-[14px] leading-5 tracking-[0.01em] text-[#005E0E]">
               OPEN ROLL CALL
             </span>
@@ -103,7 +106,7 @@ function Card6() {
           </div>
 
           <button
-            className={`w-full h-[56px] rounded-[8px] px-6 flex justify-center items-center font-inter text-sm leading-5 tracking-[1%] text-white ${
+            className={`cursor-pointer w-full h-[56px] rounded-[8px] px-6 flex justify-center items-center font-inter text-sm leading-5 tracking-[1%] text-white ${
               incidentSubmitted ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#005E0E]'
             }`}
             onClick={handleIncidentSubmit}

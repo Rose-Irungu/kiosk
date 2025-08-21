@@ -2,12 +2,17 @@
 import { useState } from "react";
 import { Siren } from "lucide-react";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 import { updateEmergency } from "../services/adminEmergencyServices";
+
+//components
+import ModalDash from "./extras/ModalDash";
 
 export default function Card4({ id, floor, unit, name, status, onResolved }) {
   const [isResolved, setIsResolved] = useState(status === "resolved");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const handleResolve = async () => {
     if (isResolved || loading) return;
@@ -20,6 +25,7 @@ export default function Card4({ id, floor, unit, name, status, onResolved }) {
         setIsResolved(true);
         onResolved(); // Notify parent to refetch data
       }
+      toast.success("Emergency resolved successfully");
     } catch (err) {
       setError(err?.toString() || "Failed to update.");
     } finally {
@@ -74,21 +80,25 @@ export default function Card4({ id, floor, unit, name, status, onResolved }) {
         {/* Button Row */}
         <div className="flex flex-col sm:flex-row w-full gap-3 min-w-0">
           <Link to="/triggers" className="flex-1 min-w-0" state={{ id, floor, unit }}>
-              <button className="w-full min-h-[40px] bg-[#005E0E] text-white rounded hover:bg-[#002A05] px-4 py-2 transition-all duration-300 text-center whitespace-normal break-words">
+              <button className="cursor-pointer w-full min-h-[40px] bg-[#005E0E] text-white rounded hover:bg-[#002A05] px-4 py-2 transition-all duration-300 text-center whitespace-normal break-words">
                 Open Roll Call
               </button>
             </Link>
 
             <button
-              onClick={handleResolve}
+              onClick={()=>setShowModal(true)}
               disabled={isResolved || loading}
-              className={`flex-1 min-w-0 px-4 py-2 min-h-[40px] rounded-sm transition-all duration-300 text-center whitespace-normal break-words ${
+              className={`cursor-pointer flex-1 min-w-0 px-4 py-2 min-h-[40px] rounded-sm transition-all duration-300 text-center whitespace-normal break-words ${
                 isResolved
                   ? "bg-[#CCCCCC] text-white border border-[#CCCCCC] cursor-not-allowed"
                   : "text-[#005E0E] border border-[#005E0E] hover:bg-[#CCCCCC] hover:text-white"
               }`}
             >
               {loading ? "Updating..." : isResolved ? "Resolved ✅" : "Mark Resolved"}
+              {showModal && <div className="fixed inset-0 flex items-center justify-center bg-black/40">
+                                <ModalDash callback1={()=>setShowModal(false)}/>
+                            </div>
+              }
             </button>
         </div>
 

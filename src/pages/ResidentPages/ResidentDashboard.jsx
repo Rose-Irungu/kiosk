@@ -5,7 +5,7 @@ import Favorites from '../../components/ResidentComponents/Favorites/Favorites';
 import NoteP from '../../components/ResidentComponents/SafetyCards/NoteP';
 
 //Service imports
-import { getAllVisitors } from '../../services/residentDashboardServices';
+import getFavouriteVisitors from '../../services/getFavouriteVisitors';
 
 function ResidentDashboard() {
     const [loading, setLoading] = useState(true);
@@ -15,12 +15,14 @@ function ResidentDashboard() {
     useEffect(() =>{
 
         const getVisitors = async () =>{
-            const allVisitors = await getAllVisitors();
-            setVisitors(allVisitors);
-            console.log("All visitors:", allVisitors);
-            return allVisitors;
+            const allVisitors = await getFavouriteVisitors();
+            const faveVisitors = await allVisitors.data;
+            setVisitors(faveVisitors);
+            console.log("Favourite visitors:", faveVisitors);
+            return faveVisitors;
         };
         getVisitors();
+        console.log(`Execution got here`);
         setLoading(false);
     }, []);
 
