@@ -58,3 +58,16 @@ export default async function deleteVisitor(visitor_id){
         throw error;
     }
 }
+
+
+export const editVisitorAdmin = async (visitorId, updatedData) => {
+  try {
+    const res = await api.put(`${API_ENDPOINTS.EDIT_VISITOR}${visitorId}/`, updatedData);
+
+    const data = await res.data;
+    return data; 
+  } catch (error) {
+    console.error("Error editing visitor:", error);
+    throw error;
+  }
+};

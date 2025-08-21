@@ -271,13 +271,13 @@ export default function Visitors() {
   return (
     <>
       <div className="w-full max-w-7xl mx-auto bg-white rounded-xl shadow-sm mt-5 ">
-        <div className="flex flex-row justify-between items-center px-6 py-4  mb-4 border-b border-[rgba(0,0,0,0.3)]">
+        <div className="flex flex-row justify-between items-center px-6 py-4  mb-4 border-b border-[rgba(0,0,0,0.3)] ">
           <div>
             <h2 className="text-xl font-bold font-['DM Sans']">Visitor Logs</h2>
           </div>
 
 
-          <div className="flex flex-row items-center justify-end gap-[24px] font-['Inter']">
+          <div className="flex flex-row items-center justify-end gap-4 font-['Inter']">
             <div
               onClick={() => setActiveTab("visitor")}
               className={`flex items-center justify-center w-[128px] h-[40px] rounded-lg cursor-pointer ${activeTab === "visitor"

@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Upload, ChevronDown } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/layout/Layout.jsx';
-import { securityRegistervisitor } from '../../services/securityVisitorRegister.js';
+import { editVisitorAdmin } from '../../services/visitorservice.js';
 import { userService } from "../../services/user";
 import toast from 'react-hot-toast';
 import { useLocation } from 'react-router-dom';
+
 
 
 export default function VisitorRegistration() {
@@ -36,7 +37,7 @@ export default function VisitorRegistration() {
     const validate = () => {
         const newErrors = {};
 
-        if (!visitorData.visitor_name.trim()) newErrors.full_name = "Full name is required.";
+        if (!visitorData.visitor_name.trim()) newErrors.visitor_name = "Full name is required.";
         if (!visitorData.email.trim()) {
             newErrors.email = "Email is required.";
         } else if (!/^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/.test(visitorData.email)) {
@@ -80,24 +81,30 @@ export default function VisitorRegistration() {
         setIsSubmitting(true);
 
         try {
-            const payload = new visitorData();
+            const payload = new FormData();
             for (const key in visitorData) {
-                payload.append(key, visitorData[key]);
+                
+                if (key === "visitor_name") {
+                    payload.append("full_name", visitorData[key]);
+                } else {
+                    payload.append(key, visitorData[key]);
+                }
             }
 
-            const res = await securityRegistervisitor(payload);
+            const res = await editVisitorAdmin(visitorData.visitor_id, payload);
             if (res.result_code == 0) {
-                toast.success("Visitor successfully registered!")
-                navigate('/security/dashboard');
+                toast.success("Visitor successfully edited!");
+                navigate('/resident/dashboard');
             } else {
-                toast.error(res.error)
+                toast.error(res.message);
             }
         } catch (error) {
             console.error("Edit Visitor failed:", error);
-            toast.error("Failed to edit visitor. Please try again later.")
+            toast.error("Failed to edit visitor. Please try again later.");
         } finally {
             setIsSubmitting(false);
         }
+
     };
 
     return (
@@ -114,10 +121,10 @@ export default function VisitorRegistration() {
                         <input
                             type="text"
                             placeholder='e.g John Doe'
-                            name='full_name'
+                            name='visitor_name'
                             value={visitorData.visitor_name}
                             onChange={handleChange}
-                            className={`h-12 px-4 rounded-lg bg-[#F4F4F4] w-full focus:outline-none ${errors.full_name ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-green-600'}`}
+                            className={`h-12 px-4 rounded-lg bg-[#F4F4F4] w-full focus:outline-none ${errors.visitor_name ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-green-600'}`}
                         />
                         {errors.visitor_name && <p className="text-red-500 text-sm">{errors.visitor_name}</p>}
                     </div>
