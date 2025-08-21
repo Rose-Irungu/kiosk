@@ -22,7 +22,7 @@ const Edit = ({ onClose }) => {
     console.log("initialData:", initialData);
     if (initialData) {
       setFormData({
-        full_name: initialData.visitor_name || "", // ✅ parent uses visitor_name
+        full_name: initialData.visitor_name || "", 
         phone_number: initialData.phone_number || "",
         email: initialData.email || "",
         visitor_id: initialData.visitor_id || "",
@@ -77,7 +77,7 @@ const Edit = ({ onClose }) => {
         onSubmit={handleSubmit}
         className="bg-white justify-center shadow-lg rounded-2xl p-6 w-full max-w-md space-y-5"
       >
-        {/* Header */}
+      
         <div className="flex justify-between items-center border-b pb-3">
           <h2 className="text-lg font-semibold text-gray-700">
             Edit Visitor Details
@@ -95,7 +95,7 @@ const Edit = ({ onClose }) => {
           Personal Information
         </h3>
 
-        {/* Name */}
+       
         <div>
           <label className="block text-sm text-gray-600 mb-1">Name</label>
           <input
@@ -113,7 +113,7 @@ const Edit = ({ onClose }) => {
           )}
         </div>
 
-        {/* Phone */}
+       
         <div>
           <label className="block text-sm text-gray-600 mb-1">Phone</label>
           <input
@@ -131,7 +131,7 @@ const Edit = ({ onClose }) => {
           )}
         </div>
 
-        {/* Email */}
+       
         <div>
           <label className="block text-sm text-gray-600 mb-1">Email</label>
           <input
@@ -149,7 +149,6 @@ const Edit = ({ onClose }) => {
           )}
         </div>
 
-        {/* Photo */}
         <div>
           <label className="block text-sm text-gray-600 mb-1">Photo</label>
           <div className="flex items-center justify-between border rounded-lg p-2">
@@ -176,7 +175,7 @@ const Edit = ({ onClose }) => {
           </div>
         </div>
 
-        {/* Save Button */}
+        
         <button
           type="submit"
           className="w-full bg-green-700 text-white rounded-lg py-2 font-medium hover:bg-green-800 transition"
