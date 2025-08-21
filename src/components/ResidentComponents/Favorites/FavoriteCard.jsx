@@ -13,7 +13,7 @@ export default function FavoriteCard({img, name, phone, email, time, function1, 
   const handleClose2 = () => setShowModal2(false);
 
   return (
-    <div className='flex flex-row w-full h-[64px] justify-between rounded-[8px] p-[12px] bg-[#FFFFFF]'
+    <div className='cursor-pointer flex flex-row w-full h-[64px] justify-between rounded-[8px] p-[12px] bg-[#FFFFFF]'
          onClick={()=> setShowModal(true)}
     >
         <div className='flex flex-row w-[216px] h-[40px] gap-[6px]'>

@@ -74,7 +74,7 @@ export default function Card4({ id, floor, unit, name, status, onResolved }) {
         {/* Button Row */}
         <div className="flex flex-col sm:flex-row w-full gap-3 min-w-0">
           <Link to="/triggers" className="flex-1 min-w-0" state={{ id, floor, unit }}>
-              <button className="w-full min-h-[40px] bg-[#005E0E] text-white rounded hover:bg-[#002A05] px-4 py-2 transition-all duration-300 text-center whitespace-normal break-words">
+              <button className="cursor-pointer w-full min-h-[40px] bg-[#005E0E] text-white rounded hover:bg-[#002A05] px-4 py-2 transition-all duration-300 text-center whitespace-normal break-words">
                 Open Roll Call
               </button>
             </Link>
@@ -82,7 +82,7 @@ export default function Card4({ id, floor, unit, name, status, onResolved }) {
             <button
               onClick={handleResolve}
               disabled={isResolved || loading}
-              className={`flex-1 min-w-0 px-4 py-2 min-h-[40px] rounded-sm transition-all duration-300 text-center whitespace-normal break-words ${
+              className={`cursor-pointer flex-1 min-w-0 px-4 py-2 min-h-[40px] rounded-sm transition-all duration-300 text-center whitespace-normal break-words ${
                 isResolved
                   ? "bg-[#CCCCCC] text-white border border-[#CCCCCC] cursor-not-allowed"
                   : "text-[#005E0E] border border-[#005E0E] hover:bg-[#CCCCCC] hover:text-white"

@@ -28,7 +28,7 @@ export default function EditVisitor({callback1}) {
                 <input id='email' type="text" className='w-full h-[46px] rounded-[12px] border-[1px] border-[#333333] py-[10px] px-[20px] gap-[20px]'/>
                 <label htmlFor="photo" className='font-semibold font-dmsans text-[16px] text-[#000000] leading-[100%] tracking-normal'>Photo</label>
                 <input id='photo' type="text" className='w-full h-[46px] rounded-[12px] border-[1px] border-[#333333] py-[10px] px-[20px] gap-[20px]'/>
-                <button className='w-full h-[50px] rounded-[8px] border-[1px] border-[#005E0E] py-[7px] px-[10px] gap-[10px] bg-[#005E0E] mt-[10px]
+                <button className='cursor-pointer w-full h-[50px] rounded-[8px] border-[1px] border-[#005E0E] py-[7px] px-[10px] gap-[10px] bg-[#005E0E] mt-[10px]
                                     font-dmsans font-bold text-[16px] text-[#E6FBE9] leading-[100%] tracking-normal'
                 >
                     Save
