@@ -14,10 +14,11 @@ const CardA = ({
   visitor_name,
   check_in,
   stayTime,
+  visitor_type,
   status,
   isFavorite,
-  // phone,
-  // email,
+  phone_number,  
+   email,
   tag,
   image,
   onApproveVisit,
@@ -27,11 +28,11 @@ const CardA = ({
   const [showDetailsView, setShowDetailsView] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isloading, setIsLoading] = useState(false);
-  const [isfavorite, setIsFavorite] = useState(false); 
+  const [isfavorite, setIsFavorite] = useState(false);
   const modalRef = useRef(null);
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  
+
 
   useEffect(() => {
     setIsFavorite(isFavorite);
@@ -57,25 +58,27 @@ const CardA = ({
     check_in,
     stayTime,
     visit_id,
+    visitor_type: visitor_type || 'guest',
     status,
     tag,
     image,
     isFavorite,
-    // phone,
-    // email,
+    phone_number,
+    email,
   };
 
   const {
-    name: n = visitorData.visitor_name,
-    time: t = getRelativeTime(visitorData.check_in),
-    stayTime: s = visitorData.stayTime || '52 mins',
-    status: st = (visitorData.status || 'pending').toLowerCase(),
-    tag: tg = visitorData.tag || 'guest',
-    image: img = visitorData.image || '/ellipse-20.png',
-    phone: phone = visitorData.phone || 'N/A',
-    email: email = visitorData.email || 'N/A',
-    date
-  } = visitorData;
+  name: n = visitorData.visitor_name,
+  time: t = getRelativeTime(visitorData.check_in),
+  stayTime: s = visitorData.stayTime || '52 mins',
+  status: st = (visitorData.status || 'pending').toLowerCase(),
+  tag: tg = visitorData.tag || 'guest',
+  image: img = visitorData.image || '/ellipse-20.png',
+  phone_number: ph = visitorData.phone_number || '',
+  visitor_type: vt = visitorData.visitor_type || 'guest',
+  email: em = visitorData.email || '',
+  date
+} = visitorData;
 
 
   const openModal = () => {
@@ -103,41 +106,41 @@ const CardA = ({
     }
   };
 
-//   useEffect(() => {
-//   const fetchFavourites = async () => {
-//     try {
-//       const data = await getallFavourite();
-//       // Check if this visitor is in the favourites list
-//       const isFav = data?.some(fav => fav.visitor_id === visitor_id);
-//       setIsFavorite(isFav);
-//     } catch (error) {
-//       console.error("Error loading favourites:", error);
-//     }
-//   };
+  //   useEffect(() => {
+  //   const fetchFavourites = async () => {
+  //     try {
+  //       const data = await getallFavourite();
+  //       // Check if this visitor is in the favourites list
+  //       const isFav = data?.some(fav => fav.visitor_id === visitor_id);
+  //       setIsFavorite(isFav);
+  //     } catch (error) {
+  //       console.error("Error loading favourites:", error);
+  //     }
+  //   };
 
-//   fetchFavourites();
-// }, [visitor_id]);
+  //   fetchFavourites();
+  // }, [visitor_id]);
 
 
- 
+
 
 
   const toggleFavorite = async () => {
-    
 
-  try {
+
+    try {
       setIsLoading(true);
-      const res = await addFavourite(visitor_id); 
+      const res = await addFavourite(visitor_id);
       console.log("Toggle Favourite Response:", res.data);
-      
-      setIsFavorite(res.data.isFavorite); 
-    
-  } catch (error) {
-    console.error("Error toggling favourite:", error);
-  } finally {
-    setIsLoading(false);
-  }
-};
+
+      setIsFavorite(res.data.isFavorite);
+
+    } catch (error) {
+      console.error("Error toggling favourite:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
 
 
@@ -275,83 +278,86 @@ const CardA = ({
             //   </div>
             // ) : (
 
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 flex flex-col gap-4 w-[350px] shadow-md">
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 flex flex-col gap-4 w-[350px] shadow-md">
 
-                <div className="flex justify-between items-center border-b border-gray-200 pb-2">
-                  <h2 className="text-green-900 font-semibold text-lg">Visitor Details</h2>
-                  <div className="flex items-center gap-3">
+              <div className="flex justify-between items-center border-b border-gray-200 pb-2">
+                <h2 className="text-green-900 font-semibold text-lg">Visitor Details</h2>
+                <div className="flex items-center gap-3">
 
-                    <button
-                      onClick={(e) => {
-                        if (isloading) return;
-                        e.stopPropagation();
-                        toggleFavorite();
-                      }}
-                    >
-                      <Heart
-                        size={20}
-                        className={`cursor-pointer transition-colors ${isFavorite ? "text-red-500 fill-red-500" : "text-gray-400"
-                          }`}
-                      />
-                    </button>
-                    {/* Close button
+                  <button
+                    onClick={(e) => {
+                      if (isloading) return;
+                      e.stopPropagation();
+                      toggleFavorite();
+                    }}
+                  >
+                    <Heart
+                      size={20}
+                      className={`cursor-pointer transition-colors ${isFavorite ? "text-red-500 fill-red-500" : "text-gray-400"
+                        }`}
+                    />
+                  </button>
+                  {/* Close button
                   <button onClick={() => setShowModal(false)} className="text-gray-500">
                     ✕
                   </button> */}
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-green-900 text-sm font-semibold mb-2">
-                    Personal Information
-                  </h3>
-                  <div className="flex items-center gap-3">
-                    <img
-                      className="w-14 h-14 rounded-full object-cover"
-                      src={img}
-                      alt={n}
-                    />
-                    <div className="flex flex-col">
-                      <span className="text-gray-900 font-medium">{n}</span>
-                      <span className="text-gray-700 text-sm">Phone: {phone}</span>
-                      <span className="text-gray-700 text-sm">Email: {email}</span>
-                    </div>
-                  </div>
-
-
-                  <div className="flex gap-3 mt-3">
-                    <button
-                      // onClick={() => setIsEditing(true)}
-                       onClick={() => navigate("/edit")}
-                      className="bg-green-900 text-white text-sm font-medium px-4 py-1.5 rounded"
-                    >
-                      Edit
-                    </button>
-
-                    <button
-                      onClick={handleAddToBlacklist}
-                      className="text-red-600 text-sm font-medium px-4 py-1.5 rounded border border-red-600"
-                    >
-                      Add to Blacklist
-                    </button>
-                  </div>
-                </div>
-
-
-                <div>
-                  <h3 className="text-green-900 text-sm font-semibold mb-2">
-                    Visit Information
-                  </h3>
-                  <div className="text-gray-700 text-sm">
-                    <p>Guest Type: {tg}</p>
-                    <p>Check in date: {date}</p>
-                    <p>Check in time: {t}</p>
-                  </div>
                 </div>
               </div>
-            )
-          
-             : null}
+
+              <div>
+                <h3 className="text-green-900 text-sm font-semibold mb-2">
+                  Personal Information
+                </h3>
+                <div className="flex items-center gap-3">
+                  <img
+                    className="w-14 h-14 rounded-full object-cover"
+                    src={img}
+                    alt={n}
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-gray-900 font-medium">{n}</span>
+                    <span className="text-gray-700 text-sm">Phone: {ph}</span>
+                    <span className="text-gray-700 text-sm">Email: {em}</span>
+                  </div>
+                </div>
+
+
+                <div className="flex gap-3 mt-3">
+                  <button
+                    // onClick={() => setIsEditing(true)}
+                    onClick={() =>
+                      navigate("/edit", { state: { initialData: visitorData } })
+                    }
+                    className="bg-green-900 text-white text-sm font-medium px-4 py-1.5 rounded"
+                  >
+                    Edit
+                  </button>
+
+
+                  <button
+                    onClick={handleAddToBlacklist}
+                    className="text-red-600 text-sm font-medium px-4 py-1.5 rounded border border-red-600"
+                  >
+                    Add to Blacklist
+                  </button>
+                </div>
+              </div>
+
+
+              <div>
+                <h3 className="text-green-900 text-sm font-semibold mb-2">
+                  Visit Information
+                </h3>
+                <div className="text-gray-700 text-sm">
+                  <p>visitor_type: {vt}</p>
+                  <p>Check in date: {date}</p>
+                  <p>Check in time: {t}</p>
+                </div>
+              </div>
+            </div>
+          )
+
+            : null}
 
 
         </div>

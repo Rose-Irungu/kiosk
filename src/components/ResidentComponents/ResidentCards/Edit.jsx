@@ -1,25 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { editVisitor } from "../../../services/visitsuser";
 
-const Edit = ({ initialData, onClose }) => {
+const Edit = ({ onClose }) => {
+  const location = useLocation();
+  const initialData = location.state?.initialData;
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     full_name: "",
     phone_number: "",
     email: "",
+    visitor_id: "",
     profile_pic: null,
+    visitor_type: "",
   });
 
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("initialData:", initialData);
     if (initialData) {
       setFormData({
-        full_name: initialData.full_name || "",
+        full_name: initialData.visitor_name || "", // ✅ parent uses visitor_name
         phone_number: initialData.phone_number || "",
         email: initialData.email || "",
-        profile_pic: null, 
+        visitor_id: initialData.visitor_id || "",
+        profile_pic: null,
+        visitor_type: initialData.visitor_type || "", 
       });
     }
   }, [initialData]);
@@ -48,23 +56,16 @@ const Edit = ({ initialData, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
+
+    if (!formData.visitor_id) {
+      console.error("No visitor_id provided");
       return;
     }
 
     try {
-      const data = new FormData();
-      data.append("full_name", formData.full_name);
-      data.append("phone_number", formData.phone_number);
-      data.append("email", formData.email);
-      if (formData.profile_pic) {
-        data.append("profile_pic", formData.profile_pic);
-      }
-
-      await editVisitor(initialData.id, data);
-      navigate("/resident/dashboard");
+      const response = await editVisitor(formData.visitor_id, formData); 
+      console.log("Visitor updated successfully:", response);
+      onClose ? onClose() : navigate(-1);
     } catch (error) {
       console.error("Failed to update visitor:", error);
     }
@@ -76,14 +77,14 @@ const Edit = ({ initialData, onClose }) => {
         onSubmit={handleSubmit}
         className="bg-white justify-center shadow-lg rounded-2xl p-6 w-full max-w-md space-y-5"
       >
-       
+        {/* Header */}
         <div className="flex justify-between items-center border-b pb-3">
           <h2 className="text-lg font-semibold text-gray-700">
             Edit Visitor Details
           </h2>
           <button
             type="button"
-            onClick={onClose}
+            onClick={onClose || (() => navigate(-1))}
             className="text-gray-500 hover:text-red-500"
           >
             ✕
@@ -94,7 +95,7 @@ const Edit = ({ initialData, onClose }) => {
           Personal Information
         </h3>
 
-       
+        {/* Name */}
         <div>
           <label className="block text-sm text-gray-600 mb-1">Name</label>
           <input

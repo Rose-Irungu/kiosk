@@ -63,6 +63,7 @@ export const blacklistVisitor = async(payload) => {
 export const editVisitor = async (visitorId, values) => {
   try {
     const formData = new FormData();
+    formData.append("visitor_id", visitorId);  
     formData.append("email", values.email);
     formData.append("full_name", values.full_name);
     formData.append("phone_number", values.phone_number);
@@ -72,11 +73,13 @@ export const editVisitor = async (visitorId, values) => {
       formData.append("profile_pic", values.profile_pic);
     }
 
-    const promise = api.put(`API_ENDPOINTS.EDIT_VISITOR}${visitorId}/`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const promise = api.put(
+      API_ENDPOINTS.EDIT_VISITOR,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
 
     const res = await toast.promise(promise, {
       loading: "Updating visitor...",
@@ -90,6 +93,7 @@ export const editVisitor = async (visitorId, values) => {
     throw error;
   }
 };
+
 
 export const unBlacklistVisitor = async(payload) => {
   try {
