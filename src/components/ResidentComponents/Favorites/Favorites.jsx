@@ -19,6 +19,7 @@ export default function Favorites({guests}) {
           guests.map((guest) => (
             <FavoriteCard
               key={guest.favourite_id}
+              id={guest.visitor_id}
               img={guest.image}
               name={guest.full_name}
               time={guest.last_visit_date}
