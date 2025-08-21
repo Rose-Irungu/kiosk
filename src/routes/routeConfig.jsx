@@ -58,7 +58,7 @@ import Card3 from "../components/Card3";
 import CardA from "../components/ResidentComponents/ResidentCards/CardA";
 import MyGuestsFrame from "../components/ResidentComponents/ResidentCards/MyGuestsFrame";
 
-// import {Edit} from "../components/ResidentComponents/ResidentCards/Edit";
+import Edit from "../components/ResidentComponents/ResidentCards/Edit";
 import Card4 from "../components/Card4";
 import Card6 from "../components/Card6";
 import { DashboardTable } from "../components/tables/DashboardTable";
@@ -210,6 +210,6 @@ export const tenantRoutes = [
     { path: '/resident/security-form', element: <Security_form /> },
     { path: '/CardA', element: <CardA /> },
     { path: '/MyGuestsFrame', element: <MyGuestsFrame /> },
-    // { path: '/Edit', element: <Edit /> },
+    { path: '/Edit', element: <Edit /> },
     // { path: '/emergency/feedback', element: <EmergencyFeedback />},
 ];

@@ -184,7 +184,7 @@ export default function ResidentRegistration() {
                                         }`}
                                 >
                                     <option value="">-- Select Unit --</option>
-                                    {units.map((unit) => (
+                                    {units.map((unit) => ( !unit.is_occupied &&
                                         <option key={unit.id} value={unit.id}>
                                             {unit.unit_name} --- {unit.floor_name}
                                         </option>
