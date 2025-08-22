@@ -555,10 +555,6 @@ export default function Visitors() {
         </div>
       )}
 
-
-
-
-
       <div className="mt-4 flex flex-col sm:flex-row items-center justify-between w-full px-4 h-auto sm:h-12 gap-2 sm:gap-0">
         <div className="flex items-center gap-2 w-full sm:w-auto">
           <button

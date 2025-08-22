@@ -86,6 +86,8 @@ export default function VisitorRegistration() {
                 
                 if (key === "visitor_name") {
                     payload.append("full_name", visitorData[key]);
+                // } else if (key === "visitor_photo"){
+                //     payload.append("profile_pic", visitorData[key]);
                 } else {
                     payload.append(key, visitorData[key]);
                 }
@@ -94,7 +96,7 @@ export default function VisitorRegistration() {
             const res = await editVisitorAdmin(visitorData.visitor_id, payload);
             if (res.result_code == 0) {
                 toast.success("Visitor successfully edited!");
-                navigate('/resident/dashboard');
+                // navigate('/resident/dashboard');
             } else {
                 toast.error(res.message);
             }
@@ -209,7 +211,8 @@ export default function VisitorRegistration() {
                             <input
                                 id="photo"
                                 type="file"
-                                name="photo"
+                                name="profile_pic"
+                                value={visitorData.visitor_photo}
                                 onChange={handleChange}
                                 className="hidden"
                                 accept="image/*"

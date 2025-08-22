@@ -47,25 +47,29 @@ export const getVisitLogss = async () => {
 };
 
 
-export default async function deleteVisitor(visitor_id){
-    try{
-        const response = await api.post(API_ENDPOINTS.DELETE_VISITOR,{
-            'visitor_id': visitor_id,
-        });
-        return response.data;
-    } catch(error){
-        console.log("Failed to delete visitor", error);
-        throw error;
-    }
+export default async function deleteVisitor(visitor_id) {
+  try {
+    const response = await api.post(API_ENDPOINTS.DELETE_VISITOR, {
+      'visitor_id': visitor_id,
+    });
+    return response.data;
+  } catch (error) {
+    console.log("Failed to delete visitor", error);
+    throw error;
+  }
 }
 
 
 export const editVisitorAdmin = async (visitorId, updatedData) => {
   try {
-    const res = await api.put(`${API_ENDPOINTS.EDIT_VISITOR}${visitorId}/`, updatedData);
+    const res = await api.put(`${API_ENDPOINTS.EDIT_VISITOR}${visitorId}/`, updatedData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }
+    });
 
     const data = await res.data;
-    return data; 
+    return data;
   } catch (error) {
     console.error("Error editing visitor:", error);
     throw error;
