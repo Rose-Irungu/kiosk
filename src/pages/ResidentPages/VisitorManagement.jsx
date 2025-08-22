@@ -284,10 +284,6 @@ const VisitorManagement = ({ datedata = [] }) => {
   };
 
 
-
-
-
-
   return (
     <>
       <ResidentLayout>
@@ -645,7 +641,7 @@ const VisitorManagement = ({ datedata = [] }) => {
         { selectedGuest.status === "pending" &&(
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 bg-opacity-30 backdrop-blur-sm">
             <div
-              className='flex flex-col items-center gap-2 bg-[#F5F4F5] w-[517px] h-[518px] rounded-[24px]'
+              className='flex flex-col items-center gap-2 bg-[#F5F4F5] w-[517px] h-[388px] rounded-[24px]'
               ref={guestModalRef}
             >
 
@@ -677,15 +673,15 @@ const VisitorManagement = ({ datedata = [] }) => {
                   <p className="font-medium text-[#002706] text-lg">Email: <span className="text-[#002706] text-lg ">{selectedGuest.email || "N/A"}</span></p>
 
                   <div className="flex flex-row items-center justify-between gap-4 mt-4">
-                    <div className="rounded-lg bg-[#005E0E] flex items-center justify-center w-[91px] h-[35px] ">
+                    <div className="rounded-lg bg-[#005E0E] flex items-center justify-center w-[91px] h-[35px] hover:bg-green-500 ">
 
-                      <button onClick={handleEditModal} className="text-white font-bold text-base">Approve</button>
+                      <button onClick={handleApprove} className="text-white font-bold text-base">Approve</button>
                     </div>
 
 
                     <div className=" flex items-center justify-center  h-[35px] p-2 ">
 
-                      <button onClick={handleAddToBlacklist} className=" font-bold text-base underline underline-[#D1190F] text-[#D1190F] hover:text-red-400 cursor-pointer">Decline</button>
+                      <button onClick={handleCancel} className=" font-bold text-base underline underline-[#D1190F] text-[#D1190F] hover:text-red-400 cursor-pointer">Decline</button>
                     </div>
 
                   </div>
