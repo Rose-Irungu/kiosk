@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 import FavoriteDetail from './FavoriteDetail';
 import EditVisitor from './EditVisitor';
 
-export default function FavoriteCard({img, name, phone, email, time, function1, function2}) {
+export default function FavoriteCard({id, img, name, phone, email, time, function1, function2}) {
   //function1 - Invite guest
   //function2 - Edit guest
   const [showModal, setShowModal] = useState(false);
@@ -50,7 +50,7 @@ export default function FavoriteCard({img, name, phone, email, time, function1, 
                                              name={name}
                                              phone={phone}
                                              email={email}
-                                             photo={()=>img.toString()}
+                                             guestID={id}
                                 />
                             </div>
                        </div>

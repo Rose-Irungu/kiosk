@@ -89,6 +89,9 @@ export const API_ENDPOINTS = {
   //Get favourites
   GET_FAVOURITE_VISITORS: '/visitors/getallfavourite/',
 
+  //Edit visitor from form
+  EDIT_VISITOR_FORM: 'visitors/resident/edit-visitor/'
+
 }
 
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://292695e84858.ngrok-free.app'
