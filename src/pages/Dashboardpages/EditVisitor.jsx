@@ -141,8 +141,9 @@ export default function VisitorRegistration() {
                                 name='email'
                                 value={visitorData.email}
                                 onChange={handleChange}
-                                className={`h-12 px-4 rounded-lg bg-[#F4F4F4] w-full focus:outline-none ${errors.email ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-green-600'}`}
+                                className={`h-12 px-4 rounded-lg bg-gray-300 w-full focus:outline-none ${errors.email ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-green-600'}`}
                                 placeholder='e.g john@gmail.com'
+                                readOnly
                             />
                             {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
                         </div>
