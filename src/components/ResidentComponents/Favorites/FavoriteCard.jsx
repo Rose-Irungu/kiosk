@@ -13,12 +13,12 @@ export default function FavoriteCard({id, img, name, phone, email, time, functio
   const handleClose2 = () => setShowModal2(false);
 
   return (
-    <div className='cursor-pointer flex flex-row w-full h-[64px] justify-between rounded-[8px] p-[12px] bg-[#FFFFFF]'
+    <div className='cursor-pointer flex flex-row w-[300px] sm:w-full h-[64px] justify-between rounded-[8px] p-[12px] bg-[#FFFFFF]'
          onClick={()=> setShowModal(true)}
     >
         <div className='flex flex-row w-[216px] h-[40px] gap-[6px]'>
             <div className='w-[40px] h-[40px]'>
-                <img src={img} className='w-[40px] h-[40px] object-cover'/>
+                <img src={img} className='w-[40px] h-[40px] object-cover rounded-full'/>
             </div>
             <div className='flex flex-col w-[170px] h-[38px] gap-[2px]'>
                 <h1 className='font-dmsans font-medium text-[16px] text-[#002706] leading-[100%] tracking-normal'>

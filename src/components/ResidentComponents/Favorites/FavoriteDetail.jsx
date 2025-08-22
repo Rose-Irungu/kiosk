@@ -29,12 +29,12 @@ export default function FavoriteDetail({img, name, phone, email, callback1, call
         </div>
         <div className='flex flex-row justify-between'>
             <div className='w-[120px] h-[120px] ml-[30px]'>
-                <img src={img} className='w-[120px] h-[120px] top-[128px]'/>
+                <img src={img} className='w-[120px] h-[120px] top-[128px] rounded-full'/>
             </div>
             <div className='flex flex-col w-[275px] h-[126px] top-[125px] left-[184px] gap-[5px]'>
                 <div className='flex flex-col w-[275px] h-[90px]'>
                     <div className='w-[151px] h-[34px] py-[4px] gap-[10px]'>
-                        <h1 className='font-dmsans font-bold text-[20px] leading-[100%] tracking-normal'>
+                        <h1 className='font-dmsans font-bold text-[18px] leading-[100%] tracking-normal'>
                             {name}
                         </h1>
                     </div>
