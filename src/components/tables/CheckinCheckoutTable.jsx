@@ -210,18 +210,37 @@ export default function CheckinCheckoutTable() {
                       {visitor.unit_number || "N/A"}
                     </TableCell>
                     <TableCell className="px-4 py-4 text-[#464F60]">
-                      {(visitor.check_in_time && getRelativeTime(visitor.check_in_time)) || "--"}
+                      {visitor.check_in_time ? (
+                        <span>
+                          {getRelativeTime(`${visitor.visit_date}T${visitor.check_in_time}`)}{" "}
+                          <span className="text-xs text-gray-500">
+                            ({visitor.visit_date} {visitor.check_in_time})
+                          </span>
+                        </span>
+                      ) : (
+                        "--"
+                      )}
                     </TableCell>
+
                     <TableCell className="px-4 py-4 text-[#464F60]">
-                      {(visitor.check_out_time && getRelativeTime(visitor.check_out_time)) || "--"}
+                      {visitor.check_out_time ? (
+                        <span>
+                          {getRelativeTime(`${visitor.visit_date}T${visitor.check_out_time}`)}{" "}
+                          <span className="text-xs text-gray-500">
+                            ({visitor.visit_date} {visitor.check_out_time})
+                          </span>
+                        </span>
+                      ) : (
+                        "--"
+                      )}
                     </TableCell>
                     <TableCell className="px-4 py-4">
                       <div
                         className={`mx-auto w-fit px-2 py-1 rounded text-xs font-semibold ${visitor.status === "checked_in"
-                            ? "bg-[rgba(1,210,30,0.2)] text-[#017B25]"
-                            : visitor.status === "checked_out"
-                              ? "bg-[#E0DBF4] text-[#4B3BAE]"
-                              : "bg-yellow-100 text-yellow-800"
+                          ? "bg-[rgba(1,210,30,0.2)] text-[#017B25]"
+                          : visitor.status === "checked_out"
+                            ? "bg-[#E0DBF4] text-[#4B3BAE]"
+                            : "bg-yellow-100 text-yellow-800"
                           }`}
                       >
                         {visitor.status === "checked_in"
