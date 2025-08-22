@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Layout from "../../components/layout/Layout";
 import userService from "../../services/user";
+import { useNavigate } from "react-router-dom";
 
 // import users from "../../services/user";
 
@@ -12,6 +13,8 @@ export default function SecurityRegistration() {
         watch,
         formState: { errors },
     } = useForm();
+
+    const navigate = useNavigate();
 
     const onSubmit = async (values) => {
         try {
@@ -40,6 +43,9 @@ export default function SecurityRegistration() {
 
             console.log("Security added:", response);
             alert("Security registered successfully!");
+
+            navigate("/userspage");
+
         } catch (error) {
             alert("Failed to register security.");
         }
