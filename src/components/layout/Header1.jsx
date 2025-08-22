@@ -154,8 +154,8 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
     if (!passwordForm.newPassword) {
       errors.newPassword = "New password is required";
-    } else if (passwordForm.newPassword.length < 6) {
-      errors.newPassword = "Password must be at least 6 characters";
+    } else if (passwordForm.newPassword.length < 8) {
+      errors.newPassword = "Password must be at least 8 characters";
     }
 
     if (!passwordForm.confirmPassword) {
