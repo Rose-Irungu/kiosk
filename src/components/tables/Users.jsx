@@ -254,7 +254,7 @@ export default function Users({ users = [], setUsers = () => { } }) {
                   </TableCell>
 
                   <TableCell>
-                    {user.resident_profile ? user.resident_profile.unit_name : user.security_profile.post}
+                    {user.resident_profile ? user?.resident_profile?.unit_name : user?.security_profile?.post}
                   </TableCell>
                   <TableCell>{dayjs(user.date_joined).format("YYYY-MM-DD")}</TableCell>
                   <TableCell>
