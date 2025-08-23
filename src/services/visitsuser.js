@@ -74,7 +74,7 @@ export const editVisitor = async (visitorId, values) => {
     }
 
     const promise = api.put(
-      API_ENDPOINTS.EDIT_VISITOR,
+      API_ENDPOINTS.R_EDIT_VISITOR,
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
@@ -82,9 +82,7 @@ export const editVisitor = async (visitorId, values) => {
     );
 
     const res = await toast.promise(promise, {
-      loading: "Updating visitor...",
-      success: "Visitor updated successfully",
-      error: "Failed to update visitor",
+      loading: "Updating visitor..."
     });
 
     return res.data;

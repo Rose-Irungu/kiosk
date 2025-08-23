@@ -10,14 +10,14 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
   const [showProfileCard, setShowProfileCard] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showChangePasswordForm, setshowChangePasswordForm] = useState(false);
-   const [showNotification, setShowNotification] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   const [userData, setUserData] = useState({
     id: '',
     first_name: '',
     last_name: '',
     email: '',
-    phone: '',
+    phone_number: '',
     residence: '',
     fullName: ''
   });
@@ -43,6 +43,8 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
+    console.log("User data:", userData);
+
     if (userInfo) {
       try {
         const user = JSON.parse(userInfo);
@@ -51,7 +53,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
           first_name: user.first_name || '',
           last_name: user.last_name || '',
           email: user.email || '',
-          phone: user.phone || '',
+          phone_number: user.phone_number || '',
           residence: user.residence || 'Westbrook Apartments',
           fullName: `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.name || 'User'
         };
@@ -64,6 +66,19 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
   }, []);
 
 
+  const [editErrors, setEditErrors] = useState({});
+
+  const validateEditForm = () => {
+    const errors = {};
+    if (!editFormData.first_name) errors.first_name = "First name is required";
+    if (!editFormData.last_name) errors.last_name = "Last name is required";
+    if (!editFormData.phone_number) errors.phone_number = "Phone number is required";
+    return errors;
+  };
+
+
+
+
   const handleEditFormChange = (field, value) => {
     setEditFormData((prev) => ({
       ...prev,
@@ -74,14 +89,19 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
   const handleEditFormSubmit = async (e) => {
     e.preventDefault();
-    
+    const errors = validateEditForm();
+    if (Object.keys(errors).length > 0) {
+      setEditErrors(errors);
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
 
       const response = await userService.updateUser(userData.id, editFormData);
 
-      if (response.result_code == 0){
+      if (response.result_code == 0) {
         const updatedUserData = {
           ...userData,
           ...editFormData,
@@ -97,7 +117,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
         toast.error(response.message)
       }
 
-      
+
     } catch (error) {
       toast.error(error?.response?.data?.message || "Failed to update profile. Please try again.")
     } finally {
@@ -134,8 +154,8 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
     if (!passwordForm.newPassword) {
       errors.newPassword = "New password is required";
-    } else if (passwordForm.newPassword.length < 6) {
-      errors.newPassword = "Password must be at least 6 characters";
+    } else if (passwordForm.newPassword.length < 8) {
+      errors.newPassword = "Password must be at least 8 characters";
     }
 
     if (!passwordForm.confirmPassword) {
@@ -167,15 +187,19 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
         new_password: passwordForm.newPassword,
       });
 
-
-      toast.success("Password changed successfully!");
-      setshowChangePasswordForm(false);
-      setPasswordForm({
-        oldPassword: "",
-        newPassword: "",
-        confirmPassword: "",
-      });
-      setPasswordErrors({});
+      if (response.result_code==0){
+        toast.success(response.message);
+        setshowChangePasswordForm(false);
+        setPasswordForm({
+          oldPassword: "",
+          newPassword: "",
+          confirmPassword: "",
+        });
+        setPasswordErrors({});
+      } else {
+        toast.error(response.message)
+      }
+      
     } catch (error) {
       if (error.message) {
         toast.error(error.message);
@@ -291,15 +315,19 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
 
             {/* Profile Card */}
             {showProfileCard && (
-              <div className="absolute top-full right-0 mt-2 z-50 w-[390px] h-[397px] bg-white shadow-lg rounded-2xl p-4 flex flex-col items-start">
+              <div className="absolute top-full right-0 mt-2 z-50 w-[390px] h-[440px] bg-white shadow-lg rounded-2xl p-4 flex flex-col items-start">
+
+                <div className="flex justify-end items-center w-full ">
+                  <button
+                    onClick={() => setShowProfileCard(false)}
+                    className="p-1 rounded-full hover:bg-gray-200 transition"
+                    aria-label="Close Profile"
+                  >
+                    <X className="w-6 h-6 text-gray-500 hover:text-gray-800" />
+                  </button>
+                </div>
                 {/* Close Button */}
-                <button
-                  onClick={() => setShowProfileCard(false)}
-                  className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-200 transition"
-                  aria-label="Close Profile"
-                >
-                  <X className="w-6 h-6 text-gray-500 hover:text-gray-800" />
-                </button>
+
 
                 <div className="flex flex-col gap-8 w-full max-w-[358px] h-[341px]">
                   <div className="flex items-center gap-6 pb-4 w-full max-w-[358px] h-[156px] border-b border-[#6C757D]/50 isolate">
@@ -398,6 +426,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
               className="flex flex-col gap-4 w-full px-4 font-['Inter']"
             >
               <div className="flex gap-4">
+                {/* First Name */}
                 <div className="flex-1">
                   <label className="block text-sm text-[#495057] mb-2">
                     First Name
@@ -406,12 +435,25 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                     type="text"
                     placeholder="Enter first name"
                     value={editFormData.first_name}
-                    onChange={(e) =>
-                      handleEditFormChange("first_name", e.target.value)
-                    }
-                    className="w-full h-[48px] px-4 py-2 border border-[#005E0E]/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                    onChange={(e) => {
+                      handleEditFormChange("first_name", e.target.value);
+                      if (editErrors.first_name) {
+                        setEditErrors((prev) => ({ ...prev, first_name: "" }));
+                      }
+                    }}
+                    className={`w-full h-[48px] px-4 py-2 border ${editErrors.first_name
+                      ? "border-red-500"
+                      : "border-[#005E0E]/50"
+                      } rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600`}
                   />
+                  {editErrors.first_name && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {editErrors.first_name}
+                    </p>
+                  )}
                 </div>
+
+                {/* Last Name */}
                 <div className="flex-1">
                   <label className="block text-sm text-[#495057] mb-2">
                     Last Name
@@ -420,66 +462,81 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                     type="text"
                     placeholder="Enter last name"
                     value={editFormData.last_name}
-                    onChange={(e) =>
-                      handleEditFormChange("last_name", e.target.value)
-                    }
-                    className="w-full h-[48px] px-4 py-2 border border-[#005E0E]/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                    onChange={(e) => {
+                      handleEditFormChange("last_name", e.target.value);
+                      if (editErrors.last_name) {
+                        setEditErrors((prev) => ({ ...prev, last_name: "" }));
+                      }
+                    }}
+                    className={`w-full h-[48px] px-4 py-2 border ${editErrors.last_name
+                      ? "border-red-500"
+                      : "border-[#005E0E]/50"
+                      } rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600`}
                   />
+                  {editErrors.last_name && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {editErrors.last_name}
+                    </p>
+                  )}
                 </div>
               </div>
+
+              {/* Email (readonly) */}
               <div>
-                <label className="block text-sm  text-[#495057] mb-2">
-                  Email
-                </label>
+                <label className="block text-sm text-[#495057] mb-2">Email</label>
                 <input
                   type="email"
-                  placeholder="Enter email"
                   value={editFormData.email}
-                  onChange={(e) =>
-                    handleEditFormChange("email", e.target.value)
-                  }
                   readOnly
-                  className=" flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border border-[#005E0E]/50 rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
+                  className="w-full h-[48px] px-4 py-2 border border-[#005E0E]/50 rounded-lg bg-gray-100 cursor-not-allowed"
                 />
               </div>
 
+              {/* Phone */}
               <div>
-                <label className="block text-sm  text-[#495057] mb-2">
-                  Phone
-                </label>
+                <label className="block text-sm text-[#495057] mb-2">Phone</label>
                 <input
                   type="text"
-                  placeholder="Enter phone_number"
+                  placeholder="Enter phone number"
                   value={editFormData.phone_number}
-                  onChange={(e) =>
-                    handleEditFormChange("phone_number", e.target.value)
-                  }
-                  className=" flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border border-[#005E0E]/50 rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
+                  onChange={(e) => {
+                    handleEditFormChange("phone_number", e.target.value);
+                    if (editErrors.phone_number) {
+                      setEditErrors((prev) => ({ ...prev, phone_number: "" }));
+                    }
+                  }}
+                  className={`w-full h-[48px] px-4 py-2 border ${editErrors.phone_number
+                    ? "border-red-500"
+                    : "border-[#005E0E]/50"
+                    } rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600`}
                 />
+                {editErrors.phone_number && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {editErrors.phone_number}
+                  </p>
+                )}
               </div>
 
+              {/* Residence (readonly) */}
               <div>
-                <label className="block text-sm  text-[#495057] mb-2">
+                <label className="block text-sm text-[#495057] mb-2">
                   Residence/Facility
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter residence"
                   value={editFormData.residence}
-                  onChange={(e) =>
-                    handleEditFormChange("residence", e.target.value)
-                  }
                   readOnly
-                  className=" flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border border-[#005E0E]/50 rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
+                  className="w-full h-[48px] px-4 py-2 border border-[#005E0E]/50 rounded-lg bg-gray-100 cursor-not-allowed"
                 />
               </div>
 
+              {/* Submit button */}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-[351px] h-[48px] mt-auto w-full ${isSubmitting
-                    ? "bg-gray-400"
-                    : "bg-[#005E0E] hover:bg-green-700"
+                className={`w-full h-[48px] mt-auto ${isSubmitting
+                  ? "bg-gray-400"
+                  : "bg-[#005E0E] hover:bg-green-700"
                   } text-white py-2 rounded-md transition`}
               >
                 {isSubmitting ? "UPDATING..." : "UPDATE PROFILE"}
@@ -488,6 +545,7 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
           </div>
         </div>
       )}
+
 
       {/* Change Password Modal */}
       {showChangePasswordForm && (
@@ -528,8 +586,8 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                     handlePasswordChange("oldPassword", e.target.value)
                   }
                   className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${passwordErrors.oldPassword
-                      ? "border-red-500"
-                      : "border-[#005E0E]/50"
+                    ? "border-red-500"
+                    : "border-[#005E0E]/50"
                     } rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
                 />
                 {passwordErrors.oldPassword && (
@@ -550,8 +608,8 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                     handlePasswordChange("newPassword", e.target.value)
                   }
                   className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${passwordErrors.newPassword
-                      ? "border-red-500"
-                      : "border-[#005E0E]/50"
+                    ? "border-red-500"
+                    : "border-[#005E0E]/50"
                     } rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
                 />
                 {passwordErrors.newPassword && (
@@ -572,8 +630,8 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                     handlePasswordChange("confirmPassword", e.target.value)
                   }
                   className={`flex flex-row items-center px-4 py-2 gap-2 w-[351px] h-[48px] border ${passwordErrors.confirmPassword
-                      ? "border-red-500"
-                      : "border-[#005E0E]/50"
+                    ? "border-red-500"
+                    : "border-[#005E0E]/50"
                     } rounded-lg w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600`}
                 />
                 {passwordErrors.confirmPassword && (
@@ -587,8 +645,8 @@ export default function Header({ setMobileOpen, profileOpen, setProfileOpen }) {
                 type="submit"
                 disabled={isSubmitting}
                 className={`w-[351px] h-[48px] mt-auto w-full ${isSubmitting
-                    ? "bg-gray-400"
-                    : "bg-[#005E0E] hover:bg-green-700"
+                  ? "bg-gray-400"
+                  : "bg-[#005E0E] hover:bg-green-700"
                   } text-white py-2 rounded-md transition`}
               >
                 {isSubmitting ? "CHANGING PASSWORD..." : "CHANGE PASSWORD"}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Layout from "../../components/layout/Layout";
 import users from "../../services/user";
+import { useNavigate } from "react-router-dom";
 
 export default function ResidentRegistration() {
     const {
@@ -12,10 +13,17 @@ export default function ResidentRegistration() {
     } = useForm();
     const [units, setUnits] = useState([]);
 
+    
+    const navigate = useNavigate();
+
+
+
+     
+
     useEffect(() => {
         const fetchUnits = async () => {
             try {
-                // Assuming you have a method to get units
+               
                 const response = await users.getAllUnits();
                 setUnits(response);
             } catch (error) {
@@ -28,46 +36,49 @@ export default function ResidentRegistration() {
     }, []);
 
     const onSubmit = async (values) => {
-        try {
-
-            // const formData = new FormData();
-            const data = {
-                first_name: values.firstName,
-                last_name: values.lastName,
-                email: values.email,
-                role: "tenant",
-                phone_number: values.phone,
-                id_number: values.idNo,
-                password: values.password,
-                next_of_kin: [{
-                    full_name: values.nextOfKinName?.toString(),
-                    relationship: values.nextOfKinRelationship?.toString(),
-                    phone_number: values.nextOfKinPhone?.toString(),
-                    email: values.nextOfKinEmail?.toString(),
-                }],
-                resident_profile: {
-                    no_of_residents: values.numPeople?.toString(),
-                    unit_number: values.unitNumber?.toString(),
-                    no_of_cars: values.numCars?.toString() || "0",
-                },
-            };
-
-            console.log("Payload:", JSON.stringify(data, null, 2));
-            
-
-            // file
-            // formData.append("profile_picture", values.photo[0]);
-
-
-            const response = await users.addUser(data);
-
-            console.log("Resident added:", response);
-            alert("Resident registered successfully!");
-        } catch (error) {
-            console.error("Error adding resident:", error);
-            alert("Failed to register resident.");
-        }
+  try {
+    const data = {
+      first_name: values.firstName,
+      last_name: values.lastName,
+      email: values.email,
+      role: "tenant",
+      phone_number: values.phone,
+      id_number: values.idNo,
+      password: values.password,
+      next_of_kin: [
+        {
+          full_name: values.nextOfKinName?.toString(),
+          relationship: values.nextOfKinRelationship?.toString(),
+          phone_number: values.nextOfKinPhone?.toString(),
+          email: values.nextOfKinEmail?.toString(),
+        },
+      ],
+      resident_profile: {
+        no_of_residents: values.numPeople?.toString(),
+        unit_number: values.unitNumber?.toString(),
+        no_of_cars: values.numCars?.toString() || "0",
+      },
     };
+
+    console.log("Payload:", JSON.stringify(data, null, 2));
+
+    const response = await users.addUser(data);
+
+    console.log("Resident added:", response);
+    alert("Resident registered successfully!");
+
+   
+    navigate("/userspage");
+
+  } catch (error) {
+    console.error("Error adding resident:", error);
+    alert("Failed to register resident.");
+  }
+};
+
+    
+
+    
 
     return (
         <Layout>
@@ -184,7 +195,7 @@ export default function ResidentRegistration() {
                                         }`}
                                 >
                                     <option value="">-- Select Unit --</option>
-                                    {units.map((unit) => (
+                                    {units.map((unit) => ( !unit.is_occupied &&
                                         <option key={unit.id} value={unit.id}>
                                             {unit.unit_name} --- {unit.floor_name}
                                         </option>

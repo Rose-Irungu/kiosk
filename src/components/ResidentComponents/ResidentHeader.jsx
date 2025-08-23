@@ -41,6 +41,7 @@ const ResidentHeader = ({ imageUrl, setMobileOpen }) => {
     if (userInfo) {
       try {
         const user = JSON.parse(userInfo);
+        console.log("User data:", user);
         setUserData(user);
       } catch (error) {
       } finally {
@@ -62,7 +63,7 @@ const ResidentHeader = ({ imageUrl, setMobileOpen }) => {
           <h2 className="text-lg font-semibold text-gray-900">
             Hi {userData.first_name},
           </h2>
-          <p className="text-sm text-gray-600">Unit {userData.unit}</p>
+          <p className="text-sm text-gray-600">Unit {userData?.resident_profile?.unit_name}</p>
         </div>
       </div>
 

@@ -58,11 +58,12 @@ export default function VisitorRegistration() {
     const handleChange = (e) => {
         const { name, value, files } = e.target;
 
-        if (name === 'photo') {
-            setVisitorData({ ...visitorData, photo: files[0] });
+        if (name === 'visitor_photo') {
+            setVisitorData({ ...visitorData, visitor_photo: files[0] });
         } else {
             setVisitorData({ ...visitorData, [name]: value });
         }
+
 
         if (errors[name]) {
             setErrors({ ...errors, [name]: '' });
@@ -83,9 +84,11 @@ export default function VisitorRegistration() {
         try {
             const payload = new FormData();
             for (const key in visitorData) {
-                
+
                 if (key === "visitor_name") {
                     payload.append("full_name", visitorData[key]);
+                    // } else if (key === "visitor_photo"){
+                    //     payload.append("profile_pic", visitorData[key]);
                 } else {
                     payload.append(key, visitorData[key]);
                 }
@@ -114,7 +117,7 @@ export default function VisitorRegistration() {
                     Edit Visitors
                 </h2>
 
-                <form className="w-full font-['Roboto'] gap-4" onSubmit={handleSubmit}>
+                <form className="w-full font-['Roboto'] gap-4" onSubmit={handleSubmit} encType="multipart/form-data">
                     {/* Full Name */}
                     <div className="flex flex-col gap-2 w-full mt-1">
                         <label className="text-sm text-[#495057]">Full Name<span className='text-[#E61C11]'>*</span></label>
@@ -138,8 +141,9 @@ export default function VisitorRegistration() {
                                 name='email'
                                 value={visitorData.email}
                                 onChange={handleChange}
-                                className={`h-12 px-4 rounded-lg bg-[#F4F4F4] w-full focus:outline-none ${errors.email ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-green-600'}`}
+                                className={`h-12 px-4 rounded-lg bg-gray-300 w-full focus:outline-none ${errors.email ? 'ring-2 ring-red-500' : 'focus:ring-2 focus:ring-green-600'}`}
                                 placeholder='e.g john@gmail.com'
+                                readOnly
                             />
                             {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
                         </div>
@@ -204,12 +208,13 @@ export default function VisitorRegistration() {
                         >
                             <Upload className="text-[#495057]" />
                             <span className="text-sm text-[#6C757D]">
-                                {visitorData.photo ? visitorData.photo.name : "Upload a Photo"}
+                                {visitorData.visitor_photo ? visitorData.visitor_photo.name : "Upload a Photo"}
                             </span>
                             <input
                                 id="photo"
                                 type="file"
-                                name="photo"
+                                name="visitor_photo"
+                                // value={visitorData.visitor_photo}
                                 onChange={handleChange}
                                 className="hidden"
                                 accept="image/*"

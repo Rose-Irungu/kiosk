@@ -66,6 +66,7 @@ export const API_ENDPOINTS = {
   GET_FAVOURITES: '/visitors/getallfavourite/',
   // REMOVE_FAVOURITE: '/visitor/remove-favourite/',
   EDIT_VISITOR: 'visitors/resident/edit-visitor/',
+  R_EDIT_VISITOR: 'visitors/resident/edit-visitor/',
 
   //User logged devices
   LOGGED_DEVICES: '/user/device-management/',
@@ -88,6 +89,9 @@ export const API_ENDPOINTS = {
 
   //Get favourites
   GET_FAVOURITE_VISITORS: '/visitors/getallfavourite/',
+
+  //Edit visitor from form
+  EDIT_VISITOR_FORM: 'visitors/resident/edit-visitor/'
 
 }
 
