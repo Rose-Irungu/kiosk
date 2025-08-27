@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1755247318354,
@@ -32,6 +32,10 @@
                 {
                     "date": 1755699311625,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -159,9 +159,9 @@\n               residentVisitors={\r\n                 loading ? 0 : stats?.visitor_trend?.totals?.guest || 0\r\n               }\r\n               serviceProviders={\r\n-                loading ? 0 : stats?.visitor_trend?.totals?.service_provider || 0\r\n+                loading ? 0 : stats?.visitor_trend?.totals?.service || 0\r\n               }\r\n               className=\"h-full\"\r\n             />\r\n           </div>\r\n"
+                },
+                {
+                    "date": 1756017155269,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n \r\n   const {\r\n     stats: visitorStats,\r\n     loading: visitorLoading,\r\n-    error: visitorError,\r\n+    error: ,\r\n   } = useVisitorStats();\r\n \r\n   const getData = async () => {\r\n     try {\r\n"
                 }
             ],
             "date": 1755247318354,

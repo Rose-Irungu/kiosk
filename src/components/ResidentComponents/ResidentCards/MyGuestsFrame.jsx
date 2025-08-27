@@ -18,7 +18,7 @@ const MyGuestsFrame = () => {
       try {
         const response = await visitsuser();
         console.log(response);
-        // const guestsData = Array.isArray(response?.data) ? response.data : [];
+      
         setGuestList(response.data);
       } catch (err) {
         console.error('API fetch error:', err);
