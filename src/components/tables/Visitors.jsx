@@ -12,12 +12,15 @@ import { Upload, ChevronDown, ArrowUp, ArrowDown, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { kioskService } from '@/services/kiosk';
 import toast from "react-hot-toast";
+import { getVisitLogs } from "../../services/checkincheckout";
 
 export default function Visitors() {
   const [visitors, setVisitors] = useState([]);
   const [allVisitors, setAllVisitors] = useState([]);
   const [filteredAllVisitors, setFilteredAllVisitors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [securityVisitors, setSecurityVisitors] = useState([]);
+  const [allSecurityVisitors, setAllSecurityVisitors] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage, setEntriesPerPage] = useState(5);
@@ -30,6 +33,7 @@ export default function Visitors() {
   const [selectedVisitor, setSelectedVisitor] = useState(null);
   const [editModal, setEditModal] = useState(null);
   const [deleteModal, setDeleteModal] = useState(null);
+  const [activeTab, setActiveTab] = useState("visitor");
   const navigate = useNavigate();
   // sorting--------------------------------------------
   const [sortConfig, setSortConfig] = useState({
@@ -79,7 +83,7 @@ export default function Visitors() {
     }
     setMenuOpenIndex(null);
   };
-// check in visitor end --------------------------------------
+  // check in visitor end --------------------------------------
   const handleCheckOut = async (visitor) => {
     const formData = {
       visit_id: visitor.visit_id,
@@ -97,27 +101,27 @@ export default function Visitors() {
     }
     setMenuOpenIndex(null);
   };
-  
+
   // Delete Visitor --------------------------------------------------
   const handleDeleteVisitor = async () => {
-    
-      const res = await deleteVisitor(selectedVisitor.visitor_id);
 
-      if (res.result_code === 0) {
-        toast.success(res.message);
+    const res = await deleteVisitor(selectedVisitor.visitor_id);
 
-        setVisitors(prevVisitors => {
-          const updated = prevVisitors.filter(v => v.visitor_id !== selectedVisitor.visitor_id);
-          setTotalEntries(updated.length);
-          return updated;
-        });
+    if (res.result_code === 0) {
+      toast.success(res.message);
+
+      setVisitors(prevVisitors => {
+        const updated = prevVisitors.filter(v => v.visitor_id !== selectedVisitor.visitor_id);
+        setTotalEntries(updated.length);
+        return updated;
+      });
 
 
-        setDeleteModal(false);
-        setSelectedVisitor(null); 
-      } else {
-        toast.error(res.message);
-      }
+      setDeleteModal(false);
+      setSelectedVisitor(null);
+    } else {
+      toast.error(res.message);
+    }
   };
 
   // Delete Visitor end --------------------------------------------
@@ -139,7 +143,7 @@ export default function Visitors() {
   // Delete Visitor
   const handleDelete = (visitor) => {
     console.log("Visitor to be deleted", visitor);
-    
+
     setSelectedVisitor(visitor);
     setDeleteModal(true);
   };
@@ -157,9 +161,18 @@ export default function Visitors() {
     };
   }, []);
 
+  // useEffect(() => {
+  //   fetchVisitors();
+  // }, [currentPage, entriesPerPage, visitorTypeFilter]);
+
+
   useEffect(() => {
-    fetchVisitors();
-  }, [currentPage, entriesPerPage, visitorTypeFilter]);
+    if (activeTab === "visitor") {
+      fetchVisitors();
+    } else if (activeTab === "security") {
+      fetchSecurity();
+    }
+  }, [activeTab, currentPage, entriesPerPage, visitorTypeFilter]);
 
   const fetchVisitors = async () => {
     setLoading(true);
@@ -195,6 +208,41 @@ export default function Visitors() {
       setLoading(false);
     }
   };
+
+
+
+
+  const fetchSecurity = async () => {
+    setLoading(true);
+    try {
+      const res = await getVisitLogs();
+      if (res.result_code === 0) {
+        let allData = res.data;
+        setAllSecurityVisitors(allData); // store all logs
+
+        setTotalEntries(allData.length);
+
+        // paginate
+        const start = (currentPage - 1) * entriesPerPage;
+        const end = start + entriesPerPage;
+        const paginated = allData.slice(start, end);
+
+        setSecurityVisitors(paginated);
+      } else {
+        setSecurityVisitors([]);
+        setAllSecurityVisitors([]);
+        setTotalEntries(0);
+      }
+    } catch (error) {
+      console.error("Error fetching security logs:", error);
+      setSecurityVisitors([]);
+      setAllSecurityVisitors([]);
+      setTotalEntries(0);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const handleExportCSV = () => {
     const headers = ["Name", "Phone", "Visitor Type", "Host/Unit", "Status"];
@@ -266,7 +314,7 @@ export default function Visitors() {
     }
   }, [searchQuery]);
 
-  const [activeTab, setActiveTab] = useState("visitor");
+
 
   return (
     <>
@@ -282,30 +330,24 @@ export default function Visitors() {
               onClick={() => setActiveTab("visitor")}
               className={`flex items-center justify-center w-[128px] h-[40px] rounded-lg cursor-pointer ${activeTab === "visitor"
                 ? "bg-[#005E0E] text-white"
-                : "bg-white border border-[#005E0E] text-dark hover:bg-gray-200"
+                : "bg-white border border-[#005E0E] text-[#005E0E] hover:bg-gray-200"
                 }`}
             >
-              <button className="flex items-center text-white text-sm font-medium">
+              <button className="flex items-center text-sm font-medium">
                 Visitor Logs
-
               </button>
-
-
             </div>
 
             <div
               onClick={() => setActiveTab("security")}
               className={`flex items-center justify-center w-[128px] h-[40px] rounded-lg cursor-pointer ${activeTab === "security"
-                ? "bg-[#005E0E] text-[#FFFFF]"
-                : "bg-white border border-[#005E0E] text-[#005E0E] hover:bg-gray-200"
+                  ? "bg-[#005E0E] text-white"
+                  : "bg-white border border-[#005E0E] text-[#005E0E] hover:bg-gray-200"
                 }`}
             >
-              <button className="flex items-center text-[#005E0E] text-sm  font-medium">
+              <button className="flex items-center text-sm font-medium">
                 Security Logs
-
               </button>
-
-
             </div>
 
 
@@ -319,6 +361,9 @@ export default function Visitors() {
             Export
           </button> */}
         </div>
+
+
+
 
         <div className="flex flex-row flex-wrap justify-between gap-4 px-6 pb-3 w-full font-['Inter'] ">
           <div className="flex flex-row justify-start items-center gap-[24px]">
@@ -387,142 +432,286 @@ export default function Visitors() {
         </div>
 
         <div className="p-4">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Photo</TableHead>
-                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">
-                  <div
-                    className="flex items-center gap-4 cursor-pointer"
-                    onClick={() => sortVisitors('visitor_name')}
-                  >
-                    Name
-                    {sortConfig.key === 'visitor_name' && (
-                      sortConfig.direction === 'ascending' ?
-                        <ArrowUp className="w-4 h-4 inline" /> :
-                        <ArrowDown className="w-4 h-4 inline" />
-                    )}
-                  </div>
-                </TableHead>
-                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Phone</TableHead>
-                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Visitor Type</TableHead>
-                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Host/Unit</TableHead>
-                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']" >Status</TableHead>
-                <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Action</TableHead>
-              </TableRow>
-            </TableHeader>
 
-            <TableBody>
-              {loading ? (
-                <TableRow >
-                  <TableCell colSpan={7}>
-                    <div className="text-center text-gray-500 py-10">Loading...</div>
-                  </TableCell>
-                </TableRow>
-              ) : visitors.length === 0 ? (
+          {activeTab === "visitor" && (
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell colSpan={7}>
-                    <div className="text-center text-gray-500 py-10">No visitors found.</div>
-                  </TableCell>
+                  <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Photo</TableHead>
+                  <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">
+                    <div
+                      className="flex items-center gap-4 cursor-pointer"
+                      onClick={() => sortVisitors('visitor_name')}
+                    >
+                      Name
+                      {sortConfig.key === 'visitor_name' && (
+                        sortConfig.direction === 'ascending' ?
+                          <ArrowUp className="w-4 h-4 inline" /> :
+                          <ArrowDown className="w-4 h-4 inline" />
+                      )}
+                    </div>
+                  </TableHead>
+                  <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Phone</TableHead>
+                  <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Visitor Type</TableHead>
+                  <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Host/Unit</TableHead>
+                  <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']" >Status</TableHead>
+                  <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Action</TableHead>
                 </TableRow>
-              ) : (
-                visitors.map((visitor, index) => (
-                  <TableRow key={index} className="even:bg-[#E0DBF4]/5 odd:bg-[#005E0E]/5 font-['Inter'] text-base text-[#495057] ">
-                    <TableCell>
-                      {visitor.visitor_photo ? (
-                        <img
-                          src={visitor.visitor_photo}
-                          alt={visitor.visitor_name}
-                          className="h-10 w-10 rounded-full object-cover"
-                        />
-                      ) : (
-                        <div className="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center text-xs text-white">
-                          N/A
-                        </div>
-                      )}
-                    </TableCell>
-                    <TableCell >{visitor.visitor_name}</TableCell>
-                    <TableCell>{visitor.phone_number}</TableCell>
-                    <TableCell>{visitor.visitor_type}</TableCell>
-                    <TableCell>{visitor.unit_number || "N/A"}</TableCell>
-                    <TableCell>
-                      <div
-                        className={`flex items-center justify-center  gap-2 w-[90px] h-[20px] rounded text-xs  font-['Inter'] ${visitor.status === "checked_in"
-                          ? "bg-[rgba(1,210,30,0.2)] text-green-800"
-                          : visitor.status === "checked_out"
-                            ? "bg-[#E0DBF4] text-purple-800"
-                            : "bg-yellow-200 text-yellow-800"
-                          }`}
-                      >
-                        {
-                          visitor.status == "checked_in"
-                            ? "Checked In"
-                            : visitor.status == "checked_out"
-                              ? "Checked Out"
-                              : "Registered"
-                        }
-                      </div>
-                    </TableCell>
+              </TableHeader>
 
-                    <TableCell ><img
-                      src="/three-dots.svg"
-                      alt="menu"
-                      className="cursor-pointer"
-                      onClick={() => {
-                        setMenuOpenIndex(index);
-                        setSelectedVisitor(visitor);
-                      }}
-                    />
-                      {/* Dropdown menu */}
-                      {menuOpenIndex === index && selectedVisitor && (
-                        <div
-                          ref={menuRef}
-                          className="absolute right-6 mt-2 w-[94px] bg-white shadow-[0px_1px_20px_0px_rgba(0_,_0,_0,_0.1)] border rounded-sm z-50"
-                          style={{
-                            position: 'fixed',
-                            top: `${event.clientY}px`,
-                            left: `${event.clientX - 80}px`
-                          }}
-                        >
-                          <ul className="flex flex-col text-sm text-gray-700 text-center font-['Inter']">
-                            <li className="px-4 py-2 hover:bg-green-100 cursor-pointer" onClick={() => handleView(selectedVisitor)}>
-                              View
-                            </li>
-                            <li className="px-4 py-2 hover:bg-green-100 cursor-pointer" onClick={() => handleEdit(selectedVisitor)}>
-                              Edit
-                            </li>
-
-                            <li
-                              className={`px-4 py-2 ${selectedVisitor.status === 'checked_in'
-                                ? 'text-gray-400 cursor-not-allowed'
-                                : 'hover:bg-green-100 cursor-pointer'
-                                }`}
-                              onClick={selectedVisitor.status !== 'checked_in' ? () => handleCheckIn(selectedVisitor) : undefined}
-                            >
-                              Check In
-                            </li>
-                            <li
-                              className={`px-4 py-2 ${selectedVisitor.status !== 'checked_in'
-                                ? 'text-gray-400 cursor-not-allowed'
-                                : 'hover:bg-green-100 cursor-pointer'
-                                }`}
-                              onClick={selectedVisitor.status === 'checked_in' ? () => handleCheckOut(selectedVisitor) : undefined}
-                            >
-                              Check Out
-                            </li>
-                            <li className="px-4 py-2 hover:bg-green-100 cursor-pointer text-red-500" onClick={() => handleDelete(selectedVisitor)}>
-                              Delete
-                            </li>
-                          </ul>
-                        </div>
-                      )}
-
+              <TableBody>
+                {loading ? (
+                  <TableRow >
+                    <TableCell colSpan={7}>
+                      <div className="text-center text-gray-500 py-10">Loading...</div>
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+                ) : visitors.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7}>
+                      <div className="text-center text-gray-500 py-10">No visitors found.</div>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  visitors.map((visitor, index) => (
+                    <TableRow key={index} className="even:bg-[#E0DBF4]/5 odd:bg-[#005E0E]/5 font-['Inter'] text-base text-[#495057] ">
+                      <TableCell>
+                        {visitor.visitor_photo ? (
+                          <img
+                            src={visitor.visitor_photo}
+                            alt={visitor.visitor_name}
+                            className="h-10 w-10 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center text-xs text-white">
+                            N/A
+                          </div>
+                        )}
+                      </TableCell>
+                      <TableCell >{visitor.visitor_name}</TableCell>
+                      <TableCell>{visitor.phone_number}</TableCell>
+                      <TableCell>{visitor.visitor_type}</TableCell>
+                      <TableCell>{visitor.unit_number || "N/A"}</TableCell>
+                      <TableCell>
+                        <div
+                          className={`flex items-center justify-center  gap-2 w-[90px] h-[20px] rounded text-xs  font-['Inter'] ${visitor.status === "checked_in"
+                            ? "bg-[rgba(1,210,30,0.2)] text-green-800"
+                            : visitor.status === "checked_out"
+                              ? "bg-[#E0DBF4] text-purple-800"
+                              : "bg-yellow-200 text-yellow-800"
+                            }`}
+                        >
+                          {
+                            visitor.status == "checked_in"
+                              ? "Checked In"
+                              : visitor.status == "checked_out"
+                                ? "Checked Out"
+                                : "Registered"
+                          }
+                        </div>
+                      </TableCell>
+
+                      <TableCell ><img
+                        src="/three-dots.svg"
+                        alt="menu"
+                        className="cursor-pointer"
+                        onClick={() => {
+                          setMenuOpenIndex(index);
+                          setSelectedVisitor(visitor);
+                        }}
+                      />
+                        {/* Dropdown menu */}
+                        {menuOpenIndex === index && selectedVisitor && (
+                          <div
+                            ref={menuRef}
+                            className="absolute right-6 mt-2 w-[94px] bg-white shadow-[0px_1px_20px_0px_rgba(0_,_0,_0,_0.1)] border rounded-sm z-50"
+                            style={{
+                              position: 'fixed',
+                              top: `${event.clientY}px`,
+                              left: `${event.clientX - 80}px`
+                            }}
+                          >
+                            <ul className="flex flex-col text-sm text-gray-700 text-center font-['Inter']">
+                              <li className="px-4 py-2 hover:bg-green-100 cursor-pointer" onClick={() => handleView(selectedVisitor)}>
+                                View
+                              </li>
+                              <li className="px-4 py-2 hover:bg-green-100 cursor-pointer" onClick={() => handleEdit(selectedVisitor)}>
+                                Edit
+                              </li>
+
+                              <li
+                                className={`px-4 py-2 ${selectedVisitor.status === 'checked_in'
+                                  ? 'text-gray-400 cursor-not-allowed'
+                                  : 'hover:bg-green-100 cursor-pointer'
+                                  }`}
+                                onClick={selectedVisitor.status !== 'checked_in' ? () => handleCheckIn(selectedVisitor) : undefined}
+                              >
+                                Check In
+                              </li>
+                              <li
+                                className={`px-4 py-2 ${selectedVisitor.status !== 'checked_in'
+                                  ? 'text-gray-400 cursor-not-allowed'
+                                  : 'hover:bg-green-100 cursor-pointer'
+                                  }`}
+                                onClick={selectedVisitor.status === 'checked_in' ? () => handleCheckOut(selectedVisitor) : undefined}
+                              >
+                                Check Out
+                              </li>
+                              <li className="px-4 py-2 hover:bg-green-100 cursor-pointer text-red-500" onClick={() => handleDelete(selectedVisitor)}>
+                                Delete
+                              </li>
+                            </ul>
+                          </div>
+                        )}
+
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          )}
+
+
+          {activeTab === "security" && (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Photo</TableHead>
+                  <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">
+                    <div
+                      className="flex items-center gap-4 cursor-pointer"
+                      onClick={() => sortVisitors('visitor_name')}
+                    >
+                      Name
+                      {sortConfig.key === 'visitor_name' && (
+                        sortConfig.direction === 'ascending' ?
+                          <ArrowUp className="w-4 h-4 inline" /> :
+                          <ArrowDown className="w-4 h-4 inline" />
+                      )}
+                    </div>
+                  </TableHead>
+                  <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Phone</TableHead>
+                  <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Visitor Type</TableHead>
+                  <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Host/Unit</TableHead>
+                  <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']" >Status</TableHead>
+                  <TableHead className="text-[#495057] text-[16px]  font-bold font-['Inter']">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+
+              <TableBody>
+                {loading ? (
+                  <TableRow >
+                    <TableCell colSpan={7}>
+                      <div className="text-center text-gray-500 py-10">Loading...</div>
+                    </TableCell>
+                  </TableRow>
+                ) : visitors.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7}>
+                      <div className="text-center text-gray-500 py-10">No visitor logs found.</div>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  visitors.map((visitor, index) => (
+                    <TableRow key={index} className="even:bg-[#E0DBF4]/5 odd:bg-[#005E0E]/5 font-['Inter'] text-base text-[#495057] ">
+                      <TableCell>
+                        {visitor.visitor_photo ? (
+                          <img
+                            src={visitor.visitor_photo}
+                            alt={visitor.visitor_name}
+                            className="h-10 w-10 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center text-xs text-white">
+                            N/A
+                          </div>
+                        )}
+                      </TableCell>
+                      <TableCell >{visitor.visitor_name}</TableCell>
+                      <TableCell>{visitor.phone_number}</TableCell>
+                      <TableCell>{visitor.visitor_type}</TableCell>
+                      <TableCell>{visitor.unit_number || "N/A"}</TableCell>
+                      <TableCell>
+                        <div
+                          className={`flex items-center justify-center  gap-2 w-[90px] h-[20px] rounded text-xs  font-['Inter'] ${visitor.status === "checked_in"
+                            ? "bg-[rgba(1,210,30,0.2)] text-green-800"
+                            : visitor.status === "checked_out"
+                              ? "bg-[#E0DBF4] text-purple-800"
+                              : "bg-yellow-200 text-yellow-800"
+                            }`}
+                        >
+                          {
+                            visitor.status == "checked_in"
+                              ? "Checked In"
+                              : visitor.status == "checked_out"
+                                ? "Checked Out"
+                                : "Registered"
+                          }
+                        </div>
+                      </TableCell>
+
+                      <TableCell ><img
+                        src="/three-dots.svg"
+                        alt="menu"
+                        className="cursor-pointer"
+                        onClick={() => {
+                          setMenuOpenIndex(index);
+                          setSelectedVisitor(visitor);
+                        }}
+                      />
+                        {/* Dropdown menu */}
+                        {menuOpenIndex === index && selectedVisitor && (
+                          <div
+                            ref={menuRef}
+                            className="absolute right-6 mt-2 w-[94px] bg-white shadow-[0px_1px_20px_0px_rgba(0_,_0,_0,_0.1)] border rounded-sm z-50"
+                            style={{
+                              position: 'fixed',
+                              top: `${event.clientY}px`,
+                              left: `${event.clientX - 80}px`
+                            }}
+                          >
+                            <ul className="flex flex-col text-sm text-gray-700 text-center font-['Inter']">
+                              <li className="px-4 py-2 hover:bg-green-100 cursor-pointer" onClick={() => handleView(selectedVisitor)}>
+                                View
+                              </li>
+                              <li className="px-4 py-2 hover:bg-green-100 cursor-pointer" onClick={() => handleEdit(selectedVisitor)}>
+                                Edit
+                              </li>
+
+                              <li
+                                className={`px-4 py-2 ${selectedVisitor.status === 'checked_in'
+                                  ? 'text-gray-400 cursor-not-allowed'
+                                  : 'hover:bg-green-100 cursor-pointer'
+                                  }`}
+                                onClick={selectedVisitor.status !== 'checked_in' ? () => handleCheckIn(selectedVisitor) : undefined}
+                              >
+                                Check In
+                              </li>
+                              <li
+                                className={`px-4 py-2 ${selectedVisitor.status !== 'checked_in'
+                                  ? 'text-gray-400 cursor-not-allowed'
+                                  : 'hover:bg-green-100 cursor-pointer'
+                                  }`}
+                                onClick={selectedVisitor.status === 'checked_in' ? () => handleCheckOut(selectedVisitor) : undefined}
+                              >
+                                Check Out
+                              </li>
+                              <li className="px-4 py-2 hover:bg-green-100 cursor-pointer text-red-500" onClick={() => handleDelete(selectedVisitor)}>
+                                Delete
+                              </li>
+                            </ul>
+                          </div>
+                        )}
+
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          )}
+
         </div>
       </div>
 
@@ -543,7 +732,7 @@ export default function Visitors() {
 
             <div className="flex flex-col items-center gap-2 ">
               <div onClick={handleDeleteVisitor} className=" flex rounded-sm h-[40px] w-[257px] items-center bg-[#E61C11] justify-center font-['Inter'] font-light hover:bg-red-500">
-                <button  className="flex items-center text-white text-sm tracking-[1%] ">DELETE USER</button>
+                <button className="flex items-center text-white text-sm tracking-[1%] ">DELETE USER</button>
               </div>
 
               <div onClick={() => setDeleteModal(false)} className="flex rounded-sm h-[40px] w-[257px] border border-[#0A5B60] justify-center font-['Inter'] hover:bg-green-500">

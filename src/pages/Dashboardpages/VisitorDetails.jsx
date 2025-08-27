@@ -1,6 +1,7 @@
 import React from 'react'
 import Layout from '../../components/layout/Layout.jsx'
 import { useLocation } from 'react-router-dom';
+import dayjs from "dayjs";
 
 const VisitorDetails = () => {
     const location = useLocation();
@@ -30,10 +31,10 @@ const VisitorDetails = () => {
                                     {/* badge */}
                                     <div
                                         className={`rounded-lg p-2 ${visitorData.status === "approved"
-                                                ? "bg-[#005E0E1A]/50 text-green-800"
-                                                : visitorData.status === "pending"
-                                                    ? "bg-yellow-100 text-yellow-800"
-                                                    : "bg-gray-100 text-gray-800" // default for other statuses
+                                            ? "bg-[#005E0E1A]/50 text-green-800"
+                                            : visitorData.status === "pending"
+                                                ? "bg-yellow-100 text-yellow-800"
+                                                : "bg-gray-100 text-gray-800" // default for other statuses
                                             }`}
                                     >
                                         <p className='text-sm text-[#495057]'>
@@ -42,8 +43,8 @@ const VisitorDetails = () => {
                                                 : visitorData.status === "pending"
                                                     ? "PENDING"
                                                     : visitorData.status === "checked_in"
-                                                    ? "CHECKED IN"
-                                                    : visitorData.status || "N/A"}
+                                                        ? "CHECKED IN"
+                                                        : visitorData.status || "N/A"}
                                         </p>
                                     </div>
 
@@ -57,80 +58,73 @@ const VisitorDetails = () => {
 
                     </div>
                     {/* container with details */}
-                    <div className='flex flex-row items-start justify-between gap-2 w-full '>
-                        {/* 1st left container  */}
-                        <div className='bg-[#FFFF] shadow-[0px_1px_4px_0px_rgba(0,_0,_0,_0.1) ] rounded-lg p-4 w-[468.5px]  '>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full items-start">
+                        {/* 1st left container */}
+                        <div className="bg-[#FFFF] shadow-[0px_1px_4px_0px_rgba(0,_0,_0,_0.1)] rounded-lg p-4 w-full min-w-0">
                             <div className='flex flex-row gap-3 items-start justify-start mb-4 font-["Inter"] px-2'>
                                 <img src="/personal-info.svg" alt="" />
                                 <p className='font-medium text-base text-[#495057]'>Personal Information</p>
                             </div>
 
-                            <div className='flex flex-row justify-between w-full border-b font-["Inter"] p-2 mb-4 text-[#495057]'>
+                            <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center w-full border-b font-["Inter"] p-2 mb-4 text-[#495057] gap-1'>
                                 <p className='text-sm'>Full Name</p>
-                                <p className='text-sm'>{visitorData.visitor_name}</p>
-
+                                <p className='text-sm break-words text-left sm:text-right'>{visitorData.visitor_name}</p>
                             </div>
-                            <div className='flex flex-row justify-between w-full border-b font-["Inter"] p-2 mb-4 text-[#495057]'>
+
+                            <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center w-full border-b font-["Inter"] p-2 mb-4 text-[#495057] gap-1'>
                                 <p className='text-sm'>Phone Number</p>
-                                <p className='text-sm'>{visitorData.phone_number ?? "N/A"}</p>
-
+                                <p className='text-sm break-words text-left sm:text-right'>{visitorData.phone_number ?? "N/A"}</p>
                             </div>
 
-                            <div className='flex flex-row justify-between w-full border-b font-["Inter"] p-2 mb-4 text-[#495057]'>
+                            <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center w-full border-b font-["Inter"] p-2 mb-4 text-[#495057] gap-1'>
                                 <p className='text-sm'>Email</p>
-                                <p className='text-sm'>{visitorData.visitor_email ?? "N/A"}</p>
-
+                                <p className='text-sm break-words text-left sm:text-right'>{visitorData.email ?? "N/A"}</p>
                             </div>
-                            <div className='flex flex-row justify-between w-full border-b font-["Inter"] p-2 mb-4 text-[#495057]'>
+
+                            <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center w-full border-b font-["Inter"] p-2 mb-4 text-[#495057] gap-1'>
                                 <p className='text-sm'>Car Number Plate</p>
-                                <p className='text-sm'>{visitorData.car_number_plate ?? "N/A"}</p>
-
+                                <p className='text-sm break-words text-left sm:text-right'>{visitorData.car_number_plate ?? "N/A"}</p>
                             </div>
 
-
-                            <div className='flex flex-row justify-between w-full border-b font-["Inter"] p-2 mb-4 text-[#495057]'>
+                            <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center w-full border-b font-["Inter"] p-2 mb-4 text-[#495057] gap-1'>
                                 <p className='text-sm'>Visitor Type</p>
-                                <p className='text-sm'>{visitorData.visitor_type ?? "N/A"}</p>
-
+                                <p className='text-sm break-words text-left sm:text-right'>{visitorData.visitor_type ?? "N/A"}</p>
                             </div>
-
                         </div>
 
-                        {/* 2nd right container  */}
-                        <div className='bg-[#FFFF] shadow-[0px_1px_4px_0px_rgba(0,_0,_0,_0.1) ] rounded-lg p-4 w-[468.5px]  '>
+                        {/* 2nd right container */}
+                        <div className="bg-[#FFFF] shadow-[0px_1px_4px_0px_rgba(0,_0,_0,_0.1)] rounded-lg p-4 w-full min-w-0">
                             <div className='flex flex-row gap-3 items-start justify-start mb-4 font-["Inter"] px-2'>
                                 <img src="/carbon_order-details.svg" alt="" />
                                 <p className='font-medium text-base text-[#495057]'>Current Visit Details</p>
                             </div>
 
-                            <div className='flex flex-row justify-between w-full border-b font-["Inter"] p-2 mb-4 text-[#495057]'>
+                            <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center w-full border-b font-["Inter"] p-2 mb-4 text-[#495057] gap-1'>
                                 <p className='text-sm'>Visit Unit</p>
-                                <p className='text-sm'>{visitorData.unit_number ?? "N/A"}</p>
-
+                                <p className='text-sm break-words text-left sm:text-right'>{visitorData.unit_number ?? "N/A"}</p>
                             </div>
-                            <div className='flex flex-row justify-between w-full border-b font-["Inter"] p-2 mb-4 text-[#495057]'>
+
+                            <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center w-full border-b font-["Inter"] p-2 mb-4 text-[#495057] gap-1'>
                                 <p className='text-sm'>Check-In Time</p>
-                                <p className='text-sm'>{visitorData.check_in ?? "N/A"}</p>
-
+                                <p className="text-sm break-words text-left sm:text-right">
+                                    {visitorData.check_in
+                                        ? dayjs(visitorData.check_in).format("DD/MM/YYYY HH:mm")
+                                        : "N/A"}
+                                </p>
                             </div>
 
-                            <div className='flex flex-row justify-between w-full border-b font-["Inter"] p-2 mb-4 text-[#495057]'>
+                            <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center w-full border-b font-["Inter"] p-2 mb-4 text-[#495057] gap-1'>
                                 <p className='text-sm'>Visit Date</p>
-                                <p className='text-sm'>{visitorData.visit_date ?? "N/A"}</p>
-
+                                <p className='text-sm break-words text-left sm:text-right'>{visitorData.visit_date ?? "N/A"}</p>
                             </div>
-                            <div className='flex flex-row justify-between w-full border-b font-["Inter"] p-2 mb-4 text-[#495057]'>
+
+                            <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center w-full border-b font-["Inter"] p-2 mb-4 text-[#495057] gap-1'>
                                 <p className='text-sm'>Duration</p>
-                                <p className='text-sm'>{visitorData.visit_date ?? "N/A"}</p>
-
+                                <p className='text-sm break-words text-left sm:text-right'>{visitorData.duration ?? "N/A"}</p>
                             </div>
-
-
-
-
                         </div>
-
                     </div>
+
 
                 </div>
             </Layout>
