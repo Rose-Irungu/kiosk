@@ -83,7 +83,7 @@ const VisitorDetails = () => {
 
                             <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center w-full border-b font-["Inter"] p-2 mb-4 text-[#495057] gap-1'>
                                 <p className='text-sm'>Car Number Plate</p>
-                                <p className='text-sm break-words text-left sm:text-right'>{visitorData.car_number_plate ?? "N/A"}</p>
+                                <p className='text-sm break-words text-left sm:text-right'>{visitorData.plate_number ?? "N/A"}</p>
                             </div>
 
                             <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center w-full border-b font-["Inter"] p-2 mb-4 text-[#495057] gap-1'>

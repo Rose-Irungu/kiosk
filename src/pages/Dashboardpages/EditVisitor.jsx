@@ -87,8 +87,8 @@ export default function VisitorRegistration() {
 
                 if (key === "visitor_name") {
                     payload.append("full_name", visitorData[key]);
-                    // } else if (key === "visitor_photo"){
-                    //     payload.append("profile_pic", visitorData[key]);
+                    } else if (key === "visitor_photo"){
+                        payload.append("profile_pic", visitorData[key]);
                 } else {
                     payload.append(key, visitorData[key]);
                 }
