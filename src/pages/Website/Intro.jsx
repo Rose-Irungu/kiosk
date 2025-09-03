@@ -14,6 +14,7 @@ const Home = () => {
   const [result, setResult] = React.useState("");
 
   const [activeSection, setActiveSection] = useState('home');
+    const navigate = useNavigate();
 
   // Add scroll event listener to detect active section
   useEffect(() => {
@@ -97,6 +98,12 @@ const Home = () => {
             onClick={() => setActiveSection('contact')}>Contact Us</a>
         </div>
         {/* Get Started Button */}
+
+          <div className='flex items-center h-[56px] w-[143px] rounded-[8px] ml-[30px] bg-white border border-[#2D2264] justify-center hover:bg-[#2D2264] hover:border-white hover:shadow-lg hover:transition-all duration-300 ease-in-out'>
+          <button 
+          onClick = {()=> navigate('/loginform')}
+          className='flex items-center  text-[16px] font-["DM Sans"] text-[#2D2264] hover:text-white'>LIVE DEMO</button>
+        </div>
         <div className='hover:bg-[#241a52]  transition-all duration-300 flex items-center h-[56px] w-[143px] rounded-[8px] bg-[#2D2264] justify-center'>
           <button className='flex items-center  text-[16px] font-["DM Sans"] text-white' onClick={() => setShowModal(true)}>GET STARTED</button>
         </div>
