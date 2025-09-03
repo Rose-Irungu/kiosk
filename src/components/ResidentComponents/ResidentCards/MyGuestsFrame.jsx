@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { visitsuser, approveVisit, cancelVisit,  } from "../../../services/visitsuser";
 
 import CardA from './CardA';
 
 const MyGuestsFrame = () => {
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('pending');
   const [guestList, setGuestList] = useState([]);
   const [loading, setLoading] = useState(true);

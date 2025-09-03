@@ -3,12 +3,15 @@ import { useState } from "react";
 import { Link } from 'react-router-dom';
 import { ChevronDown, ChevronUp } from "lucide-react";
 import AccordionItem from '../../components/AccordionItem';
+import { useNavigate } from 'react-router-dom';
 
 
 
 
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
   return (
     <>
 
@@ -27,7 +30,13 @@ const Home = () => {
           <Link className='hover:underline'>Contact Us</Link>
         </div>
         {/* Get Started Button */}
-        <div className='flex items-center h-[56px] w-[143px] rounded-[8px] bg-[#2D2264] justify-center'>
+        <div className='flex items-center h-[56px] w-[143px] rounded-[8px] ml-[30px] bg-white border border-[#2D2264] justify-center hover:bg-[#2D2264] hover:border-white hover:shadow-lg hover:transition-all duration-300 ease-in-out'>
+          <button 
+          onClick = {()=> navigate('/loginform')}
+          className='flex items-center  text-[16px] font-["DM Sans"] text-[#2D2264] hover:text-white'>LIVE DEMO</button>
+        </div>
+
+         <div className='flex items-center h-[56px] w-[143px] rounded-[8px] bg-[#2D2264] hover:bg-[#2a1c73] justify-center'>
           <button className='flex items-center  text-[16px] font-["DM Sans"] text-white'>GET STARTED</button>
         </div>
       </nav>
@@ -46,7 +55,9 @@ const Home = () => {
             <p className='text-[16px] items-start mb-[32px] text-white'>Secure, Smart, and Simple Visitor Management.<br />
               VisitorGate helps you manage guests, security, and emergencies with ease — all from one intuitive dashboard.</p>
 
-            <div className='bg-[#FFFF] rounded-[8px] border border-1 border-[#000000] w-[157px] h-[56px] flex items-center justify-center font-semibold my-[56px]'>
+              
+
+            <div className='bg-[#FFFF] rounded-[8px] border-1 border-[#000000] w-[157px] h-[56px] flex items-center justify-center font-semibold my-[56px]'>
               <button className='flex items-center text-[16px] '>
                 GET STARTED
               </button>
