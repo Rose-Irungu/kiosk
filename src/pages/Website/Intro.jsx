@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { ChevronDown, ChevronUp } from "lucide-react";
 import AccordionItem from '../../components/AccordionItem';
+import { useNavigate } from 'react-router-dom';
 
 
 

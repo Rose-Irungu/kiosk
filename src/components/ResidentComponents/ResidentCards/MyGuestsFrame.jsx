@@ -5,7 +5,6 @@ import { visitsuser, approveVisit, cancelVisit, } from "../../../services/visits
 import CardA from './CardA';
 
 const MyGuestsFrame = () => {
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('pending');
   const [guestList, setGuestList] = useState([]);
   const [loading, setLoading] = useState(true);
