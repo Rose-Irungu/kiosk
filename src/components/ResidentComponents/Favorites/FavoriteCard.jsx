@@ -5,8 +5,6 @@ import FavoriteDetail from './FavoriteDetail';
 import EditVisitor from './EditVisitor';
 
 export default function FavoriteCard({id, img, name, phone, email, time, function1, function2}) {
-  //function1 - Invite guest
-  //function2 - Edit guest
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const handleClose = () => setShowModal(false);
@@ -29,7 +27,7 @@ export default function FavoriteCard({id, img, name, phone, email, time, functio
                 </p>
             </div>
         </div>
-        {showModal && <div className="fixed inset-0 flex items-center justify-center bg-black/40"
+        {/* {showModal && <div className="fixed inset-0 flex items-center justify-center bg-black/40"
                            onClick={handleClose}
                       >
                         <div onClick={(e) => e.stopPropagation()}>
@@ -54,7 +52,7 @@ export default function FavoriteCard({id, img, name, phone, email, time, functio
                                 />
                             </div>
                        </div>
-        }
+        } */}
     </div>
   );
 }

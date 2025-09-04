@@ -30,13 +30,10 @@ export function EmergencyTable({
 }) {
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const [openDropdown, setOpenDropdown] = useState(null);
-  const [showModal, setShowModal] = useState(false);
   const [activeEvent, setActiveEvent] = useState(null);
   
-  //function to close the resolve modal
   const handleCancel = () => setActiveEvent(null);
 
-  //function to submit feedback
     const submitFeedback = async (id, feedback) => {
       try {
         const result = await submitEmergencyFeedback(id, feedback);
@@ -44,7 +41,7 @@ export function EmergencyTable({
       } catch (err) {
         console.error("Failed to submit feedback:", err);
       } finally {
-        setActiveEvent(null); // or setShowModal(false) if you stick with boolean
+        setActiveEvent(null);
       }
     };
 

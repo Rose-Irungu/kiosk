@@ -14,7 +14,7 @@ export default function Favorites({ guests }) {
     if (!term) return guests;
     return guests.filter((guest) =>
       [guest.full_name, guest.phone, guest.email]
-        .filter(Boolean) // Handle null or undefined values
+        .filter(Boolean)
         .some((field) => field.toLowerCase().includes(term))
     );
   }, [guests, searchTerm]);
