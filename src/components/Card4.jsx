@@ -9,7 +9,6 @@ import { updateEmergency } from "../services/adminEmergencyServices";
 import ModalDash from "./extras/ModalDash";
 import GlobalModal from "./extras/GlobalModal";
 
-import resolveEmergency from "../services/resolveEmergency";
 
 export default function Card4({ id, floor, unit, name, status, onResolved }) {
   const [isResolved, setIsResolved] = useState(status === "resolved");
@@ -103,7 +102,7 @@ export default function Card4({ id, floor, unit, name, status, onResolved }) {
               {loading ? "Updating..." : isResolved ? "Resolved ✅" : "Mark Resolved"}
             </button>
               {showModal && <GlobalModal>
-                                <ModalDash callback1={closeModal} callback2={resolveEmergency}/>
+                                <ModalDash callback1={closeModal} callback2={handleResolve}/>
                             </GlobalModal>
               }
         </div>

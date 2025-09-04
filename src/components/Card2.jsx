@@ -64,7 +64,7 @@ export default function Card2({
           </Link>
 
           <button
-            onClick={callback}
+            onClick={handleResolve}
             disabled={isResolved || loading}
             className={`cursor-pointer border border-[#005E0E] text-sm font-inter font-normal px-3 py-1 rounded transition-colors hover:bg-[#CCCCCC] ${
                 isResolved

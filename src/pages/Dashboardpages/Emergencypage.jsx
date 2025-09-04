@@ -127,10 +127,10 @@ export default function Emergencypage() {
             timeFilter={timeFilter}
             onTimeFilterChange={setTimeFilter}
             highlightConditions={[{ emergency_status: "ongoing" }]}
-            onStatusChange={async (action, event) => {
+            onStatusChange={async (action) => {
               try {
                 const newStatus = action === "Resolved" ? "resolved" : "ongoing";
-                await updateEmergency(event.id, newStatus);
+                await updateEmergency(newStatus);
 
                 const { all, ongoingCount, resolvedCount } = await fetchEmergencies();
 

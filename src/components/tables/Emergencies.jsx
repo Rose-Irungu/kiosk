@@ -16,6 +16,7 @@ import ModalDash from "../extras/ModalDash";
 
 //Services
 import submitEmergencyFeedback from '../../services/emergencyFeedback';
+import { updateEmergency } from "../../services/adminEmergencyServices";
 
 export function EmergencyTable({
   events = [], 
@@ -190,11 +191,25 @@ export function EmergencyTable({
                       </button>
                       {activeEvent && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black/40">
-                          <ModalDash 
-                            id={activeEvent.id} 
-                            callback1={handleCancel} 
-                            callback2={submitFeedback} 
-                          />
+                      <ModalDash 
+                        id={activeEvent.id} 
+                        callback1={handleCancel} 
+                        callback2={async () => {
+                          try {
+                            await updateEmergency(activeEvent.id, "resolved");
+
+                            if (onStatusChange) {
+                              onStatusChange("Resolved", activeEvent);
+                            }
+
+                          } catch (err) {
+                            console.error("Failed to resolve emergency:", err);
+                          } finally {
+                            setActiveEvent(null); // close modal
+                          }
+                        }} 
+                      />
+
                         </div>
                       )}                     
                       <button
