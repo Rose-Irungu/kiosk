@@ -193,7 +193,7 @@ export function EmergencyTable({
                           <ModalDash 
                             id={activeEvent.id} 
                             callback1={handleCancel} 
-                            callback2={()=>submitFeedback(activeEvent.id, )} 
+                            callback2={submitFeedback} 
                           />
                         </div>
                       )}                     

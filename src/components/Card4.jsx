@@ -7,12 +7,18 @@ import { updateEmergency } from "../services/adminEmergencyServices";
 
 //components
 import ModalDash from "./extras/ModalDash";
+import GlobalModal from "./extras/GlobalModal";
+
+import resolveEmergency from "../services/resolveEmergency";
 
 export default function Card4({ id, floor, unit, name, status, onResolved }) {
   const [isResolved, setIsResolved] = useState(status === "resolved");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
+  function closeModal(){
+    setShowModal(false);
+  }
 
   const handleResolve = async () => {
     if (isResolved || loading) return;
@@ -95,11 +101,11 @@ export default function Card4({ id, floor, unit, name, status, onResolved }) {
               }`}
             >
               {loading ? "Updating..." : isResolved ? "Resolved ✅" : "Mark Resolved"}
-              {showModal && <div className="fixed inset-0 flex items-center justify-center bg-black/40">
-                                <ModalDash callback1={()=>setShowModal(false)}/>
-                            </div>
-              }
             </button>
+              {showModal && <GlobalModal>
+                                <ModalDash callback1={closeModal} callback2={resolveEmergency}/>
+                            </GlobalModal>
+              }
         </div>
 
         {error && <p className="text-red-500 text-sm mt-1 font-inter">{error}</p>}

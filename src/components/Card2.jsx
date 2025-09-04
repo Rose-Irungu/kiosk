@@ -13,7 +13,8 @@ export default function Card2({
   minute,
   name,
   status,
-  onResolved
+  onResolved,
+  callback
 }) {
   const [isResolved, setIsResolved] = useState(status === "resolved");
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,7 @@ export default function Card2({
     try {
       setLoading(true);
       setError("");
-      const result = await updateEmergency(id, "resolved");
+      const result = await updateEmergency(id, "resolved", "Crazy");
       if (result?.emergency_status === "resolved") {
         // setIsResolved(true);
         onResolved(); 
@@ -63,7 +64,7 @@ export default function Card2({
           </Link>
 
           <button
-            onClick={handleResolve}
+            onClick={callback}
             disabled={isResolved || loading}
             className={`cursor-pointer border border-[#005E0E] text-sm font-inter font-normal px-3 py-1 rounded transition-colors hover:bg-[#CCCCCC] ${
                 isResolved

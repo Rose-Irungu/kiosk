@@ -10,10 +10,23 @@ import { getDashboardStatistics } from "../../services/dashboardService";
 import useVisitorStats from "../../hooks/useVisitorStats";
 import { fetchEmergencies } from "../../services/adminEmergencyServices";
 
+import GlobalModal from "../../components/extras/GlobalModal";
+import ModalDash from "../../components/extras/ModalDash";
+
+import submitEmergencyFeedback from "../../services/emergencyFeedback";
+
 const Dashboard = () => {
   const [stats, setStats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [latest, setLatest] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  function openModal(){
+    setShowModal(true);
+  }
+  function closeModal(){
+    setShowModal(false);
+  }
 
   const {
     stats: visitorStats,
@@ -133,6 +146,7 @@ const Dashboard = () => {
             status={latest?.emergency_status}
             buttonText="View details"
             onResolved={getData}
+            callback={openModal}
           />
         ) : (
           <div className="bg-white p-6 rounded shadow w-full">
@@ -169,6 +183,10 @@ const Dashboard = () => {
       </div>
 
       <DashboardTable />
+      {showModal && <GlobalModal>
+                          <ModalDash callback1={closeModal} callback2={submitEmergencyFeedback}/>
+                    </GlobalModal>
+      }
     </Layout>
   );
 };

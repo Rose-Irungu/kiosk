@@ -9,6 +9,8 @@ import { getDashboardStatistics } from "../../services/dashboardService";
 import useSecurityDashboardStats from "../../hooks/useSecurityDashboardStats";
 //import { todaysVisitors } from "../../scripts/securityDashboardUtils";
 
+import { checkInVisitor, checkOutVisitor } from "../../services/checkInCheckOutVisitor";
+
 export default function SecurityDashboard() {
   const [stats, setStats] = useState([]);
   const [, setLoading] = useState(true);
@@ -104,6 +106,8 @@ export default function SecurityDashboard() {
       title="Expected Visitors Today"
       visitorData={stats?.expected_visitors?.data || []}
       isLoading={statistics.loading}
+      callback2 = {checkInVisitor}
+      callback3 = {checkOutVisitor}
     />
   </div>
 

@@ -82,7 +82,7 @@ export const API_ENDPOINTS = {
     //delete visitor
   DELETE_VISITOR: '/visitors/delete/visitor/',
   EDIT_VISITOR_RESIDENT: '/visitors/resident/edit-visitor/',
-  EDIT_VISITOR: '/visitors/edit/visitor/',
+  // EDIT_VISITOR: '/visitors/edit/visitor/',
 
   //Emergency feedback
   EMERGENCY_FEEDBACK_SUBMIT: `/incidence-and-emergency/update-emergency/{id}/`,
@@ -91,7 +91,12 @@ export const API_ENDPOINTS = {
   GET_FAVOURITE_VISITORS: '/visitors/getallfavourite/',
 
   //Edit visitor from form
-  EDIT_VISITOR_FORM: 'visitors/resident/edit-visitor/'
+  EDIT_VISITOR_FORM: '/visitors/resident/edit-visitor/',
+
+  RESOLVE_EMERGENCY: '/incidence-and-emergency/add-emergency-feedback/',
+  INVITE_FAVOURITE:'/visitors/sendinvitetofavourite/',
+  CHECK_IN_VISITOR:'/visits/checkin/',
+  CHECK_OUT_VISITOR:'/visits/checkout/'
 
 }
 
