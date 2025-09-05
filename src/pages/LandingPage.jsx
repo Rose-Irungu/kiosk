@@ -37,7 +37,7 @@ const LandingPage = () => {
           </div>
 
           <div
-            onClick={() => navigate("/loginform")}
+            // onClick={() => navigate("/loginform")}
             className={`w-[350px] h-[110px] bg-[#130e2a] hover:bg-[#160c45] rounded-[24px] flex items-center justify-center p-[30px_20px] mt-20 transition-all duration-700 ease-out ${
               show ? "translate-x-0 opacity-100" : "translate-x-40 opacity-0"
             }`}
